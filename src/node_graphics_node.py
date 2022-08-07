@@ -54,8 +54,8 @@ class QDMGraphicsNode(QGraphicsItem):
 
     def initUI(self):
         """Set up this ``QGraphicsItem``"""
-        self.setFlag(QGraphicsItem.ItemIsSelectable)
-        self.setFlag(QGraphicsItem.ItemIsMovable)
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
         self.setAcceptHoverEvents(True)
 
         # init title
@@ -76,7 +76,7 @@ class QDMGraphicsNode(QGraphicsItem):
 
     def initAssets(self):
         """Initialize ``QObjects`` like ``QColor``, ``QPen`` and ``QBrush``"""
-        self._title_color = Qt.white
+        self._title_color = Qt.GlobalColor.white
         self._title_font = QFont("Ubuntu", 10)
 
         self._color = QColor("#7F000000")
@@ -181,8 +181,8 @@ class QDMGraphicsNode(QGraphicsItem):
     def initContent(self):
         """Set up the `grContent` - ``QGraphicsProxyWidget`` to have a container for `Graphics Content`"""
         if self.content is not None:
-            self.content.setGeometry(self.edge_padding, self.title_height + self.edge_padding,
-                                 self.width - 2 * self.edge_padding, self.height - 2 * self.edge_padding - self.title_height)
+            self.content.setGeometry(round(self.edge_padding), round(self.title_height + self.edge_padding),
+                                 round(self.width - 2 * self.edge_padding), round(self.height - 2 * self.edge_padding - self.title_height))
 
         # get the QGraphicsProxyWidget when inserted into the grScene
         self.grContent = self.node.scene.grScene.addWidget(self.content)
@@ -193,22 +193,22 @@ class QDMGraphicsNode(QGraphicsItem):
         """Painting the rounded rectanglar `Node`"""
         # title
         path_title = QPainterPath()
-        path_title.setFillRule(Qt.WindingFill)
+        path_title.setFillRule(Qt.FillRule.WindingFill)
         path_title.addRoundedRect(0, 0, self.width, self.title_height, self.edge_roundness, self.edge_roundness)
         path_title.addRect(0, self.title_height - self.edge_roundness, self.edge_roundness, self.edge_roundness)
         path_title.addRect(self.width - self.edge_roundness, self.title_height - self.edge_roundness, self.edge_roundness, self.edge_roundness)
-        painter.setPen(Qt.NoPen)
+        painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(self._brush_title)
         painter.drawPath(path_title.simplified())
 
 
         # content
         path_content = QPainterPath()
-        path_content.setFillRule(Qt.WindingFill)
+        path_content.setFillRule(Qt.FillRule.WindingFill)
         path_content.addRoundedRect(0, self.title_height, self.width, self.height - self.title_height, self.edge_roundness, self.edge_roundness)
         path_content.addRect(0, self.title_height, self.edge_roundness, self.edge_roundness)
         path_content.addRect(self.width - self.edge_roundness, self.title_height, self.edge_roundness, self.edge_roundness)
-        painter.setPen(Qt.NoPen)
+        painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(self._brush_background)
         painter.drawPath(path_content.simplified())
 
@@ -216,7 +216,7 @@ class QDMGraphicsNode(QGraphicsItem):
         # outline
         path_outline = QPainterPath()
         path_outline.addRoundedRect(-1, -1, self.width+2, self.height+2, self.edge_roundness, self.edge_roundness)
-        painter.setBrush(Qt.NoBrush)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
         if self.hovered:
             painter.setPen(self._pen_hovered)
             painter.drawPath(path_outline.simplified())

@@ -68,7 +68,7 @@ class QDMGraphicsSocket(QGraphicsItem):
         """Painting a circle"""
         painter.setBrush(self._brush)
         painter.setPen(self._pen if not self.isHighlighted else self._pen_highlight)
-        painter.drawEllipse(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius)
+        painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
 
     def boundingRect(self) -> QRectF:
         """Defining Qt' bounding rectangle"""

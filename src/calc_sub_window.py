@@ -83,14 +83,14 @@ class CalculatorSubWindow(NodeEditorWidget):
     def onDrop(self, event):
         if event.mimeData().hasFormat(LISTBOX_MIMETYPE):
             eventData = event.mimeData().data(LISTBOX_MIMETYPE)
-            dataStream = QDataStream(eventData, QIODevice.ReadOnly)
+            dataStream = QDataStream(eventData, QIODevice.OpenModeFlag.ReadOnly)
             pixmap = QPixmap()
             dataStream >> pixmap
             op_code = dataStream.readInt()
             text = dataStream.readQString()
 
-            mouse_position = event.pos()
-            scene_position = self.scene.grScene.views()[0].mapToScene(mouse_position)
+            mouse_position = event.position()
+            scene_position = self.scene.grScene.views()[0].mapToScene(round(mouse_position.x()), round(mouse_position.y()))
 
             if DEBUG: print("GOT DROP: [%d] '%s'" % (op_code, text), "mouse:", mouse_position, "scene:", scene_position)
 
@@ -101,7 +101,7 @@ class CalculatorSubWindow(NodeEditorWidget):
             except Exception as e: dumpException(e)
 
 
-            event.setDropAction(Qt.MoveAction)
+            event.setDropAction(Qt.DropAction.MoveAction)
             event.accept()
         else:
             # print(" ... drop ignored, not requested format '%s'" % LISTBOX_MIMETYPE)

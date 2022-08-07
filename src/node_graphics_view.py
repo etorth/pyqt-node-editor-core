@@ -77,15 +77,15 @@ class QDMGraphicsView(QGraphicsView):
 
     def initUI(self):
         """Set up this ``QGraphicsView``"""
-        self.setRenderHints(QPainter.Antialiasing | QPainter.HighQualityAntialiasing | QPainter.TextAntialiasing | QPainter.SmoothPixmapTransform)
+        self.setRenderHints(QPainter.RenderHint.Antialiasing | QPainter.RenderHint.TextAntialiasing | QPainter.RenderHint.SmoothPixmapTransform)
 
-        self.setViewportUpdateMode(QGraphicsView.FullViewportUpdate)
+        self.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.FullViewportUpdate)
 
-        self.setHorizontalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
-        self.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff)
+        self.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
-        self.setTransformationAnchor(QGraphicsView.AnchorUnderMouse)
-        self.setDragMode(QGraphicsView.RubberBandDrag)
+        self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
+        self.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
 
         # enable dropping
         self.setAcceptDrops(True)
@@ -117,22 +117,22 @@ class QDMGraphicsView(QGraphicsView):
 
     def mousePressEvent(self, event:QMouseEvent):
         """Dispatch Qt's mousePress event to corresponding function below"""
-        if event.button() == Qt.MiddleButton:
+        if event.button() == Qt.MouseButton.MiddleButton:
             self.middleMouseButtonPress(event)
-        elif event.button() == Qt.LeftButton:
+        elif event.button() == Qt.MouseButton.LeftButton:
             self.leftMouseButtonPress(event)
-        elif event.button() == Qt.RightButton:
+        elif event.button() == Qt.MouseButton.RightButton:
             self.rightMouseButtonPress(event)
         else:
             super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event:QMouseEvent):
         """Dispatch Qt's mouseRelease event to corresponding function below"""
-        if event.button() == Qt.MiddleButton:
+        if event.button() == Qt.MouseButton.MiddleButton:
             self.middleMouseButtonRelease(event)
-        elif event.button() == Qt.LeftButton:
+        elif event.button() == Qt.MouseButton.LeftButton:
             self.leftMouseButtonRelease(event)
-        elif event.button() == Qt.RightButton:
+        elif event.button() == Qt.MouseButton.RightButton:
             self.rightMouseButtonRelease(event)
         else:
             super().mouseReleaseEvent(event)
@@ -198,11 +198,11 @@ class QDMGraphicsView(QGraphicsView):
 
         # logic
         if hasattr(item, "node") or isinstance(item, QDMGraphicsEdge) or item is None:
-            if event.modifiers() & Qt.ShiftModifier:
+            if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                 event.ignore()
-                fakeEvent = QMouseEvent(QEvent.MouseButtonPress, event.localPos(), event.screenPos(),
-                                        Qt.LeftButton, event.buttons() | Qt.LeftButton,
-                                        event.modifiers() | Qt.ControlModifier)
+                fakeEvent = QMouseEvent(QEvent.Type.MouseButtonPress, event.localPos(), event.screenPos(),
+                                        Qt.MouseButton.LeftButton, event.buttons() | Qt.MouseButton.LeftButton,
+                                        event.modifiers() | Qt.KeyboardModifier.ControlModifier)
                 super().mousePressEvent(fakeEvent)
                 return
 
@@ -218,12 +218,12 @@ class QDMGraphicsView(QGraphicsView):
             if res: return
 
         if item is None:
-            if event.modifiers() & Qt.ControlModifier:
+            if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
                 self.mode = MODE_EDGE_CUT
-                fakeEvent = QMouseEvent(QEvent.MouseButtonRelease, event.localPos(), event.screenPos(),
-                                        Qt.LeftButton, Qt.NoButton, event.modifiers())
+                fakeEvent = QMouseEvent(QEvent.Type.MouseButtonRelease, event.localPos(), event.screenPos(),
+                                        Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers())
                 super().mouseReleaseEvent(fakeEvent)
-                QApplication.setOverrideCursor(Qt.CrossCursor)
+                QApplication.setOverrideCursor(Qt.CursorShape.CrossCursor)
                 return
             else:
                 self.rubberBandDraggingRectangle = True
@@ -240,11 +240,11 @@ class QDMGraphicsView(QGraphicsView):
         try:
             # logic
             if hasattr(item, "node") or isinstance(item, QDMGraphicsEdge) or item is None:
-                if event.modifiers() & Qt.ShiftModifier:
+                if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                     event.ignore()
                     fakeEvent = QMouseEvent(event.type(), event.localPos(), event.screenPos(),
-                                            Qt.LeftButton, Qt.NoButton,
-                                            event.modifiers() | Qt.ControlModifier)
+                                            Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton,
+                                            event.modifiers() | Qt.KeyboardModifier.ControlModifier)
                     super().mouseReleaseEvent(fakeEvent)
                     return
 

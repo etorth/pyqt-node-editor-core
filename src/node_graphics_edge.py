@@ -43,7 +43,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
 
     def initUI(self):
         """Set up this ``QGraphicsPathItem``"""
-        self.setFlag(QGraphicsItem.ItemIsSelectable)
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
         self.setAcceptHoverEvents(True)
         self.setZValue(-1)
 
@@ -56,7 +56,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
         self._pen_selected = QPen(self._color_selected)
         self._pen_dragging = QPen(self._color)
         self._pen_hovered = QPen(self._color_hovered)
-        self._pen_dragging.setStyle(Qt.DashLine)
+        self._pen_dragging.setStyle(Qt.PenStyle.DashLine)
         self._pen.setWidthF(3.0)
         self._pen_selected.setWidthF(3.0)
         self._pen_dragging.setWidthF(3.0)
@@ -144,7 +144,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
         """Qt's overriden method to paint this Graphics Edge. Path calculated in :func:`~nodeeditor.node_graphics_edge.QDMGraphicsEdge.calcPath` method"""
         self.setPath(self.calcPath())
 
-        painter.setBrush(Qt.NoBrush)
+        painter.setBrush(Qt.BrushStyle.NoBrush)
 
         if self.hovered and self.edge.end_socket is not None:
             painter.setPen(self._pen_hovered)

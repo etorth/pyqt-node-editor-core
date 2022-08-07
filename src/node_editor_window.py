@@ -143,12 +143,12 @@ class NodeEditorWindow(QMainWindow):
 
         res = QMessageBox.warning(self, "About to loose your work?",
                 "The document has been modified.\n Do you want to save your changes?",
-                QMessageBox.Save | QMessageBox.Discard | QMessageBox.Cancel
+                QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel
               )
 
-        if res == QMessageBox.Save:
+        if res == QMessageBox.StandardButton.Save:
             return self.onFileSave()
-        elif res == QMessageBox.Cancel:
+        elif res == QMessageBox.StandardButton.Cancel:
             return False
 
         return True

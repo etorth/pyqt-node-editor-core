@@ -7,7 +7,7 @@ from utils import dumpException
 class CalcInputContent(QDMNodeContentWidget):
     def initUI(self):
         self.edit = QLineEdit("1", self)
-        self.edit.setAlignment(Qt.AlignRight)
+        self.edit.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.edit.setObjectName(self.node.content_label_objname)
 
     def serialize(self):

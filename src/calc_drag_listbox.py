@@ -50,7 +50,7 @@ class QDMDragListbox(QListWidget):
 
 
             itemData = QByteArray()
-            dataStream = QDataStream(itemData, QIODevice.WriteOnly)
+            dataStream = QDataStream(itemData, QIODevice.OpenModeFlag.WriteOnly)
             dataStream << pixmap
             dataStream.writeInt(op_code)
             dataStream.writeQString(item.text())
@@ -60,9 +60,9 @@ class QDMDragListbox(QListWidget):
 
             drag = QDrag(self)
             drag.setMimeData(mimeData)
-            drag.setHotSpot(QPoint(pixmap.width() / 2, pixmap.height() / 2))
+            drag.setHotSpot(QPoint(pixmap.width() // 2, pixmap.height() // 2))
             drag.setPixmap(pixmap)
 
-            drag.exec_(Qt.MoveAction)
+            drag.exec(Qt.DropAction.MoveAction)
 
         except Exception as e: dumpException(e)
