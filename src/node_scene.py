@@ -5,14 +5,14 @@ A module containing
 import os
 import json
 from collections import OrderedDict
-from nodeeditor.utils import dumpException
-from nodeeditor.node_serializable import Serializable
-from nodeeditor.node_graphics_scene import QDMGraphicsScene
-from nodeeditor.node_node import Node
-from nodeeditor.node_edge import Edge
-from nodeeditor.node_scene_history import SceneHistory
-from nodeeditor.node_scene_clipboard import SceneClipboard
-from nodeeditor.utils import pp
+from utils import dumpException
+from node_serializable import Serializable
+from node_graphics_scene import QDMGraphicsScene
+from node_node import Node
+from node_edge import Edge
+from node_scene_history import SceneHistory
+from node_scene_clipboard import SceneClipboard
+from utils import pp
 
 
 DEBUG_REMOVE_WARNINGS = False

@@ -3,8 +3,8 @@
 A module containing NodeEditor's class for representing Socket and Socket Position Constants.
 """
 from collections import OrderedDict
-from nodeeditor.node_serializable import Serializable
-from nodeeditor.node_graphics_socket import QDMGraphicsSocket
+from node_serializable import Serializable
+from node_graphics_socket import QDMGraphicsSocket
 
 
 LEFT_TOP = 1        #:

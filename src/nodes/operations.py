@@ -1,7 +1,7 @@
-from PyQt5.QtCore import *
+from PyQt6.QtCore import *
 from calc_conf import *
 from calc_node_base import *
-from nodeeditor.utils import dumpException
+from utils import dumpException
 
 
 @register_node(OP_NODE_ADD)

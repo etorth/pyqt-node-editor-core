@@ -1,11 +1,11 @@
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
-from nodeeditor.node_node import Node
-from nodeeditor.node_content_widget import QDMNodeContentWidget
-from nodeeditor.node_graphics_node import QDMGraphicsNode
-from nodeeditor.node_socket import LEFT_CENTER, RIGHT_CENTER
-from nodeeditor.utils import dumpException
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
+from node_node import Node
+from node_content_widget import QDMNodeContentWidget
+from node_graphics_node import QDMGraphicsNode
+from node_socket import LEFT_CENTER, RIGHT_CENTER
+from utils import dumpException
 
 
 class CalcGraphicsNode(QDMGraphicsNode):

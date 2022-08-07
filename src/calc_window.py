@@ -1,13 +1,13 @@
 import os
-from PyQt5.QtGui import *
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
+from PyQt6.QtGui import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
 
-from nodeeditor.utils import loadStylesheets
-from nodeeditor.node_editor_window import NodeEditorWindow
+from utils import loadStylesheets
+from node_editor_window import NodeEditorWindow
 from calc_sub_window import CalculatorSubWindow
 from calc_drag_listbox import QDMDragListbox
-from nodeeditor.utils import dumpException, pp
+from utils import dumpException, pp
 from calc_conf import *
 
 # images for the dark skin
@@ -36,9 +36,9 @@ class CalculatorWindow(NodeEditorWindow):
 
 
         self.mdiArea = QMdiArea()
-        self.mdiArea.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.mdiArea.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
-        self.mdiArea.setViewMode(QMdiArea.TabbedView)
+        self.mdiArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.mdiArea.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
+        self.mdiArea.setViewMode(QMdiArea.ViewMode.TabbedView)
         self.mdiArea.setDocumentMode(True)
         self.mdiArea.setTabsClosable(True)
         self.mdiArea.setTabsMovable(True)
@@ -46,7 +46,7 @@ class CalculatorWindow(NodeEditorWindow):
 
         self.mdiArea.subWindowActivated.connect(self.updateMenus)
         self.windowMapper = QSignalMapper(self)
-        self.windowMapper.mapped[QWidget].connect(self.setActiveSubWindow)
+        # self.windowMapper.mapped[QWidget].connect(self.setActiveSubWindow)
 
         self.createNodesDock()
 
@@ -79,8 +79,8 @@ class CalculatorWindow(NodeEditorWindow):
         self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)
         self.actTile = QAction("&Tile", self, statusTip="Tile the windows", triggered=self.mdiArea.tileSubWindows)
         self.actCascade = QAction("&Cascade", self, statusTip="Cascade the windows", triggered=self.mdiArea.cascadeSubWindows)
-        self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.NextChild, statusTip="Move the focus to the next window", triggered=self.mdiArea.activateNextSubWindow)
-        self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.PreviousChild, statusTip="Move the focus to the previous window", triggered=self.mdiArea.activatePreviousSubWindow)
+        self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.StandardKey.NextChild, statusTip="Move the focus to the next window", triggered=self.mdiArea.activateNextSubWindow)
+        self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.StandardKey.PreviousChild, statusTip="Move the focus to the previous window", triggered=self.mdiArea.activatePreviousSubWindow)
 
         self.actSeparator = QAction(self)
         self.actSeparator.setSeparator(True)
@@ -127,7 +127,7 @@ class CalculatorWindow(NodeEditorWindow):
     def about(self):
         QMessageBox.about(self, "About Calculator NodeEditor Example",
                 "The <b>Calculator NodeEditor</b> example demonstrates how to write multiple "
-                "document interface applications using PyQt5 and NodeEditor. For more information visit: "
+                "document interface applications using PyQt6 and NodeEditor. For more information visit: "
                 "<a href='https://www.blenderfreak.com/'>www.BlenderFreak.com</a>")
 
     def createMenus(self):
@@ -231,7 +231,7 @@ class CalculatorWindow(NodeEditorWindow):
         self.nodesDock.setWidget(self.nodesListWidget)
         self.nodesDock.setFloating(False)
 
-        self.addDockWidget(Qt.RightDockWidgetArea, self.nodesDock)
+        self.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.nodesDock)
 
     def createStatusBar(self):
         self.statusBar().showMessage("Ready")

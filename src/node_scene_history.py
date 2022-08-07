@@ -2,8 +2,8 @@
 """
 A module containing all code for working with History (Undo/Redo)
 """
-from nodeeditor.node_graphics_edge import QDMGraphicsEdge
-from nodeeditor.utils import dumpException
+from node_graphics_edge import QDMGraphicsEdge
+from utils import dumpException
 
 DEBUG = False
 DEBUG_SELECTION = False

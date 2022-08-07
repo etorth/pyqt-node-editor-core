@@ -2,10 +2,10 @@
 """
 A module containing NodeEditor's class for representing `Node`.
 """
-from nodeeditor.node_graphics_node import QDMGraphicsNode
-from nodeeditor.node_content_widget import QDMNodeContentWidget
-from nodeeditor.node_socket import *
-from nodeeditor.utils import dumpException, pp
+from node_graphics_node import QDMGraphicsNode
+from node_content_widget import QDMNodeContentWidget
+from node_socket import *
+from utils import dumpException, pp
 
 DEBUG = False
 

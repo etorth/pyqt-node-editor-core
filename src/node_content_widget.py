@@ -2,8 +2,8 @@
 """A module containing base class for Node's content graphical representation. It also contains example of
 overriden Text Widget which can pass to it's parent notification about currently being modified."""
 from collections import OrderedDict
-from nodeeditor.node_serializable import Serializable
-from PyQt5.QtWidgets import *
+from node_serializable import Serializable
+from PyQt6.QtWidgets import *
 
 
 class QDMNodeContentWidget(QWidget, Serializable):

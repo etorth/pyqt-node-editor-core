@@ -1,9 +1,9 @@
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
-from PyQt5.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
 
 from calc_conf import *
-from nodeeditor.utils import dumpException
+from utils import dumpException
 
 
 class QDMDragListbox(QListWidget):
@@ -14,7 +14,7 @@ class QDMDragListbox(QListWidget):
     def initUI(self):
         # init
         self.setIconSize(QSize(32, 32))
-        self.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.setDragEnabled(True)
 
         self.addMyItems()
@@ -34,19 +34,19 @@ class QDMDragListbox(QListWidget):
         item.setIcon(QIcon(pixmap))
         item.setSizeHint(QSize(32, 32))
 
-        item.setFlags(Qt.ItemIsEnabled | Qt.ItemIsSelectable | Qt.ItemIsDragEnabled)
+        item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsDragEnabled)
 
         # setup data
-        item.setData(Qt.UserRole, pixmap)
-        item.setData(Qt.UserRole + 1, op_code)
+        item.setData(Qt.ItemDataRole.UserRole, pixmap)
+        item.setData(Qt.ItemDataRole.UserRole + 1, op_code)
 
 
     def startDrag(self, *args, **kwargs):
         try:
             item = self.currentItem()
-            op_code = item.data(Qt.UserRole + 1)
+            op_code = item.data(Qt.ItemDataRole.UserRole + 1)
 
-            pixmap = QPixmap(item.data(Qt.UserRole))
+            pixmap = QPixmap(item.data(Qt.ItemDataRole.UserRole))
 
 
             itemData = QByteArray()

@@ -3,14 +3,14 @@
 A module containing ``NodeEditorWidget`` class
 """
 import os
-from PyQt5.QtWidgets import *
-from PyQt5.QtGui import *
-from PyQt5.QtCore import *
+from PyQt6.QtWidgets import *
+from PyQt6.QtGui import *
+from PyQt6.QtCore import *
 
-from nodeeditor.node_scene import Scene, InvalidFile
-from nodeeditor.node_node import Node
-from nodeeditor.node_edge import Edge, EDGE_TYPE_BEZIER
-from nodeeditor.node_graphics_view import QDMGraphicsView
+from node_scene import Scene, InvalidFile
+from node_node import Node
+from node_edge import Edge, EDGE_TYPE_BEZIER
+from node_graphics_view import QDMGraphicsView
 
 
 class NodeEditorWidget(QWidget):

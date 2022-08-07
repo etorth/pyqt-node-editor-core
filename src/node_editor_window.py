@@ -4,9 +4,10 @@ A module containing Main Window class
 """
 import os
 import json
-from PyQt5.QtWidgets import *
-from PyQt5.QtCore import *
-from nodeeditor.node_editor_widget import NodeEditorWidget
+from PyQt6.QtWidgets import *
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
+from node_editor_widget import NodeEditorWidget
 
 
 class NodeEditorWindow(QMainWindow):

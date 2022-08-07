@@ -2,15 +2,15 @@
 """
 A module containing `Graphics View` for NodeEditor
 """
-from PyQt5.QtWidgets import QGraphicsView, QApplication
-from PyQt5.QtCore import *
-from PyQt5.QtGui import *
+from PyQt6.QtWidgets import QGraphicsView, QApplication
+from PyQt6.QtCore import *
+from PyQt6.QtGui import *
 
-from nodeeditor.node_graphics_socket import QDMGraphicsSocket
-from nodeeditor.node_graphics_edge import QDMGraphicsEdge
-from nodeeditor.node_edge import Edge, EDGE_TYPE_BEZIER
-from nodeeditor.node_graphics_cutline import QDMCutLine
-from nodeeditor.utils import dumpException
+from node_graphics_socket import QDMGraphicsSocket
+from node_graphics_edge import QDMGraphicsEdge
+from node_edge import Edge, EDGE_TYPE_BEZIER
+from node_graphics_cutline import QDMCutLine
+from utils import dumpException
 
 
 MODE_NOOP = 1               #: Mode representing ready state
