@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
 
-__name__ = 'NodeEditor'
-__author__ = 'Pavel Křupala'
-__version__ = '0.9.0'
+__name__ = 'QuestDesigner'
+__author__ = 'Etorth'
+__version__ = '0.1.0'
