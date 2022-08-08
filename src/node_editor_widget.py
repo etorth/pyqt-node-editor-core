@@ -118,7 +118,7 @@ class NodeEditorWidget(QWidget):
         :param filename: file to load
         :type filename: ``str``
         """
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         try:
             self.scene.loadFromFile(filename)
             self.filename = filename
@@ -141,7 +141,7 @@ class NodeEditorWidget(QWidget):
         :type filename: ``str``
         """
         if filename is not None: self.filename = filename
-        QApplication.setOverrideCursor(Qt.WaitCursor)
+        QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         self.scene.saveToFile(self.filename)
         QApplication.restoreOverrideCursor()
         return True

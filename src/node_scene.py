@@ -295,7 +295,7 @@ class Scene(Serializable):
         with open(filename, "r") as file:
             raw_data = file.read()
             try:
-                data = json.loads(raw_data, encoding='utf-8')
+                data = json.loads(raw_data)
                 self.deserialize(data)
                 self.has_been_modified = False
             except json.JSONDecodeError:
