@@ -26,7 +26,7 @@ class CalculatorSubWindow(NodeEditorWidget):
         self.scene.addDropListener(self.onDrop)
         self.scene.setNodeClassSelector(self.getNodeClassFromData)
 
-        self._close_event_listeners = []
+        self.__closeEventListeners = []
 
     def getNodeClassFromData(self, data):
         if 'op_code' not in data: return Node
@@ -68,10 +68,11 @@ class CalculatorSubWindow(NodeEditorWidget):
         self.setWindowTitle(self.getUserFriendlyFilename())
 
     def addCloseEventListener(self, callback):
-        self._close_event_listeners.append(callback)
+        self.__closeEventListeners.append(callback)
 
     def closeEvent(self, event):
-        for callback in self._close_event_listeners: callback(self, event)
+        for callback in self.__closeEventListeners:
+            callback(self, event)
 
     def onDragEnter(self, event):
         if event.mimeData().hasFormat(LISTBOX_MIMETYPE):
