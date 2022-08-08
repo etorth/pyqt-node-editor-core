@@ -31,8 +31,7 @@ def loadStylesheet(filename: str):
     """
     print('STYLE loading:', filename)
     file = QFile(filename)
-    # file.open(QFile.ReadOnly | QFile.Text)
-    file.open(QFile.ReadOnly | QFile.Text)
+    file.open(QFile.OpenModeFlag.ReadOnly | QFile.OpenModeFlag.Text)
     stylesheet = file.readAll()
     QApplication.instance().setStyleSheet(str(stylesheet, encoding='utf-8'))
 
