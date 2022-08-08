@@ -15,7 +15,7 @@ RIGHT_CENTER = 5    #:
 RIGHT_BOTTOM = 6    #:
 
 
-DEBUG = False
+DEBUG = True
 DEBUG_REMOVE_WARNINGS = False
 
 

@@ -7,7 +7,7 @@ from node_content_widget import QDMNodeContentWidget
 from node_socket import *
 from utils import dumpException, pp
 
-DEBUG = False
+DEBUG = True
 
 
 class Node(Serializable):

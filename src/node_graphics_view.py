@@ -21,7 +21,7 @@ MODE_EDGE_CUT = 3           #: Mode representing when we draw a cutting edge
 EDGE_DRAG_START_THRESHOLD = 50
 
 
-DEBUG = False
+DEBUG = True
 DEBUG_MMB_SCENE_ITEMS = False
 
 

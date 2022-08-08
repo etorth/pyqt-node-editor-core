@@ -11,7 +11,7 @@ from utils import dumpException
 EDGE_TYPE_DIRECT = 1        #:
 EDGE_TYPE_BEZIER = 2        #:
 
-DEBUG = False
+DEBUG = True
 
 
 class Edge(Serializable):

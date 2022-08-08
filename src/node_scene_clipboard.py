@@ -7,7 +7,7 @@ from node_graphics_edge import QDMGraphicsEdge
 from node_edge import Edge
 
 
-DEBUG = False
+DEBUG = True
 DEBUG_PASTING = False
 
 

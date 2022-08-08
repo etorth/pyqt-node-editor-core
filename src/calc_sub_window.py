@@ -7,7 +7,7 @@ from node_edge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
 from node_graphics_view import MODE_EDGE_DRAG#, MODE_EDGES_REROUTING
 from utils import dumpException
 
-DEBUG = False
+DEBUG = True
 DEBUG_CONTEXT = False
 
 
