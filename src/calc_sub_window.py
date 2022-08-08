@@ -61,7 +61,8 @@ class CalculatorSubWindow(NodeEditorWidget):
         context_menu = QMenu(self)
         keys = list(CALC_NODES.keys())
         keys.sort()
-        for key in keys: context_menu.addAction(self.node_actions[key])
+        for key in keys:
+            context_menu.addAction(self.node_actions[key])
         return context_menu
 
     def setTitle(self):
@@ -112,7 +113,8 @@ class CalculatorSubWindow(NodeEditorWidget):
     def contextMenuEvent(self, event):
         try:
             item = self.scene.getItemAt(event.pos())
-            if DEBUG_CONTEXT: print(item)
+            if DEBUG_CONTEXT:
+                print(item)
 
             if type(item) == QGraphicsProxyWidget:
                 item = item.widget()
@@ -188,8 +190,9 @@ class CalculatorSubWindow(NodeEditorWidget):
         new_calc_node.grNode.onSelected()
 
     def handleNewNodeContextMenu(self, event):
+        if DEBUG_CONTEXT:
+            print("CONTEXT: EMPTY SPACE")
 
-        if DEBUG_CONTEXT: print("CONTEXT: EMPTY SPACE")
         context_menu = self.initNodesContextMenu()
         action = context_menu.exec(self.mapToGlobal(event.pos()))
 
