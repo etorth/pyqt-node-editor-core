@@ -13,7 +13,7 @@ from calc_conf import *
 # images for the dark skin
 import qss.nodeeditor_dark_resources
 
-DEBUG = False
+DEBUG = True
 
 
 class CalculatorWindow(NodeEditorWindow):
