@@ -191,7 +191,7 @@ class CalculatorSubWindow(NodeEditorWidget):
 
         if DEBUG_CONTEXT: print("CONTEXT: EMPTY SPACE")
         context_menu = self.initNodesContextMenu()
-        action = context_menu.exec_(self.mapToGlobal(event.pos()))
+        action = context_menu.exec(self.mapToGlobal(event.pos()))
 
         if action is not None:
             new_calc_node = get_class_from_opcode(action.data())(self.scene)
