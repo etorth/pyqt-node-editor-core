@@ -121,7 +121,8 @@ class CalculatorWindow(NodeEditorWindow):
                             subwnd.show()
                         else:
                             nodeeditor.close()
-        except Exception as e: dumpException(e)
+        except Exception as e:
+            dumpException(e)
 
 
     def about(self):
