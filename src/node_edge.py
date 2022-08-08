@@ -7,9 +7,8 @@ from node_graphics_edge import *
 from node_serializable import Serializable
 from utils import dumpException
 
-
-EDGE_TYPE_DIRECT = 1        #:
-EDGE_TYPE_BEZIER = 2        #:
+EDGE_TYPE_DIRECT = 1  #:
+EDGE_TYPE_BEZIER = 2  #:
 
 DEBUG = True
 
@@ -18,7 +17,9 @@ class Edge(Serializable):
     """
     Class for representing Edge in NodeEditor.
     """
-    def __init__(self, scene:'Scene', start_socket:'Socket'=None, end_socket:'Socket'=None, edge_type=EDGE_TYPE_DIRECT):
+
+    def __init__(self, scene: 'Scene', start_socket: 'Socket' = None, end_socket: 'Socket' = None,
+                 edge_type=EDGE_TYPE_DIRECT):
         """
 
         :param scene: Reference to the :py:class:`~nodeeditor.node_scene.Scene`
@@ -52,6 +53,7 @@ class Edge(Serializable):
             hex(id(self))[2:5], hex(id(self))[-3:],
             self.start_socket, self.end_socket
         )
+
     @property
     def start_socket(self):
         """
@@ -93,7 +95,7 @@ class Edge(Serializable):
             self._end_socket.removeEdge(self)
 
         # assign new end socket
-        self._end_socket= value
+        self._end_socket = value
         # addEdge to the Socket class
         if self.end_socket is not None:
             self.end_socket.addEdge(self)
@@ -124,7 +126,7 @@ class Edge(Serializable):
         if self.start_socket is not None:
             self.updatePositions()
 
-    def determineEdgeClass(self, edge_type:int):
+    def determineEdgeClass(self, edge_type: int):
         """
         Determine Graphics Edge Class from provided `edge_type`
         :param edge_type: ``int`` type of edge
@@ -136,7 +138,7 @@ class Edge(Serializable):
             edge_class = QDMGraphicsEdgeDirect
         return edge_class
 
-    def getOtherSocket(self, known_socket:'Socket'):
+    def getOtherSocket(self, known_socket: 'Socket'):
         """
         Returns the oposite socket on this ``Edge``
 
@@ -147,7 +149,7 @@ class Edge(Serializable):
         """
         return self.start_socket if known_socket == self.end_socket else self.end_socket
 
-    def doSelect(self, new_state:bool=True):
+    def doSelect(self, new_state: bool = True):
         """
         Provide the safe selecting/deselecting operation. In the background it takes care about the flags, norifications
         and storing history for undo/redo.
@@ -175,7 +177,6 @@ class Edge(Serializable):
             self.grEdge.setDestination(*source_pos)
         self.grEdge.update()
 
-
     def remove_from_sockets(self):
         """
         Helper function which sets start and end :class:`~nodeeditor.node_socket.Socket` to ``None``
@@ -183,8 +184,7 @@ class Edge(Serializable):
         self.end_socket = None
         self.start_socket = None
 
-
-    def remove(self, silent_for_socket:'Socket'=None, silent=False):
+    def remove(self, silent_for_socket: 'Socket' = None, silent=False):
         """
         Safely remove this Edge.
 
@@ -239,8 +239,8 @@ class Edge(Serializable):
                     socket.node.onEdgeConnectionChanged(self)
                     if socket.is_input: socket.node.onInputChanged(socket)
 
-        except Exception as e: dumpException(e)
-
+        except Exception as e:
+            dumpException(e)
 
     def serialize(self) -> OrderedDict:
         return OrderedDict([
@@ -250,7 +250,7 @@ class Edge(Serializable):
             ('end', self.end_socket.id if self.end_socket is not None else None),
         ])
 
-    def deserialize(self, data:dict, hashmap:dict={}, restore_id:bool=True) -> bool:
+    def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
         if restore_id: self.id = data['id']
         self.start_socket = hashmap[data['start']]
         self.end_socket = hashmap[data['end']]

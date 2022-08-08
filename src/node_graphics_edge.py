@@ -7,13 +7,13 @@ from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
-
-EDGE_CP_ROUNDNESS = 100     #: Bezier controll point distance on the line
+EDGE_CP_ROUNDNESS = 100  #: Bezier controll point distance on the line
 
 
 class QDMGraphicsEdge(QGraphicsPathItem):
     """Base class for Graphics Edge"""
-    def __init__(self, edge:'Edge', parent:QWidget=None):
+
+    def __init__(self, edge: 'Edge', parent: QWidget = None):
         """
         :param edge: reference to :class:`~nodeeditor.node_edge.Edge`
         :type edge: :class:`~nodeeditor.node_edge.Edge`
@@ -80,7 +80,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
         """Our event handling when the edge was selected"""
         self.edge.scene.grScene.itemSelected.emit()
 
-    def doSelect(self, new_state:bool=True):
+    def doSelect(self, new_state: bool = True):
         """Safe version of selecting the `Graphics Node`. Takes care about the selection state flag used internally
 
         :param new_state: ``True`` to select, ``False`` to deselect
@@ -108,7 +108,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
         self.hovered = False
         self.update()
 
-    def setSource(self, x:float, y:float):
+    def setSource(self, x: float, y: float):
         """ Set source point
 
         :param x: x position
@@ -118,7 +118,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
         """
         self.posSource = [x, y]
 
-    def setDestination(self, x:float, y:float):
+    def setDestination(self, x: float, y: float):
         """ Set destination point
 
         :param x: x position
@@ -157,7 +157,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
 
         painter.drawPath(self.path())
 
-    def intersectsWith(self, p1:QPointF, p2:QPointF) -> bool:
+    def intersectsWith(self, p1: QPointF, p2: QPointF) -> bool:
         """Does this Graphics Edge intersect with line between point A and point B ?
 
         :param p1: point A
@@ -183,6 +183,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
 
 class QDMGraphicsEdgeDirect(QDMGraphicsEdge):
     """Direct line connection Graphics Edge"""
+
     def calcPath(self) -> QPainterPath:
         """Calculate the Direct line connection
 
@@ -196,6 +197,7 @@ class QDMGraphicsEdgeDirect(QDMGraphicsEdge):
 
 class QDMGraphicsEdgeBezier(QDMGraphicsEdge):
     """Cubic line connection Graphics Edge"""
+
     def calcPath(self) -> QPainterPath:
         """Calculate the cubic Bezier line connection with 2 control points
 
@@ -220,18 +222,18 @@ class QDMGraphicsEdgeBezier(QDMGraphicsEdge):
                 cpx_s *= -1
 
                 cpy_d = (
-                    (s[1] - d[1]) / math.fabs(
-                        (s[1] - d[1]) if (s[1] - d[1]) != 0 else 0.00001
-                    )
-                ) * EDGE_CP_ROUNDNESS
+                                (s[1] - d[1]) / math.fabs(
+                            (s[1] - d[1]) if (s[1] - d[1]) != 0 else 0.00001
+                        )
+                        ) * EDGE_CP_ROUNDNESS
                 cpy_s = (
-                    (d[1] - s[1]) / math.fabs(
-                        (d[1] - s[1]) if (d[1] - s[1]) != 0 else 0.00001
-                    )
-                ) * EDGE_CP_ROUNDNESS
-
+                                (d[1] - s[1]) / math.fabs(
+                            (d[1] - s[1]) if (d[1] - s[1]) != 0 else 0.00001
+                        )
+                        ) * EDGE_CP_ROUNDNESS
 
         path = QPainterPath(QPointF(self.posSource[0], self.posSource[1]))
-        path.cubicTo( s[0] + cpx_s, s[1] + cpy_s, d[0] + cpx_d, d[1] + cpy_d, self.posDestination[0], self.posDestination[1])
+        path.cubicTo(s[0] + cpx_s, s[1] + cpy_s, d[0] + cpx_d, d[1] + cpy_d, self.posDestination[0],
+                     self.posDestination[1])
 
         return path

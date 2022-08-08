@@ -34,7 +34,6 @@ class CalculatorWindow(NodeEditorWindow):
             print("Registered nodes:")
             pp(CALC_NODES)
 
-
         self.mdiArea = QMdiArea()
         self.mdiArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
         self.mdiArea.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
@@ -71,18 +70,25 @@ class CalculatorWindow(NodeEditorWindow):
             import sys
             sys.exit(0)
 
-
     def createActions(self):
         super().createActions()
 
-        self.actOpenNodeEditWindow = QAction("Open Node Edit Window", self, statusTip="Open node edit window", triggered=self.onOpenNodeEditWindow)
+        self.actOpenNodeEditWindow = QAction("Open Node Edit Window", self, statusTip="Open node edit window",
+                                             triggered=self.onOpenNodeEditWindow)
 
-        self.actClose = QAction("Cl&ose", self, statusTip="Close the active window", triggered=self.mdiArea.closeActiveSubWindow)
-        self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)
+        self.actClose = QAction("Cl&ose", self, statusTip="Close the active window",
+                                triggered=self.mdiArea.closeActiveSubWindow)
+        self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows",
+                                   triggered=self.mdiArea.closeAllSubWindows)
         self.actTile = QAction("&Tile", self, statusTip="Tile the windows", triggered=self.mdiArea.tileSubWindows)
-        self.actCascade = QAction("&Cascade", self, statusTip="Cascade the windows", triggered=self.mdiArea.cascadeSubWindows)
-        self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.StandardKey.NextChild, statusTip="Move the focus to the next window", triggered=self.mdiArea.activateNextSubWindow)
-        self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.StandardKey.PreviousChild, statusTip="Move the focus to the previous window", triggered=self.mdiArea.activatePreviousSubWindow)
+        self.actCascade = QAction("&Cascade", self, statusTip="Cascade the windows",
+                                  triggered=self.mdiArea.cascadeSubWindows)
+        self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.StandardKey.NextChild,
+                               statusTip="Move the focus to the next window",
+                               triggered=self.mdiArea.activateNextSubWindow)
+        self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.StandardKey.PreviousChild,
+                                   statusTip="Move the focus to the previous window",
+                                   triggered=self.mdiArea.activatePreviousSubWindow)
 
         self.actSeparator = QAction(self)
         self.actSeparator.setSeparator(True)
@@ -101,11 +107,12 @@ class CalculatorWindow(NodeEditorWindow):
             subwnd = self.createMdiChild()
             subwnd.widget().fileNew()
             subwnd.show()
-        except Exception as e: dumpException(e)
-
+        except Exception as e:
+            dumpException(e)
 
     def onFileOpen(self):
-        fnames, filter = QFileDialog.getOpenFileNames(self, 'Open graph from file', self.getFileDialogDirectory(), self.getFileDialogFilter())
+        fnames, filter = QFileDialog.getOpenFileNames(self, 'Open graph from file', self.getFileDialogDirectory(),
+                                                      self.getFileDialogFilter())
 
         try:
             for fname in fnames:
@@ -129,12 +136,11 @@ class CalculatorWindow(NodeEditorWindow):
     def onOpenNodeEditWindow(self):
         print(123)
 
-
     def about(self):
         QMessageBox.about(self, "About Calculator NodeEditor Example",
-                "The <b>Calculator NodeEditor</b> example demonstrates how to write multiple "
-                "document interface applications using PyQt6 and NodeEditor. For more information visit: "
-                "<a href='https://www.blenderfreak.com/'>www.BlenderFreak.com</a>")
+                          "The <b>Calculator NodeEditor</b> example demonstrates how to write multiple "
+                          "document interface applications using PyQt6 and NodeEditor. For more information visit: "
+                          "<a href='https://www.blenderfreak.com/'>www.BlenderFreak.com</a>")
 
     def createMenus(self):
         super().createMenus()
@@ -181,9 +187,8 @@ class CalculatorWindow(NodeEditorWindow):
 
             self.actUndo.setEnabled(hasMdiChild and active.canUndo())
             self.actRedo.setEnabled(hasMdiChild and active.canRedo())
-        except Exception as e: dumpException(e)
-
-
+        except Exception as e:
+            dumpException(e)
 
     def updateWindowMenu(self):
         self.windowMenu.clear()
@@ -264,13 +269,11 @@ class CalculatorWindow(NodeEditorWindow):
         else:
             event.ignore()
 
-
     def findMdiChild(self, filename):
         for window in self.mdiArea.subWindowList():
             if window.widget().filename == filename:
                 return window
         return None
-
 
     def setActiveSubWindow(self, window):
         if window:

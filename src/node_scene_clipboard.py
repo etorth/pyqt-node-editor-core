@@ -6,7 +6,6 @@ from collections import OrderedDict
 from node_graphics_edge import QDMGraphicsEdge
 from node_edge import Edge
 
-
 DEBUG = True
 DEBUG_PASTING = False
 
@@ -15,7 +14,8 @@ class SceneClipboard():
     """
     Class contains all the code for serialization/deserialization from Clipboard
     """
-    def __init__(self, scene:'Scene'):
+
+    def __init__(self, scene: 'Scene'):
         """
         :param scene: Reference to the :class:`~nodeeditor.node_scene.Scene`
         :type scene: :class:`~nodeeditor.node_scene.Scene`
@@ -26,7 +26,7 @@ class SceneClipboard():
         """
         self.scene = scene
 
-    def serializeSelected(self, delete:bool=False) -> OrderedDict:
+    def serializeSelected(self, delete: bool = False) -> OrderedDict:
         """
         Serializes selected items in the Scene into ``OrderedDict``
 
@@ -47,13 +47,11 @@ class SceneClipboard():
             elif isinstance(item, QDMGraphicsEdge):
                 sel_edges.append(item.edge)
 
-
         # debug
         if DEBUG:
             print("  NODES\n      ", sel_nodes)
             print("  EDGES\n      ", sel_edges)
             print("  SOCKETS\n     ", sel_sockets)
-
 
         # remove all edges which are not connected to a nodeeditor in our list
         edges_to_remove = []
@@ -74,12 +72,10 @@ class SceneClipboard():
 
         if DEBUG: print("our final edge list:", edges_final)
 
-
         data = OrderedDict([
             ('nodes', sel_nodes),
             ('edges', edges_final),
         ])
-
 
         # if CUT (aka delete) remove selected items
         if delete:
@@ -89,7 +85,7 @@ class SceneClipboard():
 
         return data
 
-    def deserializeFromClipboard(self, data:dict):
+    def deserializeFromClipboard(self, data: dict):
         """
         Deserializes data from Clipboard.
 
@@ -104,7 +100,7 @@ class SceneClipboard():
         mouse_scene_pos = view.last_scene_mouse_position
 
         # calculate selected objects bbox and center
-        minx, maxx, miny, maxy = 10000000,-10000000, 10000000,-10000000
+        minx, maxx, miny, maxy = 10000000, -10000000, 10000000, -10000000
         for node_data in data['nodes']:
             x, y = node_data['pos_x'], node_data['pos_y']
             if x < minx: minx = x
@@ -120,7 +116,7 @@ class SceneClipboard():
         relbboxcentery = (miny + maxy) / 2 - miny
 
         if DEBUG_PASTING:
-            print (" *** PASTA:")
+            print(" *** PASTA:")
             print("Copied boudaries:\n\tX:", minx, maxx, "   Y:", miny, maxy)
             print("\tbbox_center:", relbboxcenterx, relbboxcentery)
 
@@ -160,7 +156,6 @@ class SceneClipboard():
             for edge_data in data['edges']:
                 new_edge = Edge(self.scene)
                 new_edge.deserialize(edge_data, hashmap, restore_id=False)
-
 
         self.scene.setSilentSelectionEvents(False)
 

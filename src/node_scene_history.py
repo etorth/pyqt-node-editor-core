@@ -11,7 +11,8 @@ DEBUG_SELECTION = False
 
 class SceneHistory():
     """Class contains all the code for undo/redo operations"""
-    def __init__(self, scene:'Scene'):
+
+    def __init__(self, scene: 'Scene'):
         """
         :param scene: Reference to the :class:`~nodeeditor.node_scene.Scene`
         :type scene: :class:`~nodeeditor.node_scene.Scene`
@@ -42,7 +43,7 @@ class SceneHistory():
         """Helper function usually used when new or open file requested"""
         self.storeHistory("Initial History Stamp")
 
-    def addHistoryModifiedListener(self, callback:'function'):
+    def addHistoryModifiedListener(self, callback: 'function'):
         """
         Register callback for `HistoryModified` event
 
@@ -50,7 +51,7 @@ class SceneHistory():
         """
         self._history_modified_listeners.append(callback)
 
-    def addHistoryStoredListener(self, callback:'function'):
+    def addHistoryStoredListener(self, callback: 'function'):
         """
         Register callback for `HistoryStored` event
 
@@ -58,7 +59,7 @@ class SceneHistory():
         """
         self._history_stored_listeners.append(callback)
 
-    def addHistoryRestoredListener(self, callback:'function'):
+    def addHistoryRestoredListener(self, callback: 'function'):
         """
         Register callback for `HistoryRestored` event
 
@@ -98,7 +99,6 @@ class SceneHistory():
             self.restoreHistory()
             self.scene.has_been_modified = True
 
-
     def restoreHistory(self):
         """
         Restore `History Stamp` from `History stack`.
@@ -115,8 +115,7 @@ class SceneHistory():
         for callback in self._history_modified_listeners: callback()
         for callback in self._history_restored_listeners: callback()
 
-
-    def storeHistory(self, desc:str, setModified:bool=False):
+    def storeHistory(self, desc: str, setModified: bool = False):
         """
         Store History Stamp into History Stack
 
@@ -138,11 +137,11 @@ class SceneHistory():
                         "(%d)" % len(self.history_stack))
 
         # if the pointer (history_current_step) is not at the end of history_stack
-        if self.history_current_step+1 < len(self.history_stack):
-            self.history_stack = self.history_stack[0:self.history_current_step+1]
+        if self.history_current_step + 1 < len(self.history_stack):
+            self.history_stack = self.history_stack[0:self.history_current_step + 1]
 
         # history is outside of the limits
-        if self.history_current_step+1 >= self.history_limit:
+        if self.history_current_step + 1 >= self.history_limit:
             self.history_stack = self.history_stack[1:]
             self.history_current_step -= 1
 
@@ -156,7 +155,6 @@ class SceneHistory():
         for callback in self._history_modified_listeners: callback()
         for callback in self._history_stored_listeners: callback()
 
-
     def captureCurrentSelection(self) -> dict:
         """
         Create dictionary with list of selected nodes and list of selected edges
@@ -168,11 +166,13 @@ class SceneHistory():
             'edges': [],
         }
         for item in self.scene.grScene.selectedItems():
-            if hasattr(item, 'node'): sel_obj['nodes'].append(item.node.id)
-            elif hasattr(item, 'edge'): sel_obj['edges'].append(item.edge.id)
+            if hasattr(item, 'node'):
+                sel_obj['nodes'].append(item.node.id)
+            elif hasattr(item, 'edge'):
+                sel_obj['edges'].append(item.edge.id)
         return sel_obj
 
-    def createHistoryStamp(self, desc:str) -> dict:
+    def createHistoryStamp(self, desc: str) -> dict:
         """
         Create History Stamp. Internally serialize whole scene and current selection
 
@@ -188,7 +188,7 @@ class SceneHistory():
 
         return history_stamp
 
-    def restoreHistoryStamp(self, history_stamp:dict):
+    def restoreHistoryStamp(self, history_stamp: dict):
         """
         Restore History Stamp to current `Scene` with selection of items included
 
@@ -228,8 +228,10 @@ class SceneHistory():
             if DEBUG_SELECTION: print("selected nodes after restore:", current_selection['nodes'])
 
             # if the selection of nodes differ before and after restoration, set flag
-            if current_selection['nodes'] != previous_selection['nodes'] or current_selection['edges'] != previous_selection['edges']:
+            if current_selection['nodes'] != previous_selection['nodes'] or current_selection['edges'] != \
+                    previous_selection['edges']:
                 if DEBUG_SELECTION: print("\nSCENE: Selection has changed")
                 self.undo_selection_has_changed = True
 
-        except Exception as e: dumpException(e)
+        except Exception as e:
+            dumpException(e)

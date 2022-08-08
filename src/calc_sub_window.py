@@ -4,7 +4,7 @@ from calc_conf import *
 from node_editor_widget import NodeEditorWidget
 from calc_node_base import *
 from node_edge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
-from node_graphics_view import MODE_EDGE_DRAG#, MODE_EDGES_REROUTING
+from node_graphics_view import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
 from utils import dumpException
 
 DEBUG = True
@@ -90,7 +90,8 @@ class CalculatorSubWindow(NodeEditorWidget):
             text = dataStream.readQString()
 
             mouse_position = event.position()
-            scene_position = self.scene.grScene.views()[0].mapToScene(round(mouse_position.x()), round(mouse_position.y()))
+            scene_position = self.scene.grScene.views()[0].mapToScene(round(mouse_position.x()),
+                                                                      round(mouse_position.y()))
 
             if DEBUG: print("GOT DROP: [%d] '%s'" % (op_code, text), "mouse:", mouse_position, "scene:", scene_position)
 
@@ -98,15 +99,14 @@ class CalculatorSubWindow(NodeEditorWidget):
                 node = get_class_from_opcode(op_code)(self.scene)
                 node.setPos(scene_position.x(), scene_position.y())
                 self.scene.history.storeHistory("Created node %s" % node.__class__.__name__)
-            except Exception as e: dumpException(e)
-
+            except Exception as e:
+                dumpException(e)
 
             event.setDropAction(Qt.DropAction.MoveAction)
             event.accept()
         else:
             # print(" ... drop ignored, not requested format '%s'" % LISTBOX_MIMETYPE)
             event.ignore()
-
 
     def contextMenuEvent(self, event):
         try:
@@ -120,12 +120,13 @@ class CalculatorSubWindow(NodeEditorWidget):
                 self.handleNodeContextMenu(event)
             elif hasattr(item, 'edge'):
                 self.handleEdgeContextMenu(event)
-            #elif item is None:
+            # elif item is None:
             else:
                 self.handleNewNodeContextMenu(event)
 
             return super().contextMenuEvent(event)
-        except Exception as e: dumpException(e)
+        except Exception as e:
+            dumpException(e)
 
     def handleNodeContextMenu(self, event):
         if DEBUG_CONTEXT: print("CONTEXT: NODE")
@@ -156,7 +157,6 @@ class CalculatorSubWindow(NodeEditorWidget):
             val = selected.eval()
             if DEBUG_CONTEXT: print("EVALUATED:", val)
 
-
     def handleEdgeContextMenu(self, event):
         if DEBUG_CONTEXT: print("CONTEXT: EDGE")
         context_menu = QMenu(self)
@@ -172,7 +172,6 @@ class CalculatorSubWindow(NodeEditorWidget):
         if selected and action == bezierAct: selected.edge_type = EDGE_TYPE_BEZIER
         if selected and action == directAct: selected.edge_type = EDGE_TYPE_DIRECT
 
-
     # helper functions
     def determine_target_socket_of_node(self, was_dragged_flag, new_calc_node):
         target_socket = None
@@ -186,7 +185,6 @@ class CalculatorSubWindow(NodeEditorWidget):
         self.scene.doDeselectItems()
         new_calc_node.grNode.doSelect(True)
         new_calc_node.grNode.onSelected()
-
 
     def handleNewNodeContextMenu(self, event):
 
@@ -202,7 +200,8 @@ class CalculatorSubWindow(NodeEditorWidget):
 
             if self.scene.getView().mode == MODE_EDGE_DRAG:
                 # if we were dragging an edge...
-                target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output, new_calc_node)
+                target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output,
+                                                                     new_calc_node)
                 if target_socket is not None:
                     self.scene.getView().edgeDragEnd(target_socket.grSocket)
                     self.finish_new_node_state(new_calc_node)

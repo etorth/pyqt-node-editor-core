@@ -17,7 +17,8 @@ class NodeEditorWidget(QWidget):
     Scene_class = Scene
 
     """The ``NodeEditorWidget`` class"""
-    def __init__(self, parent:QWidget=None):
+
+    def __init__(self, parent: QWidget = None):
         """
         :param parent: parent widget
         :type parent: ``QWidget``
@@ -32,7 +33,6 @@ class NodeEditorWidget(QWidget):
 
         self.initUI()
 
-
     def initUI(self):
         """Set up this ``NodeEditorWidget`` with its layout,  :class:`~nodeeditor.node_scene.Scene` and
         :class:`~nodeeditor.node_graphics_view.QDMGraphicsView`"""
@@ -46,7 +46,6 @@ class NodeEditorWidget(QWidget):
         # create graphics view
         self.view = QDMGraphicsView(self.scene.grScene, self)
         self.layout.addWidget(self.view)
-
 
     def isModified(self) -> bool:
         """Has the `Scene` been modified?
@@ -112,7 +111,7 @@ class NodeEditorWidget(QWidget):
         self.scene.history.clear()
         self.scene.history.storeInitialHistoryStamp()
 
-    def fileLoad(self, filename:str):
+    def fileLoad(self, filename: str):
         """Load serialized graph from JSON file
 
         :param filename: file to load
@@ -133,8 +132,7 @@ class NodeEditorWidget(QWidget):
         finally:
             QApplication.restoreOverrideCursor()
 
-
-    def fileSave(self, filename:str=None):
+    def fileSave(self, filename: str = None):
         """Save serialized graph to JSON file. When called with empty parameter, we won't store/remember the filename
 
         :param filename: file to store the graph
@@ -146,12 +144,11 @@ class NodeEditorWidget(QWidget):
         QApplication.restoreOverrideCursor()
         return True
 
-
     def addNodes(self):
         """Testing method to create 3 `Nodes` with 3 `Edges` connecting them"""
-        node1 = Node(self.scene, "My Awesome Node 1", inputs=[0,0,0], outputs=[1,5])
-        node2 = Node(self.scene, "My Awesome Node 2", inputs=[3,3,3], outputs=[1])
-        node3 = Node(self.scene, "My Awesome Node 3", inputs=[2,2,2], outputs=[1])
+        node1 = Node(self.scene, "My Awesome Node 1", inputs=[0, 0, 0], outputs=[1, 5])
+        node2 = Node(self.scene, "My Awesome Node 2", inputs=[3, 3, 3], outputs=[1])
+        node3 = Node(self.scene, "My Awesome Node 3", inputs=[2, 2, 2], outputs=[1])
         node1.setPos(-350, -250)
         node2.setPos(-75, 0)
         node3.setPos(200, -200)
@@ -195,20 +192,16 @@ class NodeEditorWidget(QWidget):
         text.setFlag(QGraphicsItem.ItemIsMovable)
         text.setDefaultTextColor(QColor.fromRgbF(1.0, 1.0, 1.0))
 
-
         widget1 = QPushButton("Hello World")
         proxy1 = self.grScene.addWidget(widget1)
         proxy1.setFlag(QGraphicsItem.ItemIsMovable)
         proxy1.setPos(0, 30)
-
 
         widget2 = QTextEdit()
         proxy2 = self.grScene.addWidget(widget2)
         proxy2.setFlag(QGraphicsItem.ItemIsSelectable)
         proxy2.setPos(0, 60)
 
-
         line = self.grScene.addLine(-200, -200, 400, -100, outlinePen)
         line.setFlag(QGraphicsItem.ItemIsMovable)
         line.setFlag(QGraphicsItem.ItemIsSelectable)
-

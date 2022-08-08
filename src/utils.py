@@ -22,7 +22,7 @@ def dumpException(e=None):
     traceback.print_exc()
 
 
-def loadStylesheet(filename:str):
+def loadStylesheet(filename: str):
     """
     Loads an qss stylesheet to current QApplication instance
 
@@ -35,6 +35,7 @@ def loadStylesheet(filename:str):
     file.open(QFile.ReadOnly | QFile.Text)
     stylesheet = file.readAll()
     QApplication.instance().setStyleSheet(str(stylesheet, encoding='utf-8'))
+
 
 def loadStylesheets(*args):
     """

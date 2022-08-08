@@ -19,7 +19,6 @@ class QDMDragListbox(QListWidget):
 
         self.addMyItems()
 
-
     def addMyItems(self):
         keys = list(CALC_NODES.keys())
         keys.sort()
@@ -27,9 +26,8 @@ class QDMDragListbox(QListWidget):
             node = get_class_from_opcode(key)
             self.addMyItem(node.op_title, node.icon, node.op_code)
 
-
     def addMyItem(self, name, icon=None, op_code=0):
-        item = QListWidgetItem(name, self) # can be (icon, text, parent, <int>type)
+        item = QListWidgetItem(name, self)  # can be (icon, text, parent, <int>type)
         pixmap = QPixmap(icon if icon is not None else ".")
         item.setIcon(QIcon(pixmap))
         item.setSizeHint(QSize(32, 32))
@@ -40,14 +38,12 @@ class QDMDragListbox(QListWidget):
         item.setData(Qt.ItemDataRole.UserRole, pixmap)
         item.setData(Qt.ItemDataRole.UserRole + 1, op_code)
 
-
     def startDrag(self, *args, **kwargs):
         try:
             item = self.currentItem()
             op_code = item.data(Qt.ItemDataRole.UserRole + 1)
 
             pixmap = QPixmap(item.data(Qt.ItemDataRole.UserRole))
-
 
             itemData = QByteArray()
             dataStream = QDataStream(itemData, QIODevice.OpenModeFlag.WriteOnly)
@@ -65,4 +61,5 @@ class QDMDragListbox(QListWidget):
 
             drag.exec(Qt.DropAction.MoveAction)
 
-        except Exception as e: dumpException(e)
+        except Exception as e:
+            dumpException(e)

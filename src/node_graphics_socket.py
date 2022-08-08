@@ -16,9 +16,11 @@ SOCKET_COLORS = [
     QColor("#FF888888"),
 ]
 
+
 class QDMGraphicsSocket(QGraphicsItem):
     """Class representing Graphic `Socket` in ``QGraphicsScene``"""
-    def __init__(self, socket:'Socket'):
+
+    def __init__(self, socket: 'Socket'):
         """
         :param socket: reference to :class:`~nodeeditor.node_socket.Socket`
         :type socket: :class:`~nodeeditor.node_socket.Socket`
@@ -39,8 +41,10 @@ class QDMGraphicsSocket(QGraphicsItem):
 
     def getSocketColor(self, key):
         """Returns the ``QColor`` for this ``key``"""
-        if type(key) == int: return SOCKET_COLORS[key]
-        elif type(key) == str: return QColor(key)
+        if type(key) == int:
+            return SOCKET_COLORS[key]
+        elif type(key) == str:
+            return QColor(key)
         return Qt.transparent
 
     def changeSocketType(self):

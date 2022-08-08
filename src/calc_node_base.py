@@ -52,14 +52,13 @@ class CalcNode(Node):
     GraphicsNode_class = CalcGraphicsNode
     NodeContent_class = CalcContent
 
-    def __init__(self, scene, inputs=[2,2], outputs=[1]):
+    def __init__(self, scene, inputs=[2, 2], outputs=[1]):
         super().__init__(scene, self.__class__.op_title, inputs, outputs)
 
         self.value = None
 
         # it's really important to mark all nodes Dirty by default
         self.markDirty()
-
 
     def initSettings(self):
         super().initSettings()
@@ -109,13 +108,10 @@ class CalcNode(Node):
             self.grNode.setToolTip(str(e))
             dumpException(e)
 
-
-
     def onInputChanged(self, socket=None):
         print("%s::__onInputChanged" % self.__class__.__name__)
         self.markDirty()
         self.eval()
-
 
     def serialize(self):
         res = super().serialize()
