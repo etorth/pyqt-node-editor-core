@@ -75,6 +75,8 @@ class CalculatorWindow(NodeEditorWindow):
     def createActions(self):
         super().createActions()
 
+        self.actOpenNodeEditWindow = QAction("Open Node Edit Window", self, statusTip="Open node edit window", triggered=self.onOpenNodeEditWindow)
+
         self.actClose = QAction("Cl&ose", self, statusTip="Close the active window", triggered=self.mdiArea.closeActiveSubWindow)
         self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)
         self.actTile = QAction("&Tile", self, statusTip="Tile the windows", triggered=self.mdiArea.tileSubWindows)
@@ -123,6 +125,9 @@ class CalculatorWindow(NodeEditorWindow):
                             nodeeditor.close()
         except Exception as e:
             dumpException(e)
+
+    def onOpenNodeEditWindow(self):
+        print(123)
 
 
     def about(self):
@@ -188,6 +193,9 @@ class CalculatorWindow(NodeEditorWindow):
         toolbar_nodes.triggered.connect(self.onWindowNodesToolbar)
         toolbar_nodes.setChecked(self.nodesDock.isVisible())
 
+        self.windowMenu.addSeparator()
+
+        self.windowMenu.addAction(self.actOpenNodeEditWindow)
         self.windowMenu.addSeparator()
 
         self.windowMenu.addAction(self.actClose)
