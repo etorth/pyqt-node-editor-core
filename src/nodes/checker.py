@@ -11,7 +11,7 @@ class CalcCheckerContent(QDMNodeContentWidget):
         self.choice = QComboBox(self)
         self.choice.addItems(["大于", "小于", "等于", "不等于", "不大于", "不小于"])
 
-        self.edit = QLineEdit("1", self)
+        self.edit = QLineEdit(self)
         self.edit.setValidator(QIntValidator())
         self.edit.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.edit.setObjectName(self.node.content_label_objname)
