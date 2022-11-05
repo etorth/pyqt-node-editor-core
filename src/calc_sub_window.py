@@ -95,7 +95,8 @@ class CalculatorSubWindow(NodeEditorWidget):
             scene_position = self.scene.gfxScene.views()[0].mapToScene(round(mouse_position.x()),
                                                                       round(mouse_position.y()))
 
-            if DEBUG: print("GOT DROP: [%d] '%s'" % (op_code, text), "mouse:", mouse_position, "scene:", scene_position)
+            if DEBUG:
+                print("GOT DROP: [%d] '%s'" % (op_code, text), "mouse:", mouse_position, "scene:", scene_position)
 
             try:
                 node = get_class_from_opcode(op_code)(self.scene)
