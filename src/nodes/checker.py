@@ -13,7 +13,7 @@ class CalcCheckerContent(QDMNodeContentWidget):
 
         self.edit = QLineEdit(self)
         self.edit.setValidator(QIntValidator())
-        self.edit.setAlignment(Qt.AlignmentFlag.AlignRight)
+        self.edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.edit.setObjectName(self.node.content_label_objname)
 
         self.hbox = QHBoxLayout(self)
