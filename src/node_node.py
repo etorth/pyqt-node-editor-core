@@ -430,7 +430,8 @@ class Node(Serializable):
         """
         try:
             input_socket = self.inputs[index]
-            if len(input_socket.edges) == 0: return None, None
+            if len(input_socket.edges) == 0:
+                return None, None
             connecting_edge = input_socket.edges[0]
             other_socket = connecting_edge.getOtherSocket(self.inputs[index])
             return other_socket.node, other_socket
