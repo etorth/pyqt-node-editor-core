@@ -18,7 +18,7 @@ class CalcCheckerContent(QDMNodeContentWidget):
 
         self.hbox = QHBoxLayout(self)
         self.hbox.setContentsMargins(10, 10, 10, 10)
-        self.hbox.setSpacing(10)
+        self.hbox.setSpacing(5)
 
         self.hbox.addWidget(self.label)
         self.hbox.addWidget(self.choice)
