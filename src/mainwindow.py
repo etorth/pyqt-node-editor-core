@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import *
 from utils import loadStylesheets
 from statenodewindow import StateNodeWindow
 from calc_sub_window import CalculatorSubWindow
-from calc_drag_listbox import QDMDragListbox
+from calc_drag_listbox import QDMDragListBox
 from utils import dumpException, pp
 from calc_conf import *
 
@@ -222,7 +222,7 @@ class MainWindow(StateNodeWindow):
         pass
 
     def createNodesDock(self):
-        self.nodesListWidget = QDMDragListbox()
+        self.nodesListWidget = QDMDragListBox()
 
         self.nodesDock = QDockWidget("Nodes")
         self.nodesDock.setWidget(self.nodesListWidget)

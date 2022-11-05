@@ -6,7 +6,7 @@ from calc_conf import *
 from utils import dumpException
 
 
-class QDMDragListbox(QListWidget):
+class QDMDragListBox(QListWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.initUI()
