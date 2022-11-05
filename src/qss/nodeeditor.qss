@@ -46,3 +46,9 @@ QDMNodeContentWidget QLineEdit#calc_node_input {
 QGraphicsView {
   selection-background-color: #fff;
 }
+
+QComboBox QAbstractItemView {
+    border: 1px solid darkgray;
+    background-color: lightgray;
+    selection-background-color: rgb(0, 28, 53);
+}

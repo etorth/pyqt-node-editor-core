@@ -6,9 +6,23 @@ from utils import dumpException
 
 class CalcCheckerContent(QDMNodeContentWidget):
     def initUI(self):
+        self.label = QLabel('等级')
+
+        self.choice = QComboBox(self)
+        self.choice.addItems(["大于", "小于", "等于", "不等于", "不大于", "不小于"])
+
         self.edit = QLineEdit("1", self)
+        self.edit.setValidator(QIntValidator())
         self.edit.setAlignment(Qt.AlignmentFlag.AlignRight)
         self.edit.setObjectName(self.node.content_label_objname)
+
+        self.hbox = QHBoxLayout(self)
+        self.hbox.setContentsMargins(10, 10, 10, 10)
+        self.hbox.setSpacing(10)
+
+        self.hbox.addWidget(self.label)
+        self.hbox.addWidget(self.choice)
+        self.hbox.addWidget(self.edit)
 
     def serialize(self):
         res = super().serialize()
