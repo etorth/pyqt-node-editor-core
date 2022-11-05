@@ -225,9 +225,7 @@ class Node(Serializable):
         :return: Position of described Socket on the `Node`
         :rtype: ``x, y``
         """
-        x = self.socket_offsets[position] if (position in (LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM)) else self.gfxNode.width + \
-                                                                                                     self.socket_offsets[
-                                                                                                         position]
+        x = self.socket_offsets[position] if (position in (LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM)) else self.gfxNode.width + self.socket_offsets[position]
 
         if position in (LEFT_BOTTOM, RIGHT_BOTTOM):
             # start from bottom
