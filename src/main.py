@@ -12,7 +12,7 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle('Fusion')
 
-    window = MainWindow()
-    window.show()
+    win = MainWindow()
+    win.show()
 
     sys.exit(app.exec())

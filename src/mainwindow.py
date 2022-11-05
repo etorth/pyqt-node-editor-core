@@ -89,9 +89,9 @@ class MainWindow(StateNodeWindow):
 
     def onFileNew(self):
         try:
-            subwnd = self.createMdiChild()
-            subwnd.widget().fileNew()
-            subwnd.show()
+            subwin = self.createMdiChild()
+            subwin.widget().fileNew()
+            subwin.show()
         except Exception as e:
             dumpException(e)
 
@@ -109,8 +109,8 @@ class MainWindow(StateNodeWindow):
                         if nodeeditor.fileLoad(fname):
                             self.statusBar().showMessage("File %s loaded" % fname, 5000)
                             nodeeditor.setTitle()
-                            subwnd = self.createMdiChild(nodeeditor)
-                            subwnd.show()
+                            subwin = self.createMdiChild(nodeeditor)
+                            subwin.show()
                         else:
                             nodeeditor.close()
         except Exception as e:
@@ -235,13 +235,13 @@ class MainWindow(StateNodeWindow):
 
     def createMdiChild(self, child_widget=None):
         nodeeditor = child_widget if child_widget is not None else CalculatorSubWindow()
-        subwnd = self.mdiArea.addSubWindow(nodeeditor)
-        subwnd.setWindowIcon(self.empty_icon)
+        subwin = self.mdiArea.addSubWindow(nodeeditor)
+        subwin.setWindowIcon(self.empty_icon)
         # nodeeditor.scene.addItemSelectedListener(self.updateEditMenu)
         # nodeeditor.scene.addItemsDeselectedListener(self.updateEditMenu)
         nodeeditor.scene.history.addHistoryModifiedListener(self.updateEditMenu)
         nodeeditor.addCloseEventListener(self.onSubWndClose)
-        return subwnd
+        return subwin
 
     def onSubWndClose(self, widget, event):
         existing = self.findMdiChild(widget.filename)
