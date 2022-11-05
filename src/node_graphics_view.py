@@ -28,16 +28,16 @@ class QDMGraphicsView(QGraphicsView):
     #: pyqtSignal emitted when cursor position on the `Scene` has changed
     scenePosChanged = pyqtSignal(int, int)
 
-    def __init__(self, grScene: 'QDMGraphicsScene', parent: 'QWidget' = None):
+    def __init__(self, gfxScene: 'QDMGraphicsScene', parent: 'QWidget' = None):
         """
-        :param grScene: reference to the :class:`~nodeeditor.node_graphics_scene.QDMGraphicsScene`
-        :type grScene: :class:`~nodeeditor.node_graphics_scene.QDMGraphicsScene`
+        :param gfxScene: reference to the :class:`~nodeeditor.node_graphics_scene.QDMGraphicsScene`
+        :type gfxScene: :class:`~nodeeditor.node_graphics_scene.QDMGraphicsScene`
         :param parent: parent widget
         :type parent: ``QWidget``
 
         :Instance Attributes:
 
-        - **grScene** - reference to the :class:`~nodeeditor.node_graphics_scene.QDMGraphicsScene`
+        - **gfxScene** - reference to the :class:`~nodeeditor.node_graphics_scene.QDMGraphicsScene`
         - **mode** - state of the `Graphics View`
         - **zoomInFactor**- ``float`` - zoom step scaling, default 1.25
         - **zoomClamp** - ``bool`` - do we clamp zooming or is it infinite?
@@ -47,11 +47,11 @@ class QDMGraphicsView(QGraphicsView):
 
         """
         super().__init__(parent)
-        self.grScene = grScene
+        self.gfxScene = gfxScene
 
         self.initUI()
 
-        self.setScene(self.grScene)
+        self.setScene(self.gfxScene)
 
         self.mode = MODE_NOOP
         self.editingFlag = False
@@ -66,7 +66,7 @@ class QDMGraphicsView(QGraphicsView):
 
         # cutline
         self.cutline = QDMCutLine()
-        self.grScene.addItem(self.cutline)
+        self.gfxScene.addItem(self.cutline)
 
         # listeners
         self._drag_enter_listeners = []
@@ -142,7 +142,7 @@ class QDMGraphicsView(QGraphicsView):
         # debug print out
         if DEBUG_MMB_SCENE_ITEMS:
             if isinstance(item, QDMGraphicsEdge):
-                print("MMB DEBUG:", item.edge, "\n\t", item.edge.grEdge if item.edge.grEdge is not None else None)
+                print("MMB DEBUG:", item.edge, "\n\t", item.edge.gfxEdge if item.edge.gfxEdge is not None else None)
 
             if isinstance(item, QDMGraphicsSocket):
                 print("MMB DEBUG:", item.socket, "socket_type:", item.socket.socket_type,
@@ -153,14 +153,14 @@ class QDMGraphicsView(QGraphicsView):
         if DEBUG_MMB_SCENE_ITEMS and (item is None):
             print("SCENE:")
             print("  Nodes:")
-            for node in self.grScene.scene.nodes: print("\t", node)
+            for node in self.gfxScene.scene.nodes: print("\t", node)
             print("  Edges:")
-            for edge in self.grScene.scene.edges: print("\t", edge, "\n\t\tgrEdge:",
-                                                        edge.grEdge if edge.grEdge is not None else None)
+            for edge in self.gfxScene.scene.edges: print("\t", edge, "\n\t\tgfxEdge:",
+                                                        edge.gfxEdge if edge.gfxEdge is not None else None)
 
             if event.modifiers() & Qt.CTRL:
                 print("  Graphic Items in GraphicScene:")
-                for item in self.grScene.items():
+                for item in self.gfxScene.items():
                     print('    ', item)
 
         # faking events for enable MMB dragging the scene
@@ -255,20 +255,20 @@ class QDMGraphicsView(QGraphicsView):
 
             if self.rubberBandDraggingRectangle:
                 self.rubberBandDraggingRectangle = False
-                current_selected_items = self.grScene.selectedItems()
+                current_selected_items = self.gfxScene.selectedItems()
 
-                if current_selected_items != self.grScene.scene._last_selected_items:
+                if current_selected_items != self.gfxScene.scene._last_selected_items:
                     if current_selected_items == []:
-                        self.grScene.itemsDeselected.emit()
+                        self.gfxScene.itemsDeselected.emit()
                     else:
-                        self.grScene.itemSelected.emit()
-                    self.grScene.scene._last_selected_items = current_selected_items
+                        self.gfxScene.itemSelected.emit()
+                    self.gfxScene.scene._last_selected_items = current_selected_items
 
                 return
 
             # otherwise deselect everything
             if item is None:
-                self.grScene.itemsDeselected.emit()
+                self.gfxScene.itemsDeselected.emit()
 
         except:
             dumpException()
@@ -295,12 +295,12 @@ class QDMGraphicsView(QGraphicsView):
         scenepos = self.mapToScene(event.pos())
 
         if self.mode == MODE_EDGE_DRAG:
-            # according to sentry: 'NoneType' object has no attribute 'grEdge'
-            if self.drag_edge is not None and self.drag_edge.grEdge is not None:
-                self.drag_edge.grEdge.setDestination(scenepos.x(), scenepos.y())
-                self.drag_edge.grEdge.update()
+            # according to sentry: 'NoneType' object has no attribute 'gfxEdge'
+            if self.drag_edge is not None and self.drag_edge.gfxEdge is not None:
+                self.drag_edge.gfxEdge.setDestination(scenepos.x(), scenepos.y())
+                self.drag_edge.gfxEdge.update()
             else:
-                print(">>> Want to update self.drag_edge grEdge, but it's None!!!")
+                print(">>> Want to update self.drag_edge gfxEdge, but it's None!!!")
 
         if self.mode == MODE_EDGE_CUT and self.cutline is not None:
             self.cutline.line_points.append(scenepos)
@@ -334,18 +334,18 @@ class QDMGraphicsView(QGraphicsView):
         #     else:
         #         super().keyPressEvent(event)
         # elif event.key() == Qt.Key_S and event.modifiers() & Qt.ControlModifier:
-        #     self.grScene.scene.saveToFile("graph.json")
+        #     self.gfxScene.scene.saveToFile("graph.json")
         # elif event.key() == Qt.Key_L and event.modifiers() & Qt.ControlModifier:
-        #     self.grScene.scene.loadFromFile("graph.json")
+        #     self.gfxScene.scene.loadFromFile("graph.json")
         # elif event.key() == Qt.Key_Z and event.modifiers() & Qt.ControlModifier and not event.modifiers() & Qt.ShiftModifier:
-        #     self.grScene.scene.history.undo()
+        #     self.gfxScene.scene.history.undo()
         # elif event.key() == Qt.Key_Z and event.modifiers() & Qt.ControlModifier and event.modifiers() & Qt.ShiftModifier:
-        #     self.grScene.scene.history.redo()
+        #     self.gfxScene.scene.history.redo()
         # elif event.key() == Qt.Key_H:
-        #     print("HISTORY:     len(%d)" % len(self.grScene.scene.history.history_stack),
-        #           " -- current_step", self.grScene.scene.history.history_current_step)
+        #     print("HISTORY:     len(%d)" % len(self.gfxScene.scene.history.history_stack),
+        #           " -- current_step", self.gfxScene.scene.history.history_current_step)
         #     ix = 0
-        #     for item in self.grScene.scene.history.history_stack:
+        #     for item in self.gfxScene.scene.history.history_stack:
         #         print("#", ix, "--", item['desc'])
         #         ix += 1
         # else:
@@ -360,19 +360,19 @@ class QDMGraphicsView(QGraphicsView):
             # @TODO: we could collect all touched nodes, and notify them once after all edges removed
             # we could cut 3 edges leading to a single nodeeditor this will notify it 3x
             # maybe we could use some Notifier class with methods collect() and dispatch()
-            for edge in self.grScene.scene.edges:
-                if edge.grEdge.intersectsWith(p1, p2):
+            for edge in self.gfxScene.scene.edges:
+                if edge.gfxEdge.intersectsWith(p1, p2):
                     edge.remove()
-        self.grScene.scene.history.storeHistory("Delete cutted edges", setModified=True)
+        self.gfxScene.scene.history.storeHistory("Delete cutted edges", setModified=True)
 
     def deleteSelected(self):
         """Shortcut for safe deleting every object selected in the `Scene`."""
-        for item in self.grScene.selectedItems():
+        for item in self.gfxScene.selectedItems():
             if isinstance(item, QDMGraphicsEdge):
                 item.edge.remove()
             elif hasattr(item, 'node'):
                 item.node.remove()
-        self.grScene.scene.history.storeHistory("Delete selected", setModified=True)
+        self.gfxScene.scene.history.storeHistory("Delete selected", setModified=True)
 
     def debug_modifiers(self, event):
         """Helper function get string if we hold Ctrl, Shift or Alt modifier keys"""
@@ -399,7 +399,7 @@ class QDMGraphicsView(QGraphicsView):
             if DEBUG: print('View::edgeDragStart ~ Start dragging edge')
             if DEBUG: print('View::edgeDragStart ~   assign Start Socket to:', item.socket)
             self.drag_start_socket = item.socket
-            self.drag_edge = Edge(self.grScene.scene, item.socket, None, EDGE_TYPE_BEZIER)
+            self.drag_edge = Edge(self.gfxScene.scene, item.socket, None, EDGE_TYPE_BEZIER)
             if DEBUG: print('View::edgeDragStart ~   dragEdge:', self.drag_edge)
         except Exception as e:
             dumpException(e)
@@ -432,7 +432,7 @@ class QDMGraphicsView(QGraphicsView):
                                 socket.removeAllEdges(silent=False)
 
                     ## Create new Edge
-                    new_edge = Edge(self.grScene.scene, self.drag_start_socket, item.socket, edge_type=EDGE_TYPE_BEZIER)
+                    new_edge = Edge(self.gfxScene.scene, self.drag_start_socket, item.socket, edge_type=EDGE_TYPE_BEZIER)
                     if DEBUG: print("View::edgeDragEnd ~  created new edge:", new_edge, "connecting",
                                     new_edge.start_socket, "<-->", new_edge.end_socket)
 
@@ -442,7 +442,7 @@ class QDMGraphicsView(QGraphicsView):
                         socket.node.onEdgeConnectionChanged(new_edge)
                         if socket.is_input: socket.node.onInputChanged(socket)
 
-                    self.grScene.scene.history.storeHistory("Created new edge by dragging", setModified=True)
+                    self.gfxScene.scene.history.storeHistory("Created new edge by dragging", setModified=True)
                     return True
         except Exception as e:
             dumpException(e)

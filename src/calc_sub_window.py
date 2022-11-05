@@ -92,7 +92,7 @@ class CalculatorSubWindow(NodeEditorWidget):
             text = dataStream.readQString()
 
             mouse_position = event.position()
-            scene_position = self.scene.grScene.views()[0].mapToScene(round(mouse_position.x()),
+            scene_position = self.scene.gfxScene.views()[0].mapToScene(round(mouse_position.x()),
                                                                       round(mouse_position.y()))
 
             if DEBUG: print("GOT DROP: [%d] '%s'" % (op_code, text), "mouse:", mouse_position, "scene:", scene_position)

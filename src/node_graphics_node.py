@@ -96,7 +96,7 @@ class QDMGraphicsNode(QGraphicsItem):
 
     def onSelected(self):
         """Our event handling when the node was selected"""
-        self.node.scene.grScene.itemSelected.emit()
+        self.node.scene.gfxScene.itemSelected.emit()
 
     def doSelect(self, new_state=True):
         """Safe version of selecting the `Graphics Node`. Takes care about the selection state flag used internally
@@ -170,15 +170,15 @@ class QDMGraphicsNode(QGraphicsItem):
         self.title_item.setTextWidth(self.width - 2 * self.title_horizontal_padding)
 
     def initContent(self):
-        """Set up the `grContent` - ``QGraphicsProxyWidget`` to have a container for `Graphics Content`"""
+        """Set up the `gfxContent` - ``QGraphicsProxyWidget`` to have a container for `Graphics Content`"""
         if self.content is not None:
             self.content.setGeometry(round(self.edge_padding), round(self.title_height + self.edge_padding),
                                      round(self.width - 2 * self.edge_padding),
                                      round(self.height - 2 * self.edge_padding - self.title_height))
 
-        # get the QGraphicsProxyWidget when inserted into the grScene
-        self.grContent = self.node.scene.grScene.addWidget(self.content)
-        self.grContent.setParentItem(self)
+        # get the QGraphicsProxyWidget when inserted into the gfxScene
+        self.gfxContent = self.node.scene.gfxScene.addWidget(self.content)
+        self.gfxContent.setParentItem(self)
 
     def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
         """Painting the rounded rectanglar `Node`"""

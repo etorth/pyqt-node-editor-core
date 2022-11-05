@@ -165,7 +165,7 @@ class SceneHistory():
             'nodes': [],
             'edges': [],
         }
-        for item in self.scene.grScene.selectedItems():
+        for item in self.scene.gfxScene.selectedItems():
             if hasattr(item, 'node'):
                 sel_obj['nodes'].append(item.node.id)
             elif hasattr(item, 'edge'):
@@ -207,12 +207,12 @@ class SceneHistory():
             # restore selection
 
             # first clear all selection on edges
-            for edge in self.scene.edges: edge.grEdge.setSelected(False)
+            for edge in self.scene.edges: edge.gfxEdge.setSelected(False)
             # now restore selected edges from history_stamp
             for edge_id in history_stamp['selection']['edges']:
                 for edge in self.scene.edges:
                     if edge.id == edge_id:
-                        edge.grEdge.setSelected(True)
+                        edge.gfxEdge.setSelected(True)
                         break
 
             # first clear all selection on nodes

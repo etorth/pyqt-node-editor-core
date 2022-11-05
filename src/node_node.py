@@ -50,7 +50,7 @@ class Node(Serializable):
         self.title = title
 
         self.scene.addNode(self)
-        self.scene.grScene.addItem(self.gfxNode)
+        self.scene.gfxScene.addItem(self.gfxNode)
 
         # create socket for inputs and outputs
         self.inputs = []
@@ -146,7 +146,7 @@ class Node(Serializable):
             if hasattr(self, 'inputs') and hasattr(self, 'outputs'):
                 # remove gfxSockets from scene
                 for socket in (self.inputs + self.outputs):
-                    self.scene.grScene.removeItem(socket.gfxSocket)
+                    self.scene.gfxScene.removeItem(socket.gfxSocket)
                 self.inputs = []
                 self.outputs = []
 
@@ -283,7 +283,7 @@ class Node(Serializable):
                 if DEBUG: print("    - removing from socket:", socket, "edge:", edge)
                 edge.remove()
         if DEBUG: print(" - remove gfxNode")
-        self.scene.grScene.removeItem(self.gfxNode)
+        self.scene.gfxScene.removeItem(self.gfxNode)
         self.gfxNode = None
         if DEBUG: print(" - remove node from the scene")
         self.scene.removeNode(self)

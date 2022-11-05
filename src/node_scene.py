@@ -59,8 +59,8 @@ class Scene(Serializable):
         self.history = SceneHistory(self)
         self.clipboard = SceneClipboard(self)
 
-        self.grScene.itemSelected.connect(self.onItemSelected)
-        self.grScene.itemsDeselected.connect(self.onItemsDeselected)
+        self.gfxScene.itemSelected.connect(self.onItemSelected)
+        self.gfxScene.itemsDeselected.connect(self.onItemsDeselected)
 
     @property
     def has_been_modified(self):
@@ -86,8 +86,8 @@ class Scene(Serializable):
 
     def initUI(self):
         """Set up Graphics Scene Instance"""
-        self.grScene = QDMGraphicsScene(self)
-        self.grScene.setGrScene(self.scene_width, self.scene_height)
+        self.gfxScene = QDMGraphicsScene(self)
+        self.gfxScene.setGrScene(self.scene_width, self.scene_height)
 
     def setSilentSelectionEvents(self, value: bool = True):
         """Calling this can suppress onItemSelected events to be triggered. This is usefull when working with clipboard"""
@@ -141,7 +141,7 @@ class Scene(Serializable):
         :return: list of ``QGraphicsItems``
         :rtype: list[QGraphicsItem]
         """
-        return self.grScene.selectedItems()
+        return self.gfxScene.selectedItems()
 
     def doDeselectItems(self, silent: bool = False) -> None:
         """
@@ -202,7 +202,7 @@ class Scene(Serializable):
         for node in self.nodes:
             node.gfxNode._last_selected_state = False
         for edge in self.edges:
-            edge.grEdge._last_selected_state = False
+            edge.gfxEdge._last_selected_state = False
 
     def getView(self) -> 'QGraphicsView':
         """Shortcut for returning `Scene` ``QGraphicsView``
@@ -210,7 +210,7 @@ class Scene(Serializable):
         :return: ``QGraphicsView`` attached to the `Scene`
         :rtype: ``QGraphicsView``
         """
-        return self.grScene.views()[0]
+        return self.gfxScene.views()[0]
 
     def getItemAt(self, pos: 'QPointF'):
         """Shortcut for retrieving item at provided `Scene` position

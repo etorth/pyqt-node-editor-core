@@ -14,12 +14,10 @@ DEBUG = True
 
 
 class Edge(Serializable):
-    """
-    Class for representing Edge in NodeEditor.
+    """Class for representing Edge in NodeEditor.
     """
 
-    def __init__(self, scene: 'Scene', start_socket: 'Socket' = None, end_socket: 'Socket' = None,
-                 edge_type=EDGE_TYPE_DIRECT):
+    def __init__(self, scene: 'Scene', start_socket: 'Socket' = None, end_socket: 'Socket' = None, edge_type=EDGE_TYPE_DIRECT):
         """
 
         :param scene: Reference to the :py:class:`~nodeeditor.node_scene.Scene`
@@ -33,7 +31,7 @@ class Edge(Serializable):
         :Instance Attributes:
 
             - **scene** - reference to the :class:`~nodeeditor.node_scene.Scene`
-            - **grEdge** - Instance of :class:`~nodeeditor.node_graphics_edge.QDMGraphicsEdge` subclass handling graphical representation in the ``QGraphicsScene``.
+            - **gfxEdge** - Instance of :class:`~nodeeditor.node_graphics_edge.QDMGraphicsEdge` subclass handling graphical representation in the ``QGraphicsScene``.
         """
         super().__init__()
         self.scene = scene
@@ -114,14 +112,14 @@ class Edge(Serializable):
 
     @edge_type.setter
     def edge_type(self, value):
-        if hasattr(self, 'grEdge') and self.grEdge is not None:
-            self.scene.grScene.removeItem(self.grEdge)
+        if hasattr(self, 'gfxEdge') and self.gfxEdge is not None:
+            self.scene.gfxScene.removeItem(self.gfxEdge)
 
         self._edge_type = value
         edgeClass = self.determineEdgeClass(self.edge_type)
-        self.grEdge = edgeClass(self)
+        self.gfxEdge = edgeClass(self)
 
-        self.scene.grScene.addItem(self.grEdge)
+        self.scene.gfxScene.addItem(self.gfxEdge)
 
         if self.start_socket is not None:
             self.updatePositions()
@@ -130,8 +128,8 @@ class Edge(Serializable):
         """
         Determine Graphics Edge Class from provided `edge_type`
         :param edge_type: ``int`` type of edge
-        :return: grEdge class
-        :rtype: class of `grEdge`
+        :return: gfxEdge class
+        :rtype: class of `gfxEdge`
         """
         edge_class = QDMGraphicsEdgeBezier
         if edge_type == EDGE_TYPE_DIRECT:
@@ -157,7 +155,7 @@ class Edge(Serializable):
         :param new_state: ``True`` if you want to select the ``Edge``, ``False`` if you want to deselect the ``Edge``
         :type new_state: ``bool``
         """
-        self.grEdge.doSelect(new_state)
+        self.gfxEdge.doSelect(new_state)
 
     def updatePositions(self):
         """
@@ -167,15 +165,15 @@ class Edge(Serializable):
         source_pos = self.start_socket.getSocketPosition()
         source_pos[0] += self.start_socket.node.gfxNode.pos().x()
         source_pos[1] += self.start_socket.node.gfxNode.pos().y()
-        self.grEdge.setSource(*source_pos)
+        self.gfxEdge.setSource(*source_pos)
         if self.end_socket is not None:
             end_pos = self.end_socket.getSocketPosition()
             end_pos[0] += self.end_socket.node.gfxNode.pos().x()
             end_pos[1] += self.end_socket.node.gfxNode.pos().y()
-            self.grEdge.setDestination(*end_pos)
+            self.gfxEdge.setDestination(*end_pos)
         else:
-            self.grEdge.setDestination(*source_pos)
-        self.grEdge.update()
+            self.gfxEdge.setDestination(*source_pos)
+        self.gfxEdge.update()
 
     def remove_from_sockets(self):
         """
@@ -204,16 +202,16 @@ class Edge(Serializable):
         """
         old_sockets = [self.start_socket, self.end_socket]
 
-        # ugly hack, since I noticed that even when you remove grEdge from scene,
+        # ugly hack, since I noticed that even when you remove gfxEdge from scene,
         # sometimes it stays there! How dare you Qt!
-        if DEBUG: print(" - hide grEdge")
-        self.grEdge.hide()
+        if DEBUG: print(" - hide gfxEdge")
+        self.gfxEdge.hide()
 
-        if DEBUG: print(" - remove grEdge", self.grEdge)
-        self.scene.grScene.removeItem(self.grEdge)
-        if DEBUG: print("   grEdge:", self.grEdge)
+        if DEBUG: print(" - remove gfxEdge", self.gfxEdge)
+        self.scene.gfxScene.removeItem(self.gfxEdge)
+        if DEBUG: print("   gfxEdge:", self.gfxEdge)
 
-        self.scene.grScene.update()
+        self.scene.gfxScene.update()
 
         if DEBUG: print("# Removing Edge", self)
         if DEBUG: print(" - remove edge from all sockets")
