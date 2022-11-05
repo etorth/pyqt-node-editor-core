@@ -16,7 +16,7 @@ import qss.nodeeditor_dark_resources
 DEBUG = True
 
 
-class CalculatorWindow(NodeEditorWindow):
+class MainWindow(NodeEditorWindow):
 
     def initUI(self):
         self.name_company = 'Blenderfreak'
