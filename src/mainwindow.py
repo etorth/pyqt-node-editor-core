@@ -1,7 +1,7 @@
 import os
 from PyQt6.QtGui import *
-from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
 
 from utils import loadStylesheets
 from node_editor_window import NodeEditorWindow
@@ -15,7 +15,6 @@ import qss.nodeeditor_dark_resources
 
 DEBUG = True
 
-
 class MainWindow(NodeEditorWindow):
 
     def initUI(self):
@@ -23,10 +22,7 @@ class MainWindow(NodeEditorWindow):
         self.name_product = 'Calculator NodeEditor'
 
         self.stylesheet_filename = os.path.join(os.path.dirname(__file__), "qss/nodeeditor.qss")
-        loadStylesheets(
-            os.path.join(os.path.dirname(__file__), "qss/nodeeditor-dark.qss"),
-            self.stylesheet_filename
-        )
+        loadStylesheets(os.path.join(os.path.dirname(__file__), "qss/nodeeditor-dark.qss"), self.stylesheet_filename)
 
         self.empty_icon = QIcon(".")
 
