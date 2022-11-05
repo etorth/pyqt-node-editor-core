@@ -39,7 +39,7 @@ class CalcNode_Checker(CalcNode):
 
     def initInnerClasses(self):
         self.content = CalcCheckerContent(self)
-        self.grNode = CalcGraphicsNode(self)
+        self.gfxNode = CalcGraphicsNode(self)
         self.content.edit.textChanged.connect(self.onInputChanged)
 
     def evalImplementation(self):
@@ -52,7 +52,7 @@ class CalcNode_Checker(CalcNode):
         self.markDescendantsInvalid(False)
         self.markDescendantsDirty()
 
-        self.grNode.setToolTip("")
+        self.gfxNode.setToolTip("")
 
         self.evalChildren()
 

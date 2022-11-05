@@ -200,7 +200,7 @@ class Scene(Serializable):
     def resetLastSelectedStates(self):
         """Resets internal `selected flags` in all `Nodes` and `Edges` in the `Scene`"""
         for node in self.nodes:
-            node.grNode._last_selected_state = False
+            node.gfxNode._last_selected_state = False
         for edge in self.edges:
             edge.grEdge._last_selected_state = False
 

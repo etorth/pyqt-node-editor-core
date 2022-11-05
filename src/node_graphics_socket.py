@@ -25,7 +25,7 @@ class QDMGraphicsSocket(QGraphicsItem):
         :param socket: reference to :class:`~nodeeditor.node_socket.Socket`
         :type socket: :class:`~nodeeditor.node_socket.Socket`
         """
-        super().__init__(socket.node.grNode)
+        super().__init__(socket.node.gfxNode)
 
         self.socket = socket
 

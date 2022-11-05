@@ -216,12 +216,12 @@ class SceneHistory():
                         break
 
             # first clear all selection on nodes
-            for node in self.scene.nodes: node.grNode.setSelected(False)
+            for node in self.scene.nodes: node.gfxNode.setSelected(False)
             # now restore selected nodes from history_stamp
             for node_id in history_stamp['selection']['nodes']:
                 for node in self.scene.nodes:
                     if node.id == node_id:
-                        node.grNode.setSelected(True)
+                        node.gfxNode.setSelected(True)
                         break
 
             current_selection = self.captureCurrentSelection()
