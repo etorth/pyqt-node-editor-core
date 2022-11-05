@@ -18,9 +18,6 @@ DEBUG = True
 class MainWindow(NodeEditorWindow):
 
     def initUI(self):
-        self.name_company = 'Blenderfreak'
-        self.name_product = 'Calculator NodeEditor'
-
         self.stylesheet_filename = os.path.join(os.path.dirname(__file__), "qss/nodeeditor.qss")
         loadStylesheets(os.path.join(os.path.dirname(__file__), "qss/nodeeditor-dark.qss"), self.stylesheet_filename)
 

@@ -16,17 +16,9 @@ class NodeEditorWindow(QMainWindow):
     """Class representing NodeEditor's Main Window"""
 
     def __init__(self):
-        """
-        :Instance Attributes:
-
-        - **name_company** - name of the company, used for permanent profile settings
-        - **name_product** - name of this App, used for permanent profile settings
+        """:Instance Attributes:
         """
         super().__init__()
-
-        self.name_company = 'Blenderfreak'
-        self.name_product = 'NodeEditor'
-
         self.initUI()
 
     def initUI(self):
@@ -267,7 +259,7 @@ class NodeEditorWindow(QMainWindow):
 
     def readSettings(self):
         """Read the permanent profile settings for this app"""
-        settings = QSettings(self.name_company, self.name_product)
+        settings = QSettings()
         pos = settings.value('pos', QPoint(200, 200))
         size = settings.value('size', QSize(400, 400))
         self.move(pos)
@@ -275,6 +267,6 @@ class NodeEditorWindow(QMainWindow):
 
     def writeSettings(self):
         """Write the permanent profile settings for this app"""
-        settings = QSettings(self.name_company, self.name_product)
+        settings = QSettings()
         settings.setValue('pos', self.pos())
         settings.setValue('size', self.size())
