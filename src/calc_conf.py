@@ -35,7 +35,8 @@ def register_node(op_code):
 
 
 def get_class_from_opcode(op_code):
-    if op_code not in CALC_NODES: raise OpCodeNotRegistered("OpCode '%d' is not registered" % op_code)
+    if op_code not in CALC_NODES:
+        raise OpCodeNotRegistered("OpCode '%d' is not registered" % op_code)
     return CALC_NODES[op_code]
 
 

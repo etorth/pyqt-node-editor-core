@@ -20,7 +20,6 @@ class Node(Serializable):
 
     def __init__(self, scene: 'Scene', title: str = "Undefined Node", inputs: list = [], outputs: list = []):
         """
-
         :param scene: reference to the :class:`~nodeeditor.node_scene.Scene`
         :type scene: :class:`~nodeeditor.node_scene.Scene`
         :param title: Node Title shown in Scene
