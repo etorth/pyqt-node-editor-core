@@ -26,6 +26,9 @@ class QDMDragListbox(QListWidget):
             node = get_class_from_opcode(key)
             self.addMyItem(node.op_title, node.icon, node.op_code)
 
+        self.itemClicked.connect(self.onItemClicked)
+        self.itemDoubleClicked.connect(self.onItemDoubleClicked)
+
     def addMyItem(self, name, icon=None, op_code=0):
         item = QListWidgetItem(name, self)  # can be (icon, text, parent, <int>type)
         pixmap = QPixmap(icon if icon is not None else ".")
@@ -63,3 +66,11 @@ class QDMDragListbox(QListWidget):
 
         except Exception as e:
             dumpException(e)
+
+
+    def onItemClicked(self, item):
+        print("Clicked: ", item.text())
+
+
+    def onItemDoubleClicked(self, item):
+        print("Double clicked: ", item.text())
