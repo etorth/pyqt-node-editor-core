@@ -5,7 +5,6 @@ from calc_window import CalculatorWindow
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-
     app.setStyle('Fusion')
 
     wnd = CalculatorWindow()
