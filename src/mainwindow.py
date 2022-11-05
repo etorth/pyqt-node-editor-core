@@ -66,22 +66,14 @@ class MainWindow(NodeEditorWindow):
     def createActions(self):
         super().createActions()
 
-        self.actOpenNodeEditWindow = QAction("Open Node Edit Window", self, statusTip="Open node edit window",
-                                             triggered=self.onOpenNodeEditWindow)
+        self.actOpenNodeEditWindow = QAction("Open Node Edit Window", self, statusTip="Open node edit window", triggered=self.onOpenNodeEditWindow)
 
-        self.actClose = QAction("Cl&ose", self, statusTip="Close the active window",
-                                triggered=self.mdiArea.closeActiveSubWindow)
-        self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows",
-                                   triggered=self.mdiArea.closeAllSubWindows)
+        self.actClose = QAction("Cl&ose", self, statusTip="Close the active window", triggered=self.mdiArea.closeActiveSubWindow)
+        self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)
         self.actTile = QAction("&Tile", self, statusTip="Tile the windows", triggered=self.mdiArea.tileSubWindows)
-        self.actCascade = QAction("&Cascade", self, statusTip="Cascade the windows",
-                                  triggered=self.mdiArea.cascadeSubWindows)
-        self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.StandardKey.NextChild,
-                               statusTip="Move the focus to the next window",
-                               triggered=self.mdiArea.activateNextSubWindow)
-        self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.StandardKey.PreviousChild,
-                                   statusTip="Move the focus to the previous window",
-                                   triggered=self.mdiArea.activatePreviousSubWindow)
+        self.actCascade = QAction("&Cascade", self, statusTip="Cascade the windows", triggered=self.mdiArea.cascadeSubWindows)
+        self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.StandardKey.NextChild, statusTip="Move the focus to the next window", triggered=self.mdiArea.activateNextSubWindow)
+        self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.StandardKey.PreviousChild, statusTip="Move the focus to the previous window", triggered=self.mdiArea.activatePreviousSubWindow)
 
         self.actSeparator = QAction(self)
         self.actSeparator.setSeparator(True)
