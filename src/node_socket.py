@@ -17,7 +17,7 @@ DEBUG_REMOVE_WARNINGS = False
 
 
 class Socket(Serializable):
-    Socket_Gfx_Class = QDMGraphicsSocket
+    Socket_Gfx_class = QDMGraphicsSocket
 
     """Class representing Socket."""
 
@@ -64,7 +64,7 @@ class Socket(Serializable):
         if DEBUG:
             print("Socket -- creating with", self.index, self.position, "for nodeeditor", self.node)
 
-        self.gfxSocket = self.__class__.Socket_Gfx_Class(self)
+        self.gfxSocket = self.__class__.Socket_Gfx_class(self)
         self.setSocketPosition()
         self.edges = []
 
