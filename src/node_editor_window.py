@@ -13,7 +13,8 @@ from node_editor_widget import NodeEditorWidget
 class NodeEditorWindow(QMainWindow):
     NodeEditorWidget_class = NodeEditorWidget
 
-    """Class representing NodeEditor's Main Window"""
+    """Class representing NodeEditor's Main Window
+    """
 
     def __init__(self):
         """:Instance Attributes:
@@ -22,7 +23,8 @@ class NodeEditorWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        """Set up this ``QMainWindow``. Create :class:`~nodeeditor.node_editor_widget.NodeEditorWidget`, Actions and Menus"""
+        """Set up this ``QMainWindow``. Create :class:`~nodeeditor.node_editor_widget.NodeEditorWidget`, Actions and Menus
+        """
         self.createActions()
         self.createMenus()
 
@@ -64,7 +66,8 @@ class NodeEditorWindow(QMainWindow):
         self.actDelete = QAction('&Delete', self, shortcut='Del', statusTip="Delete selected items", triggered=self.onEditDelete)
 
     def createMenus(self):
-        """Create Menus for `File` and `Edit`"""
+        """Create Menus for `File` and `Edit`
+        """
         self.createFileMenu()
         self.createEditMenu()
 
@@ -92,11 +95,9 @@ class NodeEditorWindow(QMainWindow):
         self.editMenu.addAction(self.actDelete)
 
     def setTitle(self):
-        """Function responsible for setting window title"""
-        title = "Node Editor - "
-        title += self.getCurrentNodeEditorWidget().getUserFriendlyFilename()
-
-        self.setWindowTitle(title)
+        """Function responsible for setting window title
+        """
+        self.setWindowTitle("Node Editor - " + self.getCurrentNodeEditorWidget().getUserFriendlyFilename())
 
     def closeEvent(self, event):
         """Handle close event. Ask before we loose work"""
@@ -131,10 +132,7 @@ class NodeEditorWindow(QMainWindow):
         if not self.isModified():
             return True
 
-        res = QMessageBox.warning(self, "About to loose your work?",
-                                  "The document has been modified.\n Do you want to save your changes?",
-                                  QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel
-                                  )
+        res = QMessageBox.warning(self, "About to loose your work?", "The document has been modified.\n Do you want to save your changes?", QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel)
 
         if res == QMessageBox.StandardButton.Save:
             return self.onFileSave()
@@ -170,8 +168,7 @@ class NodeEditorWindow(QMainWindow):
     def onFileOpen(self):
         """Handle File Open operation"""
         if self.maybeSave():
-            fname, filter = QFileDialog.getOpenFileName(self, 'Open graph from file', self.getFileDialogDirectory(),
-                                                        self.getFileDialogFilter())
+            fname, filter = QFileDialog.getOpenFileName(self, 'Open graph from file', self.getFileDialogDirectory(), self.getFileDialogFilter())
             if fname != '' and os.path.isfile(fname):
                 self.getCurrentNodeEditorWidget().fileLoad(fname)
                 self.setTitle()
@@ -196,9 +193,9 @@ class NodeEditorWindow(QMainWindow):
         """Handle File Save As operation"""
         current_nodeeditor = self.getCurrentNodeEditorWidget()
         if current_nodeeditor is not None:
-            fname, filter = QFileDialog.getSaveFileName(self, 'Save graph to file', self.getFileDialogDirectory(),
-                                                        self.getFileDialogFilter())
-            if fname == '': return False
+            fname, filter = QFileDialog.getSaveFileName(self, 'Save graph to file', self.getFileDialogDirectory(), self.getFileDialogFilter())
+            if fname == '':
+                return False
 
             current_nodeeditor.fileSave(fname)
             self.statusBar().showMessage("Successfully saved as %s" % current_nodeeditor.filename, 5000)

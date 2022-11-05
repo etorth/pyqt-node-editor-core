@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-A module containing NodeEditor's class for representing Socket and Socket Position Constants.
+"""A module containing NodeEditor's class for representing Socket and Socket Position Constants.
 """
 from collections import OrderedDict
 from node_serializable import Serializable
