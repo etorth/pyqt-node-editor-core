@@ -23,31 +23,25 @@ def dumpException(e=None):
 
 
 def loadStylesheet(filename: str):
-    """
-    Loads an qss stylesheet to current QApplication instance
+    """Loads an qss stylesheet to current QApplication instance
 
     :param filename: Filename of qss stylesheet
     :type filename: str
     """
-    print('STYLE loading:', filename)
     file = QFile(filename)
     file.open(QFile.OpenModeFlag.ReadOnly | QFile.OpenModeFlag.Text)
-    stylesheet = file.readAll()
-    QApplication.instance().setStyleSheet(str(stylesheet, encoding='utf-8'))
+    QApplication.instance().setStyleSheet(str(file.readAll(), encoding='utf-8'))
 
 
 def loadStylesheets(*args):
-    """
-    Loads multiple qss stylesheets. Concats them together and applies the final stylesheet to current QApplication instance
+    """Loads multiple qss stylesheets. Concats them together and applies the final stylesheet to current QApplication instance
 
     :param args: variable number of filenames of qss stylesheets
     :type args: str, str,...
     """
-    res = ''
+    sheets = []
     for arg in args:
         file = QFile(arg)
-        # file.open(QFile.ReadOnly | QFile.Text)
         file.open(QFile.OpenModeFlag.ReadOnly | QFile.OpenModeFlag.Text)
-        stylesheet = file.readAll()
-        res += "\n" + str(stylesheet, encoding='utf-8')
-    QApplication.instance().setStyleSheet(res)
+        sheets.append(str(file.readAll(), encoding='utf-8'))
+    QApplication.instance().setStyleSheet('\n'.join(sheets))
