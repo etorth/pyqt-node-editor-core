@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""A module containing ``NodeEditorWidget`` class
+"""A module containing ``StateNodeWidget`` class
 """
 
 import os
@@ -14,10 +14,10 @@ from node_edge import Edge, EDGE_TYPE_BEZIER
 from node_graphics_view import QDMGraphicsView
 
 
-class NodeEditorWidget(QWidget):
+class StateNodeWidget(QWidget):
     Scene_class = Scene
 
-    """The ``NodeEditorWidget`` class
+    """The ``StateNodeWidget`` class
     """
 
     def __init__(self, parent: QWidget = None):
@@ -36,7 +36,7 @@ class NodeEditorWidget(QWidget):
         self.initUI()
 
     def initUI(self):
-        """Set up this ``NodeEditorWidget`` with its layout,  :class:`~nodeeditor.node_scene.Scene` and
+        """Set up this ``StateNodeWidget`` with its layout,  :class:`~nodeeditor.node_scene.Scene` and
         :class:`~nodeeditor.node_graphics_view.QDMGraphicsView`"""
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)

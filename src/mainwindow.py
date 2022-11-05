@@ -80,8 +80,8 @@ class MainWindow(NodeEditorWindow):
 
         self.actAbout = QAction("&About", self, statusTip="Show the application's About box", triggered=self.about)
 
-    def getCurrentNodeEditorWidget(self):
-        """ we're returning NodeEditorWidget here... """
+    def getCurrentStateNodeWidget(self):
+        """ we're returning StateNodeWidget here... """
         activeSubWindow = self.mdiArea.activeSubWindow()
         if activeSubWindow:
             return activeSubWindow.widget()
@@ -141,7 +141,7 @@ class MainWindow(NodeEditorWindow):
 
     def updateMenus(self):
         # print("update Menus")
-        active = self.getCurrentNodeEditorWidget()
+        active = self.getCurrentStateNodeWidget()
         hasMdiChild = (active is not None)
 
         self.actSave.setEnabled(hasMdiChild)
@@ -159,7 +159,7 @@ class MainWindow(NodeEditorWindow):
     def updateEditMenu(self):
         try:
             # print("update Edit Menu")
-            active = self.getCurrentNodeEditorWidget()
+            active = self.getCurrentStateNodeWidget()
             hasMdiChild = (active is not None)
 
             self.actPaste.setEnabled(hasMdiChild)
@@ -208,7 +208,7 @@ class MainWindow(NodeEditorWindow):
 
             action = self.windowMenu.addAction(text)
             action.setCheckable(True)
-            action.setChecked(child is self.getCurrentNodeEditorWidget())
+            action.setChecked(child is self.getCurrentStateNodeWidget())
             action.triggered.connect(self.windowMapper.map)
             self.windowMapper.setMapping(action, window)
 

@@ -7,11 +7,11 @@ import json
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
-from node_editor_widget import NodeEditorWidget
+from statenodewidget import StateNodeWidget
 
 
 class NodeEditorWindow(QMainWindow):
-    NodeEditorWidget_class = NodeEditorWidget
+    StateNodeWidget_class = StateNodeWidget
 
     """Class representing NodeEditor's Main Window
     """
@@ -23,13 +23,11 @@ class NodeEditorWindow(QMainWindow):
         self.initUI()
 
     def initUI(self):
-        """Set up this ``QMainWindow``. Create :class:`~nodeeditor.node_editor_widget.NodeEditorWidget`, Actions and Menus
-        """
         self.createActions()
         self.createMenus()
 
         # create node editor widget
-        self.nodeeditor = self.__class__.NodeEditorWidget_class(self)
+        self.nodeeditor = self.__class__.StateNodeWidget_class(self)
         self.nodeeditor.scene.addHasBeenModifiedListener(self.setTitle)
         self.setCentralWidget(self.nodeeditor)
 
@@ -97,7 +95,7 @@ class NodeEditorWindow(QMainWindow):
     def setTitle(self):
         """Function responsible for setting window title
         """
-        self.setWindowTitle("Node Editor - " + self.getCurrentNodeEditorWidget().getUserFriendlyFilename())
+        self.setWindowTitle("Node Editor - " + self.getCurrentStateNodeWidget().getUserFriendlyFilename())
 
     def closeEvent(self, event):
         """Handle close event. Ask before we loose work"""
@@ -112,13 +110,13 @@ class NodeEditorWindow(QMainWindow):
         :return: ``True`` if current :class:`~nodeeditor.node_scene.Scene` has been modified
         :rtype: ``bool``
         """
-        return self.getCurrentNodeEditorWidget().scene.isModified()
+        return self.getCurrentStateNodeWidget().scene.isModified()
 
-    def getCurrentNodeEditorWidget(self) -> NodeEditorWidget:
-        """get current :class:`~nodeeditor.node_editor_widget`
+    def getCurrentStateNodeWidget(self) -> StateNodeWidget:
+        """get current :class:`~nodeeditor.StateNodeWidget`
 
-        :return: get current :class:`~nodeeditor.node_editor_widget`
-        :rtype: :class:`~nodeeditor.node_editor_widget`
+        :return: get current :class:`~nodeeditor.StateNodeWidget`
+        :rtype: :class:`~nodeeditor.StateNodeWidget`
         """
         return self.centralWidget()
 
@@ -162,7 +160,7 @@ class NodeEditorWindow(QMainWindow):
     def onFileNew(self):
         """Hande File New operation"""
         if self.maybeSave():
-            self.getCurrentNodeEditorWidget().fileNew()
+            self.getCurrentStateNodeWidget().fileNew()
             self.setTitle()
 
     def onFileOpen(self):
@@ -170,12 +168,12 @@ class NodeEditorWindow(QMainWindow):
         if self.maybeSave():
             fname, filter = QFileDialog.getOpenFileName(self, 'Open graph from file', self.getFileDialogDirectory(), self.getFileDialogFilter())
             if fname != '' and os.path.isfile(fname):
-                self.getCurrentNodeEditorWidget().fileLoad(fname)
+                self.getCurrentStateNodeWidget().fileLoad(fname)
                 self.setTitle()
 
     def onFileSave(self):
         """Handle File Save operation"""
-        current_nodeeditor = self.getCurrentNodeEditorWidget()
+        current_nodeeditor = self.getCurrentStateNodeWidget()
         if current_nodeeditor is not None:
             if not current_nodeeditor.isFilenameSet(): return self.onFileSaveAs()
 
@@ -191,7 +189,7 @@ class NodeEditorWindow(QMainWindow):
 
     def onFileSaveAs(self):
         """Handle File Save As operation"""
-        current_nodeeditor = self.getCurrentNodeEditorWidget()
+        current_nodeeditor = self.getCurrentStateNodeWidget()
         if current_nodeeditor is not None:
             fname, filter = QFileDialog.getSaveFileName(self, 'Save graph to file', self.getFileDialogDirectory(), self.getFileDialogFilter())
             if fname == '':
@@ -209,36 +207,36 @@ class NodeEditorWindow(QMainWindow):
 
     def onEditUndo(self):
         """Handle Edit Undo operation"""
-        if self.getCurrentNodeEditorWidget():
-            self.getCurrentNodeEditorWidget().scene.history.undo()
+        if self.getCurrentStateNodeWidget():
+            self.getCurrentStateNodeWidget().scene.history.undo()
 
     def onEditRedo(self):
         """Handle Edit Redo operation"""
-        if self.getCurrentNodeEditorWidget():
-            self.getCurrentNodeEditorWidget().scene.history.redo()
+        if self.getCurrentStateNodeWidget():
+            self.getCurrentStateNodeWidget().scene.history.redo()
 
     def onEditDelete(self):
         """Handle Delete Selected operation"""
-        if self.getCurrentNodeEditorWidget():
-            self.getCurrentNodeEditorWidget().scene.getView().deleteSelected()
+        if self.getCurrentStateNodeWidget():
+            self.getCurrentStateNodeWidget().scene.getView().deleteSelected()
 
     def onEditCut(self):
         """Handle Edit Cut to clipboard operation"""
-        if self.getCurrentNodeEditorWidget():
-            data = self.getCurrentNodeEditorWidget().scene.clipboard.serializeSelected(delete=True)
+        if self.getCurrentStateNodeWidget():
+            data = self.getCurrentStateNodeWidget().scene.clipboard.serializeSelected(delete=True)
             str_data = json.dumps(data, indent=4)
             QApplication.instance().clipboard().setText(str_data)
 
     def onEditCopy(self):
         """Handle Edit Copy to clipboard operation"""
-        if self.getCurrentNodeEditorWidget():
-            data = self.getCurrentNodeEditorWidget().scene.clipboard.serializeSelected(delete=False)
+        if self.getCurrentStateNodeWidget():
+            data = self.getCurrentStateNodeWidget().scene.clipboard.serializeSelected(delete=False)
             str_data = json.dumps(data, indent=4)
             QApplication.instance().clipboard().setText(str_data)
 
     def onEditPaste(self):
         """Handle Edit Paste from clipboard operation"""
-        if self.getCurrentNodeEditorWidget():
+        if self.getCurrentStateNodeWidget():
             raw_data = QApplication.instance().clipboard().text()
 
             try:
@@ -252,7 +250,7 @@ class NodeEditorWindow(QMainWindow):
                 print("JSON does not contain any nodes!")
                 return
 
-            return self.getCurrentNodeEditorWidget().scene.clipboard.deserializeFromClipboard(data)
+            return self.getCurrentStateNodeWidget().scene.clipboard.deserializeFromClipboard(data)
 
     def readSettings(self):
         """Read the permanent profile settings for this app"""

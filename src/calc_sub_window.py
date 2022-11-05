@@ -1,7 +1,7 @@
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from calc_conf import *
-from node_editor_widget import NodeEditorWidget
+from statenodewidget import StateNodeWidget
 from calc_node_base import *
 from node_edge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
 from node_graphics_view import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
@@ -11,7 +11,7 @@ DEBUG = True
 DEBUG_CONTEXT = False
 
 
-class CalculatorSubWindow(NodeEditorWidget):
+class CalculatorSubWindow(StateNodeWidget):
     def __init__(self):
         super().__init__()
         # self.setAttribute(Qt.WA_DeleteOnClose)
