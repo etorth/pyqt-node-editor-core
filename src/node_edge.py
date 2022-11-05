@@ -47,10 +47,7 @@ class Edge(Serializable):
         self.scene.addEdge(self)
 
     def __str__(self):
-        return "<Edge %s..%s -- S:%s E:%s>" % (
-            hex(id(self))[2:5], hex(id(self))[-3:],
-            self.start_socket, self.end_socket
-        )
+        return "<Edge %s..%s -- S:%s E:%s>" % (hex(id(self))[2:5], hex(id(self))[-3:], self.start_socket, self.end_socket)
 
     @property
     def start_socket(self):
@@ -183,8 +180,7 @@ class Edge(Serializable):
         self.start_socket = None
 
     def remove(self, silent_for_socket: 'Socket' = None, silent=False):
-        """
-        Safely remove this Edge.
+        """Safely remove this Edge.
 
         Removes `Graphics Edge` from the ``QGraphicsScene`` and it's reference to all GC to clean it up.
         Notifies nodes previously connected :class:`~nodeeditor.node_node.Node` (s) about this event.
@@ -204,7 +200,8 @@ class Edge(Serializable):
 
         # ugly hack, since I noticed that even when you remove gfxEdge from scene,
         # sometimes it stays there! How dare you Qt!
-        if DEBUG: print(" - hide gfxEdge")
+        if DEBUG:
+            print(" - hide gfxEdge")
         self.gfxEdge.hide()
 
         if DEBUG: print(" - remove gfxEdge", self.gfxEdge)
