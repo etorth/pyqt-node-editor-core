@@ -178,7 +178,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
         :returns: ``QPainterPath`` of the edge connecting `source` and `destination`
         :rtype: ``QPainterPath``
         """
-        raise NotImplemented("This method has to be overriden in a child class")
+        raise NotImplementedError("This method has to be overriden in a child class")
 
 
 class QDMGraphicsEdgeDirect(QDMGraphicsEdge):
