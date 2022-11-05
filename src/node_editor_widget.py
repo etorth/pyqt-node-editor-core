@@ -16,7 +16,8 @@ from node_graphics_view import QDMGraphicsView
 class NodeEditorWidget(QWidget):
     Scene_class = Scene
 
-    """The ``NodeEditorWidget`` class"""
+    """The ``NodeEditorWidget`` class
+    """
 
     def __init__(self, parent: QWidget = None):
         """

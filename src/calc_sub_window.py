@@ -207,7 +207,7 @@ class CalculatorSubWindow(NodeEditorWidget):
                 target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output,
                                                                      new_calc_node)
                 if target_socket is not None:
-                    self.scene.getView().edgeDragEnd(target_socket.grSocket)
+                    self.scene.getView().edgeDragEnd(target_socket.gfxSocket)
                     self.finish_new_node_state(new_calc_node)
 
             else:

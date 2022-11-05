@@ -8,8 +8,7 @@ OP_NODE_MUL = 5
 OP_NODE_DIV = 6
 OP_NODE_CHECKER = 7
 
-CALC_NODES = {
-}
+CALC_NODES = {}
 
 
 class ConfException(Exception): pass
@@ -31,7 +30,6 @@ def register_node(op_code):
     def decorator(original_class):
         register_node_now(op_code, original_class)
         return original_class
-
     return decorator
 
 

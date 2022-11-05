@@ -74,7 +74,7 @@ class QDMGraphicsEdge(QGraphicsPathItem):
         socket_type_start = self.edge.start_socket.socket_type
         socket_type_end = self.edge.end_socket.socket_type
         if socket_type_start != socket_type_end: return False
-        self.changeColor(self.edge.start_socket.grSocket.getSocketColor(socket_type_start))
+        self.changeColor(self.edge.start_socket.gfxSocket.getSocketColor(socket_type_start))
 
     def onSelected(self):
         """Our event handling when the edge was selected"""

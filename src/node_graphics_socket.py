@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-A module containing Graphics representation of a :class:`~nodeeditor.node_socket.Socket`
+"""A module containing Graphics representation of a :class:`~nodeeditor.node_socket.Socket`
 """
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
@@ -18,7 +17,8 @@ SOCKET_COLORS = [
 
 
 class QDMGraphicsSocket(QGraphicsItem):
-    """Class representing Graphic `Socket` in ``QGraphicsScene``"""
+    """Class representing Graphic `Socket` in ``QGraphicsScene``
+    """
 
     def __init__(self, socket: 'Socket'):
         """

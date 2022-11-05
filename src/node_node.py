@@ -131,8 +131,7 @@ class Node(Serializable):
         }
 
     def initSockets(self, inputs: list, outputs: list, reset: bool = True):
-        """
-        Create sockets for inputs and outputs
+        """Create sockets for inputs and outputs
 
         :param inputs: list of Socket Types (int)
         :type inputs: ``list``
@@ -145,9 +144,9 @@ class Node(Serializable):
         if reset:
             # clear old sockets
             if hasattr(self, 'inputs') and hasattr(self, 'outputs'):
-                # remove grSockets from scene
+                # remove gfxSockets from scene
                 for socket in (self.inputs + self.outputs):
-                    self.scene.grScene.removeItem(socket.grSocket)
+                    self.scene.grScene.removeItem(socket.gfxSocket)
                 self.inputs = []
                 self.outputs = []
 
