@@ -74,3 +74,4 @@ class QDMDragListbox(QListWidget):
 
     def onItemDoubleClicked(self, item):
         print("Double clicked: ", item.text())
+        self.clear()
