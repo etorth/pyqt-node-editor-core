@@ -10,7 +10,7 @@ from PyQt6.QtGui import *
 from statenodewidget import StateNodeWidget
 
 
-class NodeEditorWindow(QMainWindow):
+class StateNodeWindow(QMainWindow):
     StateNodeWidget_class = StateNodeWidget
 
     """Class representing NodeEditor's Main Window

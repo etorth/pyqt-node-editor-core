@@ -4,7 +4,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
 from utils import loadStylesheets
-from node_editor_window import NodeEditorWindow
+from statenodewindow import StateNodeWindow
 from calc_sub_window import CalculatorSubWindow
 from calc_drag_listbox import QDMDragListbox
 from utils import dumpException, pp
@@ -15,7 +15,7 @@ import qss.nodeeditor_dark_resources
 
 DEBUG = True
 
-class MainWindow(NodeEditorWindow):
+class MainWindow(StateNodeWindow):
 
     def initUI(self):
         self.stylesheet_filename = os.path.join(os.path.dirname(__file__), "qss/nodeeditor.qss")
