@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+"""A module containing ``NodeEditorWidget`` class
 """
-A module containing ``NodeEditorWidget`` class
-"""
+
 import os
-from PyQt6.QtWidgets import *
+
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
 
 from node_scene import Scene, InvalidFile
 from node_node import Node
@@ -41,7 +42,7 @@ class NodeEditorWidget(QWidget):
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
 
-        # crate graphics scene
+        # create graphics scene
         self.scene = self.__class__.Scene_class()
 
         # create graphics view
