@@ -20,12 +20,12 @@ class QDMDragListBox(QListWidget):
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.setDragEnabled(True)
 
-        self.addMyItems()
+        self.addOpItems()
 
         self.itemClicked.connect(self.onItemClicked)
         self.itemDoubleClicked.connect(self.onItemDoubleClicked)
 
-    def addMyItems(self):
+    def addOpItems(self):
         item = QListWidgetItem('父控件 ' + ('>' if self._collapsed else 'v'), self)
         item.setSizeHint(QSize(32, 32))
         item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
@@ -33,10 +33,10 @@ class QDMDragListBox(QListWidget):
         if not self._collapsed:
             for key in sorted(list(CALC_NODES.keys())):
                 node = get_class_from_opcode(key)
-                self.addMyItem(node.op_title, node.icon, node.op_code)
+                self.addOpItem(node.op_title, node.icon, node.op_code)
 
 
-    def addMyItem(self, name, icon=None, op_code=0):
+    def addOpItem(self, name, icon=None, op_code=0):
         item = QListWidgetItem(name, self)
         pixmap = QPixmap(icon if icon is not None else ".")
         item.setIcon(QIcon(pixmap))
@@ -81,4 +81,4 @@ class QDMDragListBox(QListWidget):
     def onItemDoubleClicked(self, item):
         self.clear()
         self._collapsed = not self._collapsed
-        self.addMyItems()
+        self.addOpItems()
