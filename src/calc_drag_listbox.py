@@ -4,6 +4,7 @@ from PyQt6.QtWidgets import *
 
 from calc_conf import *
 from utils import dumpException
+from qdutils import *
 
 
 class QDMDragListBox(QListWidget):
@@ -44,15 +45,14 @@ class QDMDragListBox(QListWidget):
         item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable | Qt.ItemFlag.ItemIsDragEnabled)
 
         # setup data
-        item.setData(Qt.ItemDataRole.UserRole, pixmap)
-        item.setData(Qt.ItemDataRole.UserRole + 1, op_code)
+        item.setData(Qt.ItemDataRole.UserRole + UROLE_ICON, pixmap)
+        item.setData(Qt.ItemDataRole.UserRole + UROLE_TYPE, get_class_from_opcode(op_code))
 
     def startDrag(self, *args, **kwargs):
         try:
             item = self.currentItem()
-            op_code = item.data(Qt.ItemDataRole.UserRole + 1)
-
-            pixmap = QPixmap(item.data(Qt.ItemDataRole.UserRole))
+            op_code = item.data(Qt.ItemDataRole.UserRole + UROLE_TYPE).op_code
+            pixmap = QPixmap(item.data(Qt.ItemDataRole.UserRole + UROLE_ICON))
 
             itemData = QByteArray()
             dataStream = QDataStream(itemData, QIODevice.OpenModeFlag.WriteOnly)
