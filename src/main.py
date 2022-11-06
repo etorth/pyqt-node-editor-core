@@ -3,16 +3,18 @@ import sys
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
+from qdutils import *
 from mainwindow import MainWindow
 
 if __name__ == '__main__':
-    QCoreApplication.setOrganizationName('USTC')
-    QCoreApplication.setApplicationName('QuestDesigner')
+    QCoreApplication.setOrganizationName(confg.APP_ORG)
+    QCoreApplication.setApplicationName(confg.APP_NAME)
 
     app = QApplication(sys.argv)
-    app.setStyle('Fusion')
+    app.setStyle(confg.APP_STYLE)
 
     win = MainWindow()
+    win.setWindowTitle(confg.APP_TITLE)
     win.show()
 
     sys.exit(app.exec())
