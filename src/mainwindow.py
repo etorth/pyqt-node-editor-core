@@ -3,11 +3,11 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from utils import loadStylesheets
+from qdutils import *
 from statenodewindow import StateNodeWindow
 from calc_sub_window import CalculatorSubWindow
 from calc_drag_listbox import QDMDragListBox
-from utils import dumpException, pp
+from qdutils import *
 from calc_conf import *
 
 # images for the dark skin
@@ -19,13 +19,10 @@ class MainWindow(StateNodeWindow):
 
     def initUI(self):
         self.stylesheet_filename = os.path.join(os.path.dirname(__file__), "qss/nodeeditor.qss")
-        loadStylesheets(os.path.join(os.path.dirname(__file__), "qss/nodeeditor-dark.qss"), self.stylesheet_filename)
+        utils.loadStylesheets(os.path.join(os.path.dirname(__file__), "qss/nodeeditor-dark.qss"), self.stylesheet_filename)
 
         self.empty_icon = QIcon(".")
-
-        if DEBUG:
-            print("Registered nodes:")
-            pp(CALC_NODES)
+        utils.printObj(CALC_NODES)
 
         self.mdiArea = QMdiArea()
         self.mdiArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)
@@ -93,7 +90,7 @@ class MainWindow(StateNodeWindow):
             subwin.widget().fileNew()
             subwin.show()
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
 
     def onFileOpen(self):
         fnames, filter = QFileDialog.getOpenFileNames(self, 'Open graph from file', self.getFileDialogDirectory(), self.getFileDialogFilter())
@@ -114,7 +111,7 @@ class MainWindow(StateNodeWindow):
                         else:
                             nodeeditor.close()
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
 
     def onOpenNodeEditWindow(self):
         print(123)
@@ -171,7 +168,7 @@ class MainWindow(StateNodeWindow):
             self.actUndo.setEnabled(hasMdiChild and active.canUndo())
             self.actRedo.setEnabled(hasMdiChild and active.canRedo())
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
 
     def updateWindowMenu(self):
         self.windowMenu.clear()

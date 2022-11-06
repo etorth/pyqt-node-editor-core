@@ -5,7 +5,7 @@ A module containing NodeEditor's class for representing Edge and Edge Type Const
 from collections import OrderedDict
 from node_graphics_edge import *
 from node_serializable import Serializable
-from utils import dumpException
+from qdutils import *
 
 EDGE_TYPE_DIRECT = 1  #:
 EDGE_TYPE_BEZIER = 2  #:
@@ -235,7 +235,7 @@ class Edge(Serializable):
                     if socket.is_input: socket.node.onInputChanged(socket)
 
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
 
     def serialize(self) -> OrderedDict:
         return OrderedDict([

@@ -5,7 +5,7 @@ from statenodewidget import StateNodeWidget
 from calc_node_base import *
 from node_edge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
 from node_graphics_view import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
-from utils import dumpException
+from qdutils import *
 
 DEBUG = True
 DEBUG_CONTEXT = False
@@ -103,7 +103,7 @@ class CalculatorSubWindow(StateNodeWidget):
                 node.setPos(scene_position.x(), scene_position.y())
                 self.scene.history.storeHistory("Created node %s" % node.__class__.__name__)
             except Exception as e:
-                dumpException(e)
+                utils.dumpExcept(e)
 
             event.setDropAction(Qt.DropAction.MoveAction)
             event.accept()
@@ -130,7 +130,7 @@ class CalculatorSubWindow(StateNodeWidget):
 
             return super().contextMenuEvent(event)
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
 
     def handleNodeContextMenu(self, event):
         if DEBUG_CONTEXT: print("CONTEXT: NODE")

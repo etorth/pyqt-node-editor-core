@@ -5,7 +5,7 @@ from node_node import Node
 from node_content_widget import QDMNodeContentWidget
 from node_graphics_node import QDMGraphicsNode
 from node_socket import LEFT_CENTER, RIGHT_CENTER
-from utils import dumpException
+from qdutils import *
 
 
 class CalcGraphicsNode(QDMGraphicsNode):
@@ -106,7 +106,7 @@ class CalcNode(Node):
         except Exception as e:
             self.markInvalid()
             self.gfxNode.setToolTip(str(e))
-            dumpException(e)
+            utils.dumpExcept(e)
 
     def onInputChanged(self, socket=None):
         print("%s::__onInputChanged" % self.__class__.__name__)

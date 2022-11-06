@@ -10,7 +10,7 @@ from node_graphics_socket import QDMGraphicsSocket
 from node_graphics_edge import QDMGraphicsEdge
 from node_edge import Edge, EDGE_TYPE_BEZIER
 from node_graphics_cutline import QDMCutLine
-from utils import dumpException
+from qdutils import *
 
 MODE_NOOP = 1  #: Mode representing ready state
 MODE_EDGE_DRAG = 2  #: Mode representing when we drag edge state
@@ -268,7 +268,7 @@ class QDMGraphicsView(QGraphicsView):
                 self.gfxScene.itemsDeselected.emit()
 
         except:
-            dumpException()
+            utils.dumpExcept()
 
         super().mouseReleaseEvent(event)
 
@@ -399,7 +399,7 @@ class QDMGraphicsView(QGraphicsView):
             self.drag_edge = Edge(self.gfxScene.scene, item.socket, None, EDGE_TYPE_BEZIER)
             if DEBUG: print('View::edgeDragStart ~   dragEdge:', self.drag_edge)
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
 
     def edgeDragEnd(self, item: 'QGraphicsItem'):
         """Code handling the end of dragging an `Edge` operation. In this code return True if skip the
@@ -443,7 +443,7 @@ class QDMGraphicsView(QGraphicsView):
                     self.gfxScene.scene.history.storeHistory("Created new edge by dragging", setModified=True)
                     return True
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
 
         if DEBUG:
             print('View::edgeDragEnd ~ everything done.')

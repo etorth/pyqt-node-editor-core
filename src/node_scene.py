@@ -5,14 +5,13 @@ A module containing
 import os
 import json
 from collections import OrderedDict
-from utils import dumpException
+from qdutils import *
 from node_serializable import Serializable
 from node_graphics_scene import QDMGraphicsScene
 from node_node import Node
 from node_edge import Edge
 from node_scene_history import SceneHistory
 from node_scene_clipboard import SceneClipboard
-from utils import pp
 
 DEBUG_REMOVE_WARNINGS = False
 
@@ -300,7 +299,7 @@ class Scene(Serializable):
             except json.JSONDecodeError:
                 raise InvalidFile("%s is not a valid JSON file" % os.path.basename(filename))
             except Exception as e:
-                dumpException(e)
+                utils.dumpExcept(e)
 
     def setNodeClassSelector(self, class_selecting_function: 'functon') -> 'Node class type':
         """

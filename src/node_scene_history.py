@@ -3,7 +3,7 @@
 A module containing all code for working with History (Undo/Redo)
 """
 from node_graphics_edge import QDMGraphicsEdge
-from utils import dumpException
+from qdutils import *
 
 DEBUG = True
 DEBUG_SELECTION = False
@@ -234,4 +234,4 @@ class SceneHistory():
                 self.undo_selection_has_changed = True
 
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)

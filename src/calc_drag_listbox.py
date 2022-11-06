@@ -3,7 +3,9 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
 from calc_conf import *
-from utils import dumpException
+from qdutils import *
+
+
 from qdutils import *
 
 
@@ -71,7 +73,7 @@ class QDMDragListBox(QListWidget):
             drag.exec(Qt.DropAction.MoveAction)
 
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
 
 
     def onItemClicked(self, item):

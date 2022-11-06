@@ -1,7 +1,7 @@
 from PyQt6.QtCore import *
 from calc_conf import *
 from calc_node_base import *
-from utils import dumpException
+from qdutils import *
 
 
 class CalcOutputContent(QDMNodeContentWidget):

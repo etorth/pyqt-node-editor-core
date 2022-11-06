@@ -5,7 +5,7 @@ A module containing NodeEditor's class for representing `Node`.
 from node_graphics_node import QDMGraphicsNode
 from node_content_widget import QDMNodeContentWidget
 from node_socket import *
-from utils import dumpException, pp
+from qdutils import *
 
 DEBUG = True
 
@@ -415,7 +415,7 @@ class Node(Serializable):
             other_socket = connecting_edge.getOtherSocket(self.inputs[index])
             return other_socket.node
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
             return None
 
     def getInputWithSocket(self, index: int = 0) -> [('Node', 'Socket'), (None, None)]:
@@ -436,7 +436,7 @@ class Node(Serializable):
             other_socket = connecting_edge.getOtherSocket(self.inputs[index])
             return other_socket.node, other_socket
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
             return None, None
 
     def getInputWithSocketIndex(self, index: int = 0) -> ('Node', int):
@@ -457,7 +457,7 @@ class Node(Serializable):
             # print("EXC: Trying to get input with socket index %d, but none is attached to" % index, self)
             return None, None
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
             return None, None
 
     def getInputs(self, index: int = 0) -> 'List[Node]':
@@ -521,7 +521,7 @@ class Node(Serializable):
             num_outputs = len(data['outputs'])
 
             # print("> deserialize node,   num inputs:", num_inputs, "num outputs:", num_outputs)
-            # pp(data)
+            # utils.printObj(data)
 
             # possible way to do it is reuse existing sockets...
             # dont create new ones if not necessary
@@ -565,7 +565,7 @@ class Node(Serializable):
                 found.deserialize(socket_data, hashmap, restore_id)
 
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
 
         # also deseralize the content of the node
         # so far the rest was ok, now as last step the content...

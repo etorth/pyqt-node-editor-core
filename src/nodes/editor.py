@@ -1,7 +1,7 @@
 from PyQt6.QtCore import *
 from calc_conf import *
 from calc_node_base import *
-from utils import dumpException
+from qdutils import *
 
 
 class CalcEditorContent(QDMNodeContentWidget):
@@ -36,7 +36,7 @@ class CalcEditorContent(QDMNodeContentWidget):
             self.edit.setText(value)
             return True & res
         except Exception as e:
-            dumpException(e)
+            utils.dumpExcept(e)
         return res
 
 
