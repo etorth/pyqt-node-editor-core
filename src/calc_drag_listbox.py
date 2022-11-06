@@ -36,7 +36,7 @@ class QDMDragListBox(QListWidget):
 
 
     def addMyItem(self, name, icon=None, op_code=0):
-        item = QListWidgetItem(name, self)  # can be (icon, text, parent, <int>type)
+        item = QListWidgetItem(name, self)
         pixmap = QPixmap(icon if icon is not None else ".")
         item.setIcon(QIcon(pixmap))
         item.setSizeHint(QSize(32, 32))
