@@ -43,6 +43,4 @@ def get_class_from_opcode(op_code):
     return CALC_NODES[op_code]
 
 
-# import all nodes and register them
-# this fills node types into CALC_NODES list
 from nodes import *
