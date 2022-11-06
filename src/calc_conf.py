@@ -12,13 +12,16 @@ OP_NODE_EDITOR = 8
 CALC_NODES = {}
 
 
-class ConfException(Exception): pass
+class ConfException(Exception):
+    pass
 
 
-class InvalidNodeRegistration(ConfException): pass
+class InvalidNodeRegistration(ConfException):
+    pass
 
 
-class OpCodeNotRegistered(ConfException): pass
+class OpCodeNotRegistered(ConfException):
+    pass
 
 
 def register_node_now(op_code, class_reference):
