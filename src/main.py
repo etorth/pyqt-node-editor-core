@@ -17,4 +17,5 @@ if __name__ == '__main__':
     win.setWindowTitle(confg.APP_TITLE)
     win.show()
 
+    utils.debugObj(win)
     sys.exit(app.exec())

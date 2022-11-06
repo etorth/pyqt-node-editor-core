@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
-"""Module with some helper functions and config variables
-"""
+import pprint
+
 
 class Confg:
     APP_NAME    = 'QuestDesigner'
@@ -8,6 +8,9 @@ class Confg:
     APP_ORG     = 'USTC'
     APP_VERSION = '0.1'
     APP_STYLE   = 'Fusion'
+
+
+    DEBUG = True
 
     def __init__(self):
         pass
@@ -17,13 +20,17 @@ class Confg:
         return self.APP_NAME + '-' + self.APP_VERSION
 
 
+confg = Confg()
+
+
 class Utils:
     def __init__(self):
-        pass
-
-    def now(self):
-        return '12.34.56'
+        self._pprint = pprint.PrettyPrinter(indent=4)
 
 
-confg = Confg()
+    def debugObj(self, obj):
+        if confg.DEBUG:
+            self._pprint.pprint(obj)
+
+
 utils = Utils()
