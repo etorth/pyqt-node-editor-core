@@ -1,7 +1,9 @@
 # -*- encoding: utf-8 -*-
-import PyQt6
 import pprint
 import traceback
+
+from PyQt6.QtCore import QFile
+from PyQt6.QtWidgets import QApplication
 
 
 OPS_NONE    = 0
@@ -49,18 +51,18 @@ class Utils:
 
 
     def loadStylesheet(self, filename: str):
-        file = PyQt6.QtCore.QFile(filename)
-        file.open(PyQt6.QtCore.QFile.OpenModeFlag.ReadOnly | PyQt6.QtCore.QFile.OpenModeFlag.Text)
-        PyQt6.QtWidgets.QApplication.instance().setStyleSheet(str(file.readAll(), encoding='utf-8'))
+        file = QFile(filename)
+        file.open(QFile.OpenModeFlag.ReadOnly | QFile.OpenModeFlag.Text)
+        QApplication.instance().setStyleSheet(str(file.readAll(), encoding='utf-8'))
 
 
     def loadStylesheets(self, *args):
         sheets = []
         for arg in args:
-            file = PyQt6.QtCore.QFile(arg)
-            file.open(PyQt6.QtCore.QFile.OpenModeFlag.ReadOnly | PyQt6.QtCore.QFile.OpenModeFlag.Text)
+            file = QFile(arg)
+            file.open(QFile.OpenModeFlag.ReadOnly | QFile.OpenModeFlag.Text)
             sheets.append(str(file.readAll(), encoding='utf-8'))
-        PyQt6.QtWidgets.QApplication.instance().setStyleSheet('\n'.join(sheets))
+        QApplication.instance().setStyleSheet('\n'.join(sheets))
 
 
 utils = Utils()
