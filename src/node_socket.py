@@ -21,8 +21,7 @@ class Socket(Serializable):
 
     """Class representing Socket."""
 
-    def __init__(self, node: 'Node', index: int = 0, position: int = LEFT_TOP, socket_type: int = 1,
-                 multi_edges: bool = True, count_on_this_node_side: int = 1, is_input: bool = False):
+    def __init__(self, node: 'Node', index: int = 0, position: int = LEFT_TOP, socket_type: int = 1, multi_edges: bool = True, count_on_this_node_side: int = 1, is_input: bool = False):
         """
         :param node: reference to the :class:`~nodeeditor.node_node.Node` containing this `Socket`
         :type node: :class:`~nodeeditor.node_node.Node`
