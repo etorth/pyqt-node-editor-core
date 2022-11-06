@@ -9,6 +9,8 @@ from utils import dumpException
 class QDMDragListBox(QListWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
+
+        self._collapsed = False
         self.initUI()
 
     def initUI(self):
@@ -19,15 +21,19 @@ class QDMDragListBox(QListWidget):
 
         self.addMyItems()
 
-    def addMyItems(self):
-        keys = list(CALC_NODES.keys())
-        keys.sort()
-        for key in keys:
-            node = get_class_from_opcode(key)
-            self.addMyItem(node.op_title, node.icon, node.op_code)
-
         self.itemClicked.connect(self.onItemClicked)
         self.itemDoubleClicked.connect(self.onItemDoubleClicked)
+
+    def addMyItems(self):
+        item = QListWidgetItem('父控件 ' + ('>' if self._collapsed else 'v'), self)
+        item.setSizeHint(QSize(32, 32))
+        item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
+
+        if not self._collapsed:
+            for key in sorted(list(CALC_NODES.keys())):
+                node = get_class_from_opcode(key)
+                self.addMyItem(node.op_title, node.icon, node.op_code)
+
 
     def addMyItem(self, name, icon=None, op_code=0):
         item = QListWidgetItem(name, self)  # can be (icon, text, parent, <int>type)
@@ -73,5 +79,6 @@ class QDMDragListBox(QListWidget):
 
 
     def onItemDoubleClicked(self, item):
-        print("Double clicked: ", item.text())
         self.clear()
+        self._collapsed = not self._collapsed
+        self.addMyItems()
