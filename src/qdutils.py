@@ -1,6 +1,10 @@
 # -*- encoding: utf-8 -*-
 import pprint
 
+OPS_NONE    = 0
+OPS_COMMAND = 1
+OPS_CHECKER = 2
+
 
 class Confg:
     APP_NAME    = 'QuestDesigner'
