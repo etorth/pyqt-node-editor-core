@@ -5,6 +5,9 @@ OPS_NONE    = 0
 OPS_COMMAND = 1
 OPS_CHECKER = 2
 
+UROLE_NONE = 0
+UROLE_ICON = 1
+UROLE_TYPE = 2
 
 class Confg:
     APP_NAME    = 'QuestDesigner'
