@@ -25,6 +25,7 @@ OPS_CHECKER = 2
 UROLE_NONE = 0
 UROLE_ICON = 1
 UROLE_TYPE = 2
+UROLE_OPTYPE = 3
 
 
 class Confg:
@@ -65,6 +66,11 @@ class Utils:
     def valid_node_types(self):
         return sorted(sum(self._node_type_list.values(), []), key=lambda x: (x.op_type, x.op_code))
 
+    def valid_nodes(self, op_type=None):
+        if op_type is None:
+            return self._node_type_list
+        else:
+            return self._node_type_list.get(op_type, [])
 
     def __init__(self):
         self._pprint = pprint.PrettyPrinter(indent=4)

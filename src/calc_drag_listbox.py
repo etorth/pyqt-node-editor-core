@@ -5,14 +5,11 @@ from PyQt6.QtWidgets import *
 from qdutils import *
 
 
-from qdutils import *
-
-
 class QDMDragListBox(QListWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 
-        self._collapsed = False
+        self._collapsed = {}
         self.initUI()
 
     def initUI(self):
@@ -27,13 +24,17 @@ class QDMDragListBox(QListWidget):
         self.itemDoubleClicked.connect(self.onItemDoubleClicked)
 
     def addOpItems(self):
-        item = QListWidgetItem('父控件 ' + ('>' if self._collapsed else 'v'), self)
-        item.setSizeHint(QSize(32, 32))
-        item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
+        for op_type, node_types in utils.valid_nodes().items():
+            collapsed = self._collapsed.get(op_type, False)
 
-        if not self._collapsed:
-            for node in utils.valid_node_types():
-                self.addOpItem(node.op_title, node.icon, node.op_code)
+            item = QListWidgetItem(('父控件 %d ' % op_type) + ('>' if collapsed else 'v'), self)
+            item.setSizeHint(QSize(32, 32))
+            item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
+            item.setData(Qt.ItemDataRole.UserRole + UROLE_OPTYPE, op_type)
+
+            if not collapsed:
+                for node in node_types:
+                    self.addOpItem(node.op_title, node.icon, node.op_code)
 
 
     def addOpItem(self, name, icon=None, op_code=0):
@@ -47,6 +48,7 @@ class QDMDragListBox(QListWidget):
         # setup data
         item.setData(Qt.ItemDataRole.UserRole + UROLE_ICON, pixmap)
         item.setData(Qt.ItemDataRole.UserRole + UROLE_TYPE, utils.get_class_from_opcode(op_code))
+        item.setData(Qt.ItemDataRole.UserRole + UROLE_OPTYPE, None)
 
     def startDrag(self, *args, **kwargs):
         try:
@@ -79,6 +81,10 @@ class QDMDragListBox(QListWidget):
 
 
     def onItemDoubleClicked(self, item):
+        optype = item.data(Qt.ItemDataRole.UserRole + UROLE_OPTYPE)
+        if optype is None:
+            return
+
         self.clear()
-        self._collapsed = not self._collapsed
+        self._collapsed[optype] = not self._collapsed.get(optype, False)
         self.addOpItems()
