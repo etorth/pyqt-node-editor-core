@@ -84,7 +84,7 @@ class SceneHistory():
 
     def undo(self):
         """Undo operation"""
-        if DEBUG: print("UNDO")
+        if confg.DEBUG: print("UNDO")
 
         if self.canUndo():
             self.history_current_step -= 1
@@ -93,7 +93,7 @@ class SceneHistory():
 
     def redo(self):
         """Redo operation"""
-        if DEBUG: print("REDO")
+        if confg.DEBUG: print("REDO")
         if self.canRedo():
             self.history_current_step += 1
             self.restoreHistory()
@@ -108,7 +108,7 @@ class SceneHistory():
         - `History Modified` event
         - `History Restored` event
         """
-        if DEBUG: print("Restoring history",
+        if confg.DEBUG: print("Restoring history",
                         ".... current_step: @%d" % self.history_current_step,
                         "(%d)" % len(self.history_stack))
         self.restoreHistoryStamp(self.history_stack[self.history_current_step])
@@ -132,7 +132,7 @@ class SceneHistory():
         if setModified:
             self.scene.has_been_modified = True
 
-        if DEBUG: print("Storing history", '"%s"' % desc,
+        if confg.DEBUG: print("Storing history", '"%s"' % desc,
                         ".... current_step: @%d" % self.history_current_step,
                         "(%d)" % len(self.history_stack))
 
@@ -149,7 +149,7 @@ class SceneHistory():
 
         self.history_stack.append(hs)
         self.history_current_step += 1
-        if DEBUG: print("  -- setting step to:", self.history_current_step)
+        if confg.DEBUG: print("  -- setting step to:", self.history_current_step)
 
         # always trigger history modified (for i.e. updateEditMenu)
         for callback in self._history_modified_listeners: callback()
@@ -195,7 +195,7 @@ class SceneHistory():
         :param history_stamp: History Stamp to restore
         :type history_stamp: ``dict``
         """
-        if DEBUG: print("RHS: ", history_stamp['desc'])
+        if confg.DEBUG: print("RHS: ", history_stamp['desc'])
 
         try:
             self.undo_selection_has_changed = False

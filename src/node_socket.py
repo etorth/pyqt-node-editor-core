@@ -4,6 +4,7 @@
 from collections import OrderedDict
 from node_serializable import Serializable
 from node_graphics_socket import QDMGraphicsSocket
+from qdutils import *
 
 LEFT_TOP = 1  #:
 LEFT_CENTER = 2  #:
@@ -60,7 +61,7 @@ class Socket(Serializable):
         self.is_input = is_input
         self.is_output = not self.is_input
 
-        if DEBUG:
+        if confg.DEBUG:
             print("Socket -- creating with", self.index, self.position, "for nodeeditor", self.node)
 
         self.gfxSocket = self.__class__.Socket_gfx_class(self)
@@ -104,9 +105,9 @@ class Socket(Serializable):
             :class:`~nodeeditor.node_node.Node`
         :rtype: ``x, y`` position
         """
-        if DEBUG: print("  GSP: ", self.index, self.position, "nodeeditor:", self.node)
+        if confg.DEBUG: print("  GSP: ", self.index, self.position, "nodeeditor:", self.node)
         res = self.node.getSocketPosition(self.index, self.position, self.count_on_this_node_side)
-        if DEBUG: print("  res", res)
+        if confg.DEBUG: print("  res", res)
         return res
 
     def hasAnyEdge(self) -> bool:

@@ -190,7 +190,7 @@ class QDMGraphicsView(QGraphicsView):
         # we store the position of last LMB click
         self.last_lmb_click_scene_pos = self.mapToScene(event.pos())
 
-        # if DEBUG: print("LMB Click on", item, self.debug_modifiers(event))
+        # if confg.DEBUG: print("LMB Click on", item, self.debug_modifiers(event))
 
         # logic
         if hasattr(item, "node") or isinstance(item, QDMGraphicsEdge) or item is None:
@@ -393,11 +393,11 @@ class QDMGraphicsView(QGraphicsView):
     def edgeDragStart(self, item: 'QGraphicsItem'):
         """Code handling the start of dragging an `Edge` operation"""
         try:
-            if DEBUG: print('View::edgeDragStart ~ Start dragging edge')
-            if DEBUG: print('View::edgeDragStart ~   assign Start Socket to:', item.socket)
+            if confg.DEBUG: print('View::edgeDragStart ~ Start dragging edge')
+            if confg.DEBUG: print('View::edgeDragStart ~   assign Start Socket to:', item.socket)
             self.drag_start_socket = item.socket
             self.drag_edge = Edge(self.gfxScene.scene, item.socket, None, EDGE_TYPE_BEZIER)
-            if DEBUG: print('View::edgeDragStart ~   dragEdge:', self.drag_edge)
+            if confg.DEBUG: print('View::edgeDragStart ~   dragEdge:', self.drag_edge)
         except Exception as e:
             utils.dumpExcept(e)
 
@@ -410,7 +410,7 @@ class QDMGraphicsView(QGraphicsView):
         """
         self.mode = MODE_NOOP
 
-        if DEBUG: print('View::edgeDragEnd ~ End dragging edge')
+        if confg.DEBUG: print('View::edgeDragEnd ~ End dragging edge')
         self.drag_edge.remove(silent=True)  # don't notify sockets about removing drag_edge
         self.drag_edge = None
 
@@ -430,7 +430,7 @@ class QDMGraphicsView(QGraphicsView):
 
                     ## Create new Edge
                     new_edge = Edge(self.gfxScene.scene, self.drag_start_socket, item.socket, edge_type=EDGE_TYPE_BEZIER)
-                    if DEBUG:
+                    if confg.DEBUG:
                         print("View::edgeDragEnd ~  created new edge:", new_edge, "connecting", new_edge.start_socket, "<-->", new_edge.end_socket)
 
                     ## Send notifications for the new edge
@@ -445,7 +445,7 @@ class QDMGraphicsView(QGraphicsView):
         except Exception as e:
             utils.dumpExcept(e)
 
-        if DEBUG:
+        if confg.DEBUG:
             print('View::edgeDragEnd ~ everything done.')
         return False
 

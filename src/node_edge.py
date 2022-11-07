@@ -200,25 +200,25 @@ class Edge(Serializable):
 
         # ugly hack, since I noticed that even when you remove gfxEdge from scene,
         # sometimes it stays there! How dare you Qt!
-        if DEBUG:
+        if confg.DEBUG:
             print(" - hide gfxEdge")
         self.gfxEdge.hide()
 
-        if DEBUG: print(" - remove gfxEdge", self.gfxEdge)
+        if confg.DEBUG: print(" - remove gfxEdge", self.gfxEdge)
         self.scene.gfxScene.removeItem(self.gfxEdge)
-        if DEBUG: print("   gfxEdge:", self.gfxEdge)
+        if confg.DEBUG: print("   gfxEdge:", self.gfxEdge)
 
         self.scene.gfxScene.update()
 
-        if DEBUG: print("# Removing Edge", self)
-        if DEBUG: print(" - remove edge from all sockets")
+        if confg.DEBUG: print("# Removing Edge", self)
+        if confg.DEBUG: print(" - remove edge from all sockets")
         self.remove_from_sockets()
-        if DEBUG: print(" - remove edge from scene")
+        if confg.DEBUG: print(" - remove edge from scene")
         try:
             self.scene.removeEdge(self)
         except ValueError:
             pass
-        if DEBUG: print(" - everything is done.")
+        if confg.DEBUG: print(" - everything is done.")
 
         try:
             # notify nodes from old sockets

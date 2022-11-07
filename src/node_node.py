@@ -275,19 +275,19 @@ class Node(Serializable):
         """
         Safely remove this Node
         """
-        if DEBUG: print("> Removing Node", self)
-        if DEBUG: print(" - remove all edges from sockets")
+        if confg.DEBUG: print("> Removing Node", self)
+        if confg.DEBUG: print(" - remove all edges from sockets")
         for socket in (self.inputs + self.outputs):
             # if socket.hasEdge():
             for edge in socket.edges:
-                if DEBUG: print("    - removing from socket:", socket, "edge:", edge)
+                if confg.DEBUG: print("    - removing from socket:", socket, "edge:", edge)
                 edge.remove()
-        if DEBUG: print(" - remove gfxNode")
+        if confg.DEBUG: print(" - remove gfxNode")
         self.scene.gfxScene.removeItem(self.gfxNode)
         self.gfxNode = None
-        if DEBUG: print(" - remove node from the scene")
+        if confg.DEBUG: print(" - remove node from the scene")
         self.scene.removeNode(self)
-        if DEBUG: print(" - everything was done.")
+        if confg.DEBUG: print(" - everything was done.")
 
     # node evaluation stuff
 

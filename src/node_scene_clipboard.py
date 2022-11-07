@@ -34,7 +34,7 @@ class SceneClipboard():
         :type delete: ``bool``
         :return: Serialized data of current selection in NodeEditor :class:`~nodeeditor.node_scene.Scene`
         """
-        if DEBUG: print("-- COPY TO CLIPBOARD ---")
+        if confg.DEBUG: print("-- COPY TO CLIPBOARD ---")
 
         sel_nodes, sel_edges, sel_sockets = [], [], {}
 
@@ -48,7 +48,7 @@ class SceneClipboard():
                 sel_edges.append(item.edge)
 
         # debug
-        if DEBUG:
+        if confg.DEBUG:
             print("  NODES\n      ", sel_nodes)
             print("  EDGES\n      ", sel_edges)
             print("  SOCKETS\n     ", sel_sockets)
@@ -57,10 +57,10 @@ class SceneClipboard():
         edges_to_remove = []
         for edge in sel_edges:
             if edge.start_socket.id in sel_sockets and edge.end_socket.id in sel_sockets:
-                # if DEBUG: print(" edge is ok, connected with both sides")
+                # if confg.DEBUG: print(" edge is ok, connected with both sides")
                 pass
             else:
-                if DEBUG: print("edge", edge, "is not connected with both sides")
+                if confg.DEBUG: print("edge", edge, "is not connected with both sides")
                 edges_to_remove.append(edge)
         for edge in edges_to_remove:
             sel_edges.remove(edge)
@@ -70,7 +70,7 @@ class SceneClipboard():
         for edge in sel_edges:
             edges_final.append(edge.serialize())
 
-        if DEBUG: print("our final edge list:", edges_final)
+        if confg.DEBUG: print("our final edge list:", edges_final)
 
         data = OrderedDict([
             ('nodes', sel_nodes),
