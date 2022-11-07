@@ -6,9 +6,6 @@ from node_edge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
 from node_graphics_view import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
 from qdutils import *
 
-DEBUG = True
-DEBUG_CONTEXT = False
-
 
 class CalculatorSubWindow(StateNodeWidget):
     def __init__(self):
@@ -108,7 +105,7 @@ class CalculatorSubWindow(StateNodeWidget):
     def contextMenuEvent(self, event):
         try:
             item = self.scene.getItemAt(event.pos())
-            if DEBUG_CONTEXT:
+            if confg.DEBUG:
                 print(item)
 
             if type(item) == QGraphicsProxyWidget:
@@ -127,7 +124,8 @@ class CalculatorSubWindow(StateNodeWidget):
             utils.dumpExcept(e)
 
     def handleNodeContextMenu(self, event):
-        if DEBUG_CONTEXT: print("CONTEXT: NODE")
+        if confg.DEBUG:
+            print("CONTEXT: NODE")
         context_menu = QMenu(self)
         markDirtyAct = context_menu.addAction("Mark Dirty")
         markDirtyDescendantsAct = context_menu.addAction("Mark Descendant Dirty")
@@ -146,17 +144,20 @@ class CalculatorSubWindow(StateNodeWidget):
         if hasattr(item, 'socket'):
             selected = item.socket.node
 
-        if DEBUG_CONTEXT: print("got item:", selected)
+        if confg.DEBUG:
+            print("got item:", selected)
         if selected and action == markDirtyAct: selected.markDirty()
         if selected and action == markDirtyDescendantsAct: selected.markDescendantsDirty()
         if selected and action == markInvalidAct: selected.markInvalid()
         if selected and action == unmarkInvalidAct: selected.markInvalid(False)
         if selected and action == evalAct:
             val = selected.eval()
-            if DEBUG_CONTEXT: print("EVALUATED:", val)
+            if confg.DEBUG:
+                print("EVALUATED:", val)
 
     def handleEdgeContextMenu(self, event):
-        if DEBUG_CONTEXT: print("CONTEXT: EDGE")
+        if confg.DEBUG:
+            print("CONTEXT: EDGE")
         context_menu = QMenu(self)
         bezierAct = context_menu.addAction("Bezier Edge")
         directAct = context_menu.addAction("Direct Edge")
@@ -185,7 +186,7 @@ class CalculatorSubWindow(StateNodeWidget):
         new_calc_node.gfxNode.onSelected()
 
     def handleNewNodeContextMenu(self, event):
-        if DEBUG_CONTEXT:
+        if confg.DEBUG:
             print("CONTEXT: EMPTY SPACE")
 
         context_menu = self.initNodesContextMenu()
@@ -195,7 +196,8 @@ class CalculatorSubWindow(StateNodeWidget):
             new_calc_node = utils.get_class_from_opcode(action.data())(self.scene)
             scene_pos = self.scene.getView().mapToScene(event.pos())
             new_calc_node.setPos(scene_pos.x(), scene_pos.y())
-            if DEBUG_CONTEXT: print("Selected node:", new_calc_node)
+            if confg.DEBUG:
+                print("Selected node:", new_calc_node)
 
             if self.scene.getView().mode == MODE_EDGE_DRAG:
                 # if we were dragging an edge...
