@@ -40,7 +40,7 @@ class CalcEditorContent(QDMNodeContentWidget):
         return res
 
 
-@register_node(OP_NODE_EDITOR)
+@register_node
 class CalcNode_Editor(CalcNode):
     icon = "icons/editor.png"
     op_code = OP_NODE_EDITOR

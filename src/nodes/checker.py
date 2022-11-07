@@ -40,7 +40,7 @@ class CalcCheckerContent(QDMNodeContentWidget):
         return res
 
 
-@register_node(OP_NODE_CHECKER)
+@register_node
 class CalcNode_Checker(CalcNode):
     icon = "icons/checker.png"
     op_code = OP_NODE_CHECKER

@@ -24,17 +24,15 @@ class OpCodeNotRegistered(ConfException):
     pass
 
 
-def register_node_now(op_code, class_reference):
-    if op_code in CALC_NODES:
-        raise InvalidNodeRegistration("Duplicite node registration of '%s'. There is already %s" % (op_code, CALC_NODES[op_code]))
-    CALC_NODES[op_code] = class_reference
+def register_node_now(class_reference):
+    if class_reference.op_code in CALC_NODES:
+        raise InvalidNodeRegistration("Duplicite node registration of '%s'. There is already %s" % (class_reference.op_code, CALC_NODES[class_reference.op_code]))
+    CALC_NODES[class_reference.op_code] = class_reference
 
 
-def register_node(op_code):
-    def decorator(original_class):
-        register_node_now(op_code, original_class)
-        return original_class
-    return decorator
+def register_node(original_class):
+    register_node_now(original_class)
+    return original_class
 
 
 def get_class_from_opcode(op_code):
