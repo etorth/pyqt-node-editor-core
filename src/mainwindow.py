@@ -8,7 +8,6 @@ from statenodewindow import StateNodeWindow
 from calc_sub_window import CalculatorSubWindow
 from calc_drag_listbox import QDMDragListBox
 from qdutils import *
-from calc_conf import *
 
 # images for the dark skin
 import qss.nodeeditor_dark_resources
@@ -22,7 +21,7 @@ class MainWindow(StateNodeWindow):
         utils.loadStylesheets(os.path.join(os.path.dirname(__file__), "qss/nodeeditor-dark.qss"), self.stylesheet_filename)
 
         self.empty_icon = QIcon(".")
-        utils.printObj(CALC_NODES)
+        utils.printObj(utils.valid_node_types())
 
         self.mdiArea = QMdiArea()
         self.mdiArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)

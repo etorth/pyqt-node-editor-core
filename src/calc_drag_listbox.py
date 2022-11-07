@@ -2,7 +2,6 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from calc_conf import *
 from qdutils import *
 
 
@@ -33,8 +32,7 @@ class QDMDragListBox(QListWidget):
         item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
 
         if not self._collapsed:
-            for key in sorted(list(CALC_NODES.keys())):
-                node = get_class_from_opcode(key)
+            for node in utils.valid_node_types():
                 self.addOpItem(node.op_title, node.icon, node.op_code)
 
 
@@ -48,7 +46,7 @@ class QDMDragListBox(QListWidget):
 
         # setup data
         item.setData(Qt.ItemDataRole.UserRole + UROLE_ICON, pixmap)
-        item.setData(Qt.ItemDataRole.UserRole + UROLE_TYPE, get_class_from_opcode(op_code))
+        item.setData(Qt.ItemDataRole.UserRole + UROLE_TYPE, utils.get_class_from_opcode(op_code))
 
     def startDrag(self, *args, **kwargs):
         try:

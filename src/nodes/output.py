@@ -1,5 +1,4 @@
 from PyQt6.QtCore import *
-from calc_conf import *
 from calc_node_base import *
 from qdutils import *
 
@@ -11,9 +10,10 @@ class CalcOutputContent(QDMNodeContentWidget):
         self.lbl.setObjectName(self.node.content_label_objname)
 
 
-@register_node
+@utils.register_opnode
 class CalcNode_Output(CalcNode):
     icon = "icons/out.png"
+    op_type = OPS_CHECKER
     op_code = OP_NODE_OUTPUT
     op_title = "Output"
     content_label_objname = "calc_node_output"

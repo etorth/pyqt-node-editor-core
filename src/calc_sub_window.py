@@ -1,6 +1,5 @@
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
-from calc_conf import *
 from statenodewidget import StateNodeWidget
 from calc_node_base import *
 from node_edge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
@@ -30,7 +29,7 @@ class CalculatorSubWindow(StateNodeWidget):
 
     def getNodeClassFromData(self, data):
         if 'op_code' not in data: return Node
-        return get_class_from_opcode(data['op_code'])
+        return utils.get_class_from_opcode(data['op_code'])
 
     def doEvalOutputs(self):
         # eval all output nodes
@@ -50,18 +49,13 @@ class CalculatorSubWindow(StateNodeWidget):
 
     def initNewNodeActions(self):
         self.node_actions = {}
-        keys = list(CALC_NODES.keys())
-        keys.sort()
-        for key in keys:
-            node = CALC_NODES[key]
+        for node in utils.valid_node_types():
             self.node_actions[node.op_code] = QAction(QIcon(node.icon), node.op_title)
             self.node_actions[node.op_code].setData(node.op_code)
 
     def initNodesContextMenu(self):
         context_menu = QMenu(self)
-        keys = list(CALC_NODES.keys())
-        keys.sort()
-        for key in keys:
+        for key in utils.valid_node_types():
             context_menu.addAction(self.node_actions[key])
         return context_menu
 
@@ -99,7 +93,7 @@ class CalculatorSubWindow(StateNodeWidget):
                 print("GOT DROP: [%d] '%s'" % (op_code, text), "mouse:", mouse_position, "scene:", scene_position)
 
             try:
-                node = get_class_from_opcode(op_code)(self.scene)
+                node = utils.get_class_from_opcode(op_code)(self.scene)
                 node.setPos(scene_position.x(), scene_position.y())
                 self.scene.history.storeHistory("Created node %s" % node.__class__.__name__)
             except Exception as e:
@@ -198,7 +192,7 @@ class CalculatorSubWindow(StateNodeWidget):
         action = context_menu.exec(self.mapToGlobal(event.pos()))
 
         if action is not None:
-            new_calc_node = get_class_from_opcode(action.data())(self.scene)
+            new_calc_node = utils.get_class_from_opcode(action.data())(self.scene)
             scene_pos = self.scene.getView().mapToScene(event.pos())
             new_calc_node.setPos(scene_pos.x(), scene_pos.y())
             if DEBUG_CONTEXT: print("Selected node:", new_calc_node)

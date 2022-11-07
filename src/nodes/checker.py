@@ -1,5 +1,4 @@
 from PyQt6.QtCore import *
-from calc_conf import *
 from calc_node_base import *
 from qdutils import *
 
@@ -40,9 +39,10 @@ class CalcCheckerContent(QDMNodeContentWidget):
         return res
 
 
-@register_node
+@utils.register_opnode
 class CalcNode_Checker(CalcNode):
     icon = "icons/checker.png"
+    op_type = OPS_CHECKER
     op_code = OP_NODE_CHECKER
     op_title = "Checker"
     content_label_objname = "calc_node_checker"

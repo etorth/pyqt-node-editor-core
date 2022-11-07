@@ -1,11 +1,11 @@
 from PyQt6.QtCore import *
-from calc_conf import *
 from calc_node_base import *
 
 
-@register_node
+@utils.register_opnode
 class CalcNode_Add(CalcNode):
     icon = "icons/add.png"
+    op_type = OPS_CHECKER
     op_code = OP_NODE_ADD
     op_title = "Add"
     content_label = "+"
@@ -15,9 +15,10 @@ class CalcNode_Add(CalcNode):
         return input1 + input2
 
 
-@register_node
+@utils.register_opnode
 class CalcNode_Sub(CalcNode):
     icon = "icons/sub.png"
+    op_type = OPS_CHECKER
     op_code = OP_NODE_SUB
     op_title = "Substract"
     content_label = "-"
@@ -26,9 +27,10 @@ class CalcNode_Sub(CalcNode):
     def evalOperation(self, input1, input2):
         return input1 - input2
 
-@register_node
+@utils.register_opnode
 class CalcNode_Mul(CalcNode):
     icon = "icons/mul.png"
+    op_type = OPS_CHECKER
     op_code = OP_NODE_MUL
     op_title = "Multiply"
     content_label = "*"
@@ -38,9 +40,10 @@ class CalcNode_Mul(CalcNode):
         print('foo')
         return input1 * input2
 
-@register_node
+@utils.register_opnode
 class CalcNode_Div(CalcNode):
     icon = "icons/divide.png"
+    op_type = OPS_CHECKER
     op_code = OP_NODE_DIV
     op_title = "Divide"
     content_label = "/"
@@ -50,4 +53,4 @@ class CalcNode_Div(CalcNode):
         return input1 / input2
 
 # way how to register by function call
-# register_node_now(OP_NODE_ADD, CalcNode_Add)
+# utils.register_opnode_now(OP_NODE_ADD, CalcNode_Add)
