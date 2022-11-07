@@ -62,6 +62,7 @@ class StateNodeWindow(QMainWindow):
         self.actCopy = QAction('&Copy', self, shortcut='Ctrl+C', statusTip="Copy to clipboard", triggered=self.onEditCopy)
         self.actPaste = QAction('&Paste', self, shortcut='Ctrl+V', statusTip="Paste from clipboard", triggered=self.onEditPaste)
         self.actDelete = QAction('&Delete', self, shortcut='Del', statusTip="Delete selected items", triggered=self.onEditDelete)
+        self.actLuaEditor = QAction('&LuaEditor', self, shortcut='Ctrl+L', statusTip="Edit lua code", triggered=self.onEditLuaEditor)
 
     def createMenus(self):
         """Create Menus for `File` and `Edit`
@@ -91,6 +92,7 @@ class StateNodeWindow(QMainWindow):
         self.editMenu.addAction(self.actPaste)
         self.editMenu.addSeparator()
         self.editMenu.addAction(self.actDelete)
+        self.editMenu.addAction(self.actLuaEditor)
 
     def setTitle(self):
         """Function responsible for setting window title
@@ -219,6 +221,11 @@ class StateNodeWindow(QMainWindow):
         """Handle Delete Selected operation"""
         if self.getCurrentStateNodeWidget():
             self.getCurrentStateNodeWidget().scene.getView().deleteSelected()
+
+    def onEditLuaEditor(self):
+        """Handle Lua editor Selected operation"""
+        if self.getCurrentStateNodeWidget():
+            pass
 
     def onEditCut(self):
         """Handle Edit Cut to clipboard operation"""

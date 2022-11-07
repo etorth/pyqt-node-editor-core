@@ -7,6 +7,7 @@ from qdutils import *
 from statenodewindow import StateNodeWindow
 from calc_sub_window import CalculatorSubWindow
 from calc_drag_listbox import QDMDragListBox
+from luaeditorwidget import LuaEditorWidget
 from qdutils import *
 
 # images for the dark skin
@@ -85,6 +86,13 @@ class MainWindow(StateNodeWindow):
         try:
             subwin = self.createMdiChild()
             subwin.widget().fileNew()
+            subwin.show()
+        except Exception as e:
+            utils.dumpExcept(e)
+
+    def onEditLuaEditor(self):
+        try:
+            subwin = self.createLuaEditorChild()
             subwin.show()
         except Exception as e:
             utils.dumpExcept(e)
@@ -235,6 +243,12 @@ class MainWindow(StateNodeWindow):
         # nodeeditor.scene.addItemsDeselectedListener(self.updateEditMenu)
         nodeeditor.scene.history.addHistoryModifiedListener(self.updateEditMenu)
         nodeeditor.addCloseEventListener(self.onSubWndClose)
+        return subwin
+
+    def createLuaEditorChild(self):
+        luaeditor = LuaEditorWidget()
+        subwin = self.mdiArea.addSubWindow(luaeditor)
+        subwin.setWindowIcon(self.empty_icon)
         return subwin
 
     def onSubWndClose(self, widget, event):
