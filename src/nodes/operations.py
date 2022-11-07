@@ -5,7 +5,7 @@ from calc_node_base import *
 @utils.register_opnode
 class CalcNode_Add(CalcNode):
     icon = "icons/add.png"
-    op_type = OPS_CHECKER
+    op_type = OPS_COMMAND
     op_code = OP_NODE_ADD
     op_title = "Add"
     content_label = "+"
@@ -18,7 +18,7 @@ class CalcNode_Add(CalcNode):
 @utils.register_opnode
 class CalcNode_Sub(CalcNode):
     icon = "icons/sub.png"
-    op_type = OPS_CHECKER
+    op_type = OPS_COMMAND
     op_code = OP_NODE_SUB
     op_title = "Substract"
     content_label = "-"
@@ -30,7 +30,7 @@ class CalcNode_Sub(CalcNode):
 @utils.register_opnode
 class CalcNode_Mul(CalcNode):
     icon = "icons/mul.png"
-    op_type = OPS_CHECKER
+    op_type = OPS_COMMAND
     op_code = OP_NODE_MUL
     op_title = "Multiply"
     content_label = "*"
@@ -43,7 +43,7 @@ class CalcNode_Mul(CalcNode):
 @utils.register_opnode
 class CalcNode_Div(CalcNode):
     icon = "icons/divide.png"
-    op_type = OPS_CHECKER
+    op_type = OPS_COMMAND
     op_code = OP_NODE_DIV
     op_title = "Divide"
     content_label = "/"

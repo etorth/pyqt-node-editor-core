@@ -24,7 +24,7 @@ class QDMDragListBox(QListWidget):
         self.itemDoubleClicked.connect(self.onItemDoubleClicked)
 
     def addOpItems(self):
-        for op_type, node_types in utils.valid_nodes().items():
+        for op_type, node_types in sorted(utils.valid_nodes().items()):
             collapsed = self._collapsed.get(op_type, False)
 
             item = QListWidgetItem(('父控件 %d ' % op_type) + ('>' if collapsed else 'v'), self)
@@ -48,7 +48,6 @@ class QDMDragListBox(QListWidget):
         # setup data
         item.setData(Qt.ItemDataRole.UserRole + UROLE_ICON, pixmap)
         item.setData(Qt.ItemDataRole.UserRole + UROLE_TYPE, utils.get_class_from_opcode(op_code))
-        item.setData(Qt.ItemDataRole.UserRole + UROLE_OPTYPE, None)
 
     def startDrag(self, *args, **kwargs):
         try:
