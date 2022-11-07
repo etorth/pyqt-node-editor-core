@@ -12,8 +12,6 @@ from qdutils import *
 # images for the dark skin
 import qss.nodeeditor_dark_resources
 
-DEBUG = True
-
 class MainWindow(StateNodeWindow):
 
     def initUI(self):
