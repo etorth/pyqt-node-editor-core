@@ -3,19 +3,28 @@ from calc_node_base import *
 from qdutils import *
 
 
-class CalcEditorContent(QDMNodeContentWidget):
+class CalcCheckerContent(QDMNodeContentWidget):
     def initUI(self):
-        self.label = QLabel('Lua代码')
+        self.label = QLabel('等级')
+
+        self.choice = QComboBox(self)
+        self.choice.addItems(["大于", "小于", "等于", "不等于", "不大于", "不小于"])
+
+        self.edit = QLineEdit(self)
+        self.edit.setValidator(QIntValidator())
+        self.edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
         self.hbox = QHBoxLayout(self)
         self.hbox.setContentsMargins(10, 10, 10, 10)
-        self.hbox.setSpacing(10)
+        self.hbox.setSpacing(5)
 
         self.hbox.addWidget(self.label)
+        self.hbox.addWidget(self.choice)
+        self.hbox.addWidget(self.edit)
 
     def serialize(self):
         res = super().serialize()
-        res['value'] = 'lua_code_from_LuaEditorWidget'
+        res['value'] = self.edit.text()
         return res
 
     def deserialize(self, data, hashmap={}):
@@ -30,25 +39,23 @@ class CalcEditorContent(QDMNodeContentWidget):
 
 
 @utils.register_opnode
-class StateNode_Enter(CalcNode):
-    icon = "icons/editor.png"
-    op_type = OPS_ACTION
-    op_code = OP_NODE_EDITOR
-    op_title = "进入节点"
-    content_label_objname = "进入节点"
+class NodeChecker_level(CalcNode):
+    icon = "icons/checker.png"
+    op_type = OPS_CHECKER
+    op_code = OP_NODE_CHECKER
+    op_title = "等级"
 
     def __init__(self, scene):
-        super().__init__(scene, outputs=[3])
+        super().__init__(scene, inputs=[1], outputs=[3])
         self.eval()
 
     def initInnerClasses(self):
-        self.content = CalcEditorContent(self)
+        self.content = CalcCheckerContent(self)
         self.gfxNode = CalcGraphicsNode(self)
+        self.content.edit.textChanged.connect(self.onInputChanged)
 
     def evalImplementation(self):
-        u_value = 1 # hack
-        s_value = int(u_value)
-        self.value = s_value
+        self.value = 12
         self.markDirty(False)
         self.markInvalid(False)
 
@@ -58,5 +65,4 @@ class StateNode_Enter(CalcNode):
         self.gfxNode.setToolTip("")
 
         self.evalChildren()
-
         return self.value
