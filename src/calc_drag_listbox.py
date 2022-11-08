@@ -23,14 +23,33 @@ class QDMDragListBox(QListWidget):
         self.itemClicked.connect(self.onItemClicked)
         self.itemDoubleClicked.connect(self.onItemDoubleClicked)
 
+    def createCollapsibleIcon(self, filename, collapsed, gap=0):
+        icon1 = 'icons/%s.png' % ('fold' if collapsed else 'unfold')
+        icon2 = filename
+
+        img1 = QPixmap(icon1)
+        img2 = QPixmap(icon2)
+
+        image = QImage(img1.width() + gap + img2.width(), max(img1.height(), img2.height()), QImage.Format.Format_ARGB32_Premultiplied)
+        image.fill(QColor(Qt.GlobalColor.transparent))
+
+        combined = QPixmap.fromImage(image)
+        paint = QPainter(combined)
+
+        paint.drawPixmap(0, 0, img1)
+        paint.drawPixmap(img1.width() + gap, 0, img2)
+
+        return combined
+
     def addOpItems(self):
         for op_type, node_types in sorted(utils.valid_nodes().items()):
             collapsed = self._collapsed.get(op_type, False)
 
-            item = QListWidgetItem(('父控件 %d ' % op_type) + ('>' if collapsed else 'v'), self)
+            item = QListWidgetItem('父控件 %d ' % op_type, self)
             item.setSizeHint(QSize(32, 32))
             item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
             item.setData(Qt.ItemDataRole.UserRole + UROLE_OPTYPE, op_type)
+            item.setIcon(QIcon(self.createCollapsibleIcon('icons/checker.png', collapsed, 10)))
 
             if not collapsed:
                 for node in node_types:
