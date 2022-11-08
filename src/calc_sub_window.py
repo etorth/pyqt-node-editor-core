@@ -52,8 +52,8 @@ class CalculatorSubWindow(StateNodeWidget):
 
     def initNodesContextMenu(self):
         context_menu = QMenu(self)
-        for key in utils.valid_node_types():
-            context_menu.addAction(self.node_actions[key])
+        for type in utils.valid_node_types():
+            context_menu.addAction(self.node_actions[type.op_code])
         return context_menu
 
     def setTitle(self):
