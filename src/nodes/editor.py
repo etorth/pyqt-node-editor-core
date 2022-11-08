@@ -13,7 +13,6 @@ class CalcEditorContent(QDMNodeContentWidget):
         self.edit = QLineEdit(self)
         self.edit.setValidator(QIntValidator())
         self.edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.edit.setObjectName(self.node.content_label_objname)
 
         self.hbox = QHBoxLayout(self)
         self.hbox.setContentsMargins(10, 10, 10, 10)
@@ -45,7 +44,6 @@ class CalcNode_Editor(CalcNode):
     op_type = OPS_CHECKER
     op_code = OP_NODE_EDITOR
     op_title = "Editor"
-    content_label_objname = "calc_node_editor"
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[1], outputs=[3])

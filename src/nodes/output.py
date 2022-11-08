@@ -7,7 +7,6 @@ class CalcOutputContent(QDMNodeContentWidget):
     def initUI(self):
         self.lbl = QLabel("42", self)
         self.lbl.setAlignment(Qt.AlignmentFlag.AlignLeft)
-        self.lbl.setObjectName(self.node.content_label_objname)
 
 
 @utils.register_opnode
@@ -16,7 +15,6 @@ class CalcNode_Output(CalcNode):
     op_type = OPS_CHECKER
     op_code = OP_NODE_OUTPUT
     op_title = "Output"
-    content_label_objname = "calc_node_output"
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[1], outputs=[])

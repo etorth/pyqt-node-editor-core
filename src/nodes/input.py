@@ -7,7 +7,6 @@ class CalcInputContent(QDMNodeContentWidget):
     def initUI(self):
         self.edit = QLineEdit("1", self)
         self.edit.setAlignment(Qt.AlignmentFlag.AlignRight)
-        self.edit.setObjectName(self.node.content_label_objname)
 
     def serialize(self):
         res = super().serialize()
@@ -31,7 +30,6 @@ class CalcNode_Input(CalcNode):
     op_type = OPS_CHECKER
     op_code = OP_NODE_INPUT
     op_title = "Input"
-    content_label_objname = "calc_node_input"
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[], outputs=[3])
