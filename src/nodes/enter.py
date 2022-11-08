@@ -16,7 +16,7 @@ class CalcEditorContent(QDMNodeContentWidget):
 
     def serialize(self):
         res = super().serialize()
-        res['value'] = self.edit.text()
+        res['value'] = 'lua_code_from_LuaEditorWidget'
         return res
 
     def deserialize(self, data, hashmap={}):
@@ -47,7 +47,7 @@ class StateNode_Enter(CalcNode):
         self.gfxNode = CalcGraphicsNode(self)
 
     def evalImplementation(self):
-        u_value = self.content.edit.text()
+        u_value = 1 # hack
         s_value = int(u_value)
         self.value = s_value
         self.markDirty(False)
