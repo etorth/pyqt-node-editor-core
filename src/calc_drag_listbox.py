@@ -45,7 +45,7 @@ class QDMDragListBox(QListWidget):
         for op_type, node_types in sorted(utils.valid_nodes().items()):
             collapsed = self._collapsed.get(op_type, False)
 
-            item = QListWidgetItem('父控件 %d ' % op_type, self)
+            item = QListWidgetItem(utils.ops_type_str(op_type), self)
             item.setSizeHint(QSize(32, 32))
             item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
             item.setData(Qt.ItemDataRole.UserRole + UROLE_OPTYPE, op_type)

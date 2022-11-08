@@ -101,6 +101,16 @@ class Utils:
         QApplication.instance().setStyleSheet('\n'.join(sheets))
 
 
+    def ops_type_str(self, op_type) -> str:
+        if op_type == OPS_ACTION:
+            return '行为'
+        elif op_type == OPS_COMMAND:
+            return '命令'
+        elif op_type == OPS_CHECKER:
+            return '条件'
+        else:
+            return '未知'
+
 utils = Utils()
 
 from nodes import *
