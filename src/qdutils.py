@@ -8,17 +8,6 @@ from PyQt6.QtWidgets import QApplication
 
 LISTBOX_MIMETYPE = "application/x-item"
 
-OP_NODE_INPUT = 1
-OP_NODE_OUTPUT = 2
-OP_NODE_ADD = 3
-OP_NODE_SUB = 4
-OP_NODE_MUL = 5
-OP_NODE_DIV = 6
-OP_NODE_CHECKER = 7
-OP_NODE_EDITOR = 8
-OP_NODE_LOGIC_AND = 9
-
-
 OPS_NONE    = 0
 OPS_ACTION  = 1
 OPS_COMMAND = 2
@@ -53,10 +42,13 @@ confg = Confg()
 
 
 class Utils:
+    _node_type_uid = 0
     _node_type_list = {}
 
     @classmethod
     def register_opnode(cls, node_type):
+        cls._node_type_uid += 1
+        node_type.op_code = cls._node_type_uid
         bisect.insort(cls._node_type_list.setdefault(node_type.op_type, []), node_type, key=lambda x: str(x))
 
 

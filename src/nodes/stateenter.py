@@ -33,7 +33,6 @@ class CalcEditorContent(QDMNodeContentWidget):
 class StateNode_Enter(CalcNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
-    op_code = OP_NODE_EDITOR
     op_title = "进入节点"
     content_label_objname = "进入节点"
 

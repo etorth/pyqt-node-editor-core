@@ -28,7 +28,6 @@ class CalcInputContent(QDMNodeContentWidget):
 class CalcNode_Input(CalcNode):
     icon = "icons/in.png"
     op_type = OPS_CHECKER
-    op_code = OP_NODE_INPUT
     op_title = "Input"
 
     def __init__(self, scene):

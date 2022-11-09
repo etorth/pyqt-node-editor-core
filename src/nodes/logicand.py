@@ -33,7 +33,6 @@ class LogicNodeContent_and(QDMNodeContentWidget):
 class LogicNode_and(CalcNode):
     icon = "icons/editor.png"
     op_type = OPS_LOGIC
-    op_code = OP_NODE_LOGIC_AND
     op_title = "逻辑与"
 
     def __init__(self, scene):

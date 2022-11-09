@@ -44,7 +44,6 @@ class CalcContent(QDMNodeContentWidget):
 
 class CalcNode(Node):
     icon = ""
-    op_code = 0
     op_title = "Undefined"
     content_label = ""
 

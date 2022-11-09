@@ -25,7 +25,8 @@ class CalculatorSubWindow(StateNodeWidget):
         self.__closeEventListeners = []
 
     def getNodeClassFromData(self, data):
-        if 'op_code' not in data: return Node
+        if 'op_code' not in data:
+            return Node
         return utils.get_class_from_opcode(data['op_code'])
 
     def doEvalOutputs(self):
@@ -83,8 +84,7 @@ class CalculatorSubWindow(StateNodeWidget):
             text = dataStream.readQString()
 
             mouse_position = event.position()
-            scene_position = self.scene.gfxScene.views()[0].mapToScene(round(mouse_position.x()),
-                                                                      round(mouse_position.y()))
+            scene_position = self.scene.gfxScene.views()[0].mapToScene(round(mouse_position.x()), round(mouse_position.y()))
 
             if confg.DEBUG:
                 print("GOT DROP: [%d] '%s'" % (op_code, text), "mouse:", mouse_position, "scene:", scene_position)

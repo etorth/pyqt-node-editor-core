@@ -42,7 +42,6 @@ class CalcEditorContent(QDMNodeContentWidget):
 class CalcNode_Editor(CalcNode):
     icon = "icons/editor.png"
     op_type = OPS_CHECKER
-    op_code = OP_NODE_EDITOR
     op_title = "Editor"
 
     def __init__(self, scene):

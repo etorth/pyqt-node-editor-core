@@ -42,7 +42,6 @@ class CalcCheckerContent(QDMNodeContentWidget):
 class NodeChecker_level(CalcNode):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER
-    op_code = OP_NODE_CHECKER
     op_title = "等级"
 
     def __init__(self, scene):

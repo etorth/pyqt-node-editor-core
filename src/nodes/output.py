@@ -13,7 +13,6 @@ class CalcOutputContent(QDMNodeContentWidget):
 class CalcNode_Output(CalcNode):
     icon = "icons/out.png"
     op_type = OPS_CHECKER
-    op_code = OP_NODE_OUTPUT
     op_title = "Output"
 
     def __init__(self, scene):
