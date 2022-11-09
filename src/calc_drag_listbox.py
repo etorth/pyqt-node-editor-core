@@ -14,7 +14,7 @@ class QDMDragListBox(QListWidget):
 
     def initUI(self):
         # init
-        self.setIconSize(QSize(32, 32))
+        self.setIconSize(QSize(48, 48))
         self.setSelectionMode(QAbstractItemView.SelectionMode.SingleSelection)
         self.setDragEnabled(True)
 
@@ -36,7 +36,7 @@ class QDMDragListBox(QListWidget):
         combined = QPixmap.fromImage(image)
         paint = QPainter(combined)
 
-        paint.drawPixmap(0, 0, img1)
+        paint.drawPixmap(0, (image.height() - img1.height()) // 2, 16, 16, img1)
         paint.drawPixmap(img1.width() + gap, 0, img2)
 
         return combined
