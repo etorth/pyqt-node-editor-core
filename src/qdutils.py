@@ -16,12 +16,14 @@ OP_NODE_MUL = 5
 OP_NODE_DIV = 6
 OP_NODE_CHECKER = 7
 OP_NODE_EDITOR = 8
+OP_NODE_LOGIC_AND = 9
 
 
 OPS_NONE    = 0
 OPS_ACTION  = 1
 OPS_COMMAND = 2
 OPS_CHECKER = 3
+OPS_LOGIC   = 4
 
 UROLE_NONE = 0
 UROLE_ICON = 1
@@ -108,6 +110,8 @@ class Utils:
             return '命令'
         elif op_type == OPS_CHECKER:
             return '条件'
+        elif op_type == OPS_LOGIC:
+            return '逻辑'
         else:
             return '未知'
 

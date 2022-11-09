@@ -53,12 +53,12 @@ class QDMDragListBox(QListWidget):
 
             if not collapsed:
                 for node in node_types:
-                    self.addOpItem(node.op_title, node.icon, node.op_code)
+                    self.addOpItem(node)
 
 
-    def addOpItem(self, name, icon=None, op_code=0):
-        item = QListWidgetItem(name, self)
-        pixmap = QPixmap(icon if icon is not None else ".")
+    def addOpItem(self, node):
+        item = QListWidgetItem(node.op_title, self)
+        pixmap = QPixmap(node.icon if node.icon is not None else ".")
         item.setIcon(QIcon(pixmap))
         item.setSizeHint(QSize(32, 32))
 
@@ -66,7 +66,7 @@ class QDMDragListBox(QListWidget):
 
         # setup data
         item.setData(Qt.ItemDataRole.UserRole + UROLE_ICON, pixmap)
-        item.setData(Qt.ItemDataRole.UserRole + UROLE_TYPE, utils.get_class_from_opcode(op_code))
+        item.setData(Qt.ItemDataRole.UserRole + UROLE_TYPE, node)
 
     def startDrag(self, *args, **kwargs):
         try:
