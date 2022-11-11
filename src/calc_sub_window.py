@@ -134,9 +134,9 @@ class CalculatorSubWindow(StateNodeWidget):
         evalAct = context_menu.addAction("Eval")
 
         addNodeMenu = context_menu.addMenu('Add Node')
-        nodeList = []
+        nodeDict = {}
         for type in utils.valid_node_types():
-            nodeList.append(addNodeMenu.addAction(type.op_title))
+            nodeDict[addNodeMenu.addAction(type.op_title)] = type
 
         action = context_menu.exec(self.mapToGlobal(event.pos()))
         if action is None:
@@ -171,6 +171,12 @@ class CalculatorSubWindow(StateNodeWidget):
             val = selected.eval()
             if confg.DEBUG:
                 print("EVALUATED:", val)
+
+        if selected:
+            for addAct in nodeList.keys():
+                if action == addAct:
+                    print("ADDING NODE: %s", nodeList[addAct].op_title)
+
 
     def handleEdgeContextMenu(self, event):
         if confg.DEBUG:
