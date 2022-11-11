@@ -176,7 +176,8 @@ class CalculatorSubWindow(StateNodeWidget):
         if selected:
             for addedAct in addedActDict.keys():
                 if action == addedAct:
-                    print("ADDING NODE: %s", addedActDict[addedAct].op_title)
+                    print("ADDING NODE: %s" % addedActDict[addedAct].op_title)
+                    selected.addSubNode(addedActDict[addedAct])
 
 
     def handleEdgeContextMenu(self, event):

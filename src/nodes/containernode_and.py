@@ -7,11 +7,11 @@ class ContainerNodeContent_and(QDMNodeContentWidget):
     def initUI(self):
         self.label = QLabel('Lua代码')
 
-        self.hbox = QHBoxLayout(self)
-        self.hbox.setContentsMargins(10, 10, 10, 10)
-        self.hbox.setSpacing(10)
+        self.vbox = QVBoxLayout(self)
+        self.vbox.setContentsMargins(10, 10, 10, 10)
+        self.vbox.setSpacing(10)
 
-        self.hbox.addWidget(self.label)
+        self.vbox.addWidget(self.label)
 
     def serialize(self):
         res = super().serialize()
@@ -38,6 +38,10 @@ class ContainerNode_and(CalcNode):
     def __init__(self, scene):
         super().__init__(scene, outputs=[3])
         self.eval()
+
+    def addSubNode(self, node):
+        newNode = node(self.scene)
+        self.content.vbox.addWidget(QLabel('widget'))
 
     def initInnerClasses(self):
         self.content = ContainerNodeContent_and(self)

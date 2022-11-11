@@ -54,8 +54,7 @@ class QDMNodeContentWidget(QWidget, Serializable):
         self.node.scene.getView().editingFlag = value
 
     def serialize(self) -> OrderedDict:
-        return OrderedDict([
-        ])
+        return OrderedDict([])
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
         return True
