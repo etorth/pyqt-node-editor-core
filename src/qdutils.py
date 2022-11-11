@@ -12,7 +12,7 @@ OPS_NONE    = 0
 OPS_ACTION  = 1
 OPS_COMMAND = 2
 OPS_CHECKER = 3
-OPS_LOGIC   = 4
+OPS_CONTAINER   = 4
 
 UROLE_NONE = 0
 UROLE_ICON = 1
@@ -102,8 +102,8 @@ class Utils:
             return '命令'
         elif op_type == OPS_CHECKER:
             return '条件'
-        elif op_type == OPS_LOGIC:
-            return '逻辑'
+        elif op_type == OPS_CONTAINER:
+            return '容器'
         else:
             return '未知'
 

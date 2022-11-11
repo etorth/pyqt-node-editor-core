@@ -34,7 +34,6 @@ class StateNode_Enter(CalcNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
     op_title = "进入节点"
-    content_label_objname = "进入节点"
 
     def __init__(self, scene):
         super().__init__(scene, outputs=[3])

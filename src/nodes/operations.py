@@ -8,7 +8,6 @@ class CalcNode_Add(CalcNode):
     op_type = OPS_COMMAND
     op_title = "Add"
     content_label = "+"
-    content_label_objname = "calc_node_bg"
 
     def evalOperation(self, input1, input2):
         return input1 + input2
@@ -20,7 +19,6 @@ class CalcNode_Sub(CalcNode):
     op_type = OPS_COMMAND
     op_title = "Substract"
     content_label = "-"
-    content_label_objname = "calc_node_bg"
 
     def evalOperation(self, input1, input2):
         return input1 - input2
@@ -31,7 +29,6 @@ class CalcNode_Mul(CalcNode):
     op_type = OPS_COMMAND
     op_title = "Multiply"
     content_label = "*"
-    content_label_objname = "calc_node_mul"
 
     def evalOperation(self, input1, input2):
         print('foo')
@@ -43,7 +40,6 @@ class CalcNode_Div(CalcNode):
     op_type = OPS_COMMAND
     op_title = "Divide"
     content_label = "/"
-    content_label_objname = "calc_node_div"
 
     def evalOperation(self, input1, input2):
         return input1 / input2
