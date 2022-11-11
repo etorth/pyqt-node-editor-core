@@ -134,9 +134,9 @@ class CalculatorSubWindow(StateNodeWidget):
         evalAct = context_menu.addAction("Eval")
 
         addNodeMenu = context_menu.addMenu('Add Node')
-        nodeDict = {}
+        addedActDict = {}
         for type in utils.valid_node_types():
-            nodeDict[addNodeMenu.addAction(type.op_title)] = type
+            addedActDict[addNodeMenu.addAction(type.op_title)] = type
 
         action = context_menu.exec(self.mapToGlobal(event.pos()))
         if action is None:
@@ -144,7 +144,8 @@ class CalculatorSubWindow(StateNodeWidget):
 
         selected = None
         item = self.scene.getItemAt(event.pos())
-        if type(item) == QGraphicsProxyWidget:
+
+        if isinstance(item, QGraphicsProxyWidget):
             item = item.widget()
 
         if hasattr(item, 'node'):
@@ -173,9 +174,9 @@ class CalculatorSubWindow(StateNodeWidget):
                 print("EVALUATED:", val)
 
         if selected:
-            for addAct in nodeList.keys():
-                if action == addAct:
-                    print("ADDING NODE: %s", nodeList[addAct].op_title)
+            for addedAct in addedActDict.keys():
+                if action == addedAct:
+                    print("ADDING NODE: %s", addedActDict[addedAct].op_title)
 
 
     def handleEdgeContextMenu(self, event):
