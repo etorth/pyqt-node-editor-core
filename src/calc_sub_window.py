@@ -132,7 +132,15 @@ class CalculatorSubWindow(StateNodeWidget):
         markInvalidAct = context_menu.addAction("Mark Invalid")
         unmarkInvalidAct = context_menu.addAction("Unmark Invalid")
         evalAct = context_menu.addAction("Eval")
-        action = context_menu.exec_(self.mapToGlobal(event.pos()))
+
+        addNodeMenu = context_menu.addMenu('Add Node')
+        nodeList = []
+        for type in utils.valid_node_types():
+            nodeList.append(addNodeMenu.addAction(type.op_title))
+
+        action = context_menu.exec(self.mapToGlobal(event.pos()))
+        if action is None:
+            return
 
         selected = None
         item = self.scene.getItemAt(event.pos())
@@ -146,10 +154,19 @@ class CalculatorSubWindow(StateNodeWidget):
 
         if confg.DEBUG:
             print("got item:", selected)
-        if selected and action == markDirtyAct: selected.markDirty()
-        if selected and action == markDirtyDescendantsAct: selected.markDescendantsDirty()
-        if selected and action == markInvalidAct: selected.markInvalid()
-        if selected and action == unmarkInvalidAct: selected.markInvalid(False)
+
+        if selected and action == markDirtyAct:
+            selected.markDirty()
+
+        if selected and action == markDirtyDescendantsAct:
+            selected.markDescendantsDirty()
+
+        if selected and action == markInvalidAct:
+            selected.markInvalid()
+
+        if selected and action == unmarkInvalidAct:
+            selected.markInvalid(False)
+
         if selected and action == evalAct:
             val = selected.eval()
             if confg.DEBUG:
@@ -161,7 +178,7 @@ class CalculatorSubWindow(StateNodeWidget):
         context_menu = QMenu(self)
         bezierAct = context_menu.addAction("Bezier Edge")
         directAct = context_menu.addAction("Direct Edge")
-        action = context_menu.exec_(self.mapToGlobal(event.pos()))
+        action = context_menu.exec(self.mapToGlobal(event.pos()))
 
         selected = None
         item = self.scene.getItemAt(event.pos())

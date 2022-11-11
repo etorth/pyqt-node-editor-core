@@ -8,15 +8,15 @@ from PyQt6.QtWidgets import QApplication
 
 LISTBOX_MIMETYPE = "application/x-item"
 
-OPS_NONE    = 0
-OPS_ACTION  = 1
-OPS_COMMAND = 2
-OPS_CHECKER = 3
-OPS_CONTAINER   = 4
+OPS_NONE      = 0
+OPS_ACTION    = 1
+OPS_COMMAND   = 2
+OPS_CHECKER   = 3
+OPS_CONTAINER = 4
 
-UROLE_NONE = 0
-UROLE_ICON = 1
-UROLE_TYPE = 2
+UROLE_NONE   = 0
+UROLE_ICON   = 1
+UROLE_TYPE   = 2
 UROLE_OPTYPE = 3
 
 
