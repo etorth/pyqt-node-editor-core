@@ -7,10 +7,10 @@ class CalcCheckerContent(QDMNodeContentWidget):
     def initUI(self):
         self.label = QLabel('等级')
 
-        self.choice = QComboBox(self)
+        self.choice = QComboBox()
         self.choice.addItems(["大于", "小于", "等于", "不等于", "不大于", "不小于"])
 
-        self.edit = QLineEdit(self)
+        self.edit = QLineEdit()
         self.edit.setValidator(QIntValidator())
         self.edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
