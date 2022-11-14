@@ -38,8 +38,7 @@ class CalcGraphicsNode(QDMGraphicsNode):
 
 class CalcContent(QDMNodeContentWidget):
     def initUI(self):
-        lbl = QLabel(self.node.content_label, self)
-        lbl.setObjectName("calc_node_bg")
+        self.label = QLabel(self.node.content_label, self)
 
 
 class CalcNode(Node):

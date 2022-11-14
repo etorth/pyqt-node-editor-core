@@ -5,8 +5,8 @@ from qdutils import *
 
 class CalcOutputContent(QDMNodeContentWidget):
     def initUI(self):
-        self.lbl = QLabel("42", self)
-        self.lbl.setAlignment(Qt.AlignmentFlag.AlignLeft)
+        self.label = QLabel("42", self)
+        self.label.setAlignment(Qt.AlignmentFlag.AlignLeft)
 
 
 @utils.register_opnode
@@ -36,7 +36,7 @@ class CalcNode_Output(CalcNode):
             self.markInvalid()
             return
 
-        self.content.lbl.setText("%d" % val)
+        self.content.label.setText("%d" % val)
         self.markInvalid(False)
         self.markDirty(False)
         self.gfxNode.setToolTip("")
