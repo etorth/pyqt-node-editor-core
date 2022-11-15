@@ -6,12 +6,21 @@ from qdutils import *
 class ContainerNodeContent_and(QDMNodeContentWidget):
     def initUI(self):
         self.label = QLabel('Lua代码')
+        self.view = QGraphicsView()
+
+        self.scene = QGraphicsScene()
+        self.scene.addRect(0, 0, 100, 100)
+        self.scene.addEllipse(0, 0, 100, 100)
+        self.scene.addWidget(QLabel('Lua代码2'))
 
         self.vbox = QVBoxLayout(self)
         self.vbox.setContentsMargins(10, 10, 10, 10)
         self.vbox.setSpacing(10)
 
         self.vbox.addWidget(self.label)
+
+        self.view.setScene(self.scene)
+        self.vbox.addWidget(self.view)
 
     def serialize(self):
         res = super().serialize()
