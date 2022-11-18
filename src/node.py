@@ -398,7 +398,7 @@ class Node(Serializable):
         Retreive all first-level children connected to this `Node` `Outputs`
 
         :return: list of `Nodes` connected to this `Node` from all `Outputs`
-        :rtype: List[:class:`~nodeeditor.node_node.Node`]
+        :rtype: List[:class:`~nodeeditor.node.Node`]
         """
         if self.outputs == []: return []
         other_nodes = []
@@ -414,8 +414,8 @@ class Node(Serializable):
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: :class:`~nodeeditor.node_node.Node` which is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: :class:`~nodeeditor.node_node.Node` or ``None``
+        :return: :class:`~nodeeditor.node.Node` which is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
+        :rtype: :class:`~nodeeditor.node.Node` or ``None``
         """
         try:
             input_socket = self.inputs[index]
@@ -432,9 +432,9 @@ class Node(Serializable):
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node_node.Node` and :class:`~nodeeditor.node_socket.Socket` which
+        :return: Tuple containing :class:`~nodeeditor.node.Node` and :class:`~nodeeditor.node_socket.Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`~nodeeditor.node_node.Node`, :class:`~nodeeditor.node_socket.Socket`)
+        :rtype: (:class:`~nodeeditor.node.Node`, :class:`~nodeeditor.node_socket.Socket`)
         """
         try:
             input_socket = self.inputs[index]
@@ -453,9 +453,9 @@ class Node(Serializable):
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node_node.Node` and :class:`~nodeeditor.node_socket.Socket` which
+        :return: Tuple containing :class:`~nodeeditor.node.Node` and :class:`~nodeeditor.node_socket.Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`~nodeeditor.node_node.Node`, int)
+        :rtype: (:class:`~nodeeditor.node.Node`, int)
         """
         try:
             edge = self.inputs[index].edges[0]
@@ -474,8 +474,8 @@ class Node(Serializable):
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: all :class:`~nodeeditor.node_node.Node` instances which are connected to the specified `Input` or ``[]`` if there is no connection of index is out of range
-        :rtype: List[:class:`~nodeeditor.node_node.Node`]
+        :return: all :class:`~nodeeditor.node.Node` instances which are connected to the specified `Input` or ``[]`` if there is no connection of index is out of range
+        :rtype: List[:class:`~nodeeditor.node.Node`]
         """
         ins = []
         for edge in self.inputs[index].edges:
@@ -488,8 +488,8 @@ class Node(Serializable):
 
         :param index: Order number of the `Output Socket`
         :type index: ``int``
-        :return: all :class:`~nodeeditor.node_node.Node` instances which are connected to the specified `Output` or ``[]`` if there is no connection of index is out of range
-        :rtype: List[:class:`~nodeeditor.node_node.Node`]
+        :return: all :class:`~nodeeditor.node.Node` instances which are connected to the specified `Output` or ``[]`` if there is no connection of index is out of range
+        :rtype: List[:class:`~nodeeditor.node.Node`]
         """
         outs = []
         for edge in self.outputs[index].edges:

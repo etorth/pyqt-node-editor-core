@@ -9,7 +9,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
 from scene import Scene, InvalidFile
-from node_node import Node
+from node import Node
 from node_edge import Edge, EDGE_TYPE_BEZIER
 from node_graphics_view import GfxView
 

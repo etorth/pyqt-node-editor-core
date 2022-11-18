@@ -7,7 +7,7 @@ from collections import OrderedDict
 from qdutils import *
 from node_serializable import Serializable
 from node_graphics_scene import GfxScene
-from node_node import Node
+from node import Node
 from node_edge import Edge
 from scene_history import SceneHistory
 from scene_clipboard import SceneClipboard
@@ -219,10 +219,10 @@ class Scene(Serializable):
         return self.getView().itemAt(pos)
 
     def addNode(self, node: Node):
-        """Add :class:`~nodeeditor.node_node.Node` to this `Scene`
+        """Add :class:`~nodeeditor.node.Node` to this `Scene`
 
-        :param node: :class:`~nodeeditor.node_node.Node` to be added to this `Scene`
-        :type node: :class:`~nodeeditor.node_node.Node`
+        :param node: :class:`~nodeeditor.node.Node` to be added to this `Scene`
+        :type node: :class:`~nodeeditor.node.Node`
         """
         self.nodes.append(node)
 
@@ -235,10 +235,10 @@ class Scene(Serializable):
         self.edges.append(edge)
 
     def removeNode(self, node: Node):
-        """Remove :class:`~nodeeditor.node_node.Node` from this `Scene`
+        """Remove :class:`~nodeeditor.node.Node` from this `Scene`
 
-        :param node: :class:`~nodeeditor.node_node.Node` to be removed from this `Scene`
-        :type node: :class:`~nodeeditor.node_node.Node`
+        :param node: :class:`~nodeeditor.node.Node` to be removed from this `Scene`
+        :type node: :class:`~nodeeditor.node.Node`
         """
         if node in self.nodes:
             self.nodes.remove(node)
@@ -301,7 +301,7 @@ class Scene(Serializable):
     def setNodeClassSelector(self, class_selecting_function: 'functon') -> 'Node class type':
         """
         Set the function which decides what `Node` class to instantiate when deserializating `Scene`.
-        If not set, we will always instantiate :class:`~nodeeditor.node_node.Node` for each `Node` in the `Scene`
+        If not set, we will always instantiate :class:`~nodeeditor.node.Node` for each `Node` in the `Scene`
 
         :param class_selecting_function: function which returns `Node` class type (not instance) from `Node` serialized ``dict`` data
         :type class_selecting_function: ``function``

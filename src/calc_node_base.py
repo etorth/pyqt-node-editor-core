@@ -1,7 +1,7 @@
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
-from node_node import Node
+from node import Node
 from node_content_widget import QDMNodeContentWidget
 from node_graphics_node import GfxNode
 from node_socket import LEFT_CENTER, RIGHT_CENTER

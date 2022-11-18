@@ -182,14 +182,14 @@ class Edge(Serializable):
         """Safely remove this Edge.
 
         Removes `Graphics Edge` from the ``QGraphicsScene`` and it's reference to all GC to clean it up.
-        Notifies nodes previously connected :class:`~nodeeditor.node_node.Node` (s) about this event.
+        Notifies nodes previously connected :class:`~nodeeditor.node.Node` (s) about this event.
 
         Triggers Nodes':
 
-        - :py:meth:`~nodeeditor.node_node.Node.onEdgeConnectionChanged`
-        - :py:meth:`~nodeeditor.node_node.Node.onInputChanged`
+        - :py:meth:`~nodeeditor.node.Node.onEdgeConnectionChanged`
+        - :py:meth:`~nodeeditor.node.Node.onInputChanged`
 
-        :param silent_for_socket: :class:`~nodeeditor.node_socket.Socket` of a :class:`~nodeeditor.node_node.Node` which
+        :param silent_for_socket: :class:`~nodeeditor.node_socket.Socket` of a :class:`~nodeeditor.node.Node` which
             won't be notified, when this ``Edge`` is going to be removed
         :type silent_for_socket: :class:`~nodeeditor.node_socket.Socket`
         :param silent: ``True`` if no events should be triggered during removing
