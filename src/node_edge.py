@@ -20,8 +20,8 @@ class Edge(Serializable):
     def __init__(self, scene: 'Scene', start_socket: 'Socket' = None, end_socket: 'Socket' = None, edge_type=EDGE_TYPE_DIRECT):
         """
 
-        :param scene: Reference to the :py:class:`~nodeeditor.node_scene.Scene`
-        :type scene: :py:class:`~nodeeditor.node_scene.Scene`
+        :param scene: Reference to the :py:class:`~nodeeditor.scene.Scene`
+        :type scene: :py:class:`~nodeeditor.scene.Scene`
         :param start_socket: Reference to the starting socket
         :type start_socket: :py:class:`~nodeeditor.node_socket.Socket`
         :param end_socket: Reference to the End socket or ``None``
@@ -30,7 +30,7 @@ class Edge(Serializable):
 
         :Instance Attributes:
 
-            - **scene** - reference to the :class:`~nodeeditor.node_scene.Scene`
+            - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
             - **gfxEdge** - Instance of :class:`~nodeeditor.node_graphics_edge.QDMGraphicsEdge` subclass handling graphical representation in the ``QGraphicsScene``.
         """
         super().__init__()

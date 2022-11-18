@@ -9,8 +9,8 @@ from node_serializable import Serializable
 from node_graphics_scene import QDMGraphicsScene
 from node_node import Node
 from node_edge import Edge
-from node_scene_history import SceneHistory
-from node_scene_clipboard import SceneClipboard
+from scene_history import SceneHistory
+from scene_clipboard import SceneClipboard
 
 DEBUG_REMOVE_WARNINGS = False
 
@@ -28,8 +28,8 @@ class Scene(Serializable):
 
             - **nodes** - list of `Nodes` in this `Scene`
             - **edges** - list of `Edges` in this `Scene`
-            - **history** - Instance of :class:`~nodeeditor.node_scene_history.SceneHistory`
-            - **clipboard** - Instance of :class:`~nodeeditor.node_scene_clipboard.SceneClipboard`
+            - **history** - Instance of :class:`~nodeeditor.scene_history.SceneHistory`
+            - **clipboard** - Instance of :class:`~nodeeditor.scene_clipboard.SceneClipboard`
             - **scene_width** - width of this `Scene` in pixels
             - **scene_height** - height of this `Scene` in pixels
         """
@@ -288,7 +288,7 @@ class Scene(Serializable):
 
         :param filename: from what file to load the `Scene`
         :type filename: ``str``
-        :raises: :class:`~nodeeditor.node_scene.InvalidFile` if there was an error decoding JSON file
+        :raises: :class:`~nodeeditor.scene.InvalidFile` if there was an error decoding JSON file
         """
 
         with open(filename, "r") as file:

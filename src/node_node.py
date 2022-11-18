@@ -17,8 +17,8 @@ class Node(Serializable):
 
     def __init__(self, scene: 'Scene', title: str = "Undefined Node", inputs: list = [], outputs: list = []):
         """
-        :param scene: reference to the :class:`~nodeeditor.node_scene.Scene`
-        :type scene: :class:`~nodeeditor.node_scene.Scene`
+        :param scene: reference to the :class:`~nodeeditor.scene.Scene`
+        :type scene: :class:`~nodeeditor.scene.Scene`
         :param title: Node Title shown in Scene
         :type title: str
         :param inputs: list of :class:`~nodeeditor.node_socket.Socket` types from which the `Sockets` will be auto created
@@ -26,7 +26,7 @@ class Node(Serializable):
 
         :Instance Attributes:
 
-            - **scene** - reference to the :class:`~nodeeditor.node_scene.Scene`
+            - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
             - **gfxNode** - Instance of :class:`~nodeeditor.node_graphics_node.QDMGraphicsNode` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
             - **content** - Instance of :class:`~nodeeditor.node_graphics_content.QDMGraphicsContent` which is child of ``QWidget`` representing container for all inner widgets inside of the Node. Automatically created in constructor
             - **inputs** - list containin Input :class:`~nodeeditor.node_socket.Socket` instances

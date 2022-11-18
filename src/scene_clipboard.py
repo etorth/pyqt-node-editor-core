@@ -17,12 +17,12 @@ class SceneClipboard():
 
     def __init__(self, scene: 'Scene'):
         """
-        :param scene: Reference to the :class:`~nodeeditor.node_scene.Scene`
-        :type scene: :class:`~nodeeditor.node_scene.Scene`
+        :param scene: Reference to the :class:`~nodeeditor.scene.Scene`
+        :type scene: :class:`~nodeeditor.scene.Scene`
 
         :Instance Attributes:
 
-        - **scene** - reference to the :class:`~nodeeditor.node_scene.Scene`
+        - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
         """
         self.scene = scene
 
@@ -32,7 +32,7 @@ class SceneClipboard():
 
         :param delete: True if you want to delete selected items after serialization. Usefull for Cut operation
         :type delete: ``bool``
-        :return: Serialized data of current selection in NodeEditor :class:`~nodeeditor.node_scene.Scene`
+        :return: Serialized data of current selection in NodeEditor :class:`~nodeeditor.scene.Scene`
         """
         if confg.DEBUG: print("-- COPY TO CLIPBOARD ---")
 
@@ -89,7 +89,7 @@ class SceneClipboard():
         """
         Deserializes data from Clipboard.
 
-        :param data: ``dict`` data for deserialization to the :class:`nodeeditor.node_scene.Scene`.
+        :param data: ``dict`` data for deserialization to the :class:`nodeeditor.scene.Scene`.
         :type data: ``dict``
         """
 

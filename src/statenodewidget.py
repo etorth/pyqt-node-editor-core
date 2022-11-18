@@ -8,7 +8,7 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from node_scene import Scene, InvalidFile
+from scene import Scene, InvalidFile
 from node_node import Node
 from node_edge import Edge, EDGE_TYPE_BEZIER
 from node_graphics_view import QDMGraphicsView
@@ -36,7 +36,7 @@ class StateNodeWidget(QWidget):
         self.initUI()
 
     def initUI(self):
-        """Set up this ``StateNodeWidget`` with its layout,  :class:`~nodeeditor.node_scene.Scene` and
+        """Set up this ``StateNodeWidget`` with its layout,  :class:`~nodeeditor.scene.Scene` and
         :class:`~nodeeditor.node_graphics_view.QDMGraphicsView`"""
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -74,7 +74,7 @@ class StateNodeWidget(QWidget):
         return self.scene.getSelectedItems()
 
     def hasSelectedItems(self) -> bool:
-        """Is there something selected in the :class:`nodeeditor.node_scene.Scene`?
+        """Is there something selected in the :class:`nodeeditor.scene.Scene`?
 
         :return: ``True`` if there is something selected in the `Scene`
         :rtype: ``bool``

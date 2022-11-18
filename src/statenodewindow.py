@@ -107,9 +107,9 @@ class StateNodeWindow(QMainWindow):
             event.ignore()
 
     def isModified(self) -> bool:
-        """Has current :class:`~nodeeditor.node_scene.Scene` been modified?
+        """Has current :class:`~nodeeditor.scene.Scene` been modified?
 
-        :return: ``True`` if current :class:`~nodeeditor.node_scene.Scene` has been modified
+        :return: ``True`` if current :class:`~nodeeditor.scene.Scene` has been modified
         :rtype: ``bool``
         """
         return self.getCurrentStateNodeWidget().scene.isModified()

@@ -14,12 +14,12 @@ class SceneHistory():
 
     def __init__(self, scene: 'Scene'):
         """
-        :param scene: Reference to the :class:`~nodeeditor.node_scene.Scene`
-        :type scene: :class:`~nodeeditor.node_scene.Scene`
+        :param scene: Reference to the :class:`~nodeeditor.scene.Scene`
+        :type scene: :class:`~nodeeditor.scene.Scene`
 
         :Instance Attributes:
 
-        - **scene** - reference to the :class:`~nodeeditor.node_scene.Scene`
+        - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
         - **history_limit** - number of history steps that can be stored
         """
         self.scene = scene
@@ -121,7 +121,7 @@ class SceneHistory():
 
         :param desc: Description of current History Stamp
         :type desc: ``str``
-        :param setModified: if ``True`` marks :class:`~nodeeditor.node_scene.Scene` with `has_been_modified`
+        :param setModified: if ``True`` marks :class:`~nodeeditor.scene.Scene` with `has_been_modified`
         :type setModified: ``bool``
 
         Triggers:
