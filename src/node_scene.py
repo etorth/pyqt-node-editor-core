@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-A module containing
+"""A module containing
 """
 import os
 import json
@@ -16,7 +15,8 @@ from node_scene_clipboard import SceneClipboard
 DEBUG_REMOVE_WARNINGS = False
 
 
-class InvalidFile(Exception): pass
+class InvalidFile(Exception):
+    pass
 
 
 class Scene(Serializable):
