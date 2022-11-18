@@ -2,7 +2,7 @@
 """
 A module containing NodeEditor's class for representing `Node`.
 """
-from node_graphics_node import GfxNode
+from gfxnode import GfxNode
 from node_content_widget import QDMNodeContentWidget
 from node_socket import *
 from qdutils import *
@@ -27,7 +27,7 @@ class Node(Serializable):
         :Instance Attributes:
 
             - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
-            - **gfxNode** - Instance of :class:`~nodeeditor.node_graphics_node.GfxNode` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
+            - **gfxNode** - Instance of :class:`~nodeeditor.gfxnode.GfxNode` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
             - **content** - Instance of :class:`~nodeeditor.node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the Node. Automatically created in constructor
             - **inputs** - list containin Input :class:`~nodeeditor.node_socket.Socket` instances
             - **outputs** - list containin Output :class:`~nodeeditor.node_socket.Socket` instances
