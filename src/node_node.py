@@ -9,8 +9,7 @@ from qdutils import *
 
 
 class Node(Serializable):
-    """
-    Class representing `Node` in the `Scene`.
+    """Class representing `Node` in the `Scene`.
     """
     GraphicsNode_class = QDMGraphicsNode
     NodeContent_class = QDMNodeContentWidget
