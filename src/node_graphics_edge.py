@@ -140,7 +140,7 @@ class GfxEdge(QGraphicsPathItem):
         """
         return self.calcPath()
 
-    def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
+    def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         """Qt's overriden method to paint this Graphics Edge. Path calculated in :func:`~nodeeditor.node_graphics_edge.GfxEdge.calcPath` method"""
         self.setPath(self.calcPath())
 

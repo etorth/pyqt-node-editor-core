@@ -46,7 +46,7 @@ class QDMCutLine(QGraphicsItem):
 
         return path
 
-    def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
+    def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         """Paint the Cutting Line"""
         painter.setRenderHint(QPainter.RenderHint.Antialiasing)
         painter.setBrush(Qt.BrushStyle.NoBrush)

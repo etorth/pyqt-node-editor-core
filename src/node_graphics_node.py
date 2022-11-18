@@ -179,7 +179,7 @@ class GfxNode(QGraphicsItem):
         self.gfxContent = self.node.scene.gfxScene.addWidget(self.content)
         self.gfxContent.setParentItem(self)
 
-    def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
+    def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         """Painting the rounded rectanglar `Node`"""
         # title
         path_title = QPainterPath()

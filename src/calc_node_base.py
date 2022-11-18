@@ -22,8 +22,8 @@ class CalcGraphicsNode(GfxNode):
         super().initAssets()
         self.icons = QImage("icons/status_icons.png")
 
-    def paint(self, painter, QStyleOptionGraphicsItem, widget=None):
-        super().paint(painter, QStyleOptionGraphicsItem, widget)
+    def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
+        super().paint(painter, option, widget)
 
         offset = 24.0
         if self.node.isDirty(): offset = 0.0
