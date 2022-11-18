@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""A module containing
+"""A module containing Scene
 """
 import os
 import json
@@ -12,7 +12,7 @@ from node_edge import Edge
 from scene_history import SceneHistory
 from scene_clipboard import SceneClipboard
 
-class InvalidFile(Exception):
+class _InvalidFile(Exception):
     pass
 
 
@@ -285,7 +285,7 @@ class Scene(Serializable):
 
         :param filename: from what file to load the `Scene`
         :type filename: ``str``
-        :raises: :class:`~nodeeditor.scene.InvalidFile` if there was an error decoding JSON file
+        :raises: :class:`~nodeeditor.scene._InvalidFile` if there was an error decoding JSON file
         """
 
         with open(filename, "r") as file:
@@ -295,7 +295,7 @@ class Scene(Serializable):
                 self.deserialize(data)
                 self.has_been_modified = False
             except json.JSONDecodeError:
-                raise InvalidFile("%s is not a valid JSON file" % os.path.basename(filename))
+                raise _InvalidFile("%s is not a valid JSON file" % os.path.basename(filename))
             except Exception as e:
                 utils.dumpExcept(e)
 
