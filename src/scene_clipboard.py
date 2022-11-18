@@ -3,7 +3,7 @@
 A module containing all code for working with Clipboard
 """
 from collections import OrderedDict
-from node_graphics_edge import QDMGraphicsEdge
+from node_graphics_edge import GfxEdge
 from node_edge import Edge
 
 DEBUG = True
@@ -44,7 +44,7 @@ class SceneClipboard():
                 sel_nodes.append(item.node.serialize())
                 for socket in (item.node.inputs + item.node.outputs):
                     sel_sockets[socket.id] = socket
-            elif isinstance(item, QDMGraphicsEdge):
+            elif isinstance(item, GfxEdge):
                 sel_edges.append(item.edge)
 
         # debug

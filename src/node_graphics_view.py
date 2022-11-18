@@ -6,8 +6,8 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import QGraphicsView, QApplication
 
-from node_graphics_socket import QDMGraphicsSocket
-from node_graphics_edge import QDMGraphicsEdge
+from node_graphics_socket import GfxSocket
+from node_graphics_edge import GfxEdge
 from node_edge import Edge, EDGE_TYPE_BEZIER
 from node_graphics_cutline import QDMCutLine
 from qdutils import *
@@ -23,21 +23,21 @@ DEBUG = True
 DEBUG_MMB_SCENE_ITEMS = False
 
 
-class QDMGraphicsView(QGraphicsView):
+class GfxView(QGraphicsView):
     """Class representing NodeEditor's `Graphics View`"""
     #: pyqtSignal emitted when cursor position on the `Scene` has changed
     scenePosChanged = pyqtSignal(int, int)
 
-    def __init__(self, gfxScene: 'QDMGraphicsScene', parent: 'QWidget' = None):
+    def __init__(self, gfxScene: 'GfxScene', parent: 'QWidget' = None):
         """
-        :param gfxScene: reference to the :class:`~nodeeditor.node_graphics_scene.QDMGraphicsScene`
-        :type gfxScene: :class:`~nodeeditor.node_graphics_scene.QDMGraphicsScene`
+        :param gfxScene: reference to the :class:`~nodeeditor.node_graphics_scene.GfxScene`
+        :type gfxScene: :class:`~nodeeditor.node_graphics_scene.GfxScene`
         :param parent: parent widget
         :type parent: ``QWidget``
 
         :Instance Attributes:
 
-        - **gfxScene** - reference to the :class:`~nodeeditor.node_graphics_scene.QDMGraphicsScene`
+        - **gfxScene** - reference to the :class:`~nodeeditor.node_graphics_scene.GfxScene`
         - **mode** - state of the `Graphics View`
         - **zoomInFactor**- ``float`` - zoom step scaling, default 1.25
         - **zoomClamp** - ``bool`` - do we clamp zooming or is it infinite?
@@ -144,10 +144,10 @@ class QDMGraphicsView(QGraphicsView):
 
         # debug print out
         if DEBUG_MMB_SCENE_ITEMS:
-            if isinstance(item, QDMGraphicsEdge):
+            if isinstance(item, GfxEdge):
                 print("MMB DEBUG:", item.edge, "\n\t", item.edge.gfxEdge if item.edge.gfxEdge is not None else None)
 
-            if isinstance(item, QDMGraphicsSocket):
+            if isinstance(item, GfxSocket):
                 print("MMB DEBUG:", item.socket, "socket_type:", item.socket.socket_type, "has edges:", "no" if item.socket.edges == [] else "")
                 if item.socket.edges:
                     for edge in item.socket.edges: print("\t", edge)
@@ -193,14 +193,14 @@ class QDMGraphicsView(QGraphicsView):
         # if confg.DEBUG: print("LMB Click on", item, self.debug_modifiers(event))
 
         # logic
-        if hasattr(item, "node") or isinstance(item, QDMGraphicsEdge) or item is None:
+        if hasattr(item, "node") or isinstance(item, GfxEdge) or item is None:
             if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                 event.ignore()
                 fakeEvent = QMouseEvent(QEvent.Type.MouseButtonPress, event.localPos(), event.screenPos(), Qt.MouseButton.LeftButton, event.buttons() | Qt.MouseButton.LeftButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
                 super().mousePressEvent(fakeEvent)
                 return
 
-        if isinstance(item, QDMGraphicsSocket):
+        if isinstance(item, GfxSocket):
             if self.mode == MODE_NOOP:
                 self.mode = MODE_EDGE_DRAG
                 self.edgeDragStart(item)
@@ -230,7 +230,7 @@ class QDMGraphicsView(QGraphicsView):
 
         try:
             # logic
-            if hasattr(item, "node") or isinstance(item, QDMGraphicsEdge) or item is None:
+            if hasattr(item, "node") or isinstance(item, GfxEdge) or item is None:
                 if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                     event.ignore()
                     fakeEvent = QMouseEvent(event.type(), event.localPos(), event.screenPos(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
@@ -365,7 +365,7 @@ class QDMGraphicsView(QGraphicsView):
     def deleteSelected(self):
         """Shortcut for safe deleting every object selected in the `Scene`."""
         for item in self.gfxScene.selectedItems():
-            if isinstance(item, QDMGraphicsEdge):
+            if isinstance(item, GfxEdge):
                 item.edge.remove()
             elif hasattr(item, 'node'):
                 item.node.remove()
@@ -415,7 +415,7 @@ class QDMGraphicsView(QGraphicsView):
         self.drag_edge = None
 
         try:
-            if isinstance(item, QDMGraphicsSocket):
+            if isinstance(item, GfxSocket):
                 if item.socket != self.drag_start_socket:
                     # if we released dragging on a socket (other then the beginning socket)
 

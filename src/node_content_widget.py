@@ -27,7 +27,7 @@ class QDMNodeContentWidget(QWidget, Serializable):
         self.initUI()
 
     def initUI(self):
-        """Sets up layouts and widgets to be rendered in :py:class:`~nodeeditor.node_graphics_node.QDMGraphicsNode` class.
+        """Sets up layouts and widgets to be rendered in :py:class:`~nodeeditor.node_graphics_node.GfxNode` class.
         """
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -44,7 +44,7 @@ class QDMNodeContentWidget(QWidget, Serializable):
             If you are handling keyPress events by default Qt Window's shortcuts and ``QActions``, you will not
             probably need to use this method
 
-        Helper function which sets editingFlag inside :py:class:`~nodeeditor.node_graphics_view.QDMGraphicsView` class.
+        Helper function which sets editingFlag inside :py:class:`~nodeeditor.node_graphics_view.GfxView` class.
 
         This is a helper function to handle keys inside nodes with ``QLineEdits`` or ``QTextEdits`` (you can
         use overriden :py:class:`QDMTextEdit` class) and with QGraphicsView class method ``keyPressEvent``.

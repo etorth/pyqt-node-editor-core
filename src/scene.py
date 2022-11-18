@@ -6,13 +6,13 @@ import json
 from collections import OrderedDict
 from qdutils import *
 from node_serializable import Serializable
-from node_graphics_scene import QDMGraphicsScene
+from node_graphics_scene import GfxScene
 from node_node import Node
 from node_edge import Edge
 from scene_history import SceneHistory
 from scene_clipboard import SceneClipboard
 
-class _InvalidFile(Exception):
+class InvalidFile(Exception):
     pass
 
 
@@ -20,8 +20,7 @@ class Scene(Serializable):
     """Class representing NodeEditor's `Scene`"""
 
     def __init__(self):
-        """
-        :Instance Attributes:
+        """Instance Attributes:
 
             - **nodes** - list of `Nodes` in this `Scene`
             - **edges** - list of `Edges` in this `Scene`
@@ -83,7 +82,7 @@ class Scene(Serializable):
 
     def initUI(self):
         """Set up Graphics Scene Instance"""
-        self.gfxScene = QDMGraphicsScene(self)
+        self.gfxScene = GfxScene(self)
         self.gfxScene.setSceneSize(self.scene_width, self.scene_height)
 
     def setSilentSelectionEvents(self, value: bool = True):
@@ -285,7 +284,7 @@ class Scene(Serializable):
 
         :param filename: from what file to load the `Scene`
         :type filename: ``str``
-        :raises: :class:`~nodeeditor.scene._InvalidFile` if there was an error decoding JSON file
+        :raises: :class:`~nodeeditor.scene.InvalidFile` if there was an error decoding JSON file
         """
 
         with open(filename, "r") as file:
@@ -295,7 +294,7 @@ class Scene(Serializable):
                 self.deserialize(data)
                 self.has_been_modified = False
             except json.JSONDecodeError:
-                raise _InvalidFile("%s is not a valid JSON file" % os.path.basename(filename))
+                raise InvalidFile("%s is not a valid JSON file" % os.path.basename(filename))
             except Exception as e:
                 utils.dumpExcept(e)
 

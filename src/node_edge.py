@@ -31,7 +31,7 @@ class Edge(Serializable):
         :Instance Attributes:
 
             - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
-            - **gfxEdge** - Instance of :class:`~nodeeditor.node_graphics_edge.QDMGraphicsEdge` subclass handling graphical representation in the ``QGraphicsScene``.
+            - **gfxEdge** - Instance of :class:`~nodeeditor.node_graphics_edge.GfxEdge` subclass handling graphical representation in the ``QGraphicsScene``.
         """
         super().__init__()
         self.scene = scene
@@ -100,7 +100,7 @@ class Edge(Serializable):
         """Edge type
 
         :getter: get edge type constant for current ``Edge``. See :ref:`edge-type-constants`
-        :setter: sets new edge type. On background, creates new :class:`~nodeeditor.node_graphics_edge.QDMGraphicsEdge`
+        :setter: sets new edge type. On background, creates new :class:`~nodeeditor.node_graphics_edge.GfxEdge`
             child class if necessary, adds this ``QGraphicsPathItem`` to the ``QGraphicsScene`` and updates edge sockets
             positions.
         """
@@ -127,9 +127,9 @@ class Edge(Serializable):
         :return: gfxEdge class
         :rtype: class of `gfxEdge`
         """
-        edge_class = QDMGraphicsEdgeBezier
+        edge_class = GfxEdgeBezier
         if edge_type == EDGE_TYPE_DIRECT:
-            edge_class = QDMGraphicsEdgeDirect
+            edge_class = GfxEdgeDirect
         return edge_class
 
     def getOtherSocket(self, known_socket: 'Socket'):
