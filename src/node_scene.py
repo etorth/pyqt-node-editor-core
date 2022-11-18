@@ -79,7 +79,8 @@ class Scene(Serializable):
             self._has_been_modified = value
 
             # call all registered listeners
-            for callback in self._has_been_modified_listeners: callback()
+            for callback in self._has_been_modified_listeners:
+                callback()
 
         self._has_been_modified = value
 
