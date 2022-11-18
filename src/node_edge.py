@@ -97,8 +97,7 @@ class Edge(Serializable):
 
     @property
     def edge_type(self):
-        """
-        Edge type
+        """Edge type
 
         :getter: get edge type constant for current ``Edge``. See :ref:`edge-type-constants`
         :setter: sets new edge type. On background, creates new :class:`~nodeeditor.node_graphics_edge.QDMGraphicsEdge`
