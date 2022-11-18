@@ -49,7 +49,7 @@ class QDMGraphicsScene(QGraphicsScene):
         """Overriden Qt's dragMoveEvent to enable Qt's Drag Events"""
         pass
 
-    def setGrScene(self, width: int, height: int):
+    def setSceneSize(self, width: int, height: int):
         """Set `width` and `height` of the `Graphics Scene`"""
         self.setSceneRect(-width // 2, -height // 2, width, height)
 

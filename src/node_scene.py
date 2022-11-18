@@ -87,7 +87,7 @@ class Scene(Serializable):
     def initUI(self):
         """Set up Graphics Scene Instance"""
         self.gfxScene = QDMGraphicsScene(self)
-        self.gfxScene.setGrScene(self.scene_width, self.scene_height)
+        self.gfxScene.setSceneSize(self.scene_width, self.scene_height)
 
     def setSilentSelectionEvents(self, value: bool = True):
         """Calling this can suppress onItemSelected events to be triggered. This is usefull when working with clipboard"""
