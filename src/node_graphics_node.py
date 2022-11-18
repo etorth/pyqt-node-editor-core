@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-A module containing Graphics representation of :class:`~nodeeditor.node_node.Node`
+"""A module containing Graphics representation of :class:`~nodeeditor.node_node.Node`
 """
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
