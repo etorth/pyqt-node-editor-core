@@ -7,8 +7,6 @@ from node_content_widget import QDMNodeContentWidget
 from node_socket import *
 from qdutils import *
 
-DEBUG = True
-
 
 class Node(Serializable):
     """
@@ -272,22 +270,33 @@ class Node(Serializable):
                 edge.updatePositions()
 
     def remove(self):
+        """Safely remove this Node
         """
-        Safely remove this Node
-        """
-        if confg.DEBUG: print("> Removing Node", self)
-        if confg.DEBUG: print(" - remove all edges from sockets")
+        if confg.DEBUG:
+            print("> Removing Node", self)
+
+        if confg.DEBUG:
+            print(" - remove all edges from sockets")
+
         for socket in (self.inputs + self.outputs):
             # if socket.hasEdge():
             for edge in socket.edges:
-                if confg.DEBUG: print("    - removing from socket:", socket, "edge:", edge)
+                if confg.DEBUG:
+                    print("    - removing from socket:", socket, "edge:", edge)
                 edge.remove()
-        if confg.DEBUG: print(" - remove gfxNode")
+
+        if confg.DEBUG:
+            print(" - remove gfxNode")
+
         self.scene.gfxScene.removeItem(self.gfxNode)
         self.gfxNode = None
-        if confg.DEBUG: print(" - remove node from the scene")
+
+        if confg.DEBUG:
+            print(" - remove node from the scene")
+
         self.scene.removeNode(self)
-        if confg.DEBUG: print(" - everything was done.")
+        if confg.DEBUG:
+            print(" - everything was done.")
 
     # node evaluation stuff
 
@@ -306,7 +315,8 @@ class Node(Serializable):
         :type new_value: ``bool``
         """
         self._is_dirty = new_value
-        if self._is_dirty: self.onMarkedDirty()
+        if self._is_dirty:
+            self.onMarkedDirty()
 
     def onMarkedDirty(self):
         """Called when this `Node` has been marked as `Dirty`. This method is supposed to be overriden"""
@@ -419,8 +429,7 @@ class Node(Serializable):
             return None
 
     def getInputWithSocket(self, index: int = 0) -> [('Node', 'Socket'), (None, None)]:
-        """
-        Get the **first**  `Node` connected to the Input specified by `index` and the connection `Socket`
+        """Get the **first**  `Node` connected to the Input specified by `index` and the connection `Socket`
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
@@ -476,8 +485,7 @@ class Node(Serializable):
         return ins
 
     def getOutputs(self, index: int = 0) -> 'List[Node]':
-        """
-        Get **all** `Nodes` connected to the Output specified by `index`
+        """Get **all** `Nodes` connected to the Output specified by `index`
 
         :param index: Order number of the `Output Socket`
         :type index: ``int``
@@ -509,7 +517,9 @@ class Node(Serializable):
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
         try:
-            if restore_id: self.id = data['id']
+            if restore_id:
+                self.id = data['id']
+
             hashmap[data['id']] = self
 
             self.setPos(data['pos_x'], data['pos_y'])
