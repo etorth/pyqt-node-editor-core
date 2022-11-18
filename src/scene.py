@@ -12,9 +12,6 @@ from node_edge import Edge
 from scene_history import SceneHistory
 from scene_clipboard import SceneClipboard
 
-DEBUG_REMOVE_WARNINGS = False
-
-
 class InvalidFile(Exception):
     pass
 
@@ -247,8 +244,8 @@ class Scene(Serializable):
         if node in self.nodes:
             self.nodes.remove(node)
         else:
-            if DEBUG_REMOVE_WARNINGS: print("!W:", "Scene::removeNode", "wanna remove nodeeditor", node,
-                                            "from self.nodes but it's not in the list!")
+            if utils.DEBUG:
+                print("!W:", "Scene::removeNode", "wanna remove nodeeditor", node, "from self.nodes but it's not in the list!")
 
     def removeEdge(self, edge: Edge):
         """Remove :class:`~nodeeditor.node_edge.Edge` from this `Scene`
@@ -259,8 +256,8 @@ class Scene(Serializable):
         if edge in self.edges:
             self.edges.remove(edge)
         else:
-            if DEBUG_REMOVE_WARNINGS: print("!W:", "Scene::removeEdge", "wanna remove edge", edge,
-                                            "from self.edges but it's not in the list!")
+            if utils.DEBUG:
+                print("!W:", "Scene::removeEdge", "wanna remove edge", edge, "from self.edges but it's not in the list!")
 
     def clear(self):
         """Remove all `Nodes` from this `Scene`. This causes also to remove all `Edges`"""
