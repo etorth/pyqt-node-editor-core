@@ -33,9 +33,6 @@ class QDMNodeContentWidget(QWidget, Serializable):
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
 
-        self.widget_label = QLabel("Some Title")
-        self.layout.addWidget(self.widget_label)
-        self.layout.addWidget(QDMTextEdit("foo"))
 
     def setEditingFlag(self, value: bool):
         """
