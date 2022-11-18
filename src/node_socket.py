@@ -74,14 +74,14 @@ class Socket(Serializable):
         )
 
     def delete(self):
-        """Delete this `Socket` from graphics scene for sure"""
+        """Delete this `Socket` from graphics scene for sure
+        """
         self.gfxSocket.setParentItem(None)
         self.node.scene.gfxScene.removeItem(self.gfxSocket)
         del self.gfxSocket
 
     def changeSocketType(self, new_socket_type: int) -> bool:
-        """
-        Change the Socket Type
+        """Change the Socket Type
 
         :param new_socket_type: new socket type
         :type new_socket_type: ``int``
@@ -120,8 +120,7 @@ class Socket(Serializable):
         return len(self.edges) > 0
 
     def isConnected(self, edge: 'Edge') -> bool:
-        """
-        Returns ``True`` if :class:`~nodeeditor.node_edge.Edge` is connected to this `Socket`
+        """Returns ``True`` if :class:`~nodeeditor.node_edge.Edge` is connected to this `Socket`
 
         :param edge: :class:`~nodeeditor.node_edge.Edge` to check if it is connected to this `Socket`
         :type edge: :class:`~nodeeditor.node_edge.Edge`
