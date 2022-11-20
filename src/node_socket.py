@@ -41,7 +41,7 @@ class Socket(Serializable):
 
             - **node** - reference to the :class:`~nodeeditor.node.Node` containing this `Socket`
             - **edges** - list of `Edges` connected to this `Socket`
-            - **gfxSocket** - reference to the :class:`~nodeeditor.node_graphics_socket.GfxSocket`
+            - **gfx** - reference to the :class:`~nodeeditor.node_graphics_socket.GfxSocket`
             - **position** - Socket position. See :ref:`socket-position-constants`
             - **index** - Current index of this socket in the position
             - **socket_type** - Constant defining type(color) of this socket
@@ -64,7 +64,7 @@ class Socket(Serializable):
         if confg.DEBUG:
             print("Socket -- creating with", self.index, self.position, "for nodeeditor", self.node)
 
-        self.gfxSocket = self.__class__.Socket_gfx_class(self)
+        self.gfx = self.__class__.Socket_gfx_class(self)
         self.setSocketPosition()
         self.edges = []
 
@@ -76,9 +76,9 @@ class Socket(Serializable):
     def delete(self):
         """Delete this `Socket` from graphics scene for sure
         """
-        self.gfxSocket.setParentItem(None)
-        self.node.scene.gfx.removeItem(self.gfxSocket)
-        del self.gfxSocket
+        self.gfx.setParentItem(None)
+        self.node.scene.gfx.removeItem(self.gfx)
+        del self.gfx
 
     def changeSocketType(self, new_socket_type: int) -> bool:
         """Change the Socket Type
@@ -90,14 +90,14 @@ class Socket(Serializable):
         """
         if self.socket_type != new_socket_type:
             self.socket_type = new_socket_type
-            self.gfxSocket.changeSocketType()
+            self.gfx.changeSocketType()
             return True
         return False
 
     def setSocketPosition(self):
         """Helper function to set `Graphics Socket` position. Exact socket position is calculated
         inside :class:`~nodeeditor.node.Node`."""
-        self.gfxSocket.setPos(*self.node.getSocketPosition(self.index, self.position, self.count_on_this_node_side))
+        self.gfx.setPos(*self.node.getSocketPosition(self.index, self.position, self.count_on_this_node_side))
 
     def getSocketPosition(self):
         """

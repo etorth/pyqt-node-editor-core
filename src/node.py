@@ -143,7 +143,7 @@ class Node(Serializable):
             if hasattr(self, 'inputs') and hasattr(self, 'outputs'):
                 # remove gfxSockets from scene
                 for socket in (self.inputs + self.outputs):
-                    self.scene.gfx.removeItem(socket.gfxSocket)
+                    self.scene.gfx.removeItem(socket.gfx)
                 self.inputs = []
                 self.outputs = []
 
