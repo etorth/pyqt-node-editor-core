@@ -54,7 +54,7 @@ class ContainerNode_and(CalcNode):
 
     def initInnerClasses(self):
         self.content = ContainerNodeContent_and(self)
-        self.gfxNode = CalcGraphicsNode(self)
+        self.gfx = CalcGraphicsNode(self)
 
     def evalImplementation(self):
         u_value = 1 # hack
@@ -66,7 +66,7 @@ class ContainerNode_and(CalcNode):
         self.markDescendantsInvalid(False)
         self.markDescendantsDirty()
 
-        self.gfxNode.setToolTip("")
+        self.gfx.setToolTip("")
 
         self.evalChildren()
 

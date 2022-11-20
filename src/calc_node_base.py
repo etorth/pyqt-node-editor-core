@@ -72,7 +72,7 @@ class CalcNode(Node):
         if i1 is None or i2 is None:
             self.markInvalid()
             self.markDescendantsDirty()
-            self.gfxNode.setToolTip("Connect all inputs")
+            self.gfx.setToolTip("Connect all inputs")
             return None
 
         else:
@@ -80,7 +80,7 @@ class CalcNode(Node):
             self.value = val
             self.markDirty(False)
             self.markInvalid(False)
-            self.gfxNode.setToolTip("")
+            self.gfx.setToolTip("")
 
             self.markDescendantsDirty()
             self.evalChildren()
@@ -98,11 +98,11 @@ class CalcNode(Node):
             return val
         except ValueError as e:
             self.markInvalid()
-            self.gfxNode.setToolTip(str(e))
+            self.gfx.setToolTip(str(e))
             self.markDescendantsDirty()
         except Exception as e:
             self.markInvalid()
-            self.gfxNode.setToolTip(str(e))
+            self.gfx.setToolTip(str(e))
             utils.dumpExcept(e)
 
     def onInputChanged(self, socket=None):

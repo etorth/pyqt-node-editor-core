@@ -159,13 +159,13 @@ class Edge(Serializable):
         This should be called if you update ``Edge`` positions.
         """
         source_pos = self.start_socket.getSocketPosition()
-        source_pos[0] += self.start_socket.node.gfxNode.pos().x()
-        source_pos[1] += self.start_socket.node.gfxNode.pos().y()
+        source_pos[0] += self.start_socket.node.gfx.pos().x()
+        source_pos[1] += self.start_socket.node.gfx.pos().y()
         self.gfxEdge.setSource(*source_pos)
         if self.end_socket is not None:
             end_pos = self.end_socket.getSocketPosition()
-            end_pos[0] += self.end_socket.node.gfxNode.pos().x()
-            end_pos[1] += self.end_socket.node.gfxNode.pos().y()
+            end_pos[0] += self.end_socket.node.gfx.pos().x()
+            end_pos[1] += self.end_socket.node.gfx.pos().y()
             self.gfxEdge.setDestination(*end_pos)
         else:
             self.gfxEdge.setDestination(*source_pos)

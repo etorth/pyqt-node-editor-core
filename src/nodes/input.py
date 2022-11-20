@@ -36,7 +36,7 @@ class CalcNode_Input(CalcNode):
 
     def initInnerClasses(self):
         self.content = CalcInputContent(self)
-        self.gfxNode = CalcGraphicsNode(self)
+        self.gfx = CalcGraphicsNode(self)
         self.content.edit.textChanged.connect(self.onInputChanged)
 
     def evalImplementation(self):
@@ -49,7 +49,7 @@ class CalcNode_Input(CalcNode):
         self.markDescendantsInvalid(False)
         self.markDescendantsDirty()
 
-        self.gfxNode.setToolTip("")
+        self.gfx.setToolTip("")
 
         self.evalChildren()
 

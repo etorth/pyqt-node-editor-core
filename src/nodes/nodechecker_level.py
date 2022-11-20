@@ -50,7 +50,7 @@ class NodeChecker_level(CalcNode):
 
     def initInnerClasses(self):
         self.content = CalcCheckerContent(self)
-        self.gfxNode = CalcGraphicsNode(self)
+        self.gfx = CalcGraphicsNode(self)
         self.content.edit.textChanged.connect(self.onInputChanged)
 
     def evalImplementation(self):
@@ -61,7 +61,7 @@ class NodeChecker_level(CalcNode):
         self.markDescendantsInvalid(False)
         self.markDescendantsDirty()
 
-        self.gfxNode.setToolTip("")
+        self.gfx.setToolTip("")
 
         self.evalChildren()
         return self.value

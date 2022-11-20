@@ -27,7 +27,7 @@ class Node(Serializable):
         :Instance Attributes:
 
             - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
-            - **gfxNode** - Instance of :class:`~nodeeditor.gfxnode.GfxNode` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
+            - **gfx** - Instance of :class:`~nodeeditor.gfxnode.GfxNode` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
             - **content** - Instance of :class:`~nodeeditor.node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the Node. Automatically created in constructor
             - **inputs** - list containin Input :class:`~nodeeditor.node_socket.Socket` instances
             - **outputs** - list containin Output :class:`~nodeeditor.node_socket.Socket` instances
@@ -39,7 +39,7 @@ class Node(Serializable):
 
         # just to be sure, init these variables
         self.content = None
-        self.gfxNode = None
+        self.gfx = None
 
         self.initInnerClasses()
         self.initSettings()
@@ -47,7 +47,7 @@ class Node(Serializable):
         self.title = title
 
         self.scene.addNode(self)
-        self.scene.gfxScene.addItem(self.gfxNode)
+        self.scene.gfxScene.addItem(self.gfx)
 
         # create socket for inputs and outputs
         self.inputs = []
@@ -75,7 +75,7 @@ class Node(Serializable):
     @title.setter
     def title(self, value):
         self._title = value
-        self.gfxNode.title = self._title
+        self.gfx.title = self._title
 
     @property
     def pos(self):
@@ -85,7 +85,7 @@ class Node(Serializable):
         :return: Node position
         :rtype: ``QPointF``
         """
-        return self.gfxNode.pos()  # QPointF
+        return self.gfx.pos()  # QPointF
 
     def setPos(self, x: float, y: float):
         """
@@ -94,14 +94,14 @@ class Node(Serializable):
         :param x: X `Scene` position
         :param y: Y `Scene` position
         """
-        self.gfxNode.setPos(x, y)
+        self.gfx.setPos(x, y)
 
     def initInnerClasses(self):
         """Sets up graphics Node (PyQt) and Content Widget"""
         node_content_class = self.getNodeContentClass()
         graphics_node_class = self.getGraphicsNodeClass()
         if node_content_class is not None: self.content = node_content_class(self)
-        if graphics_node_class is not None: self.gfxNode = graphics_node_class(self)
+        if graphics_node_class is not None: self.gfx = graphics_node_class(self)
 
     def getNodeContentClass(self):
         """Returns class representing nodeeditor content"""
@@ -202,11 +202,11 @@ class Node(Serializable):
         :param new_state: ``True`` if you want to select the `Node`. ``False`` if you want to deselect the `Node`
         :type new_state: ``bool``
         """
-        self.gfxNode.doSelect(new_state)
+        self.gfx.doSelect(new_state)
 
     def isSelected(self):
         """Returns ``True`` if current `Node` is selected"""
-        return self.gfxNode.isSelected()
+        return self.gfx.isSelected()
 
     def getSocketPosition(self, index: int, position: int, num_out_of: int = 1) -> '(x, y)':
         """
@@ -222,15 +222,15 @@ class Node(Serializable):
         :return: Position of described Socket on the `Node`
         :rtype: ``x, y``
         """
-        x = self.socket_offsets[position] if (position in (LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM)) else self.gfxNode.width + self.socket_offsets[position]
+        x = self.socket_offsets[position] if (position in (LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM)) else self.gfx.width + self.socket_offsets[position]
 
         if position in (LEFT_BOTTOM, RIGHT_BOTTOM):
             # start from bottom
-            y = self.gfxNode.height - self.gfxNode.edge_roundness - self.gfxNode.title_vertical_padding - index * self.socket_spacing
+            y = self.gfx.height - self.gfx.edge_roundness - self.gfx.title_vertical_padding - index * self.socket_spacing
         elif position in (LEFT_CENTER, RIGHT_CENTER):
             num_sockets = num_out_of
-            node_height = self.gfxNode.height
-            top_offset = self.gfxNode.title_height + 2 * self.gfxNode.title_vertical_padding + self.gfxNode.edge_padding
+            node_height = self.gfx.height
+            top_offset = self.gfx.title_height + 2 * self.gfx.title_vertical_padding + self.gfx.edge_padding
             available_height = node_height - top_offset
 
             total_height_of_all_sockets = num_sockets * self.socket_spacing
@@ -243,7 +243,7 @@ class Node(Serializable):
 
         elif position in (LEFT_TOP, RIGHT_TOP):
             # start from top
-            y = self.gfxNode.title_height + self.gfxNode.title_vertical_padding + self.gfxNode.edge_roundness + index * self.socket_spacing
+            y = self.gfx.title_height + self.gfx.title_vertical_padding + self.gfx.edge_roundness + index * self.socket_spacing
         else:
             # this should never happen
             y = 0
@@ -257,7 +257,7 @@ class Node(Serializable):
         :param socket: `Socket` which position we want to know
         :return: (x, y) Socket's scene position
         """
-        nodepos = self.gfxNode.pos()
+        nodepos = self.gfx.pos()
         socketpos = self.getSocketPosition(socket.index, socket.position, socket.count_on_this_node_side)
         return (nodepos.x() + socketpos[0], nodepos.y() + socketpos[1])
 
@@ -285,10 +285,10 @@ class Node(Serializable):
                 edge.remove()
 
         if confg.DEBUG:
-            print(" - remove gfxNode")
+            print(" - remove gfx")
 
-        self.scene.gfxScene.removeItem(self.gfxNode)
-        self.gfxNode = None
+        self.scene.gfxScene.removeItem(self.gfx)
+        self.gfx = None
 
         if confg.DEBUG:
             print(" - remove node from the scene")
@@ -507,8 +507,8 @@ class Node(Serializable):
         return OrderedDict([
             ('id', self.id),
             ('title', self.title),
-            ('pos_x', self.gfxNode.scenePos().x()),
-            ('pos_y', self.gfxNode.scenePos().y()),
+            ('pos_x', self.gfx.scenePos().x()),
+            ('pos_y', self.gfx.scenePos().y()),
             ('inputs', inputs),
             ('outputs', outputs),
             ('content', ser_content),

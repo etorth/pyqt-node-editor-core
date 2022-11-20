@@ -207,8 +207,8 @@ class CalculatorSubWindow(StateNodeWidget):
 
     def finish_new_node_state(self, new_calc_node):
         self.scene.doDeselectItems()
-        new_calc_node.gfxNode.doSelect(True)
-        new_calc_node.gfxNode.onSelected()
+        new_calc_node.gfx.doSelect(True)
+        new_calc_node.gfx.onSelected()
 
     def handleNewNodeContextMenu(self, event):
         if confg.DEBUG:

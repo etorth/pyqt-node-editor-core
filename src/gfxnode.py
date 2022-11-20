@@ -113,7 +113,7 @@ class GfxNode(QGraphicsItem):
 
         # optimize me! just update the selected nodes
         for node in self.scene().scene.nodes:
-            if node.gfxNode.isSelected():
+            if node.gfx.isSelected():
                 node.updateConnectedEdges()
         self._was_moved = True
 
@@ -121,7 +121,7 @@ class GfxNode(QGraphicsItem):
         """Overriden event to handle when we moved, selected or deselected this `Node`"""
         super().mouseReleaseEvent(event)
 
-        # handle when gfxNode moved
+        # handle when gfx moved
         if self._was_moved:
             self._was_moved = False
             self.node.scene.history.storeHistory("Node moved", setModified=True)
@@ -135,7 +135,7 @@ class GfxNode(QGraphicsItem):
             # now we want to skip storing selection
             return
 
-        # handle when gfxNode was clicked on
+        # handle when gfx was clicked on
         if self._last_selected_state != self.isSelected() or self.node.scene._last_selected_items != self.node.scene.getSelectedItems():
             self.node.scene.resetLastSelectedStates()
             self._last_selected_state = self.isSelected()
