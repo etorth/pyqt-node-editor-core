@@ -77,7 +77,7 @@ class Socket(Serializable):
         """Delete this `Socket` from graphics scene for sure
         """
         self.gfxSocket.setParentItem(None)
-        self.node.scene.gfxScene.removeItem(self.gfxSocket)
+        self.node.scene.gfx.removeItem(self.gfxSocket)
         del self.gfxSocket
 
     def changeSocketType(self, new_socket_type: int) -> bool:

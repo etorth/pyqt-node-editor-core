@@ -78,7 +78,7 @@ class GfxEdge(QGraphicsPathItem):
 
     def onSelected(self):
         """Our event handling when the edge was selected"""
-        self.edge.scene.gfxScene.itemSelected.emit()
+        self.edge.scene.gfx.itemSelected.emit()
 
     def doSelect(self, new_state: bool = True):
         """Safe version of selecting the `Graphics Node`. Takes care about the selection state flag used internally

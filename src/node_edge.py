@@ -109,13 +109,13 @@ class Edge(Serializable):
     @edge_type.setter
     def edge_type(self, value):
         if hasattr(self, 'gfxEdge') and self.gfxEdge is not None:
-            self.scene.gfxScene.removeItem(self.gfxEdge)
+            self.scene.gfx.removeItem(self.gfxEdge)
 
         self._edge_type = value
         edgeClass = self.determineEdgeClass(self.edge_type)
         self.gfxEdge = edgeClass(self)
 
-        self.scene.gfxScene.addItem(self.gfxEdge)
+        self.scene.gfx.addItem(self.gfxEdge)
 
         if self.start_socket is not None:
             self.updatePositions()
@@ -204,10 +204,10 @@ class Edge(Serializable):
         self.gfxEdge.hide()
 
         if confg.DEBUG: print(" - remove gfxEdge", self.gfxEdge)
-        self.scene.gfxScene.removeItem(self.gfxEdge)
+        self.scene.gfx.removeItem(self.gfxEdge)
         if confg.DEBUG: print("   gfxEdge:", self.gfxEdge)
 
-        self.scene.gfxScene.update()
+        self.scene.gfx.update()
 
         if confg.DEBUG: print("# Removing Edge", self)
         if confg.DEBUG: print(" - remove edge from all sockets")

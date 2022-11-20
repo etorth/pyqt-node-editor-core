@@ -95,7 +95,7 @@ class GfxNode(QGraphicsItem):
 
     def onSelected(self):
         """Our event handling when the node was selected"""
-        self.node.scene.gfxScene.itemSelected.emit()
+        self.node.scene.gfx.itemSelected.emit()
 
     def doSelect(self, new_state=True):
         """Safe version of selecting the `Graphics Node`. Takes care about the selection state flag used internally
@@ -177,7 +177,7 @@ class GfxNode(QGraphicsItem):
                                      round(self.width - 2 * self.edge_padding),
                                      round(self.height - 2 * self.edge_padding - self.title_height))
 
-        # get the QGraphicsProxyWidget when inserted into the gfxScene
+        # get the QGraphicsProxyWidget when inserted into the gfx
         self.gfxContent = QGraphicsProxyWidget(self)
         self.gfxContent.setWidget(self.content)
 

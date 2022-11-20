@@ -165,7 +165,7 @@ class SceneHistory():
             'nodes': [],
             'edges': [],
         }
-        for item in self.scene.gfxScene.selectedItems():
+        for item in self.scene.gfx.selectedItems():
             if hasattr(item, 'node'):
                 sel_obj['nodes'].append(item.node.id)
             elif hasattr(item, 'edge'):

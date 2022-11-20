@@ -54,8 +54,8 @@ class Scene(Serializable):
         self.history = SceneHistory(self)
         self.clipboard = SceneClipboard(self)
 
-        self.gfxScene.itemSelected.connect(self.onItemSelected)
-        self.gfxScene.itemsDeselected.connect(self.onItemsDeselected)
+        self.gfx.itemSelected.connect(self.onItemSelected)
+        self.gfx.itemsDeselected.connect(self.onItemsDeselected)
 
     @property
     def has_been_modified(self):
@@ -82,8 +82,8 @@ class Scene(Serializable):
 
     def initUI(self):
         """Set up Graphics Scene Instance"""
-        self.gfxScene = GfxScene(self)
-        self.gfxScene.setSceneSize(self.scene_width, self.scene_height)
+        self.gfx = GfxScene(self)
+        self.gfx.setSceneSize(self.scene_width, self.scene_height)
 
     def setSilentSelectionEvents(self, value: bool = True):
         """Calling this can suppress onItemSelected events to be triggered. This is usefull when working with clipboard"""
@@ -137,7 +137,7 @@ class Scene(Serializable):
         :return: list of ``QGraphicsItems``
         :rtype: list[QGraphicsItem]
         """
-        return self.gfxScene.selectedItems()
+        return self.gfx.selectedItems()
 
     def doDeselectItems(self, silent: bool = False) -> None:
         """
@@ -206,7 +206,7 @@ class Scene(Serializable):
         :return: ``QGraphicsView`` attached to the `Scene`
         :rtype: ``QGraphicsView``
         """
-        return self.gfxScene.views()[0]
+        return self.gfx.views()[0]
 
     def getItemAt(self, pos: 'QPointF'):
         """Shortcut for retrieving item at provided `Scene` position
