@@ -27,7 +27,7 @@ class QDMNodeContentWidget(QWidget, Serializable):
         self.initUI()
 
     def initUI(self):
-        """Sets up layouts and widgets to be rendered in :py:class:`~nodeeditor.gfxnode.GfxNode` class.
+        """Sets up layouts and widgets to be rendered in :py:class:`~nodeeditor.nodegfx.NodeGfx` class.
         """
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)

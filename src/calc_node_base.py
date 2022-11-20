@@ -3,12 +3,12 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from node import Node
 from node_content_widget import QDMNodeContentWidget
-from gfxnode import GfxNode
+from nodegfx import NodeGfx
 from node_socket import LEFT_CENTER, RIGHT_CENTER
 from qdutils import *
 
 
-class CalcGraphicsNode(GfxNode):
+class CalcGraphicsNode(NodeGfx):
     def initSizes(self):
         super().initSizes()
         self.width = 160
