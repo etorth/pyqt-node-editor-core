@@ -36,18 +36,12 @@ class CalcGraphicsNode(NodeGfx):
         )
 
 
-class CalcContent(QDMNodeContentWidget):
-    def initUI(self):
-        self.label = QLabel(self.node.content_label, self)
-
-
 class CalcNode(Node):
     icon = ""
     op_title = "Undefined"
-    content_label = ""
 
     GraphicsNode_class = CalcGraphicsNode
-    NodeContent_class = CalcContent
+    NodeContent_class = QDMNodeContentWidget
 
     def __init__(self, scene, inputs=[2, 2], outputs=[1]):
         super().__init__(scene, self.__class__.op_title, inputs, outputs)
