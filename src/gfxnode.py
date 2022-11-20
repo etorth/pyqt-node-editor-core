@@ -176,8 +176,8 @@ class GfxNode(QGraphicsItem):
                                      round(self.height - 2 * self.edge_padding - self.title_height))
 
         # get the QGraphicsProxyWidget when inserted into the gfxScene
-        self.gfxContent = self.node.scene.gfxScene.addWidget(self.content)
-        self.gfxContent.setParentItem(self)
+        self.gfxContent = QGraphicsProxyWidget(self)
+        self.gfxContent.setWidget(self.content)
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         """Painting the rounded rectanglar `Node`"""
