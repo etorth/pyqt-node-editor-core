@@ -207,12 +207,12 @@ class SceneHistory():
             # restore selection
 
             # first clear all selection on edges
-            for edge in self.scene.edges: edge.gfxEdge.setSelected(False)
+            for edge in self.scene.edges: edge.gfx.setSelected(False)
             # now restore selected edges from history_stamp
             for edge_id in history_stamp['selection']['edges']:
                 for edge in self.scene.edges:
                     if edge.id == edge_id:
-                        edge.gfxEdge.setSelected(True)
+                        edge.gfx.setSelected(True)
                         break
 
             # first clear all selection on nodes

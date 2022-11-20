@@ -31,7 +31,7 @@ class Edge(Serializable):
         :Instance Attributes:
 
             - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
-            - **gfxEdge** - Instance of :class:`~nodeeditor.node_graphics_edge.GfxEdge` subclass handling graphical representation in the ``QGraphicsScene``.
+            - **gfx** - Instance of :class:`~nodeeditor.node_graphics_edge.GfxEdge` subclass handling graphical representation in the ``QGraphicsScene``.
         """
         super().__init__()
         self.scene = scene
@@ -108,14 +108,14 @@ class Edge(Serializable):
 
     @edge_type.setter
     def edge_type(self, value):
-        if hasattr(self, 'gfxEdge') and self.gfxEdge is not None:
-            self.scene.gfx.removeItem(self.gfxEdge)
+        if hasattr(self, 'gfx') and self.gfx is not None:
+            self.scene.gfx.removeItem(self.gfx)
 
         self._edge_type = value
         edgeClass = self.determineEdgeClass(self.edge_type)
-        self.gfxEdge = edgeClass(self)
+        self.gfx = edgeClass(self)
 
-        self.scene.gfx.addItem(self.gfxEdge)
+        self.scene.gfx.addItem(self.gfx)
 
         if self.start_socket is not None:
             self.updatePositions()
@@ -124,8 +124,8 @@ class Edge(Serializable):
         """
         Determine Graphics Edge Class from provided `edge_type`
         :param edge_type: ``int`` type of edge
-        :return: gfxEdge class
-        :rtype: class of `gfxEdge`
+        :return: gfx class
+        :rtype: class of `gfx`
         """
         edge_class = GfxEdgeBezier
         if edge_type == EDGE_TYPE_DIRECT:
@@ -151,7 +151,7 @@ class Edge(Serializable):
         :param new_state: ``True`` if you want to select the ``Edge``, ``False`` if you want to deselect the ``Edge``
         :type new_state: ``bool``
         """
-        self.gfxEdge.doSelect(new_state)
+        self.gfx.doSelect(new_state)
 
     def updatePositions(self):
         """
@@ -161,15 +161,15 @@ class Edge(Serializable):
         source_pos = self.start_socket.getSocketPosition()
         source_pos[0] += self.start_socket.node.gfx.pos().x()
         source_pos[1] += self.start_socket.node.gfx.pos().y()
-        self.gfxEdge.setSource(*source_pos)
+        self.gfx.setSource(*source_pos)
         if self.end_socket is not None:
             end_pos = self.end_socket.getSocketPosition()
             end_pos[0] += self.end_socket.node.gfx.pos().x()
             end_pos[1] += self.end_socket.node.gfx.pos().y()
-            self.gfxEdge.setDestination(*end_pos)
+            self.gfx.setDestination(*end_pos)
         else:
-            self.gfxEdge.setDestination(*source_pos)
-        self.gfxEdge.update()
+            self.gfx.setDestination(*source_pos)
+        self.gfx.update()
 
     def remove_from_sockets(self):
         """
@@ -197,15 +197,15 @@ class Edge(Serializable):
         """
         old_sockets = [self.start_socket, self.end_socket]
 
-        # ugly hack, since I noticed that even when you remove gfxEdge from scene,
+        # ugly hack, since I noticed that even when you remove gfx from scene,
         # sometimes it stays there! How dare you Qt!
         if confg.DEBUG:
-            print(" - hide gfxEdge")
-        self.gfxEdge.hide()
+            print(" - hide gfx")
+        self.gfx.hide()
 
-        if confg.DEBUG: print(" - remove gfxEdge", self.gfxEdge)
-        self.scene.gfx.removeItem(self.gfxEdge)
-        if confg.DEBUG: print("   gfxEdge:", self.gfxEdge)
+        if confg.DEBUG: print(" - remove gfx", self.gfx)
+        self.scene.gfx.removeItem(self.gfx)
+        if confg.DEBUG: print("   gfx:", self.gfx)
 
         self.scene.gfx.update()
 

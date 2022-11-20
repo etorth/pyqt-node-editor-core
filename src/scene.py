@@ -198,7 +198,7 @@ class Scene(Serializable):
         for node in self.nodes:
             node.gfx._last_selected_state = False
         for edge in self.edges:
-            edge.gfxEdge._last_selected_state = False
+            edge.gfx._last_selected_state = False
 
     def getView(self) -> 'QGraphicsView':
         """Shortcut for returning `Scene` ``QGraphicsView``

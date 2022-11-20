@@ -145,7 +145,7 @@ class GfxView(QGraphicsView):
         # debug print out
         if DEBUG_MMB_SCENE_ITEMS:
             if isinstance(item, GfxEdge):
-                print("MMB DEBUG:", item.edge, "\n\t", item.edge.gfxEdge if item.edge.gfxEdge is not None else None)
+                print("MMB DEBUG:", item.edge, "\n\t", item.edge.gfx if item.edge.gfx is not None else None)
 
             if isinstance(item, GfxSocket):
                 print("MMB DEBUG:", item.socket, "socket_type:", item.socket.socket_type, "has edges:", "no" if item.socket.edges == [] else "")
@@ -161,7 +161,7 @@ class GfxView(QGraphicsView):
 
             print("  Edges:")
             for edge in self.gfx.scene.edges:
-                print("\t", edge, "\n\t\tgfxEdge:", edge.gfxEdge if edge.gfxEdge is not None else None)
+                print("\t", edge, "\n\t\tgfxEdge:", edge.gfx if edge.gfx is not None else None)
 
             if event.modifiers() & Qt.CTRL:
                 print("  Graphic Items in GraphicScene:")
@@ -292,12 +292,12 @@ class GfxView(QGraphicsView):
         scenepos = self.mapToScene(event.pos())
 
         if self.mode == MODE_EDGE_DRAG:
-            # according to sentry: 'NoneType' object has no attribute 'gfxEdge'
-            if self.drag_edge is not None and self.drag_edge.gfxEdge is not None:
-                self.drag_edge.gfxEdge.setDestination(scenepos.x(), scenepos.y())
-                self.drag_edge.gfxEdge.update()
+            # according to sentry: 'NoneType' object has no attribute 'gfx'
+            if self.drag_edge is not None and self.drag_edge.gfx is not None:
+                self.drag_edge.gfx.setDestination(scenepos.x(), scenepos.y())
+                self.drag_edge.gfx.update()
             else:
-                print(">>> Want to update self.drag_edge gfxEdge, but it's None!!!")
+                print(">>> Want to update self.drag_edge gfx, but it's None!!!")
 
         if self.mode == MODE_EDGE_CUT and self.cutline is not None:
             self.cutline.line_points.append(scenepos)
@@ -358,7 +358,7 @@ class GfxView(QGraphicsView):
             # we could cut 3 edges leading to a single nodeeditor this will notify it 3x
             # maybe we could use some Notifier class with methods collect() and dispatch()
             for edge in self.gfx.scene.edges:
-                if edge.gfxEdge.intersectsWith(p1, p2):
+                if edge.gfx.intersectsWith(p1, p2):
                     edge.remove()
         self.gfx.scene.history.storeHistory("Delete cutted edges", setModified=True)
 
