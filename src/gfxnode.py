@@ -105,7 +105,9 @@ class GfxNode(QGraphicsItem):
         """
         self.setSelected(new_state)
         self._last_selected_state = new_state
-        if new_state: self.onSelected()
+
+        if new_state:
+            self.onSelected()
 
     def mouseMoveEvent(self, event):
         """Overriden event to detect that we moved with this `Node`"""
