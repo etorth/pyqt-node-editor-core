@@ -171,15 +171,17 @@ class NodeGfx(QGraphicsItem):
         self.title_item.setTextWidth(self.width - 2 * self.title_horizontal_padding)
 
     def initContent(self):
-        """Set up the `gfxContent` - ``QGraphicsProxyWidget`` to have a container for `Graphics Content`"""
+        """Set up the `proxy` - ``QGraphicsProxyWidget`` to have a container for `Graphics Content`"""
         if self.content is not None:
-            self.content.setGeometry(round(self.edge_padding), round(self.title_height + self.edge_padding),
+            self.content.setGeometry(round(self.edge_padding),
+                                     round(self.title_height + self.edge_padding),
                                      round(self.width - 2 * self.edge_padding),
                                      round(self.height - 2 * self.edge_padding - self.title_height))
 
         # get the QGraphicsProxyWidget when inserted into the gfx
-        self.gfxContent = QGraphicsProxyWidget(self)
-        self.gfxContent.setWidget(self.content)
+        self.proxy = QGraphicsProxyWidget(self)
+        self.proxy.setWidget(self.content)
+
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         """Painting the rounded rectanglar `Node`"""
