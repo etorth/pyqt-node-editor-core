@@ -7,12 +7,11 @@ from PyQt6.QtWidgets import *
 
 
 class QDMNodeContentWidget(QWidget, Serializable):
-    """Base class for representation of the Node's graphics content. This class also provides layout
-    for other widgets inside of a :py:class:`~nodeeditor.node.Node`"""
+    """Base class for representation of the Node's graphics content. This class also provides layout for other widgets inside of a :py:class:`~nodeeditor.node.Node`
+    """
 
     def __init__(self, node: 'Node', parent: QGraphicsWidget = None):
-        """
-        :param node: reference to the :py:class:`~nodeeditor.node.Node`
+        """:param node: reference to the :py:class:`~nodeeditor.node.Node`
         :type node: :py:class:`~nodeeditor.node.Node`
         :param parent: parent widget
         :type parent: QWidget

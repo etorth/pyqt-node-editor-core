@@ -5,7 +5,7 @@ from PyQt6.QtWidgets import *
 from qdutils import *
 
 
-class QDMDragListBox(QListWidget):
+class DragListBox(QListWidget):
     def __init__(self, parent=None):
         super().__init__(parent)
 

@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import *
 from qdutils import *
 from statenodewindow import StateNodeWindow
 from calc_sub_window import CalculatorSubWindow
-from calc_drag_listbox import QDMDragListBox
+from draglistbox import DragListBox
 from luaeditorwidget import LuaEditorWidget
 from qdutils import *
 
@@ -225,7 +225,7 @@ class MainWindow(StateNodeWindow):
         pass
 
     def createNodesDock(self):
-        self.nodesListWidget = QDMDragListBox()
+        self.nodesListWidget = DragListBox()
 
         self.nodesDock = QDockWidget("Nodes")
         self.nodesDock.setWidget(self.nodesListWidget)
