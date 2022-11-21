@@ -282,6 +282,15 @@ class QD_Node(QD_Serializable):
             for edge in socket.edges:
                 edge.updatePositions()
 
+
+    def updateSockets(self):
+        for sock in self.inputs:
+            sock.setSocketPosition()
+
+        for sock in self.outputs:
+            sock.setSocketPosition()
+
+
     def remove(self):
         """Safely remove this QD_Node
         """
