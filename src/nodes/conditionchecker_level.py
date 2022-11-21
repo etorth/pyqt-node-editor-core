@@ -39,7 +39,7 @@ class CalcCheckerContent(NodeWidget):
 
 
 @utils.register_opnode
-class NodeChecker_level(CalcNode):
+class ConditionChecker_level(CalcNode):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER
     op_title = "等级"
