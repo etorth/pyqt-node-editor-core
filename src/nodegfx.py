@@ -172,15 +172,15 @@ class NodeGfx(QGraphicsItem):
 
     def initContent(self):
         """Set up the `proxy` - ``QGraphicsProxyWidget`` to have a container for `Graphics Content`"""
-        if self.content is not None:
-            self.content.setGeometry(round(self.edge_padding),
+        if self.content.gfx is not None:
+            self.content.gfx.setGeometry(round(self.edge_padding),
                                      round(self.title_height + self.edge_padding),
                                      round(self.width - 2 * self.edge_padding),
                                      round(self.height - 2 * self.edge_padding - self.title_height))
 
         # get the QGraphicsProxyWidget when inserted into the gfx
         self.proxy = QGraphicsProxyWidget(self)
-        self.proxy.setWidget(self.content)
+        self.proxy.setWidget(self.content.gfx)
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):

@@ -1,9 +1,13 @@
+from PyQt6.QtGui import *
 from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
+
 from calc_node_base import *
 from qdutils import *
+from nodecontentgfx import *
 
 
-class CalcCheckerContent(NodeContent):
+class ConditionCheckerContentGfx_level(NodeContentGfx):
     def initUI(self):
         self.label = QLabel('等级')
 
@@ -22,16 +26,22 @@ class CalcCheckerContent(NodeContent):
         self.hbox.addWidget(self.choice)
         self.hbox.addWidget(self.edit)
 
+
+class ConditionCheckerContent_level(NodeContent):
+    NodeContentGfx_class = ConditionCheckerContentGfx_level
+
+
     def serialize(self):
         res = super().serialize()
-        res['value'] = self.edit.text()
+        res['value'] = self.gfx.edit.text()
         return res
+
 
     def deserialize(self, data, hashmap={}):
         res = super().deserialize(data, hashmap)
         try:
             value = data['value']
-            self.edit.setText(value)
+            self.gfx.edit.setText(value)
             return True & res
         except Exception as e:
             utils.dumpExcept(e)
@@ -44,14 +54,17 @@ class ConditionChecker_level(CalcNode):
     op_type = OPS_CHECKER
     op_title = "等级"
 
+    NodeContent_class = ConditionCheckerContent_level
+
     def __init__(self, scene):
         super().__init__(scene, inputs=[1], outputs=[3])
         self.eval()
 
+
     def initInnerClasses(self):
-        self.content = CalcCheckerContent(self)
-        self.gfx = CalcGraphicsNode(self)
-        self.content.edit.textChanged.connect(self.onInputChanged)
+        super().initInnerClasses()
+        self.content.gfx.edit.textChanged.connect(self.onInputChanged)
+
 
     def evalImplementation(self):
         self.value = 12

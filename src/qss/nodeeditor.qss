@@ -1,20 +1,20 @@
-NodeContent {
+NodeContentGfx {
   background: transparent;
 }
-NodeContent QFrame {
+NodeContentGfx QFrame {
   background: transparent;
 }
-NodeContent QTextEdit,
-NodeContent QLineEdit {
+NodeContentGfx QTextEdit,
+NodeContentGfx QLineEdit {
   background: #666;
   color: #fff;
 }
-NodeContent QLabel {
+NodeContentGfx QLabel {
   color: #e0e0e0;
 }
-NodeContent QLabel#calc_node_bg,
-NodeContent QLabel#calc_node_mul,
-NodeContent QLabel#calc_node_div {
+NodeContentGfx QLabel#calc_node_bg,
+NodeContentGfx QLabel#calc_node_mul,
+NodeContentGfx QLabel#calc_node_div {
   background: transparent;
   height: 0px;
   color: #373737;
@@ -23,11 +23,11 @@ NodeContent QLabel#calc_node_div {
   min-height: 49px;
   padding-left: 94px;
 }
-NodeContent QLabel#calc_node_mul,
-NodeContent QLabel#calc_node_div {
+NodeContentGfx QLabel#calc_node_mul,
+NodeContentGfx QLabel#calc_node_div {
   padding-top: 12px;
 }
-NodeContent QLabel#calc_node_output {
+NodeContentGfx QLabel#calc_node_output {
   min-width: 150px;
   max-width: 150px;
   min-height: 45px;
@@ -36,7 +36,7 @@ NodeContent QLabel#calc_node_output {
   margin-top: 5px;
   font-size: 28px;
 }
-NodeContent QLineEdit#calc_node_input {
+NodeContentGfx QLineEdit#calc_node_input {
   width: 140px;
   height: 36px;
   margin-top: 5px;
