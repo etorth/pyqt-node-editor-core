@@ -18,18 +18,18 @@ class QD_Edge(QD_Serializable):
     def __init__(self, scene: 'QD_Scene', start_socket: 'QD_Socket' = None, end_socket: 'QD_Socket' = None, edge_type=EDGE_TYPE_DIRECT):
         """
 
-        :param scene: Reference to the :py:class:`~nodeeditor.scene.QD_Scene`
-        :type scene: :py:class:`~nodeeditor.scene.QD_Scene`
+        :param scene: Reference to the :py:class:`scene.QD_Scene`
+        :type scene: :py:class:`scene.QD_Scene`
         :param start_socket: Reference to the starting socket
-        :type start_socket: :py:class:`~nodeeditor.socket.QD_Socket`
+        :type start_socket: :py:class:`socket.QD_Socket`
         :param end_socket: Reference to the End socket or ``None``
-        :type end_socket: :py:class:`~nodeeditor.socket.QD_Socket` or ``None``
+        :type end_socket: :py:class:`socket.QD_Socket` or ``None``
         :param edge_type: Constant determining type of edge. See :ref:`edge-type-constants`
 
         :Instance Attributes:
 
-            - **scene** - reference to the :class:`~nodeeditor.scene.QD_Scene`
-            - **gfx** - Instance of :class:`~nodeeditor.qdedgegfx.QD_EdgeGfx` subclass handling graphical representation in the ``QGraphicsScene``.
+            - **scene** - reference to the :class:`scene.QD_Scene`
+            - **gfx** - Instance of :class:`qdedgegfx.QD_EdgeGfx` subclass handling graphical representation in the ``QGraphicsScene``.
         """
         super().__init__()
         self.scene = scene
@@ -52,9 +52,9 @@ class QD_Edge(QD_Serializable):
         """
         Start socket
 
-        :getter: Returns start :class:`~nodeeditor.socket.QD_Socket`
-        :setter: Sets start :class:`~nodeeditor.socket.QD_Socket` safely
-        :type: :class:`~nodeeditor.socket.QD_Socket`
+        :getter: Returns start :class:`socket.QD_Socket`
+        :setter: Sets start :class:`socket.QD_Socket` safely
+        :type: :class:`socket.QD_Socket`
         """
         return self._start_socket
 
@@ -75,9 +75,9 @@ class QD_Edge(QD_Serializable):
         """
         End socket
 
-        :getter: Returns end :class:`~nodeeditor.socket.QD_Socket` or ``None`` if not set
-        :setter: Sets end :class:`~nodeeditor.socket.QD_Socket` safely
-        :type: :class:`~nodeeditor.socket.QD_Socket` or ``None``
+        :getter: Returns end :class:`socket.QD_Socket` or ``None`` if not set
+        :setter: Sets end :class:`socket.QD_Socket` safely
+        :type: :class:`socket.QD_Socket` or ``None``
         """
         return self._end_socket
 
@@ -98,7 +98,7 @@ class QD_Edge(QD_Serializable):
         """QD_Edge type
 
         :getter: get edge type constant for current ``QD_Edge``. See :ref:`edge-type-constants`
-        :setter: sets new edge type. On background, creates new :class:`~nodeeditor.qdedgegfx.QD_EdgeGfx`
+        :setter: sets new edge type. On background, creates new :class:`qdedgegfx.QD_EdgeGfx`
             child class if necessary, adds this ``QGraphicsPathItem`` to the ``QGraphicsScene`` and updates edge sockets
             positions.
         """
@@ -134,10 +134,10 @@ class QD_Edge(QD_Serializable):
         """
         Returns the oposite socket on this ``QD_Edge``
 
-        :param known_socket: Provide known :class:`~nodeeditor.socket.QD_Socket` to be able to determine the oposite one.
-        :type known_socket: :class:`~nodeeditor.socket.QD_Socket`
+        :param known_socket: Provide known :class:`socket.QD_Socket` to be able to determine the oposite one.
+        :type known_socket: :class:`socket.QD_Socket`
         :return: The oposite socket on this ``QD_Edge`` or ``None``
-        :rtype: :class:`~nodeeditor.socket.QD_Socket` or ``None``
+        :rtype: :class:`socket.QD_Socket` or ``None``
         """
         return self.start_socket if known_socket == self.end_socket else self.end_socket
 
@@ -153,7 +153,7 @@ class QD_Edge(QD_Serializable):
 
     def updatePositions(self):
         """
-        Updates the internal `Graphics QD_Edge` positions according to the start and end :class:`~nodeeditor.socket.QD_Socket`.
+        Updates the internal `Graphics QD_Edge` positions according to the start and end :class:`socket.QD_Socket`.
         This should be called if you update ``QD_Edge`` positions.
         """
         source_pos = self.start_socket.getSocketPosition()
@@ -171,7 +171,7 @@ class QD_Edge(QD_Serializable):
 
     def remove_from_sockets(self):
         """
-        Helper function which sets start and end :class:`~nodeeditor.socket.QD_Socket` to ``None``
+        Helper function which sets start and end :class:`socket.QD_Socket` to ``None``
         """
         self.end_socket = None
         self.start_socket = None
@@ -180,16 +180,16 @@ class QD_Edge(QD_Serializable):
         """Safely remove this QD_Edge.
 
         Removes `Graphics QD_Edge` from the ``QGraphicsScene`` and it's reference to all GC to clean it up.
-        Notifies nodes previously connected :class:`~nodeeditor.node.QD_Node` (s) about this event.
+        Notifies nodes previously connected :class:`node.QD_Node` (s) about this event.
 
         Triggers Nodes':
 
-        - :py:meth:`~nodeeditor.node.QD_Node.onEdgeConnectionChanged`
-        - :py:meth:`~nodeeditor.node.QD_Node.onInputChanged`
+        - :py:meth:`node.QD_Node.onEdgeConnectionChanged`
+        - :py:meth:`node.QD_Node.onInputChanged`
 
-        :param silent_for_socket: :class:`~nodeeditor.socket.QD_Socket` of a :class:`~nodeeditor.node.QD_Node` which
+        :param silent_for_socket: :class:`socket.QD_Socket` of a :class:`node.QD_Node` which
             won't be notified, when this ``QD_Edge`` is going to be removed
-        :type silent_for_socket: :class:`~nodeeditor.socket.QD_Socket`
+        :type silent_for_socket: :class:`socket.QD_Socket`
         :param silent: ``True`` if no events should be triggered during removing
         :type silent: ``bool``
         """

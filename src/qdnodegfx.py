@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""A module containing Graphics representation of :class:`~nodeeditor.node.QD_Node`
+"""A module containing Graphics representation of :class:`node.QD_Node`
 """
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
@@ -7,18 +7,18 @@ from PyQt6.QtGui import *
 
 
 class QD_NodeGfx(QGraphicsItem):
-    """Class describing Graphics representation of :class:`~nodeeditor.node.QD_Node`"""
+    """Class describing Graphics representation of :class:`node.QD_Node`"""
 
     def __init__(self, node: 'QD_Node', parent: QWidget = None):
         """
-        :param node: reference to :class:`~nodeeditor.node.QD_Node`
-        :type node: :class:`~nodeeditor.node.QD_Node`
+        :param node: reference to :class:`node.QD_Node`
+        :type node: :class:`node.QD_Node`
         :param parent: parent widget
         :type parent: QWidget
 
         :Instance Attributes:
 
-            - **node** - reference to :class:`~nodeeditor.node.QD_Node`
+            - **node** - reference to :class:`node.QD_Node`
         """
         super().__init__(parent)
         self.node = node

@@ -24,8 +24,8 @@ class QD_Socket(QD_Serializable):
 
     def __init__(self, node: 'QD_Node', index: int = 0, position: int = LEFT_TOP, socket_type: int = 1, multi_edges: bool = True, count_on_this_node_side: int = 1, is_input: bool = False):
         """
-        :param node: reference to the :class:`~nodeeditor.node.QD_Node` containing this `QD_Socket`
-        :type node: :class:`~nodeeditor.node.QD_Node`
+        :param node: reference to the :class:`node.QD_Node` containing this `QD_Socket`
+        :type node: :class:`node.QD_Node`
         :param index: Current index of this socket in the position
         :type index: ``int``
         :param position: QD_Socket position. See :ref:`socket-position-constants`
@@ -39,9 +39,9 @@ class QD_Socket(QD_Serializable):
 
         :Instance Attributes:
 
-            - **node** - reference to the :class:`~nodeeditor.node.QD_Node` containing this `QD_Socket`
+            - **node** - reference to the :class:`node.QD_Node` containing this `QD_Socket`
             - **edges** - list of `Edges` connected to this `QD_Socket`
-            - **gfx** - reference to the :class:`~nodeeditor.qdsocketgfx.QD_SocketGfx`
+            - **gfx** - reference to the :class:`qdsocketgfx.QD_SocketGfx`
             - **position** - QD_Socket position. See :ref:`socket-position-constants`
             - **index** - Current index of this socket in the position
             - **socket_type** - Constant defining type(color) of this socket
@@ -96,13 +96,13 @@ class QD_Socket(QD_Serializable):
 
     def setSocketPosition(self):
         """Helper function to set `Graphics QD_Socket` position. Exact socket position is calculated
-        inside :class:`~nodeeditor.node.QD_Node`."""
+        inside :class:`node.QD_Node`."""
         self.gfx.setPos(*self.node.getSocketPosition(self.index, self.position, self.count_on_this_node_side))
 
     def getSocketPosition(self):
         """
         :return: Returns this `QD_Socket` position according the implementation stored in
-            :class:`~nodeeditor.node.QD_Node`
+            :class:`node.QD_Node`
         :rtype: ``x, y`` position
         """
         if confg.DEBUG:
@@ -117,18 +117,18 @@ class QD_Socket(QD_Serializable):
 
     def hasAnyEdge(self) -> bool:
         """
-        Returns ``True`` if any :class:`~nodeeditor.qdedge.QD_Edge` is connectected to this socket
+        Returns ``True`` if any :class:`qdedge.QD_Edge` is connectected to this socket
 
-        :return: ``True`` if any :class:`~nodeeditor.qdedge.QD_Edge` is connected to this socket
+        :return: ``True`` if any :class:`qdedge.QD_Edge` is connected to this socket
         :rtype: ``bool``
         """
         return len(self.edges) > 0
 
     def isConnected(self, edge: 'QD_Edge') -> bool:
-        """Returns ``True`` if :class:`~nodeeditor.qdedge.QD_Edge` is connected to this `QD_Socket`
+        """Returns ``True`` if :class:`qdedge.QD_Edge` is connected to this `QD_Socket`
 
-        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to check if it is connected to this `QD_Socket`
-        :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
+        :param edge: :class:`qdedge.QD_Edge` to check if it is connected to this `QD_Socket`
+        :type edge: :class:`qdedge.QD_Edge`
         :return: ``True`` if `QD_Edge` is connected to this socket
         :rtype: ``bool``
         """
@@ -138,16 +138,16 @@ class QD_Socket(QD_Serializable):
         """
         Append an QD_Edge to the list of connected Edges
 
-        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to connect to this `QD_Socket`
-        :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
+        :param edge: :class:`qdedge.QD_Edge` to connect to this `QD_Socket`
+        :type edge: :class:`qdedge.QD_Edge`
         """
         self.edges.append(edge)
 
     def removeEdge(self, edge: 'QD_Edge'):
         """
-        Disconnect passed :class:`~nodeeditor.qdedge.QD_Edge` from this `QD_Socket`
-        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to disconnect
-        :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
+        Disconnect passed :class:`qdedge.QD_Edge` from this `QD_Socket`
+        :param edge: :class:`qdedge.QD_Edge` to disconnect
+        :type edge: :class:`qdedge.QD_Edge`
         """
         if edge in self.edges:
             self.edges.remove(edge)

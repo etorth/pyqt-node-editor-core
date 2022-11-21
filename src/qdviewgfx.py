@@ -27,14 +27,14 @@ class QD_ViewGfx(QGraphicsView):
 
     def __init__(self, gfx: 'QD_SceneGfx', parent: 'QWidget' = None):
         """
-        :param gfx: reference to the :class:`~nodeeditor.qdscenegfx.QD_SceneGfx`
-        :type gfx: :class:`~nodeeditor.qdscenegfx.QD_SceneGfx`
+        :param gfx: reference to the :class:`qdscenegfx.QD_SceneGfx`
+        :type gfx: :class:`qdscenegfx.QD_SceneGfx`
         :param parent: parent widget
         :type parent: ``QWidget``
 
         :Instance Attributes:
 
-        - **gfx** - reference to the :class:`~nodeeditor.qdscenegfx.QD_SceneGfx`
+        - **gfx** - reference to the :class:`qdscenegfx.QD_SceneGfx`
         - **mode** - state of the `Graphics View`
         - **zoomInFactor**- ``float`` - zoom step scaling, default 1.25
         - **zoomClamp** - ``bool`` - do we clamp zooming or is it infinite?

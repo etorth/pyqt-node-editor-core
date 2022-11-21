@@ -62,9 +62,9 @@ class QD_MainWindow(QMainWindow):
 
 
     def isModified(self) -> bool:
-        """Has current :class:`~nodeeditor.scene.QD_Scene` been modified?
+        """Has current :class:`scene.QD_Scene` been modified?
 
-        :return: ``True`` if current :class:`~nodeeditor.scene.QD_Scene` has been modified
+        :return: ``True`` if current :class:`scene.QD_Scene` has been modified
         :rtype: ``bool``
         """
         return self.getCurrentStateNodeWidget().scene.isModified()

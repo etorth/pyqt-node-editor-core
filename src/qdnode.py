@@ -20,18 +20,18 @@ class QD_Node(QD_Serializable):
 
     def __init__(self, scene: 'QD_Scene', inputs: list = [], outputs: list = []):
         """
-        :param scene: reference to the :class:`~nodeeditor.scene.QD_Scene`
-        :type scene: :class:`~nodeeditor.scene.QD_Scene`
-        :param inputs: list of :class:`~nodeeditor.socket.QD_Socket` types from which the `Sockets` will be auto created
-        :param outputs: list of :class:`~nodeeditor.socket.QD_Socket` types from which the `Sockets` will be auto created
+        :param scene: reference to the :class:`scene.QD_Scene`
+        :type scene: :class:`scene.QD_Scene`
+        :param inputs: list of :class:`socket.QD_Socket` types from which the `Sockets` will be auto created
+        :param outputs: list of :class:`socket.QD_Socket` types from which the `Sockets` will be auto created
 
         :Instance Attributes:
 
-            - **scene** - reference to the :class:`~nodeeditor.scene.QD_Scene`
-            - **gfx** - Instance of :class:`~nodeeditor.qdnodegfx.QD_NodeGfx` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
-            - **content** - Instance of :class:`~nodeeditor.node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the QD_Node. Automatically created in constructor
-            - **inputs** - list containin Input :class:`~nodeeditor.socket.QD_Socket` instances
-            - **outputs** - list containin Output :class:`~nodeeditor.socket.QD_Socket` instances
+            - **scene** - reference to the :class:`scene.QD_Scene`
+            - **gfx** - Instance of :class:`qdnodegfx.QD_NodeGfx` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
+            - **content** - Instance of :class:`node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the QD_Node. Automatically created in constructor
+            - **inputs** - list containin Input :class:`socket.QD_Socket` instances
+            - **outputs** - list containin Output :class:`socket.QD_Socket` instances
 
         """
         super().__init__()
@@ -180,8 +180,8 @@ class QD_Node(QD_Serializable):
         """
         Event handling that any connection (`QD_Edge`) has changed. Currently not used...
 
-        :param new_edge: reference to the changed :class:`~nodeeditor.qdedge.QD_Edge`
-        :type new_edge: :class:`~nodeeditor.qdedge.QD_Edge`
+        :param new_edge: reference to the changed :class:`qdedge.QD_Edge`
+        :type new_edge: :class:`qdedge.QD_Edge`
         """
         pass
 
@@ -189,8 +189,8 @@ class QD_Node(QD_Serializable):
         """Event handling when QD_Node's input QD_Edge has changed. We auto-mark this `QD_Node` to be `Dirty` with all it's
         descendants
 
-        :param socket: reference to the changed :class:`~nodeeditor.socket.QD_Socket`
-        :type socket: :class:`~nodeeditor.socket.QD_Socket`
+        :param socket: reference to the changed :class:`socket.QD_Socket`
+        :type socket: :class:`socket.QD_Socket`
         """
         self.markDirty()
         self.markDescendantsDirty()
@@ -219,7 +219,7 @@ class QD_Node(QD_Serializable):
 
     def getSocketPosition(self, index: int, position: int, num_out_of: int = 1) -> '(x, y)':
         """
-        Get the relative `x, y` position of a :class:`~nodeeditor.socket.QD_Socket`. This is used for placing
+        Get the relative `x, y` position of a :class:`socket.QD_Socket`. This is used for placing
         the `Graphics Sockets` on `Graphics QD_Node`.
 
         :param index: Order number of the QD_Socket. (0, 1, 2, ...)
@@ -451,7 +451,7 @@ class QD_Node(QD_Serializable):
         Retreive all first-level children connected to this `QD_Node` `Outputs`
 
         :return: list of `Nodes` connected to this `QD_Node` from all `Outputs`
-        :rtype: List[:class:`~nodeeditor.node.QD_Node`]
+        :rtype: List[:class:`node.QD_Node`]
         """
         if self.outputs == []: return []
         other_nodes = []
@@ -467,8 +467,8 @@ class QD_Node(QD_Serializable):
 
         :param index: Order number of the `Input QD_Socket`
         :type index: ``int``
-        :return: :class:`~nodeeditor.node.QD_Node` which is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: :class:`~nodeeditor.node.QD_Node` or ``None``
+        :return: :class:`node.QD_Node` which is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
+        :rtype: :class:`node.QD_Node` or ``None``
         """
         try:
             input_socket = self.inputs[index]
@@ -485,9 +485,9 @@ class QD_Node(QD_Serializable):
 
         :param index: Order number of the `Input QD_Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node.QD_Node` and :class:`~nodeeditor.socket.QD_Socket` which
+        :return: Tuple containing :class:`node.QD_Node` and :class:`socket.QD_Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`~nodeeditor.node.QD_Node`, :class:`~nodeeditor.socket.QD_Socket`)
+        :rtype: (:class:`node.QD_Node`, :class:`socket.QD_Socket`)
         """
         try:
             input_socket = self.inputs[index]
@@ -506,9 +506,9 @@ class QD_Node(QD_Serializable):
 
         :param index: Order number of the `Input QD_Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node.QD_Node` and :class:`~nodeeditor.socket.QD_Socket` which
+        :return: Tuple containing :class:`node.QD_Node` and :class:`socket.QD_Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`~nodeeditor.node.QD_Node`, int)
+        :rtype: (:class:`node.QD_Node`, int)
         """
         try:
             edge = self.inputs[index].edges[0]
@@ -527,8 +527,8 @@ class QD_Node(QD_Serializable):
 
         :param index: Order number of the `Input QD_Socket`
         :type index: ``int``
-        :return: all :class:`~nodeeditor.node.QD_Node` instances which are connected to the specified `Input` or ``[]`` if there is no connection of index is out of range
-        :rtype: List[:class:`~nodeeditor.node.QD_Node`]
+        :return: all :class:`node.QD_Node` instances which are connected to the specified `Input` or ``[]`` if there is no connection of index is out of range
+        :rtype: List[:class:`node.QD_Node`]
         """
         ins = []
         for edge in self.inputs[index].edges:
@@ -541,8 +541,8 @@ class QD_Node(QD_Serializable):
 
         :param index: Order number of the `Output QD_Socket`
         :type index: ``int``
-        :return: all :class:`~nodeeditor.node.QD_Node` instances which are connected to the specified `Output` or ``[]`` if there is no connection of index is out of range
-        :rtype: List[:class:`~nodeeditor.node.QD_Node`]
+        :return: all :class:`node.QD_Node` instances which are connected to the specified `Output` or ``[]`` if there is no connection of index is out of range
+        :rtype: List[:class:`node.QD_Node`]
         """
         outs = []
         for edge in self.outputs[index].edges:

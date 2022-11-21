@@ -24,8 +24,8 @@ class QD_Scene(QD_Serializable):
 
             - **nodes** - list of `Nodes` in this `QD_Scene`
             - **edges** - list of `Edges` in this `QD_Scene`
-            - **history** - Instance of :class:`~nodeeditor.qdscenehistory.QD_SceneHistory`
-            - **clipboard** - Instance of :class:`~nodeeditor.qdsceneclipboard.QD_SceneClipboard`
+            - **history** - Instance of :class:`qdscenehistory.QD_SceneHistory`
+            - **clipboard** - Instance of :class:`qdsceneclipboard.QD_SceneClipboard`
             - **scene_width** - width of this `QD_Scene` in pixels
             - **scene_height** - height of this `QD_Scene` in pixels
         """
@@ -219,26 +219,26 @@ class QD_Scene(QD_Serializable):
         return self.getView().itemAt(pos)
 
     def addNode(self, node: QD_Node):
-        """Add :class:`~nodeeditor.node.QD_Node` to this `QD_Scene`
+        """Add :class:`node.QD_Node` to this `QD_Scene`
 
-        :param node: :class:`~nodeeditor.node.QD_Node` to be added to this `QD_Scene`
-        :type node: :class:`~nodeeditor.node.QD_Node`
+        :param node: :class:`node.QD_Node` to be added to this `QD_Scene`
+        :type node: :class:`node.QD_Node`
         """
         self.nodes.append(node)
 
     def addEdge(self, edge: QD_Edge):
-        """Add :class:`~nodeeditor.qdedge.QD_Edge` to this `QD_Scene`
+        """Add :class:`qdedge.QD_Edge` to this `QD_Scene`
 
-        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to be added to this `QD_Scene`
-        :return: :class:`~nodeeditor.qdedge.QD_Edge`
+        :param edge: :class:`qdedge.QD_Edge` to be added to this `QD_Scene`
+        :return: :class:`qdedge.QD_Edge`
         """
         self.edges.append(edge)
 
     def removeNode(self, node: QD_Node):
-        """Remove :class:`~nodeeditor.node.QD_Node` from this `QD_Scene`
+        """Remove :class:`node.QD_Node` from this `QD_Scene`
 
-        :param node: :class:`~nodeeditor.node.QD_Node` to be removed from this `QD_Scene`
-        :type node: :class:`~nodeeditor.node.QD_Node`
+        :param node: :class:`node.QD_Node` to be removed from this `QD_Scene`
+        :type node: :class:`node.QD_Node`
         """
         if node in self.nodes:
             self.nodes.remove(node)
@@ -247,10 +247,10 @@ class QD_Scene(QD_Serializable):
                 print("!W:", "QD_Scene::removeNode", "wanna remove nodeeditor", node, "from self.nodes but it's not in the list!")
 
     def removeEdge(self, edge: QD_Edge):
-        """Remove :class:`~nodeeditor.qdedge.QD_Edge` from this `QD_Scene`
+        """Remove :class:`qdedge.QD_Edge` from this `QD_Scene`
 
-        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to be remove from this `QD_Scene`
-        :return: :class:`~nodeeditor.qdedge.QD_Edge`
+        :param edge: :class:`qdedge.QD_Edge` to be remove from this `QD_Scene`
+        :return: :class:`qdedge.QD_Edge`
         """
         if edge in self.edges:
             self.edges.remove(edge)
@@ -284,7 +284,7 @@ class QD_Scene(QD_Serializable):
 
         :param filename: from what file to load the `QD_Scene`
         :type filename: ``str``
-        :raises: :class:`~nodeeditor.scene.InvalidFile` if there was an error decoding JSON file
+        :raises: :class:`scene.InvalidFile` if there was an error decoding JSON file
         """
 
         with open(filename, "r") as file:
@@ -301,7 +301,7 @@ class QD_Scene(QD_Serializable):
     def setNodeClassSelector(self, class_selecting_function: 'functon') -> 'QD_Node class type':
         """
         Set the function which decides what `QD_Node` class to instantiate when deserializating `QD_Scene`.
-        If not set, we will always instantiate :class:`~nodeeditor.node.QD_Node` for each `QD_Node` in the `QD_Scene`
+        If not set, we will always instantiate :class:`node.QD_Node` for each `QD_Node` in the `QD_Scene`
 
         :param class_selecting_function: function which returns `QD_Node` class type (not instance) from `QD_Node` serialized ``dict`` data
         :type class_selecting_function: ``function``

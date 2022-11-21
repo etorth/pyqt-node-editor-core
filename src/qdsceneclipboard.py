@@ -15,12 +15,12 @@ class QD_SceneClipboard():
 
     def __init__(self, scene: 'QD_Scene'):
         """
-        :param scene: Reference to the :class:`~nodeeditor.scene.QD_Scene`
-        :type scene: :class:`~nodeeditor.scene.QD_Scene`
+        :param scene: Reference to the :class:`scene.QD_Scene`
+        :type scene: :class:`scene.QD_Scene`
 
         :Instance Attributes:
 
-        - **scene** - reference to the :class:`~nodeeditor.scene.QD_Scene`
+        - **scene** - reference to the :class:`scene.QD_Scene`
         """
         self.scene = scene
 
@@ -30,7 +30,7 @@ class QD_SceneClipboard():
 
         :param delete: True if you want to delete selected items after serialization. Usefull for Cut operation
         :type delete: ``bool``
-        :return: Serialized data of current selection in NodeEditor :class:`~nodeeditor.scene.QD_Scene`
+        :return: Serialized data of current selection in NodeEditor :class:`scene.QD_Scene`
         """
         if confg.DEBUG:
             print("-- COPY TO CLIPBOARD ---")

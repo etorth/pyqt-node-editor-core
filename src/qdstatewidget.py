@@ -33,8 +33,8 @@ class QD_StateWidget(QWidget):
         self.initUI()
 
     def initUI(self):
-        """Set up this ``QD_StateWidget`` with its layout,  :class:`~nodeeditor.scene.QD_Scene` and
-        :class:`~nodeeditor.qdviewgfx.QD_ViewGfx`"""
+        """Set up this ``QD_StateWidget`` with its layout,  :class:`scene.QD_Scene` and
+        :class:`qdviewgfx.QD_ViewGfx`"""
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)

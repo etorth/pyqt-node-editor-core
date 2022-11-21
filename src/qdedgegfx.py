@@ -15,14 +15,14 @@ class QD_EdgeGfx(QGraphicsPathItem):
 
     def __init__(self, edge: 'QD_Edge', parent: QWidget = None):
         """
-        :param edge: reference to :class:`~nodeeditor.qdedge.QD_Edge`
-        :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
+        :param edge: reference to :class:`qdedge.QD_Edge`
+        :type edge: :class:`qdedge.QD_Edge`
         :param parent: parent widget
         :type parent: ``QWidget``
 
         :Instance attributes:
 
-            - **edge** - reference to :class:`~nodeeditor.qdedge.QD_Edge`
+            - **edge** - reference to :class:`qdedge.QD_Edge`
             - **posSource** - ``[x, y]`` source position in the `QD_Scene`
             - **posDestination** - ``[x, y]`` destination position in the `QD_Scene`
         """
@@ -141,7 +141,7 @@ class QD_EdgeGfx(QGraphicsPathItem):
         return self.calcPath()
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
-        """Qt's overriden method to paint this Graphics QD_Edge. Path calculated in :func:`~nodeeditor.qdedgegfx.QD_EdgeGfx.calcPath` method"""
+        """Qt's overriden method to paint this Graphics QD_Edge. Path calculated in :func:`qdedgegfx.QD_EdgeGfx.calcPath` method"""
         self.setPath(self.calcPath())
 
         painter.setBrush(Qt.BrushStyle.NoBrush)

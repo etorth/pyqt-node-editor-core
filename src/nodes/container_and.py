@@ -54,3 +54,4 @@ class _Container_and(QD_Node):
         content = nodeType.NodeContent_class(None)
         self.list.append(content)
         self.content.gfx.vbox.addWidget(content.gfx)
+        self.updateConnectedEdges()

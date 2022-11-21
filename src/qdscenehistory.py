@@ -11,12 +11,12 @@ class QD_SceneHistory():
 
     def __init__(self, scene: 'QD_Scene'):
         """
-        :param scene: Reference to the :class:`~nodeeditor.scene.QD_Scene`
-        :type scene: :class:`~nodeeditor.scene.QD_Scene`
+        :param scene: Reference to the :class:`scene.QD_Scene`
+        :type scene: :class:`scene.QD_Scene`
 
         :Instance Attributes:
 
-        - **scene** - reference to the :class:`~nodeeditor.scene.QD_Scene`
+        - **scene** - reference to the :class:`scene.QD_Scene`
         - **history_limit** - number of history steps that can be stored
         """
         self.scene = scene
@@ -124,7 +124,7 @@ class QD_SceneHistory():
 
         :param desc: Description of current History Stamp
         :type desc: ``str``
-        :param setModified: if ``True`` marks :class:`~nodeeditor.scene.QD_Scene` with `has_been_modified`
+        :param setModified: if ``True`` marks :class:`scene.QD_Scene` with `has_been_modified`
         :type setModified: ``bool``
 
         Triggers:
