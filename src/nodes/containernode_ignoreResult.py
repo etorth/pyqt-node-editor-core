@@ -1,5 +1,5 @@
 from PyQt6.QtCore import *
-from calc_node_base import *
+from node import *
 from qdutils import *
 
 
@@ -30,7 +30,7 @@ class ContainerNodeContent_ignoreResult(NodeContent):
 
 
 @utils.register_opnode
-class ContainerNode_ignoreResult(CalcNode):
+class ContainerNode_ignoreResult(Node):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
     op_title = "忽略结果"

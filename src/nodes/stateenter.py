@@ -1,5 +1,5 @@
 from PyQt6.QtCore import *
-from calc_node_base import *
+from node import *
 from qdutils import *
 
 
@@ -30,7 +30,7 @@ class CalcEditorContent(NodeContent):
 
 
 @utils.register_opnode
-class StateNode_Enter(CalcNode):
+class StateNode_Enter(Node):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
     op_title = "进入节点"

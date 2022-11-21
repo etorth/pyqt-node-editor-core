@@ -1,5 +1,5 @@
 from PyQt6.QtCore import *
-from calc_node_base import *
+from node import *
 from qdutils import *
 
 
@@ -10,7 +10,7 @@ class CalcOutputContent(NodeContent):
 
 
 @utils.register_opnode
-class CalcNode_Output(CalcNode):
+class CalcNode_Output(Node):
     icon = "icons/out.png"
     op_type = OPS_CHECKER
     op_title = "Output"

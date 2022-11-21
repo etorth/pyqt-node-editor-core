@@ -1,5 +1,5 @@
 from PyQt6.QtCore import *
-from calc_node_base import *
+from node import *
 from qdutils import *
 
 
@@ -25,7 +25,7 @@ class CalcInputContent(NodeContent):
 
 
 @utils.register_opnode
-class CalcNode_Input(CalcNode):
+class CalcNode_Input(Node):
     icon = "icons/in.png"
     op_type = OPS_CHECKER
     op_title = "Input"

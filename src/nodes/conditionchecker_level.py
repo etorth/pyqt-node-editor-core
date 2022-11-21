@@ -2,7 +2,7 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from calc_node_base import *
+from node import *
 from qdutils import *
 from nodecontentgfx import *
 
@@ -49,7 +49,7 @@ class ConditionCheckerContent_level(NodeContent):
 
 
 @utils.register_opnode
-class ConditionChecker_level(CalcNode):
+class ConditionChecker_level(Node):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER
     op_title = "等级"

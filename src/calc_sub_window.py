@@ -1,7 +1,7 @@
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from statenodewidget import StateNodeWidget
-from calc_node_base import *
+from node import *
 from node_edge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
 from node_graphics_view import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
 from qdutils import *

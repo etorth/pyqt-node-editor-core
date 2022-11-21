@@ -1,5 +1,5 @@
 from PyQt6.QtCore import *
-from calc_node_base import *
+from node import *
 from qdutils import *
 
 
@@ -39,7 +39,7 @@ class ContainerNodeContent_and(NodeContent):
 
 
 @utils.register_opnode
-class ContainerNode_and(CalcNode):
+class ContainerNode_and(Node):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
     op_title = "逻辑与"

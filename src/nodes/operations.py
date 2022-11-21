@@ -1,9 +1,9 @@
 from PyQt6.QtCore import *
-from calc_node_base import *
+from node import *
 
 
 @utils.register_opnode
-class CalcNode_Add(CalcNode):
+class CalcNode_Add(Node):
     icon = "icons/add.png"
     op_type = OPS_COMMAND
     op_title = "Add"
@@ -13,7 +13,7 @@ class CalcNode_Add(CalcNode):
 
 
 @utils.register_opnode
-class CalcNode_Sub(CalcNode):
+class CalcNode_Sub(Node):
     icon = "icons/sub.png"
     op_type = OPS_COMMAND
     op_title = "Substract"
@@ -22,7 +22,7 @@ class CalcNode_Sub(CalcNode):
         return input1 - input2
 
 @utils.register_opnode
-class CalcNode_Mul(CalcNode):
+class CalcNode_Mul(Node):
     icon = "icons/mul.png"
     op_type = OPS_COMMAND
     op_title = "Multiply"
@@ -32,7 +32,7 @@ class CalcNode_Mul(CalcNode):
         return input1 * input2
 
 @utils.register_opnode
-class CalcNode_Div(CalcNode):
+class CalcNode_Div(Node):
     icon = "icons/divide.png"
     op_type = OPS_COMMAND
     op_title = "Divide"

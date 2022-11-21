@@ -66,13 +66,13 @@ class NodeGfx(QGraphicsItem):
 
     def initSizes(self):
         """Set up internal attributes like `width`, `height`, etc."""
-        self.width = 180
-        self.height = 240
-        self.edge_roundness = 10.0
-        self.edge_padding = 10.0
-        self.title_height = 24.0
-        self.title_horizontal_padding = 4.0
-        self.title_vertical_padding = 4.0
+        self.width = 160
+        self.height = 74
+        self.edge_roundness = 6
+        self.edge_padding = 4
+        self.title_height = 24
+        self.title_horizontal_padding = 8
+        self.title_vertical_padding = 10
 
     def initAssets(self):
         """Initialize ``QObjects`` like ``QColor``, ``QPen`` and ``QBrush``"""
@@ -92,6 +92,8 @@ class NodeGfx(QGraphicsItem):
 
         self._brush_title = QBrush(QColor("#FF313131"))
         self._brush_background = QBrush(QColor("#E3212121"))
+
+        self._icons = QImage("icons/status_icons.png")
 
     def onSelected(self):
         """Our event handling when the node was selected"""
@@ -217,3 +219,13 @@ class NodeGfx(QGraphicsItem):
         else:
             painter.setPen(self._pen_default if not self.isSelected() else self._pen_selected)
             painter.drawPath(path_outline.simplified())
+
+        offset = 24.0
+        if self.node.isDirty(): offset = 0.0
+        if self.node.isInvalid(): offset = 48.0
+
+        painter.drawImage(
+            QRectF(-10, -10, 24.0, 24.0),
+            self._icons,
+            QRectF(offset, 0, 24.0, 24.0)
+        )

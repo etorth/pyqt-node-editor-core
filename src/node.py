@@ -15,12 +15,13 @@ class Node(QD_Serializable):
     NodeContent_class = NodeContent
     Socket_class = Socket
 
-    def __init__(self, scene: 'Scene', title: str = "Undefined Node", inputs: list = [], outputs: list = []):
+    icon = ""
+    op_title = "Undefined"
+
+    def __init__(self, scene: 'Scene', inputs: list = [2, 2], outputs: list = [1]):
         """
         :param scene: reference to the :class:`~nodeeditor.scene.Scene`
         :type scene: :class:`~nodeeditor.scene.Scene`
-        :param title: Node Title shown in Scene
-        :type title: str
         :param inputs: list of :class:`~nodeeditor.socket.Socket` types from which the `Sockets` will be auto created
         :param outputs: list of :class:`~nodeeditor.socket.Socket` types from which the `Sockets` will be auto created
 
@@ -34,7 +35,7 @@ class Node(QD_Serializable):
 
         """
         super().__init__()
-        self._title = title
+        self._title = self.__class__.op_title
         self.scene = scene
 
         # just to be sure, init these variables
@@ -44,7 +45,7 @@ class Node(QD_Serializable):
         self.initInnerClasses()
         self.initSettings()
 
-        self.title = title
+        self.title = self.__class__.op_title
 
         self.scene.addNode(self)
         self.scene.gfx.addItem(self.gfx)
@@ -57,6 +58,9 @@ class Node(QD_Serializable):
         # dirty and evaluation
         self._is_dirty = False
         self._is_invalid = False
+
+        self.value = None
+        self.markDirty()
 
     def __str__(self):
         return "<%s:%s %s..%s>" % (self.title, self.__class__.__name__, hex(id(self))[2:5], hex(id(self))[-3:])
@@ -118,8 +122,8 @@ class Node(QD_Serializable):
         """Initialize properties and socket information"""
         self.socket_spacing = 22
 
-        self.input_socket_position = LEFT_BOTTOM
-        self.output_socket_position = RIGHT_TOP
+        self.input_socket_position = LEFT_CENTER
+        self.output_socket_position = RIGHT_CENTER
         self.input_multi_edged = False
         self.output_multi_edged = True
         self.socket_offsets = {
@@ -190,6 +194,7 @@ class Node(QD_Serializable):
         """
         self.markDirty()
         self.markDescendantsDirty()
+        self.eval()
 
     def onDeserialized(self, data: dict):
         """Event manually called when this node was deserialized. Currently called when node is deserialized from scene
@@ -384,11 +389,50 @@ class Node(QD_Serializable):
             other_node.markInvalid(new_value)
             other_node.markChildrenInvalid(new_value)
 
-    def eval(self, index=0):
-        """Evaluate this `Node`. This is supposed to be overriden. See :ref:`evaluation` for more"""
-        self.markDirty(False)
-        self.markInvalid(False)
-        return 0
+
+    def evalOperation(self, input1, input2):
+        return 123
+
+
+    def evalImplementation(self):
+        i1 = self.getInput(0)
+        i2 = self.getInput(1)
+
+        if i1 is None or i2 is None:
+            self.markInvalid()
+            self.markDescendantsDirty()
+            self.gfx.setToolTip("Connect all inputs")
+            return None
+
+        else:
+            val = self.evalOperation(i1.eval(), i2.eval())
+            self.value = val
+            self.markDirty(False)
+            self.markInvalid(False)
+            self.gfx.setToolTip("")
+
+            self.markDescendantsDirty()
+            self.evalChildren()
+
+            return val
+
+    def eval(self):
+        if not self.isDirty() and not self.isInvalid():
+            print(" _> returning cached %s value:" % self.__class__.__name__, self.value)
+            return self.value
+
+        try:
+
+            val = self.evalImplementation()
+            return val
+        except ValueError as e:
+            self.markInvalid()
+            self.gfx.setToolTip(str(e))
+            self.markDescendantsDirty()
+        except Exception as e:
+            self.markInvalid()
+            self.gfx.setToolTip(str(e))
+            utils.dumpExcept(e)
 
     def evalChildren(self):
         """Evaluate all children of this `Node`"""
@@ -504,9 +548,15 @@ class Node(QD_Serializable):
     # serialization functions
 
     def serialize(self) -> OrderedDict:
-        inputs, outputs = [], []
-        for socket in self.inputs: inputs.append(socket.serialize())
-        for socket in self.outputs: outputs.append(socket.serialize())
+        inputs = []
+        outputs = []
+
+        for socket in self.inputs:
+            inputs.append(socket.serialize())
+
+        for socket in self.outputs:
+            outputs.append(socket.serialize())
+
         ser_content = self.content.serialize() if isinstance(self.content, QD_Serializable) else {}
         return OrderedDict([
             ('id', self.id),
@@ -516,6 +566,7 @@ class Node(QD_Serializable):
             ('inputs', inputs),
             ('outputs', outputs),
             ('content', ser_content),
+            ('op_code', self.__class__.op_code), # added by @register_opnode
         ])
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:

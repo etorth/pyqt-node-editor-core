@@ -1,5 +1,5 @@
 from PyQt6.QtCore import *
-from calc_node_base import *
+from node import *
 from qdutils import *
 
 
@@ -39,7 +39,7 @@ class CalcEditorContent(NodeContent):
 
 
 @utils.register_opnode
-class CalcNode_Editor(CalcNode):
+class CalcNode_Editor(Node):
     icon = "icons/editor.png"
     op_type = OPS_CHECKER
     op_title = "Editor"
