@@ -8,7 +8,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
 
-class GfxScene(QGraphicsScene):
+class QD_SceneGfx(QGraphicsScene):
     """Class representing Graphic of :class:`~nodeeditor.scene.Scene`"""
     #: pyqtSignal emitted when some item is selected in the `Scene`
     itemSelected = pyqtSignal()

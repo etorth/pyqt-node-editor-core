@@ -6,7 +6,7 @@ import json
 from collections import OrderedDict
 from qdutils import *
 from qdserializable import QD_Serializable
-from node_graphics_scene import GfxScene
+from qdscenegfx import QD_SceneGfx
 from qdnode import QD_Node
 from node_edge import Edge
 from scene_history import SceneHistory
@@ -82,7 +82,7 @@ class Scene(QD_Serializable):
 
     def initUI(self):
         """Set up Graphics Scene Instance"""
-        self.gfx = GfxScene(self)
+        self.gfx = QD_SceneGfx(self)
         self.gfx.setSceneSize(self.scene_width, self.scene_height)
 
     def setSilentSelectionEvents(self, value: bool = True):

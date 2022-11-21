@@ -28,16 +28,16 @@ class QD_ViewGfx(QGraphicsView):
     #: pyqtSignal emitted when cursor position on the `Scene` has changed
     scenePosChanged = pyqtSignal(int, int)
 
-    def __init__(self, gfx: 'GfxScene', parent: 'QWidget' = None):
+    def __init__(self, gfx: 'QD_SceneGfx', parent: 'QWidget' = None):
         """
-        :param gfx: reference to the :class:`~nodeeditor.node_graphics_scene.GfxScene`
-        :type gfx: :class:`~nodeeditor.node_graphics_scene.GfxScene`
+        :param gfx: reference to the :class:`~nodeeditor.qdscenegfx.QD_SceneGfx`
+        :type gfx: :class:`~nodeeditor.qdscenegfx.QD_SceneGfx`
         :param parent: parent widget
         :type parent: ``QWidget``
 
         :Instance Attributes:
 
-        - **gfx** - reference to the :class:`~nodeeditor.node_graphics_scene.GfxScene`
+        - **gfx** - reference to the :class:`~nodeeditor.qdscenegfx.QD_SceneGfx`
         - **mode** - state of the `Graphics View`
         - **zoomInFactor**- ``float`` - zoom step scaling, default 1.25
         - **zoomClamp** - ``bool`` - do we clamp zooming or is it infinite?
