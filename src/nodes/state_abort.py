@@ -61,7 +61,6 @@ class _State_abort(QD_Node):
         self.markDescendantsDirty()
 
         self.gfx.setToolTip("")
-
         self.evalChildren()
 
         return self.value
