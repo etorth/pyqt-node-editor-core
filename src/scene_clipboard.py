@@ -5,6 +5,7 @@ A module containing all code for working with Clipboard
 from collections import OrderedDict
 from node_graphics_edge import EdgeGfx
 from node_edge import Edge
+from qdutils import *
 
 DEBUG = True
 DEBUG_PASTING = False
@@ -34,7 +35,8 @@ class SceneClipboard():
         :type delete: ``bool``
         :return: Serialized data of current selection in NodeEditor :class:`~nodeeditor.scene.Scene`
         """
-        if confg.DEBUG: print("-- COPY TO CLIPBOARD ---")
+        if confg.DEBUG:
+            print("-- COPY TO CLIPBOARD ---")
 
         sel_nodes, sel_edges, sel_sockets = [], [], {}
 
