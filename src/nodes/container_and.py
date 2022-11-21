@@ -9,27 +9,11 @@ from qdnodecontentgfx import *
 
 class _ContainerContentGfx_and(QD_NodeContentGfx):
     def initUI(self):
-        self.edit = QLineEdit(self)
+        self.vbox = QVBoxLayout(self)
 
 
 class _ContainerContent_and(QD_NodeContent):
     NodeContentGfx_class =_ContainerContentGfx_and
-
-    def serialize(self):
-        res = super().serialize()
-        res['value'] = self.gfx.edit.text()
-        return res
-
-
-    def deserialize(self, data, hashmap={}):
-        res = super().deserialize(data, hashmap)
-        try:
-            value = data['value']
-            self.gfx.edit.setText(value)
-            return True & res
-        except Exception as e:
-            utils.dumpExcept(e)
-        return res
 
 
 @utils.register_opnode
@@ -43,6 +27,7 @@ class _Container_and(QD_Node):
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[2], outputs=[3])
+        self.list = []
         self.eval()
 
 
@@ -59,5 +44,10 @@ class _Container_and(QD_Node):
         self.gfx.setToolTip("")
 
         self.evalChildren()
-
         return self.value
+
+
+    def addSubNode(self, nodeType):
+        content = nodeType.NodeContent_class(self)
+        self.list.append(content)
+        self.content.gfx.vbox.addWidget(content.gfx)

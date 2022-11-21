@@ -139,7 +139,7 @@ class QD_StateSubWindow(QD_StateWidget):
         unmarkInvalidAct = context_menu.addAction("Unmark Invalid")
         evalAct = context_menu.addAction("Eval")
 
-        addNodeMenu = context_menu.addMenu('Add QD_Node')
+        addNodeMenu = context_menu.addMenu('Add Node')
         addedActDict = {}
         for type in utils.valid_node_types():
             addedActDict[addNodeMenu.addAction(type.op_title)] = type
