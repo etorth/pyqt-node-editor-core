@@ -7,9 +7,6 @@ from node_graphics_edge import EdgeGfx
 from node_edge import Edge
 from qdutils import *
 
-DEBUG = True
-DEBUG_PASTING = False
-
 
 class SceneClipboard():
     """
@@ -62,7 +59,8 @@ class SceneClipboard():
                 # if confg.DEBUG: print(" edge is ok, connected with both sides")
                 pass
             else:
-                if confg.DEBUG: print("edge", edge, "is not connected with both sides")
+                if confg.DEBUG:
+                    print("edge", edge, "is not connected with both sides")
                 edges_to_remove.append(edge)
         for edge in edges_to_remove:
             sel_edges.remove(edge)
@@ -72,7 +70,8 @@ class SceneClipboard():
         for edge in sel_edges:
             edges_final.append(edge.serialize())
 
-        if confg.DEBUG: print("our final edge list:", edges_final)
+        if confg.DEBUG:
+            print("our final edge list:", edges_final)
 
         data = OrderedDict([
             ('nodes', sel_nodes),
@@ -117,7 +116,7 @@ class SceneClipboard():
         relbboxcenterx = (minx + maxx) / 2 - minx
         relbboxcentery = (miny + maxy) / 2 - miny
 
-        if DEBUG_PASTING:
+        if confg.DEBUG:
             print(" *** PASTA:")
             print("Copied boudaries:\n\tX:", minx, maxx, "   Y:", miny, maxy)
             print("\tbbox_center:", relbboxcenterx, relbboxcentery)
@@ -147,7 +146,7 @@ class SceneClipboard():
 
             new_node.doSelect()
 
-            if DEBUG_PASTING:
+            if confg.DEBUG:
                 print("** PASTA SUM:")
                 print("\tMouse pos:", mousex, mousey)
                 print("\tnew node pos:", posx, posy)
