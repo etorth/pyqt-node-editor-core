@@ -3,7 +3,7 @@
 """
 from collections import OrderedDict
 from qdserializable import QD_Serializable
-from node_graphics_socket import SocketGfx
+from qdsocketgfx import QD_SocketGfx
 from qdutils import *
 
 LEFT_TOP = 1  #:
@@ -18,7 +18,7 @@ DEBUG_REMOVE_WARNINGS = False
 
 
 class Socket(QD_Serializable):
-    SocketGfx_class = SocketGfx
+    SocketGfx_class = QD_SocketGfx
 
     """Class representing Socket."""
 
@@ -41,7 +41,7 @@ class Socket(QD_Serializable):
 
             - **node** - reference to the :class:`~nodeeditor.node.QD_Node` containing this `Socket`
             - **edges** - list of `Edges` connected to this `Socket`
-            - **gfx** - reference to the :class:`~nodeeditor.node_graphics_socket.SocketGfx`
+            - **gfx** - reference to the :class:`~nodeeditor.qdsocketgfx.QD_SocketGfx`
             - **position** - Socket position. See :ref:`socket-position-constants`
             - **index** - Current index of this socket in the position
             - **socket_type** - Constant defining type(color) of this socket

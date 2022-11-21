@@ -16,7 +16,7 @@ SOCKET_COLORS = [
 ]
 
 
-class SocketGfx(QGraphicsItem):
+class QD_SocketGfx(QGraphicsItem):
     """Class representing Graphic `Socket` in ``QGraphicsScene``
     """
 
