@@ -1,5 +1,5 @@
 from PyQt6.QtCore import *
-from node import *
+from qdnode import *
 
 
 @utils.register_opnode

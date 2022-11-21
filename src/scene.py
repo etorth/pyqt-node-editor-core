@@ -7,7 +7,7 @@ from collections import OrderedDict
 from qdutils import *
 from qdserializable import QD_Serializable
 from node_graphics_scene import GfxScene
-from node import QD_Node
+from qdnode import QD_Node
 from node_edge import Edge
 from scene_history import SceneHistory
 from scene_clipboard import SceneClipboard
