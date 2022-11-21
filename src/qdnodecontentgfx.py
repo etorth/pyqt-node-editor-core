@@ -14,7 +14,3 @@ class QD_NodeContentGfx(QWidget):
 
     def initUI(self):
         raise NotImplementedError()
-
-
-    def setEditingFlag(self, value: bool):
-        self.content.node.scene.getView().editingFlag = value
