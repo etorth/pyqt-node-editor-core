@@ -8,7 +8,7 @@ from qdstatewidget import QD_StateWidget
 
 from qdutils import *
 from qdstatesubwindow import QD_StateSubWindow
-from draglistbox import DragListBox
+from qddraglistbox import QD_DragListBox
 from qdluaeditor import QD_LuaEditor
 from qdutils import *
 
@@ -294,7 +294,7 @@ class QD_MainWindow(QMainWindow):
         pass
 
     def createNodesDock(self):
-        self.nodesListWidget = DragListBox()
+        self.nodesListWidget = QD_DragListBox()
 
         self.nodesDock = QDockWidget("Nodes")
         self.nodesDock.setWidget(self.nodesListWidget)
