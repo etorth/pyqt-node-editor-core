@@ -6,4 +6,4 @@ import glob
 #     if os.path.isfile(f) and not f.endswith('__init__.py'):
 #         __all__.append(os.path.splitext(os.path.basename(f))[0])
 
-__all__ = ['conditionchecker_level', 'operations', 'state_enter', 'state_exit']
+__all__ = ['conditionchecker_level', 'operations', 'state_enter', 'state_exit', 'notifier']
