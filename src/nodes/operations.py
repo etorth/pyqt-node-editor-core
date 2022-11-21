@@ -11,27 +11,30 @@ class _CalcNodeBase(QD_Node):
 
 
 @utils.register_opnode
-class CalcNode_add(_CalcNodeBase):
+class _CalcNode_add(_CalcNodeBase):
     icon = "icons/add.png"
-    op_title = "Add"
+    op_title = "加"
+
 
     def evalOperation(self, input1, input2):
         return input1 + input2
 
 
 @utils.register_opnode
-class CalcNode_sub(_CalcNodeBase):
+class _CalcNode_sub(_CalcNodeBase):
     icon = "icons/sub.png"
-    op_title = "Substract"
+    op_title = "减"
+
 
     def evalOperation(self, input1, input2):
         return input1 - input2
 
 
 @utils.register_opnode
-class CalcNode_mul(_CalcNodeBase):
+class _CalcNode_mul(_CalcNodeBase):
     icon = "icons/mul.png"
-    op_title = "Multiply"
+    op_title = "乘"
+
 
     def evalOperation(self, input1, input2):
         print('foo')
@@ -39,9 +42,9 @@ class CalcNode_mul(_CalcNodeBase):
 
 
 @utils.register_opnode
-class CalcNode_div(_CalcNodeBase):
+class _CalcNode_div(_CalcNodeBase):
     icon = "icons/divide.png"
-    op_title = "Divide"
+    op_title = "除"
 
 
     def evalOperation(self, input1, input2):
