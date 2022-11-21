@@ -164,9 +164,9 @@ class StateNodeWidget(QWidget):
     def addCustomNode(self):
         """Testing method to create a custom Node with custom content"""
         from nodecontent import NodeContent
-        from node_serializable import Serializable
+        from qdserializable import QD_Serializable
 
-        class NNodeContent(QLabel):  # , Serializable):
+        class NNodeContent(QLabel):  # , QD_Serializable):
             def __init__(self, node, parent=None):
                 super().__init__("FooBar")
                 self.node = node

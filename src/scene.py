@@ -5,7 +5,7 @@ import os
 import json
 from collections import OrderedDict
 from qdutils import *
-from node_serializable import Serializable
+from qdserializable import QD_Serializable
 from node_graphics_scene import GfxScene
 from node import Node
 from node_edge import Edge
@@ -16,7 +16,7 @@ class InvalidFile(Exception):
     pass
 
 
-class Scene(Serializable):
+class Scene(QD_Serializable):
     """Class representing NodeEditor's `Scene`"""
 
     def __init__(self):

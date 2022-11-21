@@ -4,7 +4,7 @@ A module containing NodeEditor's class for representing Edge and Edge Type Const
 """
 from collections import OrderedDict
 from node_graphics_edge import *
-from node_serializable import Serializable
+from qdserializable import QD_Serializable
 from qdutils import *
 
 EDGE_TYPE_DIRECT = 1  #:
@@ -13,7 +13,7 @@ EDGE_TYPE_BEZIER = 2  #:
 DEBUG = True
 
 
-class Edge(Serializable):
+class Edge(QD_Serializable):
     """Class for representing Edge in NodeEditor.
     """
 

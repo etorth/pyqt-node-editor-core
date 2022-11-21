@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
-"""A module containing Serializable interface
+"""A module containing QD_Serializable interface
 """
 from collections import OrderedDict
 
 
-class Serializable():
+class QD_Serializable():
     def __init__(self):
         """Default constructor automatically creates data which are common to any serializable object.
         In our case we create ``self.id`` which we use in every object in NodeEditor.

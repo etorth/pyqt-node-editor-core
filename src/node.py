@@ -8,7 +8,7 @@ from qsocket import *
 from qdutils import *
 
 
-class Node(Serializable):
+class Node(QD_Serializable):
     """Class representing `Node` in the `Scene`.
     """
     NodeGfx_class = NodeGfx
@@ -507,7 +507,7 @@ class Node(Serializable):
         inputs, outputs = [], []
         for socket in self.inputs: inputs.append(socket.serialize())
         for socket in self.outputs: outputs.append(socket.serialize())
-        ser_content = self.content.serialize() if isinstance(self.content, Serializable) else {}
+        ser_content = self.content.serialize() if isinstance(self.content, QD_Serializable) else {}
         return OrderedDict([
             ('id', self.id),
             ('title', self.title),
@@ -582,7 +582,7 @@ class Node(Serializable):
 
         # also deseralize the content of the node
         # so far the rest was ok, now as last step the content...
-        if isinstance(self.content, Serializable):
+        if isinstance(self.content, QD_Serializable):
             res = self.content.deserialize(data['content'], hashmap)
             return res
 

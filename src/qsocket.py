@@ -2,7 +2,7 @@
 """A module containing NodeEditor's class for representing Socket and Socket Position Constants.
 """
 from collections import OrderedDict
-from node_serializable import Serializable
+from qdserializable import QD_Serializable
 from node_graphics_socket import SocketGfx
 from qdutils import *
 
@@ -17,7 +17,7 @@ DEBUG = True
 DEBUG_REMOVE_WARNINGS = False
 
 
-class Socket(Serializable):
+class Socket(QD_Serializable):
     SocketGfx_class = SocketGfx
 
     """Class representing Socket."""
