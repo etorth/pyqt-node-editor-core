@@ -10,7 +10,7 @@ from qdscenegfx import QD_SceneGfx
 from qdnode import QD_Node
 from qdedge import QD_Edge
 from qdscenehistory import QD_SceneHistory
-from sceneclipboard import SceneClipboard
+from qdsceneclipboard import QD_SceneClipboard
 
 class InvalidFile(Exception):
     pass
@@ -25,7 +25,7 @@ class QD_Scene(QD_Serializable):
             - **nodes** - list of `Nodes` in this `QD_Scene`
             - **edges** - list of `Edges` in this `QD_Scene`
             - **history** - Instance of :class:`~nodeeditor.qdscenehistory.QD_SceneHistory`
-            - **clipboard** - Instance of :class:`~nodeeditor.sceneclipboard.SceneClipboard`
+            - **clipboard** - Instance of :class:`~nodeeditor.qdsceneclipboard.QD_SceneClipboard`
             - **scene_width** - width of this `QD_Scene` in pixels
             - **scene_height** - height of this `QD_Scene` in pixels
         """
@@ -52,7 +52,7 @@ class QD_Scene(QD_Serializable):
 
         self.initUI()
         self.history = QD_SceneHistory(self)
-        self.clipboard = SceneClipboard(self)
+        self.clipboard = QD_SceneClipboard(self)
 
         self.gfx.itemSelected.connect(self.onItemSelected)
         self.gfx.itemsDeselected.connect(self.onItemsDeselected)
