@@ -4,7 +4,7 @@ A module containing NodeEditor's class for representing `Node`.
 """
 from nodegfx import NodeGfx
 from nodewidget import NodeWidget
-from socket import *
+from qsocket import *
 from qdutils import *
 
 
