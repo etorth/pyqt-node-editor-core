@@ -107,9 +107,9 @@ class StateNodeWindow(QMainWindow):
             event.ignore()
 
     def isModified(self) -> bool:
-        """Has current :class:`~nodeeditor.scene.Scene` been modified?
+        """Has current :class:`~nodeeditor.scene.QD_Scene` been modified?
 
-        :return: ``True`` if current :class:`~nodeeditor.scene.Scene` has been modified
+        :return: ``True`` if current :class:`~nodeeditor.scene.QD_Scene` has been modified
         :rtype: ``bool``
         """
         return self.getCurrentStateNodeWidget().scene.isModified()
@@ -123,7 +123,7 @@ class StateNodeWindow(QMainWindow):
         return self.centralWidget()
 
     def maybeSave(self) -> bool:
-        """If current `Scene` is modified, ask a dialog to save the changes. Used before
+        """If current `QD_Scene` is modified, ask a dialog to save the changes. Used before
         closing window / mdi child document
 
         :return: ``True`` if we can continue in the `Close Event` and shutdown. ``False`` if we should cancel
@@ -142,14 +142,14 @@ class StateNodeWindow(QMainWindow):
         return True
 
     def onScenePosChanged(self, x: int, y: int):
-        """Handle event when cursor position changed on the `Scene`
+        """Handle event when cursor position changed on the `QD_Scene`
 
         :param x: new cursor x position
         :type x:
         :param y: new cursor y position
         :type y:
         """
-        self.status_mouse_pos.setText("Scene Pos: [%d, %d]" % (x, y))
+        self.status_mouse_pos.setText("QD_Scene Pos: [%d, %d]" % (x, y))
 
     def getFileDialogDirectory(self):
         """Returns starting directory for ``QFileDialog`` file open/save"""

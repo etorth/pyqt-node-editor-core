@@ -1,21 +1,18 @@
 # -*- coding: utf-8 -*-
-"""A module containing ``StateNodeWidget`` class
-"""
-
 import os
 
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from scene import Scene, InvalidFile
+from qdscene import QD_Scene, InvalidFile
 from qdnode import QD_Node
 from qdedge import QD_Edge, EDGE_TYPE_BEZIER
 from qdviewgfx import QD_ViewGfx
 
 
 class StateNodeWidget(QWidget):
-    Scene_class = Scene
+    Scene_class = QD_Scene
 
     """The ``StateNodeWidget`` class
     """
@@ -36,7 +33,7 @@ class StateNodeWidget(QWidget):
         self.initUI()
 
     def initUI(self):
-        """Set up this ``StateNodeWidget`` with its layout,  :class:`~nodeeditor.scene.Scene` and
+        """Set up this ``StateNodeWidget`` with its layout,  :class:`~nodeeditor.scene.QD_Scene` and
         :class:`~nodeeditor.qdviewgfx.QD_ViewGfx`"""
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
@@ -50,9 +47,9 @@ class StateNodeWidget(QWidget):
         self.layout.addWidget(self.view)
 
     def isModified(self) -> bool:
-        """Has the `Scene` been modified?
+        """Has the `QD_Scene` been modified?
 
-        :return: ``True`` if the `Scene` has been modified
+        :return: ``True`` if the `QD_Scene` has been modified
         :rtype: ``bool``
         """
         return self.scene.isModified()
@@ -66,7 +63,7 @@ class StateNodeWidget(QWidget):
         return self.filename is not None
 
     def getSelectedItems(self) -> list:
-        """Shortcut returning `Scene`'s currently selected items
+        """Shortcut returning `QD_Scene`'s currently selected items
 
         :return: list of ``QGraphicsItems``
         :rtype: list[QGraphicsItem]
@@ -74,9 +71,9 @@ class StateNodeWidget(QWidget):
         return self.scene.getSelectedItems()
 
     def hasSelectedItems(self) -> bool:
-        """Is there something selected in the :class:`nodeeditor.scene.Scene`?
+        """Is there something selected in the :class:`nodeeditor.scene.QD_Scene`?
 
-        :return: ``True`` if there is something selected in the `Scene`
+        :return: ``True`` if there is something selected in the `QD_Scene`
         :rtype: ``bool``
         """
         return self.getSelectedItems() != []

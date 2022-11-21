@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-A module containing Graphic representation of :class:`~nodeeditor.scene.Scene`
+A module containing Graphic representation of :class:`~nodeeditor.scene.QD_Scene`
 """
 import math
 from PyQt6.QtWidgets import *
@@ -9,16 +9,16 @@ from PyQt6.QtGui import *
 
 
 class QD_SceneGfx(QGraphicsScene):
-    """Class representing Graphic of :class:`~nodeeditor.scene.Scene`"""
-    #: pyqtSignal emitted when some item is selected in the `Scene`
+    """Class representing Graphic of :class:`~nodeeditor.scene.QD_Scene`"""
+    #: pyqtSignal emitted when some item is selected in the `QD_Scene`
     itemSelected = pyqtSignal()
-    #: pyqtSignal emitted when items are deselected in the `Scene`
+    #: pyqtSignal emitted when items are deselected in the `QD_Scene`
     itemsDeselected = pyqtSignal()
 
-    def __init__(self, scene: 'Scene', parent: QWidget = None):
+    def __init__(self, scene: 'QD_Scene', parent: QWidget = None):
         """
-        :param scene: reference to the :class:`~nodeeditor.scene.Scene`
-        :type scene: :class:`~nodeeditor.scene.Scene`
+        :param scene: reference to the :class:`~nodeeditor.scene.QD_Scene`
+        :type scene: :class:`~nodeeditor.scene.QD_Scene`
         :param parent: parent widget
         :type parent: QWidget
         """
@@ -50,7 +50,7 @@ class QD_SceneGfx(QGraphicsScene):
         pass
 
     def setSceneSize(self, width: int, height: int):
-        """Set `width` and `height` of the `Graphics Scene`"""
+        """Set `width` and `height` of the `Graphics QD_Scene`"""
         self.setSceneRect(-width // 2, -height // 2, width, height)
 
     def drawBackground(self, painter: QPainter, rect: QRect):

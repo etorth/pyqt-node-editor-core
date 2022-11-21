@@ -22,7 +22,7 @@ EDGE_DRAG_START_THRESHOLD = 50
 
 class QD_ViewGfx(QGraphicsView):
     """Class representing NodeEditor's `Graphics View`"""
-    #: pyqtSignal emitted when cursor position on the `Scene` has changed
+    #: pyqtSignal emitted when cursor position on the `QD_Scene` has changed
     scenePosChanged = pyqtSignal(int, int)
 
     def __init__(self, gfx: 'QD_SceneGfx', parent: 'QWidget' = None):
@@ -285,7 +285,7 @@ class QD_ViewGfx(QGraphicsView):
         super().mouseReleaseEvent(event)
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        """Overriden Qt's ``mouseMoveEvent`` handling Scene/View logic"""
+        """Overriden Qt's ``mouseMoveEvent`` handling QD_Scene/View logic"""
         scenepos = self.mapToScene(event.pos())
 
         if self.mode == MODE_EDGE_DRAG:
@@ -360,7 +360,7 @@ class QD_ViewGfx(QGraphicsView):
         self.gfx.scene.history.storeHistory("Delete cutted edges", setModified=True)
 
     def deleteSelected(self):
-        """Shortcut for safe deleting every object selected in the `Scene`."""
+        """Shortcut for safe deleting every object selected in the `QD_Scene`."""
         for item in self.gfx.selectedItems():
             if isinstance(item, QD_EdgeGfx):
                 item.edge.remove()
@@ -408,7 +408,7 @@ class QD_ViewGfx(QGraphicsView):
         """Code handling the end of dragging an `QD_Edge` operation. In this code return True if skip the
         rest of the mouse event processing
 
-        :param item: Item in the `Graphics Scene` where we ended dragging an `QD_Edge`
+        :param item: Item in the `Graphics QD_Scene` where we ended dragging an `QD_Edge`
         :type item: ``QGraphicsItem``
         """
         self.mode = MODE_NOOP

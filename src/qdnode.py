@@ -9,7 +9,7 @@ from qdutils import *
 
 
 class QD_Node(QD_Serializable):
-    """Class representing `QD_Node` in the `Scene`.
+    """Class representing `QD_Node` in the `QD_Scene`.
     """
     NodeGfx_class = NodeGfx
     NodeContent_class = NodeContent
@@ -18,16 +18,16 @@ class QD_Node(QD_Serializable):
     icon = ""
     op_title = "Undefined"
 
-    def __init__(self, scene: 'Scene', inputs: list = [2, 2], outputs: list = [1]):
+    def __init__(self, scene: 'QD_Scene', inputs: list = [2, 2], outputs: list = [1]):
         """
-        :param scene: reference to the :class:`~nodeeditor.scene.Scene`
-        :type scene: :class:`~nodeeditor.scene.Scene`
+        :param scene: reference to the :class:`~nodeeditor.scene.QD_Scene`
+        :type scene: :class:`~nodeeditor.scene.QD_Scene`
         :param inputs: list of :class:`~nodeeditor.socket.Socket` types from which the `Sockets` will be auto created
         :param outputs: list of :class:`~nodeeditor.socket.Socket` types from which the `Sockets` will be auto created
 
         :Instance Attributes:
 
-            - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
+            - **scene** - reference to the :class:`~nodeeditor.scene.QD_Scene`
             - **gfx** - Instance of :class:`~nodeeditor.nodegfx.NodeGfx` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
             - **content** - Instance of :class:`~nodeeditor.node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the QD_Node. Automatically created in constructor
             - **inputs** - list containin Input :class:`~nodeeditor.socket.Socket` instances
@@ -84,7 +84,7 @@ class QD_Node(QD_Serializable):
     @property
     def pos(self):
         """
-        Retrieve QD_Node's position in the Scene
+        Retrieve QD_Node's position in the QD_Scene
 
         :return: QD_Node position
         :rtype: ``QPointF``
@@ -95,8 +95,8 @@ class QD_Node(QD_Serializable):
         """
         Sets position of the Graphics QD_Node
 
-        :param x: X `Scene` position
-        :param y: Y `Scene` position
+        :param x: X `QD_Scene` position
+        :param y: Y `QD_Scene` position
         """
         self.gfx.setPos(x, y)
 
@@ -202,7 +202,7 @@ class QD_Node(QD_Serializable):
         pass
 
     def onDoubleClicked(self, event):
-        """Event handling double click on Graphics QD_Node in `Scene`"""
+        """Event handling double click on Graphics QD_Node in `QD_Scene`"""
         pass
 
     def doSelect(self, new_state: bool = True):
@@ -261,7 +261,7 @@ class QD_Node(QD_Serializable):
 
     def getSocketScenePosition(self, socket: 'Socket') -> '(x, y)':
         """
-        Get absolute Socket position in the Scene
+        Get absolute Socket position in the QD_Scene
 
         :param socket: `Socket` which position we want to know
         :return: (x, y) Socket's scene position

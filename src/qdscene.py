@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""A module containing Scene
+"""A module containing QD_Scene
 """
 import os
 import json
@@ -16,18 +16,18 @@ class InvalidFile(Exception):
     pass
 
 
-class Scene(QD_Serializable):
-    """Class representing NodeEditor's `Scene`"""
+class QD_Scene(QD_Serializable):
+    """Class representing NodeEditor's `QD_Scene`"""
 
     def __init__(self):
         """Instance Attributes:
 
-            - **nodes** - list of `Nodes` in this `Scene`
-            - **edges** - list of `Edges` in this `Scene`
+            - **nodes** - list of `Nodes` in this `QD_Scene`
+            - **edges** - list of `Edges` in this `QD_Scene`
             - **history** - Instance of :class:`~nodeeditor.scenehistory.SceneHistory`
             - **clipboard** - Instance of :class:`~nodeeditor.sceneclipboard.SceneClipboard`
-            - **scene_width** - width of this `Scene` in pixels
-            - **scene_height** - height of this `Scene` in pixels
+            - **scene_width** - width of this `QD_Scene` in pixels
+            - **scene_height** - height of this `QD_Scene` in pixels
         """
         super().__init__()
         self.nodes = []
@@ -60,9 +60,9 @@ class Scene(QD_Serializable):
     @property
     def has_been_modified(self):
         """
-        Has this `Scene` been modified?
+        Has this `QD_Scene` been modified?
 
-        :getter: ``True`` if the `Scene` has been modified
+        :getter: ``True`` if the `QD_Scene` has been modified
         :setter: set new state. Triggers `Has Been Modified` event
         :type: ``bool``
         """
@@ -81,7 +81,7 @@ class Scene(QD_Serializable):
         self._has_been_modified = value
 
     def initUI(self):
-        """Set up Graphics Scene Instance"""
+        """Set up Graphics QD_Scene Instance"""
         self.gfx = QD_SceneGfx(self)
         self.gfx.setSceneSize(self.scene_width, self.scene_height)
 
@@ -123,9 +123,9 @@ class Scene(QD_Serializable):
                 for callback in self._items_deselected_listeners: callback()
 
     def isModified(self) -> bool:
-        """Is this `Scene` dirty aka `has been modified` ?
+        """Is this `QD_Scene` dirty aka `has been modified` ?
 
-        :return: ``True`` if `Scene` has been modified
+        :return: ``True`` if `QD_Scene` has been modified
         :rtype: ``bool``
         """
         return self.has_been_modified
@@ -194,22 +194,22 @@ class Scene(QD_Serializable):
 
     # custom flag to detect node or edge has been selected....
     def resetLastSelectedStates(self):
-        """Resets internal `selected flags` in all `Nodes` and `Edges` in the `Scene`"""
+        """Resets internal `selected flags` in all `Nodes` and `Edges` in the `QD_Scene`"""
         for node in self.nodes:
             node.gfx._last_selected_state = False
         for edge in self.edges:
             edge.gfx._last_selected_state = False
 
     def getView(self) -> 'QGraphicsView':
-        """Shortcut for returning `Scene` ``QGraphicsView``
+        """Shortcut for returning `QD_Scene` ``QGraphicsView``
 
-        :return: ``QGraphicsView`` attached to the `Scene`
+        :return: ``QGraphicsView`` attached to the `QD_Scene`
         :rtype: ``QGraphicsView``
         """
         return self.gfx.views()[0]
 
     def getItemAt(self, pos: 'QPointF'):
-        """Shortcut for retrieving item at provided `Scene` position
+        """Shortcut for retrieving item at provided `QD_Scene` position
 
         :param pos: scene position
         :type pos: ``QPointF``
@@ -219,47 +219,47 @@ class Scene(QD_Serializable):
         return self.getView().itemAt(pos)
 
     def addNode(self, node: QD_Node):
-        """Add :class:`~nodeeditor.node.QD_Node` to this `Scene`
+        """Add :class:`~nodeeditor.node.QD_Node` to this `QD_Scene`
 
-        :param node: :class:`~nodeeditor.node.QD_Node` to be added to this `Scene`
+        :param node: :class:`~nodeeditor.node.QD_Node` to be added to this `QD_Scene`
         :type node: :class:`~nodeeditor.node.QD_Node`
         """
         self.nodes.append(node)
 
     def addEdge(self, edge: QD_Edge):
-        """Add :class:`~nodeeditor.qdedge.QD_Edge` to this `Scene`
+        """Add :class:`~nodeeditor.qdedge.QD_Edge` to this `QD_Scene`
 
-        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to be added to this `Scene`
+        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to be added to this `QD_Scene`
         :return: :class:`~nodeeditor.qdedge.QD_Edge`
         """
         self.edges.append(edge)
 
     def removeNode(self, node: QD_Node):
-        """Remove :class:`~nodeeditor.node.QD_Node` from this `Scene`
+        """Remove :class:`~nodeeditor.node.QD_Node` from this `QD_Scene`
 
-        :param node: :class:`~nodeeditor.node.QD_Node` to be removed from this `Scene`
+        :param node: :class:`~nodeeditor.node.QD_Node` to be removed from this `QD_Scene`
         :type node: :class:`~nodeeditor.node.QD_Node`
         """
         if node in self.nodes:
             self.nodes.remove(node)
         else:
             if utils.DEBUG:
-                print("!W:", "Scene::removeNode", "wanna remove nodeeditor", node, "from self.nodes but it's not in the list!")
+                print("!W:", "QD_Scene::removeNode", "wanna remove nodeeditor", node, "from self.nodes but it's not in the list!")
 
     def removeEdge(self, edge: QD_Edge):
-        """Remove :class:`~nodeeditor.qdedge.QD_Edge` from this `Scene`
+        """Remove :class:`~nodeeditor.qdedge.QD_Edge` from this `QD_Scene`
 
-        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to be remove from this `Scene`
+        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to be remove from this `QD_Scene`
         :return: :class:`~nodeeditor.qdedge.QD_Edge`
         """
         if edge in self.edges:
             self.edges.remove(edge)
         else:
             if utils.DEBUG:
-                print("!W:", "Scene::removeEdge", "wanna remove edge", edge, "from self.edges but it's not in the list!")
+                print("!W:", "QD_Scene::removeEdge", "wanna remove edge", edge, "from self.edges but it's not in the list!")
 
     def clear(self):
-        """Remove all `Nodes` from this `Scene`. This causes also to remove all `Edges`"""
+        """Remove all `Nodes` from this `QD_Scene`. This causes also to remove all `Edges`"""
         while len(self.nodes) > 0:
             self.nodes[0].remove()
 
@@ -267,7 +267,7 @@ class Scene(QD_Serializable):
 
     def saveToFile(self, filename: str):
         """
-        Save this `Scene` to the file on disk.
+        Save this `QD_Scene` to the file on disk.
 
         :param filename: where to save this scene
         :type filename: ``str``
@@ -280,9 +280,9 @@ class Scene(QD_Serializable):
 
     def loadFromFile(self, filename: str):
         """
-        Load `Scene` from a file on disk
+        Load `QD_Scene` from a file on disk
 
-        :param filename: from what file to load the `Scene`
+        :param filename: from what file to load the `QD_Scene`
         :type filename: ``str``
         :raises: :class:`~nodeeditor.scene.InvalidFile` if there was an error decoding JSON file
         """
@@ -300,8 +300,8 @@ class Scene(QD_Serializable):
 
     def setNodeClassSelector(self, class_selecting_function: 'functon') -> 'QD_Node class type':
         """
-        Set the function which decides what `QD_Node` class to instantiate when deserializating `Scene`.
-        If not set, we will always instantiate :class:`~nodeeditor.node.QD_Node` for each `QD_Node` in the `Scene`
+        Set the function which decides what `QD_Node` class to instantiate when deserializating `QD_Scene`.
+        If not set, we will always instantiate :class:`~nodeeditor.node.QD_Node` for each `QD_Node` in the `QD_Scene`
 
         :param class_selecting_function: function which returns `QD_Node` class type (not instance) from `QD_Node` serialized ``dict`` data
         :type class_selecting_function: ``function``
@@ -317,7 +317,7 @@ class Scene(QD_Serializable):
 
         :param data: serialized `QD_Node` object data
         :type data: ``dict``
-        :return: Instance of `QD_Node` class to be used in this Scene
+        :return: Instance of `QD_Node` class to be used in this QD_Scene
         :rtype: `QD_Node` class instance
         """
         return QD_Node if self.node_class_selector is None else self.node_class_selector(data)
