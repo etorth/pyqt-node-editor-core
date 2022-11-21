@@ -18,7 +18,7 @@ class QD_Node(QD_Serializable):
     icon = ""
     op_title = "Undefined"
 
-    def __init__(self, scene: 'QD_Scene', inputs: list = [2, 2], outputs: list = [1]):
+    def __init__(self, scene: 'QD_Scene', inputs: list = [], outputs: list = []):
         """
         :param scene: reference to the :class:`~nodeeditor.scene.QD_Scene`
         :type scene: :class:`~nodeeditor.scene.QD_Scene`
