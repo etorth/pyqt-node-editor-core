@@ -9,7 +9,9 @@ from qdnodecontentgfx import *
 
 class _StateContentGfx_enter(QD_NodeContentGfx):
     def initUI(self):
-        self.label = QLabel('进入', self)
+        self.label = QLabel('进入')
+        self.box = QVBoxLayout(self)
+        self.box.addWidget(self.label)
 
 
 class _StateContent_enter(QD_NodeContent):
