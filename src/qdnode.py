@@ -170,8 +170,7 @@ class QD_Node(QD_Serializable):
         pass
 
     def onInputChanged(self, socket: 'QD_Socket'):
-        """Event handling when QD_Node's input QD_Edge has changed. We auto-mark this `QD_Node` to be `Dirty` with all it's
-        descendants
+        """Event handling when QD_Node's input QD_Edge has changed. We auto-mark this `QD_Node` to be `Dirty` with all it's descendants
 
         :param socket: reference to the changed :class:`socket.QD_Socket`
         :type socket: :class:`socket.QD_Socket`
@@ -201,7 +200,7 @@ class QD_Node(QD_Serializable):
         """Returns ``True`` if current `QD_Node` is selected"""
         return self.gfx.isSelected()
 
-    def getSocketPosition(self, index: int, position: int, num_out_of: int = 1) -> '(x, y)':
+    def getSocketPosition(self, index: int, is_input: bool, num_out_of: int = 1) -> '(x, y)':
         """
         Get the relative `x, y` position of a :class:`socket.QD_Socket`. This is used for placing
         the `Graphics Sockets` on `Graphics QD_Node`.
@@ -216,35 +215,21 @@ class QD_Node(QD_Serializable):
         :rtype: ``x, y``
         """
 
-        if position in (LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM):
-            x = self.socket_offsets[position]
+        if is_input:
+            x = -1
         else:
-            x = self.gfx.width + self.socket_offsets[position]
+            x = self.gfx.width + 1
 
 
-        if position in (LEFT_BOTTOM, RIGHT_BOTTOM):
-            # start from bottom
-            y = self.gfx.height - self.gfx.edge_roundness - self.gfx.title_vertical_padding - index * self.socket_spacing
-        elif position in (LEFT_CENTER, RIGHT_CENTER):
-            num_sockets = num_out_of
-            node_height = self.gfx.height
-            top_offset = self.gfx.title_height + 2 * self.gfx.title_vertical_padding + self.gfx.edge_padding
-            available_height = node_height - top_offset
+        top_offset = self.gfx.title_height + 2 * self.gfx.title_vertical_padding + self.gfx.edge_padding
+        available_height = self.gfx.height - top_offset
 
-            total_height_of_all_sockets = num_sockets * self.socket_spacing
-            new_top = available_height - total_height_of_all_sockets
+        total_height_of_all_sockets = num_out_of * self.socket_spacing
+        new_top = available_height - total_height_of_all_sockets
 
-            # y = top_offset + index * self.socket_spacing + new_top / 2
-            y = top_offset + available_height / 2.0 + (index - 0.5) * self.socket_spacing
-            if num_sockets > 1:
-                y -= self.socket_spacing * (num_sockets - 1) / 2
-
-        elif position in (LEFT_TOP, RIGHT_TOP):
-            # start from top
-            y = self.gfx.title_height + self.gfx.title_vertical_padding + self.gfx.edge_roundness + index * self.socket_spacing
-        else:
-            # this should never happen
-            y = 0
+        y = top_offset + available_height / 2.0 + (index - 0.5) * self.socket_spacing
+        if num_out_of > 1:
+            y -= self.socket_spacing * (num_out_of - 1) / 2
 
         return [x, y]
 
@@ -256,7 +241,7 @@ class QD_Node(QD_Serializable):
         :return: (x, y) QD_Socket's scene position
         """
         nodepos = self.gfx.pos()
-        socketpos = self.getSocketPosition(socket.index, socket.position, socket.count_on_this_node_side)
+        socketpos = self.getSocketPosition(socket.index, socket.is_input, socket.count_on_this_node_side)
         return (nodepos.x() + socketpos[0], nodepos.y() + socketpos[1])
 
     def updateConnectedEdges(self):

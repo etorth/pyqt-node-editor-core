@@ -97,7 +97,7 @@ class QD_Socket(QD_Serializable):
     def setSocketPosition(self):
         """Helper function to set `Graphics QD_Socket` position. Exact socket position is calculated
         inside :class:`node.QD_Node`."""
-        self.gfx.setPos(*self.node.getSocketPosition(self.index, self.position, self.count_on_this_node_side))
+        self.gfx.setPos(*self.node.getSocketPosition(self.index, self.is_input, self.count_on_this_node_side))
 
     def getSocketPosition(self):
         """
@@ -108,7 +108,7 @@ class QD_Socket(QD_Serializable):
         if confg.DEBUG:
             print("  GSP: ", self.index, self.position, "nodeeditor:", self.node)
 
-        res = self.node.getSocketPosition(self.index, self.position, self.count_on_this_node_side)
+        res = self.node.getSocketPosition(self.index, self.is_input, self.count_on_this_node_side)
 
         if confg.DEBUG:
             print("  res", res)
