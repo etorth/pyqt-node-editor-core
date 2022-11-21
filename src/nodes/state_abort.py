@@ -9,7 +9,11 @@ from qdnodecontentgfx import *
 
 class _StateContentGfx_abort(QD_NodeContentGfx):
     def initUI(self):
-        self.label = QLabel('终止', self)
+        self.label = QLabel()
+        self.label.setPixmap(QPixmap("icons/abort.png").scaled(32, 32))
+
+        self.box = QVBoxLayout(self)
+        self.box.addWidget(self.label)
 
 
 class _StateContent_abort(QD_NodeContent):
@@ -34,7 +38,7 @@ class _StateContent_abort(QD_NodeContent):
 
 @utils.register_opnode
 class _State_abort(QD_Node):
-    icon = "icons/editor.png"
+    icon = "icons/abort.png"
     op_type = OPS_ACTION
     op_title = "终止"
 

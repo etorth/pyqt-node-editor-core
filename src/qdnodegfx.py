@@ -82,8 +82,8 @@ class QD_NodeGfx(QGraphicsItem):
 
     def initSizes(self):
         """Set up internal attributes like `width`, `height`, etc."""
-        self._mini_width = 160
-        self._mini_height = 74
+        self._mini_width = 64
+        self._mini_height = 64
 
         self.edge_roundness = 6
         self.edge_padding = 4
