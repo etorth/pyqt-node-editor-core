@@ -15,7 +15,7 @@ class LineNumberArea(QWidget):
         self._code_editor.lineNumberAreaPaintEvent(event)
 
 
-class LuaEditorWidget(QPlainTextEdit):
+class QD_LuaEditor(QPlainTextEdit):
     def __init__(self):
         super().__init__()
         self.line_number_area = LineNumberArea(self)

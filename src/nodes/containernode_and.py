@@ -24,7 +24,7 @@ class ContainerNodeContent_and(NodeContent):
 
     def serialize(self):
         res = super().serialize()
-        res['value'] = 'lua_code_from_LuaEditorWidget'
+        res['value'] = 'lua_code_from_QD_LuaEditor'
         return res
 
     def deserialize(self, data, hashmap={}):

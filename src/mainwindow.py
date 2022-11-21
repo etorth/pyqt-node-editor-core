@@ -7,7 +7,7 @@ from qdutils import *
 from statenodewindow import StateNodeWindow
 from calc_sub_window import CalculatorSubWindow
 from draglistbox import DragListBox
-from luaeditorwidget import LuaEditorWidget
+from qdluaeditor import QD_LuaEditor
 from qdutils import *
 
 # images for the dark skin
@@ -164,7 +164,7 @@ class MainWindow(StateNodeWindow):
             active = self.getCurrentStateNodeWidget()
             hasMdiChild = (active is not None)
 
-            if not issubclass(type(active), LuaEditorWidget):
+            if not issubclass(type(active), QD_LuaEditor):
                 self.actPaste.setEnabled(hasMdiChild)
 
                 self.actCut.setEnabled(hasMdiChild and active.hasSelectedItems())
@@ -247,7 +247,7 @@ class MainWindow(StateNodeWindow):
         return subwin
 
     def createLuaEditorChild(self):
-        luaeditor = LuaEditorWidget()
+        luaeditor = QD_LuaEditor()
         subwin = self.mdiArea.addSubWindow(luaeditor)
         subwin.setWindowIcon(self.empty_icon)
         return subwin
