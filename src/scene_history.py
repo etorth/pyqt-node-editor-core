@@ -2,7 +2,7 @@
 """
 A module containing all code for working with History (Undo/Redo)
 """
-from node_graphics_edge import EdgeGfx
+from qdedgegfx import QD_EdgeGfx
 from qdutils import *
 
 DEBUG = True

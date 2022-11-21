@@ -7,7 +7,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import QGraphicsView, QApplication
 
 from qdsocketgfx import QD_SocketGfx
-from node_graphics_edge import EdgeGfx
+from qdedgegfx import QD_EdgeGfx
 from qdedge import QD_Edge, EDGE_TYPE_BEZIER
 from node_graphics_cutline import QDMCutLine
 from qdutils import *
@@ -18,9 +18,6 @@ MODE_EDGE_CUT = 3  #: Mode representing when we draw a cutting edge
 
 #: Distance when click on socket to enable `Drag QD_Edge`
 EDGE_DRAG_START_THRESHOLD = 50
-
-DEBUG = True
-DEBUG_MMB_SCENE_ITEMS = False
 
 
 class QD_ViewGfx(QGraphicsView):
@@ -143,8 +140,8 @@ class QD_ViewGfx(QGraphicsView):
         item = self.getItemAtClick(event)
 
         # debug print out
-        if DEBUG_MMB_SCENE_ITEMS:
-            if isinstance(item, EdgeGfx):
+        if confg.DEBUG:
+            if isinstance(item, QD_EdgeGfx):
                 print("MMB DEBUG:", item.edge, "\n\t", item.edge.gfx if item.edge.gfx is not None else None)
 
             if isinstance(item, QD_SocketGfx):
@@ -152,7 +149,7 @@ class QD_ViewGfx(QGraphicsView):
                 if item.socket.edges:
                     for edge in item.socket.edges: print("\t", edge)
 
-        if DEBUG_MMB_SCENE_ITEMS and (item is None):
+        if confg.DEBUG and (item is None):
             print("SCENE:")
             print("  Nodes:")
 
@@ -193,7 +190,7 @@ class QD_ViewGfx(QGraphicsView):
         # if confg.DEBUG: print("LMB Click on", item, self.debug_modifiers(event))
 
         # logic
-        if hasattr(item, "node") or isinstance(item, EdgeGfx) or item is None:
+        if hasattr(item, "node") or isinstance(item, QD_EdgeGfx) or item is None:
             if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                 event.ignore()
                 fakeEvent = QMouseEvent(QEvent.Type.MouseButtonPress, event.localPos(), event.screenPos(), Qt.MouseButton.LeftButton, event.buttons() | Qt.MouseButton.LeftButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
@@ -230,7 +227,7 @@ class QD_ViewGfx(QGraphicsView):
 
         try:
             # logic
-            if hasattr(item, "node") or isinstance(item, EdgeGfx) or item is None:
+            if hasattr(item, "node") or isinstance(item, QD_EdgeGfx) or item is None:
                 if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                     event.ignore()
                     fakeEvent = QMouseEvent(event.type(), event.localPos(), event.screenPos(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
@@ -365,7 +362,7 @@ class QD_ViewGfx(QGraphicsView):
     def deleteSelected(self):
         """Shortcut for safe deleting every object selected in the `Scene`."""
         for item in self.gfx.selectedItems():
-            if isinstance(item, EdgeGfx):
+            if isinstance(item, QD_EdgeGfx):
                 item.edge.remove()
             elif hasattr(item, 'node'):
                 item.node.remove()
@@ -393,11 +390,17 @@ class QD_ViewGfx(QGraphicsView):
     def edgeDragStart(self, item: 'QGraphicsItem'):
         """Code handling the start of dragging an `QD_Edge` operation"""
         try:
-            if confg.DEBUG: print('View::edgeDragStart ~ Start dragging edge')
-            if confg.DEBUG: print('View::edgeDragStart ~   assign Start Socket to:', item.socket)
+            if confg.DEBUG:
+                print('View::edgeDragStart ~ Start dragging edge')
+
+            if confg.DEBUG:
+                print('View::edgeDragStart ~   assign Start Socket to:', item.socket)
+
             self.drag_start_socket = item.socket
             self.drag_edge = QD_Edge(self.gfx.scene, item.socket, None, EDGE_TYPE_BEZIER)
-            if confg.DEBUG: print('View::edgeDragStart ~   dragEdge:', self.drag_edge)
+
+            if confg.DEBUG:
+                print('View::edgeDragStart ~   dragEdge:', self.drag_edge)
         except Exception as e:
             utils.dumpExcept(e)
 
@@ -410,7 +413,9 @@ class QD_ViewGfx(QGraphicsView):
         """
         self.mode = MODE_NOOP
 
-        if confg.DEBUG: print('View::edgeDragEnd ~ End dragging edge')
+        if confg.DEBUG:
+            print('View::edgeDragEnd ~ End dragging edge')
+
         self.drag_edge.remove(silent=True)  # don't notify sockets about removing drag_edge
         self.drag_edge = None
 

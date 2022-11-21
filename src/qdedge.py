@@ -3,7 +3,7 @@
 A module containing NodeEditor's class for representing QD_Edge and QD_Edge Type Constants.
 """
 from collections import OrderedDict
-from node_graphics_edge import *
+from qdedgegfx import *
 from qdserializable import QD_Serializable
 from qdutils import *
 
@@ -29,7 +29,7 @@ class QD_Edge(QD_Serializable):
         :Instance Attributes:
 
             - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
-            - **gfx** - Instance of :class:`~nodeeditor.node_graphics_edge.EdgeGfx` subclass handling graphical representation in the ``QGraphicsScene``.
+            - **gfx** - Instance of :class:`~nodeeditor.qdedgegfx.QD_EdgeGfx` subclass handling graphical representation in the ``QGraphicsScene``.
         """
         super().__init__()
         self.scene = scene
@@ -98,7 +98,7 @@ class QD_Edge(QD_Serializable):
         """QD_Edge type
 
         :getter: get edge type constant for current ``QD_Edge``. See :ref:`edge-type-constants`
-        :setter: sets new edge type. On background, creates new :class:`~nodeeditor.node_graphics_edge.EdgeGfx`
+        :setter: sets new edge type. On background, creates new :class:`~nodeeditor.qdedgegfx.QD_EdgeGfx`
             child class if necessary, adds this ``QGraphicsPathItem`` to the ``QGraphicsScene`` and updates edge sockets
             positions.
         """
