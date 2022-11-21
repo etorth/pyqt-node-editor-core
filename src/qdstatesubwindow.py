@@ -156,34 +156,36 @@ class QD_StateSubWindow(QD_StateWidget):
 
         if hasattr(item, 'node'):
             selected = item.node
+
         if hasattr(item, 'socket'):
             selected = item.socket.node
 
         if confg.DEBUG:
             print("got item:", selected)
 
-        if selected and action == markDirtyAct:
-            selected.markDirty()
-
-        if selected and action == markDirtyDescendantsAct:
-            selected.markDescendantsDirty()
-
-        if selected and action == markInvalidAct:
-            selected.markInvalid()
-
-        if selected and action == unmarkInvalidAct:
-            selected.markInvalid(False)
-
-        if selected and action == evalAct:
-            val = selected.eval()
-            if confg.DEBUG:
-                print("EVALUATED:", val)
-
         if selected:
-            for addedAct in addedActDict.keys():
-                if action == addedAct:
-                    print("ADDING NODE: %s" % addedActDict[addedAct].op_title)
-                    selected.addSubNode(addedActDict[addedAct])
+            if action == markDirtyAct:
+                selected.markDirty()
+
+            elif action == markDirtyDescendantsAct:
+                selected.markDescendantsDirty()
+
+            elif action == markInvalidAct:
+                selected.markInvalid()
+
+            elif action == unmarkInvalidAct:
+                selected.markInvalid(False)
+
+            elif action == evalAct:
+                val = selected.eval()
+                if confg.DEBUG:
+                    print("EVALUATED:", val)
+
+            else:
+                for addedAct in addedActDict.keys():
+                    if action == addedAct:
+                        print("ADDING NODE: %s" % addedActDict[addedAct].op_title)
+                        selected.addSubNode(addedActDict[addedAct])
 
 
     def handleEdgeContextMenu(self, event):

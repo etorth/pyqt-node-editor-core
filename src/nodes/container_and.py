@@ -10,6 +10,8 @@ from qdnodecontentgfx import *
 class _ContainerContentGfx_and(QD_NodeContentGfx):
     def initUI(self):
         self.vbox = QVBoxLayout(self)
+        self.vbox.setContentsMargins(0, 0, 0, 0)
+        self.vbox.setSpacing(10)
 
 
 class _ContainerContent_and(QD_NodeContent):
