@@ -63,7 +63,7 @@ class QD_NodeGfx(QGraphicsItem):
     @property
     def height(self) -> int:
         if self.content is not None:
-            return max(self.content.gfx.height(), self._mini_height)
+            return max(self.title_height + self.content.gfx.height(), self._mini_height)
         else:
             return self._mini_height
 
