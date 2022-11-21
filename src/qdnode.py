@@ -124,8 +124,8 @@ class QD_Node(QD_Serializable):
 
         self.input_socket_position = LEFT_CENTER
         self.output_socket_position = RIGHT_CENTER
-        self.input_multi_edged = False
-        self.output_multi_edged = True
+        self.input_multi_edged = True
+        self.output_multi_edged = False
         self.socket_offsets = {
             LEFT_BOTTOM: -1,
             LEFT_CENTER: -1,

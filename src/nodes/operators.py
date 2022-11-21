@@ -30,7 +30,7 @@ class _CalcNodeBase(QD_Node):
 
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[1, 2], outputs=[3])
+        super().__init__(scene, inputs=[1], outputs=[2, 3])
         self.eval()
 
 
