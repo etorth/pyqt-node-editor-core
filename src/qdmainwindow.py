@@ -164,10 +164,9 @@ class QD_MainWindow(QMainWindow):
         print(123)
 
     def about(self):
-        QMessageBox.about(self, "About Calculator NodeEditor Example",
-                          "The <b>Calculator NodeEditor</b> example demonstrates how to write multiple "
-                          "document interface applications using PyQt6 and NodeEditor. For more information visit: "
-                          "<a href='https://www.blenderfreak.com/'>www.BlenderFreak.com</a>")
+        QMessageBox.about(self, "About QuestDesigner",
+                          "The <b>QuestDesigner</b> helps to design quests for mir2x game. For more information visit: "
+                          "<a href='https://github.com/etorth/mir2x'>github.com/etorth/mir2x</a>")
 
     def createFileMenu(self):
         menubar = self.menuBar()
