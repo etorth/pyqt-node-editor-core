@@ -7,13 +7,13 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _ContainerContentGfx_ignoreResult(QD_NodeContentGfx):
+class _ContainerContentGfx_and(QD_NodeContentGfx):
     def initUI(self):
         self.edit = QLineEdit(self)
 
 
-class _ContainerContent_ignoreResult(QD_NodeContent):
-    NodeContentGfx_class =_ContainerContentGfx_ignoreResult
+class _ContainerContent_and(QD_NodeContent):
+    NodeContentGfx_class =_ContainerContentGfx_and
 
     def serialize(self):
         res = super().serialize()
@@ -33,12 +33,12 @@ class _ContainerContent_ignoreResult(QD_NodeContent):
 
 
 @utils.register_opnode
-class _Container_ignoreResult(QD_Node):
+class _Container_and(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
-    op_title = "忽略结果"
+    op_title = "或"
 
-    NodeContent_class = _ContainerContent_ignoreResult
+    NodeContent_class = _ContainerContent_and
 
 
     def __init__(self, scene):

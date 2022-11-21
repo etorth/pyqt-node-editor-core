@@ -1,37 +1,31 @@
+from PyQt6.QtGui import *
 from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
+
 from qdnode import *
 from qdutils import *
+from qdnodecontentgfx import *
 
 
-class ContainerNodeContent_and(QD_NodeContent):
+class _ContainerContentGfx_and(QD_NodeContentGfx):
     def initUI(self):
-        self.label = QLabel('Lua代码')
-        self.view = QGraphicsView()
+        self.edit = QLineEdit(self)
 
-        self.scene = QGraphicsScene()
-        self.scene.addRect(0, 0, 100, 100)
-        self.scene.addEllipse(0, 0, 100, 100)
-        self.scene.addWidget(QLabel('Lua代码2'))
 
-        self.vbox = QVBoxLayout(self)
-        self.vbox.setContentsMargins(10, 10, 10, 10)
-        self.vbox.setSpacing(10)
-
-        self.vbox.addWidget(self.label)
-
-        self.view.setScene(self.scene)
-        self.vbox.addWidget(self.view)
+class _ContainerContent_and(QD_NodeContent):
+    NodeContentGfx_class =_ContainerContentGfx_and
 
     def serialize(self):
         res = super().serialize()
-        res['value'] = 'lua_code_from_QD_LuaEditor'
+        res['value'] = self.gfx.edit.text()
         return res
+
 
     def deserialize(self, data, hashmap={}):
         res = super().deserialize(data, hashmap)
         try:
             value = data['value']
-            self.edit.setText(value)
+            self.gfx.edit.setText(value)
             return True & res
         except Exception as e:
             utils.dumpExcept(e)
@@ -39,22 +33,18 @@ class ContainerNodeContent_and(QD_NodeContent):
 
 
 @utils.register_opnode
-class ContainerNode_and(QD_Node):
+class _Container_and(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
-    op_title = "逻辑与"
+    op_title = "与"
+
+    NodeContent_class = _ContainerContent_and
+
 
     def __init__(self, scene):
-        super().__init__(scene, outputs=[3])
+        super().__init__(scene, inputs=[2], outputs=[3])
         self.eval()
 
-    def addSubNode(self, node):
-        newNode = node(self.scene)
-        self.content.vbox.addWidget(QLabel('widget'))
-
-    def initInnerClasses(self):
-        self.content = ContainerNodeContent_and(self)
-        self.gfx = CalcGraphicsNode(self)
 
     def evalImplementation(self):
         u_value = 1 # hack
