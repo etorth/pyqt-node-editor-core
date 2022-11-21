@@ -13,9 +13,7 @@ class QD_NodeContentGfx(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.layout = QVBoxLayout()
-        self.layout.setContentsMargins(0, 0, 0, 0)
-        self.setLayout(self.layout)
+        raise NotImplementedError()
 
 
     def setEditingFlag(self, value: bool):
