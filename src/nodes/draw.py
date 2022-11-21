@@ -9,11 +9,16 @@ from qdnodecontentgfx import *
 
 class _DrawContentGfx(QD_NodeContentGfx):
     def initUI(self):
-        self.scene = QGraphicsScene()
+        self.scene = QGraphicsScene(0, 0, 40, 40)
         self.scene.addEllipse(0, 0, 30, 30, QPen(Qt.GlobalColor.black), QBrush(Qt.GlobalColor.red))
 
         self.view = QGraphicsView(self)
         self.view.setScene(self.scene)
+
+        self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.view.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+
+        self.view.resize(40, 40)
 
 
 class _DrawContent(QD_NodeContent):

@@ -186,6 +186,7 @@ class QD_StateSubWindow(QD_StateWidget):
                     if action == addedAct:
                         print("ADDING NODE: %s" % addedActDict[addedAct].op_title)
                         selected.addSubNode(addedActDict[addedAct])
+                        break
 
 
     def handleEdgeContextMenu(self, event):
