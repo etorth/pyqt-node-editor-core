@@ -51,7 +51,9 @@ class QD_SocketGfx(QGraphicsItem):
         """Change the QD_Socket Type"""
         self._color_background = self.getSocketColor(self.socket_type)
         self._brush = QBrush(self._color_background)
-        # print("QD_Socket changed to:", self._color_background.getRgbF())
+        if confg.DEBUG:
+            print("QD_Socket changed to:", self._color_background.getRgbF())
+
         self.update()
 
     def initAssets(self):
@@ -73,6 +75,7 @@ class QD_SocketGfx(QGraphicsItem):
         painter.setBrush(self._brush)
         painter.setPen(self._pen if not self.isHighlighted else self._pen_highlight)
         painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
+
 
     def boundingRect(self) -> QRectF:
         """Defining Qt' bounding rectangle"""
