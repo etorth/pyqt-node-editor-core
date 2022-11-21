@@ -10,6 +10,11 @@ class _CalcNodeBase(QD_Node):
     op_type = OPS_COMMAND
 
 
+    def __init__(self, scene):
+        super().__init__(scene, inputs=[1, 2], outputs=[3])
+        self.eval()
+
+
 @utils.register_opnode
 class _CalcNode_add(_CalcNodeBase):
     icon = "icons/add.png"
