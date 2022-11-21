@@ -81,7 +81,7 @@ class EdgeGfx(QGraphicsPathItem):
         self.edge.scene.gfx.itemSelected.emit()
 
     def doSelect(self, new_state: bool = True):
-        """Safe version of selecting the `Graphics Node`. Takes care about the selection state flag used internally
+        """Safe version of selecting the `Graphics QD_Node`. Takes care about the selection state flag used internally
 
         :param new_state: ``True`` to select, ``False`` to deselect
         :type new_state: ``bool``

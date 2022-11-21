@@ -10,7 +10,7 @@ class CalcOutputContent(NodeContent):
 
 
 @utils.register_opnode
-class CalcNode_Output(Node):
+class CalcNode_Output(QD_Node):
     icon = "icons/out.png"
     op_type = OPS_CHECKER
     op_title = "Output"

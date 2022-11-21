@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-A module containing NodeEditor's class for representing `Node`.
+A module containing NodeEditor's class for representing `QD_Node`.
 """
 from nodegfx import NodeGfx
 from nodecontent import NodeContent
@@ -8,8 +8,8 @@ from qsocket import *
 from qdutils import *
 
 
-class Node(QD_Serializable):
-    """Class representing `Node` in the `Scene`.
+class QD_Node(QD_Serializable):
+    """Class representing `QD_Node` in the `Scene`.
     """
     NodeGfx_class = NodeGfx
     NodeContent_class = NodeContent
@@ -29,7 +29,7 @@ class Node(QD_Serializable):
 
             - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
             - **gfx** - Instance of :class:`~nodeeditor.nodegfx.NodeGfx` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
-            - **content** - Instance of :class:`~nodeeditor.node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the Node. Automatically created in constructor
+            - **content** - Instance of :class:`~nodeeditor.node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the QD_Node. Automatically created in constructor
             - **inputs** - list containin Input :class:`~nodeeditor.socket.Socket` instances
             - **outputs** - list containin Output :class:`~nodeeditor.socket.Socket` instances
 
@@ -70,8 +70,8 @@ class Node(QD_Serializable):
         """
         Title shown in the scene
 
-        :getter: return current Node title
-        :setter: sets Node title and passes it to Graphics Node class
+        :getter: return current QD_Node title
+        :setter: sets QD_Node title and passes it to Graphics QD_Node class
         :type: ``str``
         """
         return self._title
@@ -84,16 +84,16 @@ class Node(QD_Serializable):
     @property
     def pos(self):
         """
-        Retrieve Node's position in the Scene
+        Retrieve QD_Node's position in the Scene
 
-        :return: Node position
+        :return: QD_Node position
         :rtype: ``QPointF``
         """
         return self.gfx.pos()  # QPointF
 
     def setPos(self, x: float, y: float):
         """
-        Sets position of the Graphics Node
+        Sets position of the Graphics QD_Node
 
         :param x: X `Scene` position
         :param y: Y `Scene` position
@@ -101,7 +101,7 @@ class Node(QD_Serializable):
         self.gfx.setPos(x, y)
 
     def initInnerClasses(self):
-        """Sets up graphics Node (PyQt) and Content Widget"""
+        """Sets up graphics QD_Node (PyQt) and Content Widget"""
         node_content_class = self.getNodeContentClass()
         graphics_node_class = self.getGraphicsNodeClass()
 
@@ -186,7 +186,7 @@ class Node(QD_Serializable):
         pass
 
     def onInputChanged(self, socket: 'Socket'):
-        """Event handling when Node's input Edge has changed. We auto-mark this `Node` to be `Dirty` with all it's
+        """Event handling when QD_Node's input Edge has changed. We auto-mark this `QD_Node` to be `Dirty` with all it's
         descendants
 
         :param socket: reference to the changed :class:`~nodeeditor.socket.Socket`
@@ -202,25 +202,25 @@ class Node(QD_Serializable):
         pass
 
     def onDoubleClicked(self, event):
-        """Event handling double click on Graphics Node in `Scene`"""
+        """Event handling double click on Graphics QD_Node in `Scene`"""
         pass
 
     def doSelect(self, new_state: bool = True):
-        """Shortcut method for selecting/deselecting the `Node`
+        """Shortcut method for selecting/deselecting the `QD_Node`
 
-        :param new_state: ``True`` if you want to select the `Node`. ``False`` if you want to deselect the `Node`
+        :param new_state: ``True`` if you want to select the `QD_Node`. ``False`` if you want to deselect the `QD_Node`
         :type new_state: ``bool``
         """
         self.gfx.doSelect(new_state)
 
     def isSelected(self):
-        """Returns ``True`` if current `Node` is selected"""
+        """Returns ``True`` if current `QD_Node` is selected"""
         return self.gfx.isSelected()
 
     def getSocketPosition(self, index: int, position: int, num_out_of: int = 1) -> '(x, y)':
         """
         Get the relative `x, y` position of a :class:`~nodeeditor.socket.Socket`. This is used for placing
-        the `Graphics Sockets` on `Graphics Node`.
+        the `Graphics Sockets` on `Graphics QD_Node`.
 
         :param index: Order number of the Socket. (0, 1, 2, ...)
         :type index: ``int``
@@ -228,7 +228,7 @@ class Node(QD_Serializable):
         :type position: ``int``
         :param num_out_of: Total number of Sockets on this `Socket Position`
         :type num_out_of: ``int``
-        :return: Position of described Socket on the `Node`
+        :return: Position of described Socket on the `QD_Node`
         :rtype: ``x, y``
         """
         x = self.socket_offsets[position] if (position in (LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM)) else self.gfx.width + self.socket_offsets[position]
@@ -278,10 +278,10 @@ class Node(QD_Serializable):
                 edge.updatePositions()
 
     def remove(self):
-        """Safely remove this Node
+        """Safely remove this QD_Node
         """
         if confg.DEBUG:
-            print("> Removing Node", self)
+            print("> Removing QD_Node", self)
 
         if confg.DEBUG:
             print(" - remove all edges from sockets")
@@ -311,15 +311,15 @@ class Node(QD_Serializable):
     def isDirty(self) -> bool:
         """Is this node marked as `Dirty`
 
-        :return: ``True`` if `Node` is marked as `Dirty`
+        :return: ``True`` if `QD_Node` is marked as `Dirty`
         :rtype: ``bool``
         """
         return self._is_dirty
 
     def markDirty(self, new_value: bool = True):
-        """Mark this `Node` as `Dirty`. See :ref:`evaluation` for more
+        """Mark this `QD_Node` as `Dirty`. See :ref:`evaluation` for more
 
-        :param new_value: ``True`` if this `Node` should be `Dirty`. ``False`` if you want to un-dirty this `Node`
+        :param new_value: ``True`` if this `QD_Node` should be `Dirty`. ``False`` if you want to un-dirty this `QD_Node`
         :type new_value: ``bool``
         """
         self._is_dirty = new_value
@@ -327,11 +327,11 @@ class Node(QD_Serializable):
             self.onMarkedDirty()
 
     def onMarkedDirty(self):
-        """Called when this `Node` has been marked as `Dirty`. This method is supposed to be overriden"""
+        """Called when this `QD_Node` has been marked as `Dirty`. This method is supposed to be overriden"""
         pass
 
     def markChildrenDirty(self, new_value: bool = True):
-        """Mark all first level children of this `Node` to be `Dirty`. Not this `Node` it self. Not other descendants
+        """Mark all first level children of this `QD_Node` to be `Dirty`. Not this `QD_Node` it self. Not other descendants
 
         :param new_value: ``True`` if children should be `Dirty`. ``False`` if you want to un-dirty children
         :type new_value: ``bool``
@@ -340,7 +340,7 @@ class Node(QD_Serializable):
             other_node.markDirty(new_value)
 
     def markDescendantsDirty(self, new_value: bool = True):
-        """Mark all children and descendants of this `Node` to be `Dirty`. Not this `Node` it self
+        """Mark all children and descendants of this `QD_Node` to be `Dirty`. Not this `QD_Node` it self
 
         :param new_value: ``True`` if children and descendants should be `Dirty`. ``False`` if you want to un-dirty children and descendants
         :type new_value: ``bool``
@@ -352,26 +352,26 @@ class Node(QD_Serializable):
     def isInvalid(self) -> bool:
         """Is this node marked as `Invalid`?
 
-        :return: ``True`` if `Node` is marked as `Invalid`
+        :return: ``True`` if `QD_Node` is marked as `Invalid`
         :rtype: ``bool``
         """
         return self._is_invalid
 
     def markInvalid(self, new_value: bool = True):
-        """Mark this `Node` as `Invalid`. See :ref:`evaluation` for more
+        """Mark this `QD_Node` as `Invalid`. See :ref:`evaluation` for more
 
-        :param new_value: ``True`` if this `Node` should be `Invalid`. ``False`` if you want to make this `Node` valid
+        :param new_value: ``True`` if this `QD_Node` should be `Invalid`. ``False`` if you want to make this `QD_Node` valid
         :type new_value: ``bool``
         """
         self._is_invalid = new_value
         if self._is_invalid: self.onMarkedInvalid()
 
     def onMarkedInvalid(self):
-        """Called when this `Node` has been marked as `Invalid`. This method is supposed to be overriden"""
+        """Called when this `QD_Node` has been marked as `Invalid`. This method is supposed to be overriden"""
         pass
 
     def markChildrenInvalid(self, new_value: bool = True):
-        """Mark all first level children of this `Node` to be `Invalid`. Not this `Node` it self. Not other descendants
+        """Mark all first level children of this `QD_Node` to be `Invalid`. Not this `QD_Node` it self. Not other descendants
 
         :param new_value: ``True`` if children should be `Invalid`. ``False`` if you want to make children valid
         :type new_value: ``bool``
@@ -380,7 +380,7 @@ class Node(QD_Serializable):
             other_node.markInvalid(new_value)
 
     def markDescendantsInvalid(self, new_value: bool = True):
-        """Mark all children and descendants of this `Node` to be `Invalid`. Not this `Node` it self
+        """Mark all children and descendants of this `QD_Node` to be `Invalid`. Not this `QD_Node` it self
 
         :param new_value: ``True`` if children and descendants should be `Invalid`. ``False`` if you want to make children and descendants valid
         :type new_value: ``bool``
@@ -435,18 +435,18 @@ class Node(QD_Serializable):
             utils.dumpExcept(e)
 
     def evalChildren(self):
-        """Evaluate all children of this `Node`"""
+        """Evaluate all children of this `QD_Node`"""
         for node in self.getChildrenNodes():
             node.eval()
 
     # traversing nodes functions
 
-    def getChildrenNodes(self) -> 'List[Node]':
+    def getChildrenNodes(self) -> 'List[QD_Node]':
         """
-        Retreive all first-level children connected to this `Node` `Outputs`
+        Retreive all first-level children connected to this `QD_Node` `Outputs`
 
-        :return: list of `Nodes` connected to this `Node` from all `Outputs`
-        :rtype: List[:class:`~nodeeditor.node.Node`]
+        :return: list of `Nodes` connected to this `QD_Node` from all `Outputs`
+        :rtype: List[:class:`~nodeeditor.node.QD_Node`]
         """
         if self.outputs == []: return []
         other_nodes = []
@@ -456,14 +456,14 @@ class Node(QD_Serializable):
                 other_nodes.append(other_node)
         return other_nodes
 
-    def getInput(self, index: int = 0) -> ['Node', None]:
+    def getInput(self, index: int = 0) -> ['QD_Node', None]:
         """
-        Get the **first**  `Node` connected to the  Input specified by `index`
+        Get the **first**  `QD_Node` connected to the  Input specified by `index`
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: :class:`~nodeeditor.node.Node` which is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: :class:`~nodeeditor.node.Node` or ``None``
+        :return: :class:`~nodeeditor.node.QD_Node` which is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
+        :rtype: :class:`~nodeeditor.node.QD_Node` or ``None``
         """
         try:
             input_socket = self.inputs[index]
@@ -475,14 +475,14 @@ class Node(QD_Serializable):
             utils.dumpExcept(e)
             return None
 
-    def getInputWithSocket(self, index: int = 0) -> [('Node', 'Socket'), (None, None)]:
-        """Get the **first**  `Node` connected to the Input specified by `index` and the connection `Socket`
+    def getInputWithSocket(self, index: int = 0) -> [('QD_Node', 'Socket'), (None, None)]:
+        """Get the **first**  `QD_Node` connected to the Input specified by `index` and the connection `Socket`
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node.Node` and :class:`~nodeeditor.socket.Socket` which
+        :return: Tuple containing :class:`~nodeeditor.node.QD_Node` and :class:`~nodeeditor.socket.Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`~nodeeditor.node.Node`, :class:`~nodeeditor.socket.Socket`)
+        :rtype: (:class:`~nodeeditor.node.QD_Node`, :class:`~nodeeditor.socket.Socket`)
         """
         try:
             input_socket = self.inputs[index]
@@ -495,15 +495,15 @@ class Node(QD_Serializable):
             utils.dumpExcept(e)
             return None, None
 
-    def getInputWithSocketIndex(self, index: int = 0) -> ('Node', int):
+    def getInputWithSocketIndex(self, index: int = 0) -> ('QD_Node', int):
         """
-        Get the **first**  `Node` connected to the Input specified by `index` and the connection `Socket`
+        Get the **first**  `QD_Node` connected to the Input specified by `index` and the connection `Socket`
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node.Node` and :class:`~nodeeditor.socket.Socket` which
+        :return: Tuple containing :class:`~nodeeditor.node.QD_Node` and :class:`~nodeeditor.socket.Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`~nodeeditor.node.Node`, int)
+        :rtype: (:class:`~nodeeditor.node.QD_Node`, int)
         """
         try:
             edge = self.inputs[index].edges[0]
@@ -516,14 +516,14 @@ class Node(QD_Serializable):
             utils.dumpExcept(e)
             return None, None
 
-    def getInputs(self, index: int = 0) -> 'List[Node]':
+    def getInputs(self, index: int = 0) -> 'List[QD_Node]':
         """
         Get **all** `Nodes` connected to the Input specified by `index`
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: all :class:`~nodeeditor.node.Node` instances which are connected to the specified `Input` or ``[]`` if there is no connection of index is out of range
-        :rtype: List[:class:`~nodeeditor.node.Node`]
+        :return: all :class:`~nodeeditor.node.QD_Node` instances which are connected to the specified `Input` or ``[]`` if there is no connection of index is out of range
+        :rtype: List[:class:`~nodeeditor.node.QD_Node`]
         """
         ins = []
         for edge in self.inputs[index].edges:
@@ -531,13 +531,13 @@ class Node(QD_Serializable):
             ins.append(other_socket.node)
         return ins
 
-    def getOutputs(self, index: int = 0) -> 'List[Node]':
+    def getOutputs(self, index: int = 0) -> 'List[QD_Node]':
         """Get **all** `Nodes` connected to the Output specified by `index`
 
         :param index: Order number of the `Output Socket`
         :type index: ``int``
-        :return: all :class:`~nodeeditor.node.Node` instances which are connected to the specified `Output` or ``[]`` if there is no connection of index is out of range
-        :rtype: List[:class:`~nodeeditor.node.Node`]
+        :return: all :class:`~nodeeditor.node.QD_Node` instances which are connected to the specified `Output` or ``[]`` if there is no connection of index is out of range
+        :rtype: List[:class:`~nodeeditor.node.QD_Node`]
         """
         outs = []
         for edge in self.outputs[index].edges:

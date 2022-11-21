@@ -8,7 +8,7 @@ class NodeContent(QD_Serializable):
     NodeContentGfx_class = NodeContentGfx
 
 
-    def __init__(self, node: 'Node'):
+    def __init__(self, node: 'QD_Node'):
         super().__init__()
 
         self.node = node

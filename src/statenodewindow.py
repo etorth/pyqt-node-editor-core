@@ -97,7 +97,7 @@ class StateNodeWindow(QMainWindow):
     def setTitle(self):
         """Function responsible for setting window title
         """
-        self.setWindowTitle("Node Editor - " + self.getCurrentStateNodeWidget().getUserFriendlyFilename())
+        self.setWindowTitle("QD_Node Editor - " + self.getCurrentStateNodeWidget().getUserFriendlyFilename())
 
     def closeEvent(self, event):
         """Handle close event. Ask before we loose work"""

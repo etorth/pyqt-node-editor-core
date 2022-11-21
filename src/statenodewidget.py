@@ -9,7 +9,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
 from scene import Scene, InvalidFile
-from node import Node
+from node import QD_Node
 from node_edge import Edge, EDGE_TYPE_BEZIER
 from node_graphics_view import GfxView
 
@@ -148,9 +148,9 @@ class StateNodeWidget(QWidget):
 
     def addNodes(self):
         """Testing method to create 3 `Nodes` with 3 `Edges` connecting them"""
-        node1 = Node(self.scene, "My Awesome Node 1", inputs=[0, 0, 0], outputs=[1, 5])
-        node2 = Node(self.scene, "My Awesome Node 2", inputs=[3, 3, 3], outputs=[1])
-        node3 = Node(self.scene, "My Awesome Node 3", inputs=[2, 2, 2], outputs=[1])
+        node1 = QD_Node(self.scene, "My Awesome QD_Node 1", inputs=[0, 0, 0], outputs=[1, 5])
+        node2 = QD_Node(self.scene, "My Awesome QD_Node 2", inputs=[3, 3, 3], outputs=[1])
+        node3 = QD_Node(self.scene, "My Awesome QD_Node 3", inputs=[2, 2, 2], outputs=[1])
         node1.setPos(-350, -250)
         node2.setPos(-75, 0)
         node3.setPos(200, -200)
@@ -162,7 +162,7 @@ class StateNodeWidget(QWidget):
         self.scene.history.storeInitialHistoryStamp()
 
     def addCustomNode(self):
-        """Testing method to create a custom Node with custom content"""
+        """Testing method to create a custom QD_Node with custom content"""
         from nodecontent import NodeContent
         from qdserializable import QD_Serializable
 
@@ -172,11 +172,11 @@ class StateNodeWidget(QWidget):
                 self.node = node
                 self.setParent(parent)
 
-        class NNode(Node):
+        class NNode(QD_Node):
             NodeContent_class = NNodeContent
 
         self.scene.setNodeClassSelector(lambda data: NNode)
-        node = NNode(self.scene, "A Custom Node 1", inputs=[0, 1, 2])
+        node = NNode(self.scene, "A Custom QD_Node 1", inputs=[0, 1, 2])
 
         print("node content:", node.content)
 

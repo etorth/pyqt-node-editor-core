@@ -25,7 +25,7 @@ class CalcInputContent(NodeContent):
 
 
 @utils.register_opnode
-class CalcNode_Input(Node):
+class CalcNode_Input(QD_Node):
     icon = "icons/in.png"
     op_type = OPS_CHECKER
     op_title = "Input"

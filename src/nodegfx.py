@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""A module containing Graphics representation of :class:`~nodeeditor.node.Node`
+"""A module containing Graphics representation of :class:`~nodeeditor.node.QD_Node`
 """
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
@@ -7,18 +7,18 @@ from PyQt6.QtGui import *
 
 
 class NodeGfx(QGraphicsItem):
-    """Class describing Graphics representation of :class:`~nodeeditor.node.Node`"""
+    """Class describing Graphics representation of :class:`~nodeeditor.node.QD_Node`"""
 
-    def __init__(self, node: 'Node', parent: QWidget = None):
+    def __init__(self, node: 'QD_Node', parent: QWidget = None):
         """
-        :param node: reference to :class:`~nodeeditor.node.Node`
-        :type node: :class:`~nodeeditor.node.Node`
+        :param node: reference to :class:`~nodeeditor.node.QD_Node`
+        :type node: :class:`~nodeeditor.node.QD_Node`
         :param parent: parent widget
         :type parent: QWidget
 
         :Instance Attributes:
 
-            - **node** - reference to :class:`~nodeeditor.node.Node`
+            - **node** - reference to :class:`~nodeeditor.node.QD_Node`
         """
         super().__init__(parent)
         self.node = node
@@ -34,14 +34,14 @@ class NodeGfx(QGraphicsItem):
 
     @property
     def content(self):
-        """Reference to `Node Content`"""
+        """Reference to `QD_Node Content`"""
         return self.node.content if self.node else None
 
     @property
     def title(self):
-        """title of this `Node`
+        """title of this `QD_Node`
 
-        :getter: current Graphics Node title
+        :getter: current Graphics QD_Node title
         :setter: stores and make visible the new title
         :type: str
         """
@@ -100,7 +100,7 @@ class NodeGfx(QGraphicsItem):
         self.node.scene.gfx.itemSelected.emit()
 
     def doSelect(self, new_state=True):
-        """Safe version of selecting the `Graphics Node`. Takes care about the selection state flag used internally
+        """Safe version of selecting the `Graphics QD_Node`. Takes care about the selection state flag used internally
 
         :param new_state: ``True`` to select, ``False`` to deselect
         :type new_state: ``bool``
@@ -112,7 +112,7 @@ class NodeGfx(QGraphicsItem):
             self.onSelected()
 
     def mouseMoveEvent(self, event):
-        """Overriden event to detect that we moved with this `Node`"""
+        """Overriden event to detect that we moved with this `QD_Node`"""
         super().mouseMoveEvent(event)
 
         # optimize me! just update the selected nodes
@@ -122,13 +122,13 @@ class NodeGfx(QGraphicsItem):
         self._was_moved = True
 
     def mouseReleaseEvent(self, event):
-        """Overriden event to handle when we moved, selected or deselected this `Node`"""
+        """Overriden event to handle when we moved, selected or deselected this `QD_Node`"""
         super().mouseReleaseEvent(event)
 
         # handle when gfx moved
         if self._was_moved:
             self._was_moved = False
-            self.node.scene.history.storeHistory("Node moved", setModified=True)
+            self.node.scene.history.storeHistory("QD_Node moved", setModified=True)
 
             self.node.scene.resetLastSelectedStates()
             self.doSelect()  # also trigger itemSelected when node was moved
@@ -146,7 +146,7 @@ class NodeGfx(QGraphicsItem):
             self.onSelected()
 
     def mouseDoubleClickEvent(self, event):
-        """Overriden event for doubleclick. Resend to `Node::onDoubleClicked`"""
+        """Overriden event for doubleclick. Resend to `QD_Node::onDoubleClicked`"""
         self.node.onDoubleClicked(event)
 
     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
@@ -186,7 +186,7 @@ class NodeGfx(QGraphicsItem):
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
-        """Painting the rounded rectanglar `Node`"""
+        """Painting the rounded rectanglar `QD_Node`"""
         # title
         path_title = QPainterPath()
         path_title.setFillRule(Qt.FillRule.WindingFill)

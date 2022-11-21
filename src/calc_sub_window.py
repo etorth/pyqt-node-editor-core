@@ -1,5 +1,7 @@
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
+from PyQt6.QtWidgets import QGraphicsProxyWidget, QMenu
+
 from statenodewidget import StateNodeWidget
 from node import *
 from node_edge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
@@ -26,7 +28,7 @@ class CalculatorSubWindow(StateNodeWidget):
 
     def getNodeClassFromData(self, data):
         if 'op_code' not in data:
-            return Node
+            return QD_Node
         return utils.get_class_from_opcode(data['op_code'])
 
     def doEvalOutputs(self):
@@ -133,7 +135,7 @@ class CalculatorSubWindow(StateNodeWidget):
         unmarkInvalidAct = context_menu.addAction("Unmark Invalid")
         evalAct = context_menu.addAction("Eval")
 
-        addNodeMenu = context_menu.addMenu('Add Node')
+        addNodeMenu = context_menu.addMenu('Add QD_Node')
         addedActDict = {}
         for type in utils.valid_node_types():
             addedActDict[addNodeMenu.addAction(type.op_title)] = type

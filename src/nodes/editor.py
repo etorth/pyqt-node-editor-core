@@ -39,7 +39,7 @@ class CalcEditorContent(NodeContent):
 
 
 @utils.register_opnode
-class CalcNode_Editor(Node):
+class CalcNode_Editor(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_CHECKER
     op_title = "Editor"

@@ -61,7 +61,7 @@ class MainWindow(StateNodeWindow):
     def createActions(self):
         super().createActions()
 
-        self.actOpenNodeEditWindow = QAction("Open Node Edit Window", self, statusTip="Open node edit window", triggered=self.onOpenNodeEditWindow)
+        self.actOpenNodeEditWindow = QAction("Open QD_Node Edit Window", self, statusTip="Open node edit window", triggered=self.onOpenNodeEditWindow)
 
         self.actClose = QAction("Cl&ose", self, statusTip="Close the active window", triggered=self.mdiArea.closeActiveSubWindow)
         self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)

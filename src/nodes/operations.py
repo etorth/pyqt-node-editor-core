@@ -3,7 +3,7 @@ from node import *
 
 
 @utils.register_opnode
-class CalcNode_Add(Node):
+class CalcNode_Add(QD_Node):
     icon = "icons/add.png"
     op_type = OPS_COMMAND
     op_title = "Add"
@@ -13,7 +13,7 @@ class CalcNode_Add(Node):
 
 
 @utils.register_opnode
-class CalcNode_Sub(Node):
+class CalcNode_Sub(QD_Node):
     icon = "icons/sub.png"
     op_type = OPS_COMMAND
     op_title = "Substract"
@@ -22,7 +22,7 @@ class CalcNode_Sub(Node):
         return input1 - input2
 
 @utils.register_opnode
-class CalcNode_Mul(Node):
+class CalcNode_Mul(QD_Node):
     icon = "icons/mul.png"
     op_type = OPS_COMMAND
     op_title = "Multiply"
@@ -32,7 +32,7 @@ class CalcNode_Mul(Node):
         return input1 * input2
 
 @utils.register_opnode
-class CalcNode_Div(Node):
+class CalcNode_Div(QD_Node):
     icon = "icons/divide.png"
     op_type = OPS_COMMAND
     op_title = "Divide"

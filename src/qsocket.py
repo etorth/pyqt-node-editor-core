@@ -22,10 +22,10 @@ class Socket(QD_Serializable):
 
     """Class representing Socket."""
 
-    def __init__(self, node: 'Node', index: int = 0, position: int = LEFT_TOP, socket_type: int = 1, multi_edges: bool = True, count_on_this_node_side: int = 1, is_input: bool = False):
+    def __init__(self, node: 'QD_Node', index: int = 0, position: int = LEFT_TOP, socket_type: int = 1, multi_edges: bool = True, count_on_this_node_side: int = 1, is_input: bool = False):
         """
-        :param node: reference to the :class:`~nodeeditor.node.Node` containing this `Socket`
-        :type node: :class:`~nodeeditor.node.Node`
+        :param node: reference to the :class:`~nodeeditor.node.QD_Node` containing this `Socket`
+        :type node: :class:`~nodeeditor.node.QD_Node`
         :param index: Current index of this socket in the position
         :type index: ``int``
         :param position: Socket position. See :ref:`socket-position-constants`
@@ -39,7 +39,7 @@ class Socket(QD_Serializable):
 
         :Instance Attributes:
 
-            - **node** - reference to the :class:`~nodeeditor.node.Node` containing this `Socket`
+            - **node** - reference to the :class:`~nodeeditor.node.QD_Node` containing this `Socket`
             - **edges** - list of `Edges` connected to this `Socket`
             - **gfx** - reference to the :class:`~nodeeditor.node_graphics_socket.SocketGfx`
             - **position** - Socket position. See :ref:`socket-position-constants`
@@ -96,13 +96,13 @@ class Socket(QD_Serializable):
 
     def setSocketPosition(self):
         """Helper function to set `Graphics Socket` position. Exact socket position is calculated
-        inside :class:`~nodeeditor.node.Node`."""
+        inside :class:`~nodeeditor.node.QD_Node`."""
         self.gfx.setPos(*self.node.getSocketPosition(self.index, self.position, self.count_on_this_node_side))
 
     def getSocketPosition(self):
         """
         :return: Returns this `Socket` position according the implementation stored in
-            :class:`~nodeeditor.node.Node`
+            :class:`~nodeeditor.node.QD_Node`
         :rtype: ``x, y`` position
         """
         if confg.DEBUG: print("  GSP: ", self.index, self.position, "nodeeditor:", self.node)

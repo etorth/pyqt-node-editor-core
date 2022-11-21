@@ -30,7 +30,7 @@ class ContainerNodeContent_ignoreResult(NodeContent):
 
 
 @utils.register_opnode
-class ContainerNode_ignoreResult(Node):
+class ContainerNode_ignoreResult(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
     op_title = "忽略结果"

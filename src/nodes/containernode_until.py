@@ -30,7 +30,7 @@ class ContainerNodeContent_until(NodeContent):
 
 
 @utils.register_opnode
-class ContainerNode_until(Node):
+class ContainerNode_until(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
     op_title = "等待至"

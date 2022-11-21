@@ -49,7 +49,7 @@ class ConditionCheckerContent_level(NodeContent):
 
 
 @utils.register_opnode
-class ConditionChecker_level(Node):
+class ConditionChecker_level(QD_Node):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER
     op_title = "等级"

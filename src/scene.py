@@ -7,7 +7,7 @@ from collections import OrderedDict
 from qdutils import *
 from qdserializable import QD_Serializable
 from node_graphics_scene import GfxScene
-from node import Node
+from node import QD_Node
 from node_edge import Edge
 from scene_history import SceneHistory
 from scene_clipboard import SceneClipboard
@@ -218,11 +218,11 @@ class Scene(QD_Serializable):
         """
         return self.getView().itemAt(pos)
 
-    def addNode(self, node: Node):
-        """Add :class:`~nodeeditor.node.Node` to this `Scene`
+    def addNode(self, node: QD_Node):
+        """Add :class:`~nodeeditor.node.QD_Node` to this `Scene`
 
-        :param node: :class:`~nodeeditor.node.Node` to be added to this `Scene`
-        :type node: :class:`~nodeeditor.node.Node`
+        :param node: :class:`~nodeeditor.node.QD_Node` to be added to this `Scene`
+        :type node: :class:`~nodeeditor.node.QD_Node`
         """
         self.nodes.append(node)
 
@@ -234,11 +234,11 @@ class Scene(QD_Serializable):
         """
         self.edges.append(edge)
 
-    def removeNode(self, node: Node):
-        """Remove :class:`~nodeeditor.node.Node` from this `Scene`
+    def removeNode(self, node: QD_Node):
+        """Remove :class:`~nodeeditor.node.QD_Node` from this `Scene`
 
-        :param node: :class:`~nodeeditor.node.Node` to be removed from this `Scene`
-        :type node: :class:`~nodeeditor.node.Node`
+        :param node: :class:`~nodeeditor.node.QD_Node` to be removed from this `Scene`
+        :type node: :class:`~nodeeditor.node.QD_Node`
         """
         if node in self.nodes:
             self.nodes.remove(node)
@@ -298,29 +298,29 @@ class Scene(QD_Serializable):
             except Exception as e:
                 utils.dumpExcept(e)
 
-    def setNodeClassSelector(self, class_selecting_function: 'functon') -> 'Node class type':
+    def setNodeClassSelector(self, class_selecting_function: 'functon') -> 'QD_Node class type':
         """
-        Set the function which decides what `Node` class to instantiate when deserializating `Scene`.
-        If not set, we will always instantiate :class:`~nodeeditor.node.Node` for each `Node` in the `Scene`
+        Set the function which decides what `QD_Node` class to instantiate when deserializating `Scene`.
+        If not set, we will always instantiate :class:`~nodeeditor.node.QD_Node` for each `QD_Node` in the `Scene`
 
-        :param class_selecting_function: function which returns `Node` class type (not instance) from `Node` serialized ``dict`` data
+        :param class_selecting_function: function which returns `QD_Node` class type (not instance) from `QD_Node` serialized ``dict`` data
         :type class_selecting_function: ``function``
-        :return: Class Type of `Node` to be instantiated during deserialization
-        :rtype: `Node` class type
+        :return: Class Type of `QD_Node` to be instantiated during deserialization
+        :rtype: `QD_Node` class type
         """
         self.node_class_selector = class_selecting_function
 
-    def getNodeClassFromData(self, data: dict) -> 'Node class instance':
+    def getNodeClassFromData(self, data: dict) -> 'QD_Node class instance':
         """
-        Takes `Node` serialized data and determines which `Node Class` to instantiate according the description
-        in the serialized Node
+        Takes `QD_Node` serialized data and determines which `QD_Node Class` to instantiate according the description
+        in the serialized QD_Node
 
-        :param data: serialized `Node` object data
+        :param data: serialized `QD_Node` object data
         :type data: ``dict``
-        :return: Instance of `Node` class to be used in this Scene
-        :rtype: `Node` class instance
+        :return: Instance of `QD_Node` class to be used in this Scene
+        :rtype: `QD_Node` class instance
         """
-        return Node if self.node_class_selector is None else self.node_class_selector(data)
+        return QD_Node if self.node_class_selector is None else self.node_class_selector(data)
 
     def serialize(self) -> OrderedDict:
         nodes, edges = [], []

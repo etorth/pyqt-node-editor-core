@@ -30,7 +30,7 @@ class CalcEditorContent(NodeContent):
 
 
 @utils.register_opnode
-class StateNode_Enter(Node):
+class StateNode_Enter(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
     op_title = "进入节点"

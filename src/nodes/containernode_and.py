@@ -39,7 +39,7 @@ class ContainerNodeContent_and(NodeContent):
 
 
 @utils.register_opnode
-class ContainerNode_and(Node):
+class ContainerNode_and(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
     op_title = "逻辑与"

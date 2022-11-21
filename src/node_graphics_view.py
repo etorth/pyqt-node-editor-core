@@ -279,7 +279,7 @@ class GfxView(QGraphicsView):
     def rightMouseButtonRelease(self, event: QMouseEvent):
         """When Right mouse button was release"""
 
-        ## cannot be because with dragging RMB we spawn Create New Node Context Menu
+        ## cannot be because with dragging RMB we spawn Create New QD_Node Context Menu
         ## However, you could use this if you want to cancel with RMB
         # if self.mode == MODE_EDGE_DRAG:
         #     self.cancelDragEdge(event)
@@ -315,8 +315,8 @@ class GfxView(QGraphicsView):
             This overriden Qt's method was used for handling key shortcuts, before we implemented propper
             ``QWindow`` with Actions and Menu. Still the commented code serves as an example how to handle
             key presses without Qt's framework for Actions and shortcuts. There can be also found an example
-            how to solve the problem when Node does contain Text/LineEdit and we press `Delete`
-            key (also serving to delete `Node`)
+            how to solve the problem when QD_Node does contain Text/LineEdit and we press `Delete`
+            key (also serving to delete `QD_Node`)
 
         :param event: Qt's Key event
         :type event: ``QKeyEvent``
