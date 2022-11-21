@@ -6,7 +6,7 @@ from qdedgegfx import QD_EdgeGfx
 from qdutils import *
 
 
-class SceneHistory():
+class QD_SceneHistory():
     """Class contains all the code for undo/redo operations"""
 
     def __init__(self, scene: 'QD_Scene'):
