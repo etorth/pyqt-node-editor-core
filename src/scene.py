@@ -9,8 +9,8 @@ from qdserializable import QD_Serializable
 from qdscenegfx import QD_SceneGfx
 from qdnode import QD_Node
 from qdedge import QD_Edge
-from scene_history import SceneHistory
-from scene_clipboard import SceneClipboard
+from scenehistory import SceneHistory
+from sceneclipboard import SceneClipboard
 
 class InvalidFile(Exception):
     pass
@@ -24,8 +24,8 @@ class Scene(QD_Serializable):
 
             - **nodes** - list of `Nodes` in this `Scene`
             - **edges** - list of `Edges` in this `Scene`
-            - **history** - Instance of :class:`~nodeeditor.scene_history.SceneHistory`
-            - **clipboard** - Instance of :class:`~nodeeditor.scene_clipboard.SceneClipboard`
+            - **history** - Instance of :class:`~nodeeditor.scenehistory.SceneHistory`
+            - **clipboard** - Instance of :class:`~nodeeditor.sceneclipboard.SceneClipboard`
             - **scene_width** - width of this `Scene` in pixels
             - **scene_height** - height of this `Scene` in pixels
         """
