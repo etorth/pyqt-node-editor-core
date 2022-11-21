@@ -122,8 +122,6 @@ class QD_Node(QD_Serializable):
         """Initialize properties and socket information"""
         self.socket_spacing = 22
 
-        self.input_socket_position = LEFT_CENTER
-        self.output_socket_position = RIGHT_CENTER
         self.socket_offsets = {
             LEFT_BOTTOM: -1,
             LEFT_CENTER: -1,
@@ -154,16 +152,12 @@ class QD_Node(QD_Serializable):
                 self.outputs = []
 
         # create new sockets
-        counter = 0
         for item in inputs:
-            socket = self.__class__.Socket_class(node=self, index=counter, position=self.input_socket_position, socket_type=item, multi_edges=True, count_on_this_node_side=len(inputs), is_input=True)
-            counter += 1
+            socket = self.__class__.Socket_class(node=self, index=len(self.inputs), position=LEFT_CENTER, socket_type=item, multi_edges=True, count_on_this_node_side=len(inputs), is_input=True)
             self.inputs.append(socket)
 
-        counter = 0
         for item in outputs:
-            socket = self.__class__.Socket_class(node=self, index=counter, position=self.output_socket_position, socket_type=item, multi_edges=False, count_on_this_node_side=len(outputs), is_input=False)
-            counter += 1
+            socket = self.__class__.Socket_class(node=self, index=len(self.outputs), position=RIGHT_CENTER, socket_type=item, multi_edges=False, count_on_this_node_side=len(outputs), is_input=False)
             self.outputs.append(socket)
 
     def onEdgeConnectionChanged(self, new_edge: 'QD_Edge'):
