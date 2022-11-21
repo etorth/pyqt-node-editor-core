@@ -216,10 +216,9 @@ class QD_Node(QD_Serializable):
         """
 
         if is_input:
-            x = -1
+            x = 0
         else:
-            x = self.gfx.width + 1
-
+            x = self.gfx.width
 
         top_offset = self.gfx.title_height + 2 * self.gfx.title_vertical_padding + self.gfx.edge_padding
         available_height = self.gfx.height - top_offset
