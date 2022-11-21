@@ -241,8 +241,4 @@ class QD_NodeGfx(QGraphicsItem):
         if self.node.isDirty(): offset = 0.0
         if self.node.isInvalid(): offset = 48.0
 
-        painter.drawImage(
-            QRectF(-10, -10, 24.0, 24.0),
-            self._icons,
-            QRectF(offset, 0, 24.0, 24.0)
-        )
+        painter.drawImage(QRectF(-10, -10, 24.0, 24.0), self._icons, QRectF(offset, 0, 24.0, 24.0))
