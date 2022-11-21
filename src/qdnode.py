@@ -124,8 +124,6 @@ class QD_Node(QD_Serializable):
 
         self.input_socket_position = LEFT_CENTER
         self.output_socket_position = RIGHT_CENTER
-        self.input_multi_edged = True
-        self.output_multi_edged = False
         self.socket_offsets = {
             LEFT_BOTTOM: -1,
             LEFT_CENTER: -1,
@@ -158,21 +156,13 @@ class QD_Node(QD_Serializable):
         # create new sockets
         counter = 0
         for item in inputs:
-            socket = self.__class__.Socket_class(
-                node=self, index=counter, position=self.input_socket_position,
-                socket_type=item, multi_edges=self.input_multi_edged,
-                count_on_this_node_side=len(inputs), is_input=True
-            )
+            socket = self.__class__.Socket_class(node=self, index=counter, position=self.input_socket_position, socket_type=item, multi_edges=True, count_on_this_node_side=len(inputs), is_input=True)
             counter += 1
             self.inputs.append(socket)
 
         counter = 0
         for item in outputs:
-            socket = self.__class__.Socket_class(
-                node=self, index=counter, position=self.output_socket_position,
-                socket_type=item, multi_edges=self.output_multi_edged,
-                count_on_this_node_side=len(outputs), is_input=False
-            )
+            socket = self.__class__.Socket_class(node=self, index=counter, position=self.output_socket_position, socket_type=item, multi_edges=False, count_on_this_node_side=len(outputs), is_input=False)
             counter += 1
             self.outputs.append(socket)
 
