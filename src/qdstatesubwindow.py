@@ -1,3 +1,7 @@
+# -*- coding: utf-8 -*-
+"""QD_StateSubWindow
+QD_StateSubWindow supports to edit a state which consists of edges and nodes for a state
+"""
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
@@ -9,7 +13,7 @@ from qdviewgfx import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
 from qdutils import *
 
 
-class QD_NodeSubWindow(StateNodeWidget):
+class QD_StateSubWindow(StateNodeWidget):
     def __init__(self):
         super().__init__()
         # self.setAttribute(Qt.WA_DeleteOnClose)
