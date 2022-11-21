@@ -50,6 +50,7 @@ class QD_DragListBox(QListWidget):
             item.setFlags(Qt.ItemFlag.ItemIsEnabled | Qt.ItemFlag.ItemIsSelectable)
             item.setData(Qt.ItemDataRole.UserRole + UROLE_OPTYPE, op_type)
             item.setIcon(QIcon(self.createCollapsibleIcon('icons/checker.png', collapsed, 10)))
+            item.setBackground(QBrush(Qt.GlobalColor.darkCyan))
 
             if not collapsed:
                 for node in node_types:
