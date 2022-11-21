@@ -2,7 +2,7 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 from node import Node
-from nodewidget import NodeWidget
+from nodecontent import NodeContent
 from nodegfx import NodeGfx
 from qsocket import LEFT_CENTER, RIGHT_CENTER
 from qdutils import *
@@ -41,7 +41,7 @@ class CalcNode(Node):
     op_title = "Undefined"
 
     NodeGfx_class = CalcGraphicsNode
-    NodeContent_class = NodeWidget
+    NodeContent_class = NodeContent
 
     def __init__(self, scene, inputs=[2, 2], outputs=[1]):
         super().__init__(scene, self.__class__.op_title, inputs, outputs)

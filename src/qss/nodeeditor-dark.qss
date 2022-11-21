@@ -166,16 +166,16 @@ QLineEdit {
     border-radius:2px;
     padding:1px 2px
 }
-NodeWidget {
+NodeContent {
     background:transparent;
 }
-NodeWidget QFrame {
+NodeContent QFrame {
     background:transparent
 }
-NodeWidget QTextEdit {
+NodeContent QTextEdit {
     background:#666
 }
-NodeWidget QLabel {
+NodeContent QLabel {
     color:#e0e0e0
 }
 QGraphicsView {

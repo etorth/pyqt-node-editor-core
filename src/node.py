@@ -3,7 +3,7 @@
 A module containing NodeEditor's class for representing `Node`.
 """
 from nodegfx import NodeGfx
-from nodewidget import NodeWidget
+from nodecontent import NodeContent
 from qsocket import *
 from qdutils import *
 
@@ -12,7 +12,7 @@ class Node(Serializable):
     """Class representing `Node` in the `Scene`.
     """
     NodeGfx_class = NodeGfx
-    NodeContent_class = NodeWidget
+    NodeContent_class = NodeContent
     Socket_class = Socket
 
     def __init__(self, scene: 'Scene', title: str = "Undefined Node", inputs: list = [], outputs: list = []):

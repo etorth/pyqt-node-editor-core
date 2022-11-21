@@ -3,7 +3,7 @@ from calc_node_base import *
 from qdutils import *
 
 
-class ContainerNodeContent_and(NodeWidget):
+class ContainerNodeContent_and(NodeContent):
     def initUI(self):
         self.label = QLabel('Lua代码')
         self.view = QGraphicsView()

@@ -3,7 +3,7 @@ from calc_node_base import *
 from qdutils import *
 
 
-class CalcCheckerContent(NodeWidget):
+class CalcCheckerContent(NodeContent):
     def initUI(self):
         self.label = QLabel('等级')
 
