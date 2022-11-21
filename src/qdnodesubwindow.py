@@ -9,7 +9,7 @@ from qdviewgfx import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
 from qdutils import *
 
 
-class CalculatorSubWindow(StateNodeWidget):
+class QD_NodeSubWindow(StateNodeWidget):
     def __init__(self):
         super().__init__()
         # self.setAttribute(Qt.WA_DeleteOnClose)
