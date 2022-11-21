@@ -11,6 +11,8 @@ class QD_NodeContent(QD_Serializable):
     def __init__(self, node: 'QD_Node'):
         super().__init__()
 
+        # node can be None which means this content is not bound to any node
+        # used for adding sub-nodes in container nodes
         self.node = node
         self.initInnerClasses()
 
