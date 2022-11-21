@@ -100,8 +100,12 @@ class Node(Serializable):
         """Sets up graphics Node (PyQt) and Content Widget"""
         node_content_class = self.getNodeContentClass()
         graphics_node_class = self.getGraphicsNodeClass()
-        if node_content_class is not None: self.content = node_content_class(self)
-        if graphics_node_class is not None: self.gfx = graphics_node_class(self)
+
+        if node_content_class is not None:
+            self.content = node_content_class(self)
+
+        if graphics_node_class is not None:
+            self.gfx = graphics_node_class(self)
 
     def getNodeContentClass(self):
         """Returns class representing nodeeditor content"""
