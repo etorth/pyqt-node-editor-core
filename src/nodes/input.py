@@ -3,7 +3,7 @@ from calc_node_base import *
 from qdutils import *
 
 
-class CalcInputContent(QDMNodeContentWidget):
+class CalcInputContent(NodeWidget):
     def initUI(self):
         self.edit = QLineEdit("1", self)
         self.edit.setAlignment(Qt.AlignmentFlag.AlignRight)

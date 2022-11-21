@@ -6,7 +6,7 @@ from node_serializable import Serializable
 from PyQt6.QtWidgets import *
 
 
-class QDMNodeContentWidget(QWidget, Serializable):
+class NodeWidget(QWidget, Serializable):
     """Base class for representation of the Node's graphics content. This class also provides layout for other widgets inside of a :py:class:`~nodeeditor.node.Node`
     """
 
@@ -63,7 +63,7 @@ class QDMTextEdit(QTextEdit):
             This class is example of ``QTextEdit`` modification to be able to handle `Delete` key with overriden
             Qt's ``keyPressEvent`` (when not using ``QActions`` in menu or toolbar)
 
-        Overriden ``QTextEdit`` which sends notification about being edited to parent's container :py:class:`QDMNodeContentWidget`
+        Overriden ``QTextEdit`` which sends notification about being edited to parent's container :py:class:`NodeWidget`
     """
 
     def focusInEvent(self, event: 'QFocusEvent'):

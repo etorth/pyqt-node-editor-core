@@ -163,7 +163,7 @@ class StateNodeWidget(QWidget):
 
     def addCustomNode(self):
         """Testing method to create a custom Node with custom content"""
-        from node_content_widget import QDMNodeContentWidget
+        from nodewidget import NodeWidget
         from node_serializable import Serializable
 
         class NNodeContent(QLabel):  # , Serializable):
