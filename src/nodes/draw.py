@@ -19,6 +19,7 @@ class _DrawContentGfx(QD_NodeContentGfx):
         self.view.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.view.resize(40, 40)
+        self.resize(40, 40)
 
 
 class _DrawContent(QD_NodeContent):
@@ -52,5 +53,4 @@ class _Draw(QD_Node):
         self.gfx.setToolTip("")
 
         self.evalChildren()
-
         return self.value
