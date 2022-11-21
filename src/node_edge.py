@@ -23,9 +23,9 @@ class Edge(Serializable):
         :param scene: Reference to the :py:class:`~nodeeditor.scene.Scene`
         :type scene: :py:class:`~nodeeditor.scene.Scene`
         :param start_socket: Reference to the starting socket
-        :type start_socket: :py:class:`~nodeeditor.node_socket.Socket`
+        :type start_socket: :py:class:`~nodeeditor.socket.Socket`
         :param end_socket: Reference to the End socket or ``None``
-        :type end_socket: :py:class:`~nodeeditor.node_socket.Socket` or ``None``
+        :type end_socket: :py:class:`~nodeeditor.socket.Socket` or ``None``
         :param edge_type: Constant determining type of edge. See :ref:`edge-type-constants`
 
         :Instance Attributes:
@@ -54,9 +54,9 @@ class Edge(Serializable):
         """
         Start socket
 
-        :getter: Returns start :class:`~nodeeditor.node_socket.Socket`
-        :setter: Sets start :class:`~nodeeditor.node_socket.Socket` safely
-        :type: :class:`~nodeeditor.node_socket.Socket`
+        :getter: Returns start :class:`~nodeeditor.socket.Socket`
+        :setter: Sets start :class:`~nodeeditor.socket.Socket` safely
+        :type: :class:`~nodeeditor.socket.Socket`
         """
         return self._start_socket
 
@@ -77,9 +77,9 @@ class Edge(Serializable):
         """
         End socket
 
-        :getter: Returns end :class:`~nodeeditor.node_socket.Socket` or ``None`` if not set
-        :setter: Sets end :class:`~nodeeditor.node_socket.Socket` safely
-        :type: :class:`~nodeeditor.node_socket.Socket` or ``None``
+        :getter: Returns end :class:`~nodeeditor.socket.Socket` or ``None`` if not set
+        :setter: Sets end :class:`~nodeeditor.socket.Socket` safely
+        :type: :class:`~nodeeditor.socket.Socket` or ``None``
         """
         return self._end_socket
 
@@ -136,10 +136,10 @@ class Edge(Serializable):
         """
         Returns the oposite socket on this ``Edge``
 
-        :param known_socket: Provide known :class:`~nodeeditor.node_socket.Socket` to be able to determine the oposite one.
-        :type known_socket: :class:`~nodeeditor.node_socket.Socket`
+        :param known_socket: Provide known :class:`~nodeeditor.socket.Socket` to be able to determine the oposite one.
+        :type known_socket: :class:`~nodeeditor.socket.Socket`
         :return: The oposite socket on this ``Edge`` or ``None``
-        :rtype: :class:`~nodeeditor.node_socket.Socket` or ``None``
+        :rtype: :class:`~nodeeditor.socket.Socket` or ``None``
         """
         return self.start_socket if known_socket == self.end_socket else self.end_socket
 
@@ -155,7 +155,7 @@ class Edge(Serializable):
 
     def updatePositions(self):
         """
-        Updates the internal `Graphics Edge` positions according to the start and end :class:`~nodeeditor.node_socket.Socket`.
+        Updates the internal `Graphics Edge` positions according to the start and end :class:`~nodeeditor.socket.Socket`.
         This should be called if you update ``Edge`` positions.
         """
         source_pos = self.start_socket.getSocketPosition()
@@ -173,7 +173,7 @@ class Edge(Serializable):
 
     def remove_from_sockets(self):
         """
-        Helper function which sets start and end :class:`~nodeeditor.node_socket.Socket` to ``None``
+        Helper function which sets start and end :class:`~nodeeditor.socket.Socket` to ``None``
         """
         self.end_socket = None
         self.start_socket = None
@@ -189,9 +189,9 @@ class Edge(Serializable):
         - :py:meth:`~nodeeditor.node.Node.onEdgeConnectionChanged`
         - :py:meth:`~nodeeditor.node.Node.onInputChanged`
 
-        :param silent_for_socket: :class:`~nodeeditor.node_socket.Socket` of a :class:`~nodeeditor.node.Node` which
+        :param silent_for_socket: :class:`~nodeeditor.socket.Socket` of a :class:`~nodeeditor.node.Node` which
             won't be notified, when this ``Edge`` is going to be removed
-        :type silent_for_socket: :class:`~nodeeditor.node_socket.Socket`
+        :type silent_for_socket: :class:`~nodeeditor.socket.Socket`
         :param silent: ``True`` if no events should be triggered during removing
         :type silent: ``bool``
         """

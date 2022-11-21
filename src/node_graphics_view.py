@@ -6,7 +6,7 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import QGraphicsView, QApplication
 
-from node_graphics_socket import GfxSocket
+from node_graphics_socket import SocketGfx
 from node_graphics_edge import GfxEdge
 from node_edge import Edge, EDGE_TYPE_BEZIER
 from node_graphics_cutline import QDMCutLine
@@ -147,7 +147,7 @@ class GfxView(QGraphicsView):
             if isinstance(item, GfxEdge):
                 print("MMB DEBUG:", item.edge, "\n\t", item.edge.gfx if item.edge.gfx is not None else None)
 
-            if isinstance(item, GfxSocket):
+            if isinstance(item, SocketGfx):
                 print("MMB DEBUG:", item.socket, "socket_type:", item.socket.socket_type, "has edges:", "no" if item.socket.edges == [] else "")
                 if item.socket.edges:
                     for edge in item.socket.edges: print("\t", edge)
@@ -200,7 +200,7 @@ class GfxView(QGraphicsView):
                 super().mousePressEvent(fakeEvent)
                 return
 
-        if isinstance(item, GfxSocket):
+        if isinstance(item, SocketGfx):
             if self.mode == MODE_NOOP:
                 self.mode = MODE_EDGE_DRAG
                 self.edgeDragStart(item)
@@ -415,7 +415,7 @@ class GfxView(QGraphicsView):
         self.drag_edge = None
 
         try:
-            if isinstance(item, GfxSocket):
+            if isinstance(item, SocketGfx):
                 if item.socket != self.drag_start_socket:
                     # if we released dragging on a socket (other then the beginning socket)
 

@@ -4,7 +4,7 @@ from PyQt6.QtWidgets import *
 from node import Node
 from node_content_widget import QDMNodeContentWidget
 from nodegfx import NodeGfx
-from node_socket import LEFT_CENTER, RIGHT_CENTER
+from socket import LEFT_CENTER, RIGHT_CENTER
 from qdutils import *
 
 

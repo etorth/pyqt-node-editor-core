@@ -4,7 +4,7 @@ A module containing NodeEditor's class for representing `Node`.
 """
 from nodegfx import NodeGfx
 from node_content_widget import QDMNodeContentWidget
-from node_socket import *
+from socket import *
 from qdutils import *
 
 
@@ -21,16 +21,16 @@ class Node(Serializable):
         :type scene: :class:`~nodeeditor.scene.Scene`
         :param title: Node Title shown in Scene
         :type title: str
-        :param inputs: list of :class:`~nodeeditor.node_socket.Socket` types from which the `Sockets` will be auto created
-        :param outputs: list of :class:`~nodeeditor.node_socket.Socket` types from which the `Sockets` will be auto created
+        :param inputs: list of :class:`~nodeeditor.socket.Socket` types from which the `Sockets` will be auto created
+        :param outputs: list of :class:`~nodeeditor.socket.Socket` types from which the `Sockets` will be auto created
 
         :Instance Attributes:
 
             - **scene** - reference to the :class:`~nodeeditor.scene.Scene`
             - **gfx** - Instance of :class:`~nodeeditor.nodegfx.NodeGfx` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
             - **content** - Instance of :class:`~nodeeditor.node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the Node. Automatically created in constructor
-            - **inputs** - list containin Input :class:`~nodeeditor.node_socket.Socket` instances
-            - **outputs** - list containin Output :class:`~nodeeditor.node_socket.Socket` instances
+            - **inputs** - list containin Input :class:`~nodeeditor.socket.Socket` instances
+            - **outputs** - list containin Output :class:`~nodeeditor.socket.Socket` instances
 
         """
         super().__init__()
@@ -181,8 +181,8 @@ class Node(Serializable):
         """Event handling when Node's input Edge has changed. We auto-mark this `Node` to be `Dirty` with all it's
         descendants
 
-        :param socket: reference to the changed :class:`~nodeeditor.node_socket.Socket`
-        :type socket: :class:`~nodeeditor.node_socket.Socket`
+        :param socket: reference to the changed :class:`~nodeeditor.socket.Socket`
+        :type socket: :class:`~nodeeditor.socket.Socket`
         """
         self.markDirty()
         self.markDescendantsDirty()
@@ -210,7 +210,7 @@ class Node(Serializable):
 
     def getSocketPosition(self, index: int, position: int, num_out_of: int = 1) -> '(x, y)':
         """
-        Get the relative `x, y` position of a :class:`~nodeeditor.node_socket.Socket`. This is used for placing
+        Get the relative `x, y` position of a :class:`~nodeeditor.socket.Socket`. This is used for placing
         the `Graphics Sockets` on `Graphics Node`.
 
         :param index: Order number of the Socket. (0, 1, 2, ...)
@@ -432,9 +432,9 @@ class Node(Serializable):
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node.Node` and :class:`~nodeeditor.node_socket.Socket` which
+        :return: Tuple containing :class:`~nodeeditor.node.Node` and :class:`~nodeeditor.socket.Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`~nodeeditor.node.Node`, :class:`~nodeeditor.node_socket.Socket`)
+        :rtype: (:class:`~nodeeditor.node.Node`, :class:`~nodeeditor.socket.Socket`)
         """
         try:
             input_socket = self.inputs[index]
@@ -453,7 +453,7 @@ class Node(Serializable):
 
         :param index: Order number of the `Input Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node.Node` and :class:`~nodeeditor.node_socket.Socket` which
+        :return: Tuple containing :class:`~nodeeditor.node.Node` and :class:`~nodeeditor.socket.Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
         :rtype: (:class:`~nodeeditor.node.Node`, int)
         """
