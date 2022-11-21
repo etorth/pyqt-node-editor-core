@@ -9,23 +9,19 @@ from qdnodecontentgfx import *
 
 class _ContainerContentGfx_repeat(QD_NodeContentGfx):
     def initUI(self):
-        self.hbox = QHBoxLayout()
-
         self.choice = QComboBox()
-        self.choice.addItems(["为真时", "为假时", "一直"])
-
-        self.label1 = QLabel('重复')
+        self.choice.addItems(["为真时", "为假时", "无论真假"])
 
         self.times = QLineEdit()
         self.times.setValidator(QIntValidator())
         self.times.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.label2 = QLabel('次')
-
+        self.hbox = QHBoxLayout()
+        self.hbox.addWidget(QLabel("当结果"))
         self.hbox.addWidget(self.choice)
-        self.hbox.addWidget(self.label1)
+        self.hbox.addWidget(QLabel("重复执行"))
         self.hbox.addWidget(self.times)
-        self.hbox.addWidget(self.label2)
+        self.hbox.addWidget(QLabel("次"))
 
         self.vbox = QVBoxLayout(self)
         self.vbox.addLayout(self.hbox)
