@@ -6,8 +6,18 @@ from qdnode import *
 from qdutils import *
 from qdnodecontentgfx import *
 
+class _CalcNodeBaseContentGfx(QD_NodeContentGfx):
+    def initUI(self):
+        self.label = QLabel(self.content.node.__class__.op_title, self)
+
+
+class _CalcNodeBaseContent(QD_NodeContent):
+    NodeContentGfx_class = _CalcNodeBaseContentGfx
+
+
 class _CalcNodeBase(QD_Node):
     op_type = OPS_COMMAND
+    NodeContent_class = _CalcNodeBaseContent
 
 
     def __init__(self, scene):
