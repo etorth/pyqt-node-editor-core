@@ -48,6 +48,7 @@ class _Container_and(QD_Node):
 
 
     def addSubNode(self, nodeType):
+        self.gfx.prepareGeometryChange()
         content = nodeType.NodeContent_class(self)
         self.list.append(content)
         self.content.gfx.vbox.addWidget(content.gfx)
