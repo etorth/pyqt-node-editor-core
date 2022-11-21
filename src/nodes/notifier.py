@@ -9,7 +9,9 @@ from qdnodecontentgfx import *
 
 class _NotifierContentGfx_enter(QD_NodeContentGfx):
     def initUI(self):
-        self.edit = QLineEdit(self)
+        self.edit = QLineEdit()
+        self.box = QHBoxLayout(self)
+        self.box.addWidget(self.edit)
 
 
 class _NotifierContent_enter(QD_NodeContent):
