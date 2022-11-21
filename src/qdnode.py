@@ -231,7 +231,12 @@ class QD_Node(QD_Serializable):
         :return: Position of described QD_Socket on the `QD_Node`
         :rtype: ``x, y``
         """
-        x = self.socket_offsets[position] if (position in (LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM)) else self.gfx.width + self.socket_offsets[position]
+
+        if position in (LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM):
+            x = self.socket_offsets[position]
+        else:
+            x = self.gfx.width + self.socket_offsets[position]
+
 
         if position in (LEFT_BOTTOM, RIGHT_BOTTOM):
             # start from bottom

@@ -105,9 +105,14 @@ class QD_Socket(QD_Serializable):
             :class:`~nodeeditor.node.QD_Node`
         :rtype: ``x, y`` position
         """
-        if confg.DEBUG: print("  GSP: ", self.index, self.position, "nodeeditor:", self.node)
+        if confg.DEBUG:
+            print("  GSP: ", self.index, self.position, "nodeeditor:", self.node)
+
         res = self.node.getSocketPosition(self.index, self.position, self.count_on_this_node_side)
-        if confg.DEBUG: print("  res", res)
+
+        if confg.DEBUG:
+            print("  res", res)
+
         return res
 
     def hasAnyEdge(self) -> bool:
