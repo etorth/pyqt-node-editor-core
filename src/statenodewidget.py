@@ -11,7 +11,7 @@ from PyQt6.QtWidgets import *
 from scene import Scene, InvalidFile
 from qdnode import QD_Node
 from node_edge import Edge, EDGE_TYPE_BEZIER
-from node_graphics_view import GfxView
+from qdviewgfx import QD_ViewGfx
 
 
 class StateNodeWidget(QWidget):
@@ -37,7 +37,7 @@ class StateNodeWidget(QWidget):
 
     def initUI(self):
         """Set up this ``StateNodeWidget`` with its layout,  :class:`~nodeeditor.scene.Scene` and
-        :class:`~nodeeditor.node_graphics_view.GfxView`"""
+        :class:`~nodeeditor.qdviewgfx.QD_ViewGfx`"""
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
@@ -46,7 +46,7 @@ class StateNodeWidget(QWidget):
         self.scene = self.__class__.Scene_class()
 
         # create graphics view
-        self.view = GfxView(self.scene.gfx, self)
+        self.view = QD_ViewGfx(self.scene.gfx, self)
         self.layout.addWidget(self.view)
 
     def isModified(self) -> bool:

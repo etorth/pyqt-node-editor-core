@@ -23,7 +23,7 @@ DEBUG = True
 DEBUG_MMB_SCENE_ITEMS = False
 
 
-class GfxView(QGraphicsView):
+class QD_ViewGfx(QGraphicsView):
     """Class representing NodeEditor's `Graphics View`"""
     #: pyqtSignal emitted when cursor position on the `Scene` has changed
     scenePosChanged = pyqtSignal(int, int)
