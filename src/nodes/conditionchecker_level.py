@@ -7,7 +7,7 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class ConditionCheckerContentGfx_level(QD_NodeContentGfx):
+class _ConditionCheckerContentGfx_level(QD_NodeContentGfx):
     def initUI(self):
         self.label = QLabel('等级')
 
@@ -27,8 +27,8 @@ class ConditionCheckerContentGfx_level(QD_NodeContentGfx):
         self.hbox.addWidget(self.edit)
 
 
-class ConditionCheckerContent_level(QD_NodeContent):
-    NodeContentGfx_class = ConditionCheckerContentGfx_level
+class _ConditionCheckerContent_level(QD_NodeContent):
+    NodeContentGfx_class = _ConditionCheckerContentGfx_level
 
 
     def serialize(self):
@@ -49,12 +49,12 @@ class ConditionCheckerContent_level(QD_NodeContent):
 
 
 @utils.register_opnode
-class ConditionChecker_level(QD_Node):
+class _ConditionChecker_level(QD_Node):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER
     op_title = "等级"
 
-    NodeContent_class = ConditionCheckerContent_level
+    NodeContent_class = _ConditionCheckerContent_level
 
     def __init__(self, scene):
         super().__init__(scene, inputs=[1], outputs=[3])

@@ -1,28 +1,31 @@
+from PyQt6.QtGui import *
 from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
+
 from qdnode import *
 from qdutils import *
+from qdnodecontentgfx import *
 
 
-class CalcEditorContent(QD_NodeContent):
+class _StateContentGfx_enter(QD_NodeContentGfx):
     def initUI(self):
-        self.label = QLabel('Lua代码')
+        self.label = QLabel('进入', self)
 
-        self.hbox = QHBoxLayout(self)
-        self.hbox.setContentsMargins(10, 10, 10, 10)
-        self.hbox.setSpacing(10)
 
-        self.hbox.addWidget(self.label)
+class _StateContent_enter(QD_NodeContent):
+    NodeContentGfx_class =_StateContentGfx_enter
 
     def serialize(self):
         res = super().serialize()
-        res['value'] = 'lua_code_from_QD_LuaEditor'
+        res['value'] = self.gfx.label.text()
         return res
+
 
     def deserialize(self, data, hashmap={}):
         res = super().deserialize(data, hashmap)
         try:
             value = data['value']
-            self.edit.setText(value)
+            self.gfx.label.setText(value)
             return True & res
         except Exception as e:
             utils.dumpExcept(e)
@@ -30,18 +33,18 @@ class CalcEditorContent(QD_NodeContent):
 
 
 @utils.register_opnode
-class StateNode_Enter(QD_Node):
+class _State_enter(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
     op_title = "进入节点"
+
+    NodeContent_class = _StateContent_enter
+
 
     def __init__(self, scene):
         super().__init__(scene, outputs=[3])
         self.eval()
 
-    def initInnerClasses(self):
-        self.content = CalcEditorContent(self)
-        self.gfx = CalcGraphicsNode(self)
 
     def evalImplementation(self):
         u_value = 1 # hack
