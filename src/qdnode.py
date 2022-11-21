@@ -3,7 +3,7 @@
 A module containing NodeEditor's class for representing `QD_Node`.
 """
 from nodegfx import NodeGfx
-from nodecontent import NodeContent
+from qdnodecontent import QD_NodeContent
 from qsocket import *
 from qdutils import *
 
@@ -12,7 +12,7 @@ class QD_Node(QD_Serializable):
     """Class representing `QD_Node` in the `QD_Scene`.
     """
     NodeGfx_class = NodeGfx
-    NodeContent_class = NodeContent
+    NodeContent_class = QD_NodeContent
     Socket_class = Socket
 
     icon = ""

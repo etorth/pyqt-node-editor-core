@@ -27,7 +27,7 @@ class ConditionCheckerContentGfx_level(NodeContentGfx):
         self.hbox.addWidget(self.edit)
 
 
-class ConditionCheckerContent_level(NodeContent):
+class ConditionCheckerContent_level(QD_NodeContent):
     NodeContentGfx_class = ConditionCheckerContentGfx_level
 
 

@@ -3,7 +3,7 @@ from qdnode import *
 from qdutils import *
 
 
-class CalcEditorContent(NodeContent):
+class CalcEditorContent(QD_NodeContent):
     def initUI(self):
         self.label = QLabel('Lua代码')
 

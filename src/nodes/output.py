@@ -3,7 +3,7 @@ from qdnode import *
 from qdutils import *
 
 
-class CalcOutputContent(NodeContent):
+class CalcOutputContent(QD_NodeContent):
     def initUI(self):
         self.label = QLabel("42", self)
         self.label.setAlignment(Qt.AlignmentFlag.AlignLeft)

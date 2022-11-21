@@ -3,7 +3,7 @@ from qdnode import *
 from qdutils import *
 
 
-class ContainerNodeContent_until(NodeContent):
+class ContainerNodeContent_until(QD_NodeContent):
     def initUI(self):
         self.label = QLabel('Lua代码')
 

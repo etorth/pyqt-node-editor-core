@@ -4,7 +4,7 @@ from qdserializable import QD_Serializable
 from nodecontentgfx import NodeContentGfx
 
 
-class NodeContent(QD_Serializable):
+class QD_NodeContent(QD_Serializable):
     NodeContentGfx_class = NodeContentGfx
 
 
