@@ -2,7 +2,7 @@
 """
 A module containing NodeEditor's class for representing `QD_Node`.
 """
-from nodegfx import NodeGfx
+from qdnodegfx import QD_NodeGfx
 from qdnodecontent import QD_NodeContent
 from qsocket import *
 from qdutils import *
@@ -11,7 +11,7 @@ from qdutils import *
 class QD_Node(QD_Serializable):
     """Class representing `QD_Node` in the `QD_Scene`.
     """
-    NodeGfx_class = NodeGfx
+    NodeGfx_class = QD_NodeGfx
     NodeContent_class = QD_NodeContent
     Socket_class = Socket
 
@@ -28,7 +28,7 @@ class QD_Node(QD_Serializable):
         :Instance Attributes:
 
             - **scene** - reference to the :class:`~nodeeditor.scene.QD_Scene`
-            - **gfx** - Instance of :class:`~nodeeditor.nodegfx.NodeGfx` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
+            - **gfx** - Instance of :class:`~nodeeditor.qdnodegfx.QD_NodeGfx` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
             - **content** - Instance of :class:`~nodeeditor.node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the QD_Node. Automatically created in constructor
             - **inputs** - list containin Input :class:`~nodeeditor.socket.Socket` instances
             - **outputs** - list containin Output :class:`~nodeeditor.socket.Socket` instances

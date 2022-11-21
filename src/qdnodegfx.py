@@ -6,7 +6,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
 
-class NodeGfx(QGraphicsItem):
+class QD_NodeGfx(QGraphicsItem):
     """Class describing Graphics representation of :class:`~nodeeditor.node.QD_Node`"""
 
     def __init__(self, node: 'QD_Node', parent: QWidget = None):
