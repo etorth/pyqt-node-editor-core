@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import QGraphicsView, QApplication
 from qdsocketgfx import QD_SocketGfx
 from qdedgegfx import QD_EdgeGfx
 from qdedge import QD_Edge, EDGE_TYPE_BEZIER
-from node_graphics_cutline import QDMCutLine
+from qdcutline import QD_CutLine
 from qdutils import *
 
 MODE_NOOP = 1  #: Mode representing ready state
@@ -62,7 +62,7 @@ class QD_ViewGfx(QGraphicsView):
         self.zoomRange = [0, 10]
 
         # cutline
-        self.cutline = QDMCutLine()
+        self.cutline = QD_CutLine()
         self.gfx.addItem(self.cutline)
 
         # listeners

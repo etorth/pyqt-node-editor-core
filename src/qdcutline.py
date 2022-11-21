@@ -6,7 +6,7 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 
 
-class QDMCutLine(QGraphicsItem):
+class QD_CutLine(QGraphicsItem):
     """Class representing Cutting Line used for cutting multiple `Edges` with one stroke"""
 
     def __init__(self, parent: QWidget = None):
