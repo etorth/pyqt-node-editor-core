@@ -11,7 +11,7 @@ from qdutils import *
 class Node(Serializable):
     """Class representing `Node` in the `Scene`.
     """
-    GraphicsNode_class = NodeGfx
+    NodeGfx_class = NodeGfx
     NodeContent_class = NodeWidget
     Socket_class = Socket
 
@@ -108,7 +108,7 @@ class Node(Serializable):
         return self.__class__.NodeContent_class
 
     def getGraphicsNodeClass(self):
-        return self.__class__.GraphicsNode_class
+        return self.__class__.NodeGfx_class
 
     def initSettings(self):
         """Initialize properties and socket information"""

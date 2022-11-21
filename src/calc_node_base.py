@@ -40,7 +40,7 @@ class CalcNode(Node):
     icon = ""
     op_title = "Undefined"
 
-    GraphicsNode_class = CalcGraphicsNode
+    NodeGfx_class = CalcGraphicsNode
     NodeContent_class = NodeWidget
 
     def __init__(self, scene, inputs=[2, 2], outputs=[1]):
