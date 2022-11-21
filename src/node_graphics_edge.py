@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-A module containing Graphics representation of Edge
+A module containing Graphics representation of QD_Edge
 """
 import math
 from PyQt6.QtWidgets import *
@@ -11,18 +11,18 @@ EDGE_CP_ROUNDNESS = 100  #: Bezier controll point distance on the line
 
 
 class EdgeGfx(QGraphicsPathItem):
-    """Base class for Graphics Edge"""
+    """Base class for Graphics QD_Edge"""
 
-    def __init__(self, edge: 'Edge', parent: QWidget = None):
+    def __init__(self, edge: 'QD_Edge', parent: QWidget = None):
         """
-        :param edge: reference to :class:`~nodeeditor.node_edge.Edge`
-        :type edge: :class:`~nodeeditor.node_edge.Edge`
+        :param edge: reference to :class:`~nodeeditor.qdedge.QD_Edge`
+        :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
         :param parent: parent widget
         :type parent: ``QWidget``
 
         :Instance attributes:
 
-            - **edge** - reference to :class:`~nodeeditor.node_edge.Edge`
+            - **edge** - reference to :class:`~nodeeditor.qdedge.QD_Edge`
             - **posSource** - ``[x, y]`` source position in the `Scene`
             - **posDestination** - ``[x, y]`` destination position in the `Scene`
         """
@@ -91,7 +91,7 @@ class EdgeGfx(QGraphicsPathItem):
         if new_state: self.onSelected()
 
     def mouseReleaseEvent(self, event):
-        """Overriden Qt's method to handle selecting and deselecting this `Graphics Edge`"""
+        """Overriden Qt's method to handle selecting and deselecting this `Graphics QD_Edge`"""
         super().mouseReleaseEvent(event)
         if self._last_selected_state != self.isSelected():
             self.edge.scene.resetLastSelectedStates()
@@ -133,7 +133,7 @@ class EdgeGfx(QGraphicsPathItem):
         return self.shape().boundingRect()
 
     def shape(self) -> QPainterPath:
-        """Returns ``QPainterPath`` representation of this `Edge`
+        """Returns ``QPainterPath`` representation of this `QD_Edge`
 
         :return: path representation
         :rtype: ``QPainterPath``
@@ -141,7 +141,7 @@ class EdgeGfx(QGraphicsPathItem):
         return self.calcPath()
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
-        """Qt's overriden method to paint this Graphics Edge. Path calculated in :func:`~nodeeditor.node_graphics_edge.EdgeGfx.calcPath` method"""
+        """Qt's overriden method to paint this Graphics QD_Edge. Path calculated in :func:`~nodeeditor.node_graphics_edge.EdgeGfx.calcPath` method"""
         self.setPath(self.calcPath())
 
         painter.setBrush(Qt.BrushStyle.NoBrush)
@@ -158,13 +158,13 @@ class EdgeGfx(QGraphicsPathItem):
         painter.drawPath(self.path())
 
     def intersectsWith(self, p1: QPointF, p2: QPointF) -> bool:
-        """Does this Graphics Edge intersect with line between point A and point B ?
+        """Does this Graphics QD_Edge intersect with line between point A and point B ?
 
         :param p1: point A
         :type p1: ``QPointF``
         :param p2: point B
         :type p2: ``QPointF``
-        :return: ``True`` if this `Graphics Edge` intersects
+        :return: ``True`` if this `Graphics QD_Edge` intersects
         :rtype: ``bool``
         """
         cutpath = QPainterPath(p1)
@@ -182,7 +182,7 @@ class EdgeGfx(QGraphicsPathItem):
 
 
 class GfxEdgeDirect(EdgeGfx):
-    """Direct line connection Graphics Edge"""
+    """Direct line connection Graphics QD_Edge"""
 
     def calcPath(self) -> QPainterPath:
         """Calculate the Direct line connection
@@ -196,7 +196,7 @@ class GfxEdgeDirect(EdgeGfx):
 
 
 class GfxEdgeBezier(EdgeGfx):
-    """Cubic line connection Graphics Edge"""
+    """Cubic line connection Graphics QD_Edge"""
 
     def calcPath(self) -> QPainterPath:
         """Calculate the cubic Bezier line connection with 2 control points

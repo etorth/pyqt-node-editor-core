@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-A module containing NodeEditor's class for representing Edge and Edge Type Constants.
+A module containing NodeEditor's class for representing QD_Edge and QD_Edge Type Constants.
 """
 from collections import OrderedDict
 from node_graphics_edge import *
@@ -10,11 +10,9 @@ from qdutils import *
 EDGE_TYPE_DIRECT = 1  #:
 EDGE_TYPE_BEZIER = 2  #:
 
-DEBUG = True
 
-
-class Edge(QD_Serializable):
-    """Class for representing Edge in NodeEditor.
+class QD_Edge(QD_Serializable):
+    """Class for representing QD_Edge in NodeEditor.
     """
 
     def __init__(self, scene: 'Scene', start_socket: 'Socket' = None, end_socket: 'Socket' = None, edge_type=EDGE_TYPE_DIRECT):
@@ -47,7 +45,7 @@ class Edge(QD_Serializable):
         self.scene.addEdge(self)
 
     def __str__(self):
-        return "<Edge %s..%s -- S:%s E:%s>" % (hex(id(self))[2:5], hex(id(self))[-3:], self.start_socket, self.end_socket)
+        return "<QD_Edge %s..%s -- S:%s E:%s>" % (hex(id(self))[2:5], hex(id(self))[-3:], self.start_socket, self.end_socket)
 
     @property
     def start_socket(self):
@@ -97,9 +95,9 @@ class Edge(QD_Serializable):
 
     @property
     def edge_type(self):
-        """Edge type
+        """QD_Edge type
 
-        :getter: get edge type constant for current ``Edge``. See :ref:`edge-type-constants`
+        :getter: get edge type constant for current ``QD_Edge``. See :ref:`edge-type-constants`
         :setter: sets new edge type. On background, creates new :class:`~nodeeditor.node_graphics_edge.EdgeGfx`
             child class if necessary, adds this ``QGraphicsPathItem`` to the ``QGraphicsScene`` and updates edge sockets
             positions.
@@ -122,7 +120,7 @@ class Edge(QD_Serializable):
 
     def determineEdgeClass(self, edge_type: int):
         """
-        Determine Graphics Edge Class from provided `edge_type`
+        Determine Graphics QD_Edge Class from provided `edge_type`
         :param edge_type: ``int`` type of edge
         :return: gfx class
         :rtype: class of `gfx`
@@ -134,11 +132,11 @@ class Edge(QD_Serializable):
 
     def getOtherSocket(self, known_socket: 'Socket'):
         """
-        Returns the oposite socket on this ``Edge``
+        Returns the oposite socket on this ``QD_Edge``
 
         :param known_socket: Provide known :class:`~nodeeditor.socket.Socket` to be able to determine the oposite one.
         :type known_socket: :class:`~nodeeditor.socket.Socket`
-        :return: The oposite socket on this ``Edge`` or ``None``
+        :return: The oposite socket on this ``QD_Edge`` or ``None``
         :rtype: :class:`~nodeeditor.socket.Socket` or ``None``
         """
         return self.start_socket if known_socket == self.end_socket else self.end_socket
@@ -148,15 +146,15 @@ class Edge(QD_Serializable):
         Provide the safe selecting/deselecting operation. In the background it takes care about the flags, norifications
         and storing history for undo/redo.
 
-        :param new_state: ``True`` if you want to select the ``Edge``, ``False`` if you want to deselect the ``Edge``
+        :param new_state: ``True`` if you want to select the ``QD_Edge``, ``False`` if you want to deselect the ``QD_Edge``
         :type new_state: ``bool``
         """
         self.gfx.doSelect(new_state)
 
     def updatePositions(self):
         """
-        Updates the internal `Graphics Edge` positions according to the start and end :class:`~nodeeditor.socket.Socket`.
-        This should be called if you update ``Edge`` positions.
+        Updates the internal `Graphics QD_Edge` positions according to the start and end :class:`~nodeeditor.socket.Socket`.
+        This should be called if you update ``QD_Edge`` positions.
         """
         source_pos = self.start_socket.getSocketPosition()
         source_pos[0] += self.start_socket.node.gfx.pos().x()
@@ -179,9 +177,9 @@ class Edge(QD_Serializable):
         self.start_socket = None
 
     def remove(self, silent_for_socket: 'Socket' = None, silent=False):
-        """Safely remove this Edge.
+        """Safely remove this QD_Edge.
 
-        Removes `Graphics Edge` from the ``QGraphicsScene`` and it's reference to all GC to clean it up.
+        Removes `Graphics QD_Edge` from the ``QGraphicsScene`` and it's reference to all GC to clean it up.
         Notifies nodes previously connected :class:`~nodeeditor.node.QD_Node` (s) about this event.
 
         Triggers Nodes':
@@ -190,7 +188,7 @@ class Edge(QD_Serializable):
         - :py:meth:`~nodeeditor.node.QD_Node.onInputChanged`
 
         :param silent_for_socket: :class:`~nodeeditor.socket.Socket` of a :class:`~nodeeditor.node.QD_Node` which
-            won't be notified, when this ``Edge`` is going to be removed
+            won't be notified, when this ``QD_Edge`` is going to be removed
         :type silent_for_socket: :class:`~nodeeditor.socket.Socket`
         :param silent: ``True`` if no events should be triggered during removing
         :type silent: ``bool``
@@ -203,21 +201,32 @@ class Edge(QD_Serializable):
             print(" - hide gfx")
         self.gfx.hide()
 
-        if confg.DEBUG: print(" - remove gfx", self.gfx)
+        if confg.DEBUG:
+            print(" - remove gfx", self.gfx)
+
         self.scene.gfx.removeItem(self.gfx)
-        if confg.DEBUG: print("   gfx:", self.gfx)
+        if confg.DEBUG:
+            print("   gfx:", self.gfx)
 
         self.scene.gfx.update()
 
-        if confg.DEBUG: print("# Removing Edge", self)
-        if confg.DEBUG: print(" - remove edge from all sockets")
+        if confg.DEBUG:
+            print("# Removing QD_Edge", self)
+
+        if confg.DEBUG:
+            print(" - remove edge from all sockets")
+
         self.remove_from_sockets()
-        if confg.DEBUG: print(" - remove edge from scene")
+        if confg.DEBUG:
+            print(" - remove edge from scene")
+
         try:
             self.scene.removeEdge(self)
         except ValueError:
             pass
-        if confg.DEBUG: print(" - everything is done.")
+
+        if confg.DEBUG:
+            print(" - everything is done.")
 
         try:
             # notify nodes from old sockets

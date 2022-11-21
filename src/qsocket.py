@@ -112,37 +112,37 @@ class Socket(QD_Serializable):
 
     def hasAnyEdge(self) -> bool:
         """
-        Returns ``True`` if any :class:`~nodeeditor.node_edge.Edge` is connectected to this socket
+        Returns ``True`` if any :class:`~nodeeditor.qdedge.QD_Edge` is connectected to this socket
 
-        :return: ``True`` if any :class:`~nodeeditor.node_edge.Edge` is connected to this socket
+        :return: ``True`` if any :class:`~nodeeditor.qdedge.QD_Edge` is connected to this socket
         :rtype: ``bool``
         """
         return len(self.edges) > 0
 
-    def isConnected(self, edge: 'Edge') -> bool:
-        """Returns ``True`` if :class:`~nodeeditor.node_edge.Edge` is connected to this `Socket`
+    def isConnected(self, edge: 'QD_Edge') -> bool:
+        """Returns ``True`` if :class:`~nodeeditor.qdedge.QD_Edge` is connected to this `Socket`
 
-        :param edge: :class:`~nodeeditor.node_edge.Edge` to check if it is connected to this `Socket`
-        :type edge: :class:`~nodeeditor.node_edge.Edge`
-        :return: ``True`` if `Edge` is connected to this socket
+        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to check if it is connected to this `Socket`
+        :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
+        :return: ``True`` if `QD_Edge` is connected to this socket
         :rtype: ``bool``
         """
         return edge in self.edges
 
-    def addEdge(self, edge: 'Edge'):
+    def addEdge(self, edge: 'QD_Edge'):
         """
-        Append an Edge to the list of connected Edges
+        Append an QD_Edge to the list of connected Edges
 
-        :param edge: :class:`~nodeeditor.node_edge.Edge` to connect to this `Socket`
-        :type edge: :class:`~nodeeditor.node_edge.Edge`
+        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to connect to this `Socket`
+        :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
         """
         self.edges.append(edge)
 
-    def removeEdge(self, edge: 'Edge'):
+    def removeEdge(self, edge: 'QD_Edge'):
         """
-        Disconnect passed :class:`~nodeeditor.node_edge.Edge` from this `Socket`
-        :param edge: :class:`~nodeeditor.node_edge.Edge` to disconnect
-        :type edge: :class:`~nodeeditor.node_edge.Edge`
+        Disconnect passed :class:`~nodeeditor.qdedge.QD_Edge` from this `Socket`
+        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to disconnect
+        :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
         """
         if edge in self.edges:
             self.edges.remove(edge)

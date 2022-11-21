@@ -176,17 +176,17 @@ class QD_Node(QD_Serializable):
             counter += 1
             self.outputs.append(socket)
 
-    def onEdgeConnectionChanged(self, new_edge: 'Edge'):
+    def onEdgeConnectionChanged(self, new_edge: 'QD_Edge'):
         """
-        Event handling that any connection (`Edge`) has changed. Currently not used...
+        Event handling that any connection (`QD_Edge`) has changed. Currently not used...
 
-        :param new_edge: reference to the changed :class:`~nodeeditor.node_edge.Edge`
-        :type new_edge: :class:`~nodeeditor.node_edge.Edge`
+        :param new_edge: reference to the changed :class:`~nodeeditor.qdedge.QD_Edge`
+        :type new_edge: :class:`~nodeeditor.qdedge.QD_Edge`
         """
         pass
 
     def onInputChanged(self, socket: 'Socket'):
-        """Event handling when QD_Node's input Edge has changed. We auto-mark this `QD_Node` to be `Dirty` with all it's
+        """Event handling when QD_Node's input QD_Edge has changed. We auto-mark this `QD_Node` to be `Dirty` with all it's
         descendants
 
         :param socket: reference to the changed :class:`~nodeeditor.socket.Socket`

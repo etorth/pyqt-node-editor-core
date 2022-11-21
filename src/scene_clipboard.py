@@ -4,7 +4,7 @@ A module containing all code for working with Clipboard
 """
 from collections import OrderedDict
 from node_graphics_edge import EdgeGfx
-from node_edge import Edge
+from qdedge import QD_Edge
 from qdutils import *
 
 
@@ -155,7 +155,7 @@ class SceneClipboard():
         # create each edge
         if 'edges' in data:
             for edge_data in data['edges']:
-                new_edge = Edge(self.scene)
+                new_edge = QD_Edge(self.scene)
                 new_edge.deserialize(edge_data, hashmap, restore_id=False)
 
         self.scene.setSilentSelectionEvents(False)

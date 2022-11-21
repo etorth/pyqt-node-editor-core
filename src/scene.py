@@ -8,7 +8,7 @@ from qdutils import *
 from qdserializable import QD_Serializable
 from qdscenegfx import QD_SceneGfx
 from qdnode import QD_Node
-from node_edge import Edge
+from qdedge import QD_Edge
 from scene_history import SceneHistory
 from scene_clipboard import SceneClipboard
 
@@ -226,11 +226,11 @@ class Scene(QD_Serializable):
         """
         self.nodes.append(node)
 
-    def addEdge(self, edge: Edge):
-        """Add :class:`~nodeeditor.node_edge.Edge` to this `Scene`
+    def addEdge(self, edge: QD_Edge):
+        """Add :class:`~nodeeditor.qdedge.QD_Edge` to this `Scene`
 
-        :param edge: :class:`~nodeeditor.node_edge.Edge` to be added to this `Scene`
-        :return: :class:`~nodeeditor.node_edge.Edge`
+        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to be added to this `Scene`
+        :return: :class:`~nodeeditor.qdedge.QD_Edge`
         """
         self.edges.append(edge)
 
@@ -246,11 +246,11 @@ class Scene(QD_Serializable):
             if utils.DEBUG:
                 print("!W:", "Scene::removeNode", "wanna remove nodeeditor", node, "from self.nodes but it's not in the list!")
 
-    def removeEdge(self, edge: Edge):
-        """Remove :class:`~nodeeditor.node_edge.Edge` from this `Scene`
+    def removeEdge(self, edge: QD_Edge):
+        """Remove :class:`~nodeeditor.qdedge.QD_Edge` from this `Scene`
 
-        :param edge: :class:`~nodeeditor.node_edge.Edge` to be remove from this `Scene`
-        :return: :class:`~nodeeditor.node_edge.Edge`
+        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to be remove from this `Scene`
+        :return: :class:`~nodeeditor.qdedge.QD_Edge`
         """
         if edge in self.edges:
             self.edges.remove(edge)
@@ -387,7 +387,7 @@ class Scene(QD_Serializable):
                     break
 
             if not found:
-                new_edge = Edge(self).deserialize(edge_data, hashmap, restore_id)
+                new_edge = QD_Edge(self).deserialize(edge_data, hashmap, restore_id)
                 # print("New edge for", edge_data)
             else:
                 found.deserialize(edge_data, hashmap, restore_id)

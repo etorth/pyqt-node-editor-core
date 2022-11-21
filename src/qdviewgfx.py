@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import QGraphicsView, QApplication
 
 from qdsocketgfx import QD_SocketGfx
 from node_graphics_edge import EdgeGfx
-from node_edge import Edge, EDGE_TYPE_BEZIER
+from qdedge import QD_Edge, EDGE_TYPE_BEZIER
 from node_graphics_cutline import QDMCutLine
 from qdutils import *
 
@@ -16,7 +16,7 @@ MODE_NOOP = 1  #: Mode representing ready state
 MODE_EDGE_DRAG = 2  #: Mode representing when we drag edge state
 MODE_EDGE_CUT = 3  #: Mode representing when we draw a cutting edge
 
-#: Distance when click on socket to enable `Drag Edge`
+#: Distance when click on socket to enable `Drag QD_Edge`
 EDGE_DRAG_START_THRESHOLD = 50
 
 DEBUG = True
@@ -391,21 +391,21 @@ class QD_ViewGfx(QGraphicsView):
         return obj
 
     def edgeDragStart(self, item: 'QGraphicsItem'):
-        """Code handling the start of dragging an `Edge` operation"""
+        """Code handling the start of dragging an `QD_Edge` operation"""
         try:
             if confg.DEBUG: print('View::edgeDragStart ~ Start dragging edge')
             if confg.DEBUG: print('View::edgeDragStart ~   assign Start Socket to:', item.socket)
             self.drag_start_socket = item.socket
-            self.drag_edge = Edge(self.gfx.scene, item.socket, None, EDGE_TYPE_BEZIER)
+            self.drag_edge = QD_Edge(self.gfx.scene, item.socket, None, EDGE_TYPE_BEZIER)
             if confg.DEBUG: print('View::edgeDragStart ~   dragEdge:', self.drag_edge)
         except Exception as e:
             utils.dumpExcept(e)
 
     def edgeDragEnd(self, item: 'QGraphicsItem'):
-        """Code handling the end of dragging an `Edge` operation. In this code return True if skip the
+        """Code handling the end of dragging an `QD_Edge` operation. In this code return True if skip the
         rest of the mouse event processing
 
-        :param item: Item in the `Graphics Scene` where we ended dragging an `Edge`
+        :param item: Item in the `Graphics Scene` where we ended dragging an `QD_Edge`
         :type item: ``QGraphicsItem``
         """
         self.mode = MODE_NOOP
@@ -428,8 +428,8 @@ class QD_ViewGfx(QGraphicsView):
                             else:
                                 socket.removeAllEdges(silent=False)
 
-                    ## Create new Edge
-                    new_edge = Edge(self.gfx.scene, self.drag_start_socket, item.socket, edge_type=EDGE_TYPE_BEZIER)
+                    ## Create new QD_Edge
+                    new_edge = QD_Edge(self.gfx.scene, self.drag_start_socket, item.socket, edge_type=EDGE_TYPE_BEZIER)
                     if confg.DEBUG:
                         print("View::edgeDragEnd ~  created new edge:", new_edge, "connecting", new_edge.start_socket, "<-->", new_edge.end_socket)
 

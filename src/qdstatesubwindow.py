@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import *
 
 from statenodewidget import StateNodeWidget
 from qdnode import *
-from node_edge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
+from qdedge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
 from qdviewgfx import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
 from qdutils import *
 
@@ -190,8 +190,8 @@ class QD_StateSubWindow(StateNodeWidget):
         if confg.DEBUG:
             print("CONTEXT: EDGE")
         context_menu = QMenu(self)
-        bezierAct = context_menu.addAction("Bezier Edge")
-        directAct = context_menu.addAction("Direct Edge")
+        bezierAct = context_menu.addAction("Bezier QD_Edge")
+        directAct = context_menu.addAction("Direct QD_Edge")
         action = context_menu.exec(self.mapToGlobal(event.pos()))
 
         selected = None
