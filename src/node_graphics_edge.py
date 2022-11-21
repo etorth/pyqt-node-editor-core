@@ -10,7 +10,7 @@ from PyQt6.QtGui import *
 EDGE_CP_ROUNDNESS = 100  #: Bezier controll point distance on the line
 
 
-class GfxEdge(QGraphicsPathItem):
+class EdgeGfx(QGraphicsPathItem):
     """Base class for Graphics Edge"""
 
     def __init__(self, edge: 'Edge', parent: QWidget = None):
@@ -141,7 +141,7 @@ class GfxEdge(QGraphicsPathItem):
         return self.calcPath()
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
-        """Qt's overriden method to paint this Graphics Edge. Path calculated in :func:`~nodeeditor.node_graphics_edge.GfxEdge.calcPath` method"""
+        """Qt's overriden method to paint this Graphics Edge. Path calculated in :func:`~nodeeditor.node_graphics_edge.EdgeGfx.calcPath` method"""
         self.setPath(self.calcPath())
 
         painter.setBrush(Qt.BrushStyle.NoBrush)
@@ -181,7 +181,7 @@ class GfxEdge(QGraphicsPathItem):
         raise NotImplementedError("This method has to be overriden in a child class")
 
 
-class GfxEdgeDirect(GfxEdge):
+class GfxEdgeDirect(EdgeGfx):
     """Direct line connection Graphics Edge"""
 
     def calcPath(self) -> QPainterPath:
@@ -195,7 +195,7 @@ class GfxEdgeDirect(GfxEdge):
         return path
 
 
-class GfxEdgeBezier(GfxEdge):
+class GfxEdgeBezier(EdgeGfx):
     """Cubic line connection Graphics Edge"""
 
     def calcPath(self) -> QPainterPath:

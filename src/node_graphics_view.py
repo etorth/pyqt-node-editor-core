@@ -7,7 +7,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import QGraphicsView, QApplication
 
 from node_graphics_socket import SocketGfx
-from node_graphics_edge import GfxEdge
+from node_graphics_edge import EdgeGfx
 from node_edge import Edge, EDGE_TYPE_BEZIER
 from node_graphics_cutline import QDMCutLine
 from qdutils import *
@@ -144,7 +144,7 @@ class GfxView(QGraphicsView):
 
         # debug print out
         if DEBUG_MMB_SCENE_ITEMS:
-            if isinstance(item, GfxEdge):
+            if isinstance(item, EdgeGfx):
                 print("MMB DEBUG:", item.edge, "\n\t", item.edge.gfx if item.edge.gfx is not None else None)
 
             if isinstance(item, SocketGfx):
@@ -193,7 +193,7 @@ class GfxView(QGraphicsView):
         # if confg.DEBUG: print("LMB Click on", item, self.debug_modifiers(event))
 
         # logic
-        if hasattr(item, "node") or isinstance(item, GfxEdge) or item is None:
+        if hasattr(item, "node") or isinstance(item, EdgeGfx) or item is None:
             if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                 event.ignore()
                 fakeEvent = QMouseEvent(QEvent.Type.MouseButtonPress, event.localPos(), event.screenPos(), Qt.MouseButton.LeftButton, event.buttons() | Qt.MouseButton.LeftButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
@@ -230,7 +230,7 @@ class GfxView(QGraphicsView):
 
         try:
             # logic
-            if hasattr(item, "node") or isinstance(item, GfxEdge) or item is None:
+            if hasattr(item, "node") or isinstance(item, EdgeGfx) or item is None:
                 if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                     event.ignore()
                     fakeEvent = QMouseEvent(event.type(), event.localPos(), event.screenPos(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
@@ -365,7 +365,7 @@ class GfxView(QGraphicsView):
     def deleteSelected(self):
         """Shortcut for safe deleting every object selected in the `Scene`."""
         for item in self.gfx.selectedItems():
-            if isinstance(item, GfxEdge):
+            if isinstance(item, EdgeGfx):
                 item.edge.remove()
             elif hasattr(item, 'node'):
                 item.node.remove()
