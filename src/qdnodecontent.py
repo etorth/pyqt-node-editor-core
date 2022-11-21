@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 from collections import OrderedDict
 from qdserializable import QD_Serializable
-from nodecontentgfx import NodeContentGfx
+from qdnodecontentgfx import QD_NodeContentGfx
 
 
 class QD_NodeContent(QD_Serializable):
-    NodeContentGfx_class = NodeContentGfx
+    NodeContentGfx_class = QD_NodeContentGfx
 
 
     def __init__(self, node: 'QD_Node'):

@@ -4,10 +4,10 @@ from PyQt6.QtWidgets import *
 
 from qdnode import *
 from qdutils import *
-from nodecontentgfx import *
+from qdnodecontentgfx import *
 
 
-class ConditionCheckerContentGfx_level(NodeContentGfx):
+class ConditionCheckerContentGfx_level(QD_NodeContentGfx):
     def initUI(self):
         self.label = QLabel('等级')
 
