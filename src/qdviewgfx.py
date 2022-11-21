@@ -394,7 +394,7 @@ class QD_ViewGfx(QGraphicsView):
                 print('View::edgeDragStart ~ Start dragging edge')
 
             if confg.DEBUG:
-                print('View::edgeDragStart ~   assign Start Socket to:', item.socket)
+                print('View::edgeDragStart ~   assign Start QD_Socket to:', item.socket)
 
             self.drag_start_socket = item.socket
             self.drag_edge = QD_Edge(self.gfx.scene, item.socket, None, EDGE_TYPE_BEZIER)
@@ -456,7 +456,7 @@ class QD_ViewGfx(QGraphicsView):
 
     def distanceBetweenClickAndReleaseIsOff(self, event: QMouseEvent) -> bool:
         """ Measures if we are too far from the last Mouse button click scene position.
-        This is used for detection if we release too far after we clicked on a `Socket`
+        This is used for detection if we release too far after we clicked on a `QD_Socket`
 
         :param event: Qt's mouse event
         :type event: ``QMouseEvent``

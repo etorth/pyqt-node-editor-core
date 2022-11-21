@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""A module containing NodeEditor's class for representing Socket and Socket Position Constants.
+"""A module containing NodeEditor's class for representing QD_Socket and QD_Socket Position Constants.
 """
 from collections import OrderedDict
 from qdserializable import QD_Serializable
@@ -17,36 +17,36 @@ DEBUG = True
 DEBUG_REMOVE_WARNINGS = False
 
 
-class Socket(QD_Serializable):
+class QD_Socket(QD_Serializable):
     SocketGfx_class = QD_SocketGfx
 
-    """Class representing Socket."""
+    """Class representing QD_Socket."""
 
     def __init__(self, node: 'QD_Node', index: int = 0, position: int = LEFT_TOP, socket_type: int = 1, multi_edges: bool = True, count_on_this_node_side: int = 1, is_input: bool = False):
         """
-        :param node: reference to the :class:`~nodeeditor.node.QD_Node` containing this `Socket`
+        :param node: reference to the :class:`~nodeeditor.node.QD_Node` containing this `QD_Socket`
         :type node: :class:`~nodeeditor.node.QD_Node`
         :param index: Current index of this socket in the position
         :type index: ``int``
-        :param position: Socket position. See :ref:`socket-position-constants`
+        :param position: QD_Socket position. See :ref:`socket-position-constants`
         :param socket_type: Constant defining type(color) of this socket
         :param multi_edges: Can this socket have multiple `Edges` connected?
         :type multi_edges: ``bool``
         :param count_on_this_node_side: number of total sockets on this position
         :type count_on_this_node_side: ``int``
-        :param is_input: Is this an input `Socket`?
+        :param is_input: Is this an input `QD_Socket`?
         :type is_input: ``bool``
 
         :Instance Attributes:
 
-            - **node** - reference to the :class:`~nodeeditor.node.QD_Node` containing this `Socket`
-            - **edges** - list of `Edges` connected to this `Socket`
+            - **node** - reference to the :class:`~nodeeditor.node.QD_Node` containing this `QD_Socket`
+            - **edges** - list of `Edges` connected to this `QD_Socket`
             - **gfx** - reference to the :class:`~nodeeditor.qdsocketgfx.QD_SocketGfx`
-            - **position** - Socket position. See :ref:`socket-position-constants`
+            - **position** - QD_Socket position. See :ref:`socket-position-constants`
             - **index** - Current index of this socket in the position
             - **socket_type** - Constant defining type(color) of this socket
             - **count_on_this_node_side** - number of sockets on this position
-            - **is_multi_edges** - ``True`` if `Socket` can contain multiple `Edges`
+            - **is_multi_edges** - ``True`` if `QD_Socket` can contain multiple `Edges`
             - **is_input** - ``True`` if this socket serves for Input
             - **is_output** - ``True`` if this socket serves for Output
         """
@@ -62,26 +62,26 @@ class Socket(QD_Serializable):
         self.is_output = not self.is_input
 
         if confg.DEBUG:
-            print("Socket -- creating with", self.index, self.position, "for nodeeditor", self.node)
+            print("QD_Socket -- creating with", self.index, self.position, "for nodeeditor", self.node)
 
         self.gfx = self.__class__.SocketGfx_class(self)
         self.setSocketPosition()
         self.edges = []
 
     def __str__(self):
-        return "<Socket #%d %s %s..%s>" % (
+        return "<QD_Socket #%d %s %s..%s>" % (
             self.index, "ME" if self.is_multi_edges else "SE", hex(id(self))[2:5], hex(id(self))[-3:]
         )
 
     def delete(self):
-        """Delete this `Socket` from graphics scene for sure
+        """Delete this `QD_Socket` from graphics scene for sure
         """
         self.gfx.setParentItem(None)
         self.node.scene.gfx.removeItem(self.gfx)
         del self.gfx
 
     def changeSocketType(self, new_socket_type: int) -> bool:
-        """Change the Socket Type
+        """Change the QD_Socket Type
 
         :param new_socket_type: new socket type
         :type new_socket_type: ``int``
@@ -95,13 +95,13 @@ class Socket(QD_Serializable):
         return False
 
     def setSocketPosition(self):
-        """Helper function to set `Graphics Socket` position. Exact socket position is calculated
+        """Helper function to set `Graphics QD_Socket` position. Exact socket position is calculated
         inside :class:`~nodeeditor.node.QD_Node`."""
         self.gfx.setPos(*self.node.getSocketPosition(self.index, self.position, self.count_on_this_node_side))
 
     def getSocketPosition(self):
         """
-        :return: Returns this `Socket` position according the implementation stored in
+        :return: Returns this `QD_Socket` position according the implementation stored in
             :class:`~nodeeditor.node.QD_Node`
         :rtype: ``x, y`` position
         """
@@ -120,9 +120,9 @@ class Socket(QD_Serializable):
         return len(self.edges) > 0
 
     def isConnected(self, edge: 'QD_Edge') -> bool:
-        """Returns ``True`` if :class:`~nodeeditor.qdedge.QD_Edge` is connected to this `Socket`
+        """Returns ``True`` if :class:`~nodeeditor.qdedge.QD_Edge` is connected to this `QD_Socket`
 
-        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to check if it is connected to this `Socket`
+        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to check if it is connected to this `QD_Socket`
         :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
         :return: ``True`` if `QD_Edge` is connected to this socket
         :rtype: ``bool``
@@ -133,14 +133,14 @@ class Socket(QD_Serializable):
         """
         Append an QD_Edge to the list of connected Edges
 
-        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to connect to this `Socket`
+        :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to connect to this `QD_Socket`
         :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
         """
         self.edges.append(edge)
 
     def removeEdge(self, edge: 'QD_Edge'):
         """
-        Disconnect passed :class:`~nodeeditor.qdedge.QD_Edge` from this `Socket`
+        Disconnect passed :class:`~nodeeditor.qdedge.QD_Edge` from this `QD_Socket`
         :param edge: :class:`~nodeeditor.qdedge.QD_Edge` to disconnect
         :type edge: :class:`~nodeeditor.qdedge.QD_Edge`
         """
@@ -148,11 +148,11 @@ class Socket(QD_Serializable):
             self.edges.remove(edge)
         else:
             if DEBUG_REMOVE_WARNINGS:
-                print("!W:", "Socket::removeEdge", "wanna remove edge", edge,
+                print("!W:", "QD_Socket::removeEdge", "wanna remove edge", edge,
                       "from self.edges but it's not in the list!")
 
     def removeAllEdges(self, silent=False):
-        """Disconnect all `Edges` from this `Socket`"""
+        """Disconnect all `Edges` from this `QD_Socket`"""
         while self.edges:
             edge = self.edges.pop(0)
             if silent:
@@ -164,12 +164,12 @@ class Socket(QD_Serializable):
         """
         Deserialization helper function. In our tutorials we create new version of graph data format.
         This function is here to help solve the issue of opening older files in the newer format.
-        If the 'multi_edges' param is missing in the dictionary, we determine if this `Socket`
+        If the 'multi_edges' param is missing in the dictionary, we determine if this `QD_Socket`
         should support multiple `Edges`.
 
-        :param data: `Socket` data in ``dict`` format for deserialization
+        :param data: `QD_Socket` data in ``dict`` format for deserialization
         :type data: ``dict``
-        :return: ``True`` if this `Socket` should support multi_edges
+        :return: ``True`` if this `QD_Socket` should support multi_edges
         """
         if 'multi_edges' in data:
             return data['multi_edges']

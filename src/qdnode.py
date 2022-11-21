@@ -4,7 +4,7 @@ A module containing NodeEditor's class for representing `QD_Node`.
 """
 from qdnodegfx import QD_NodeGfx
 from qdnodecontent import QD_NodeContent
-from qsocket import *
+from qdsocket import *
 from qdutils import *
 
 
@@ -13,7 +13,7 @@ class QD_Node(QD_Serializable):
     """
     NodeGfx_class = QD_NodeGfx
     NodeContent_class = QD_NodeContent
-    Socket_class = Socket
+    Socket_class = QD_Socket
 
     icon = ""
     op_title = "Undefined"
@@ -22,16 +22,16 @@ class QD_Node(QD_Serializable):
         """
         :param scene: reference to the :class:`~nodeeditor.scene.QD_Scene`
         :type scene: :class:`~nodeeditor.scene.QD_Scene`
-        :param inputs: list of :class:`~nodeeditor.socket.Socket` types from which the `Sockets` will be auto created
-        :param outputs: list of :class:`~nodeeditor.socket.Socket` types from which the `Sockets` will be auto created
+        :param inputs: list of :class:`~nodeeditor.socket.QD_Socket` types from which the `Sockets` will be auto created
+        :param outputs: list of :class:`~nodeeditor.socket.QD_Socket` types from which the `Sockets` will be auto created
 
         :Instance Attributes:
 
             - **scene** - reference to the :class:`~nodeeditor.scene.QD_Scene`
             - **gfx** - Instance of :class:`~nodeeditor.qdnodegfx.QD_NodeGfx` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
             - **content** - Instance of :class:`~nodeeditor.node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the QD_Node. Automatically created in constructor
-            - **inputs** - list containin Input :class:`~nodeeditor.socket.Socket` instances
-            - **outputs** - list containin Output :class:`~nodeeditor.socket.Socket` instances
+            - **inputs** - list containin Input :class:`~nodeeditor.socket.QD_Socket` instances
+            - **outputs** - list containin Output :class:`~nodeeditor.socket.QD_Socket` instances
 
         """
         super().__init__()
@@ -138,9 +138,9 @@ class QD_Node(QD_Serializable):
     def initSockets(self, inputs: list, outputs: list, reset: bool = True):
         """Create sockets for inputs and outputs
 
-        :param inputs: list of Socket Types (int)
+        :param inputs: list of QD_Socket Types (int)
         :type inputs: ``list``
-        :param outputs: list of Socket Types (int)
+        :param outputs: list of QD_Socket Types (int)
         :type outputs: ``list``
         :param reset: if ``True`` destroys and removes old `Sockets`
         :type reset: ``bool``
@@ -185,12 +185,12 @@ class QD_Node(QD_Serializable):
         """
         pass
 
-    def onInputChanged(self, socket: 'Socket'):
+    def onInputChanged(self, socket: 'QD_Socket'):
         """Event handling when QD_Node's input QD_Edge has changed. We auto-mark this `QD_Node` to be `Dirty` with all it's
         descendants
 
-        :param socket: reference to the changed :class:`~nodeeditor.socket.Socket`
-        :type socket: :class:`~nodeeditor.socket.Socket`
+        :param socket: reference to the changed :class:`~nodeeditor.socket.QD_Socket`
+        :type socket: :class:`~nodeeditor.socket.QD_Socket`
         """
         self.markDirty()
         self.markDescendantsDirty()
@@ -219,16 +219,16 @@ class QD_Node(QD_Serializable):
 
     def getSocketPosition(self, index: int, position: int, num_out_of: int = 1) -> '(x, y)':
         """
-        Get the relative `x, y` position of a :class:`~nodeeditor.socket.Socket`. This is used for placing
+        Get the relative `x, y` position of a :class:`~nodeeditor.socket.QD_Socket`. This is used for placing
         the `Graphics Sockets` on `Graphics QD_Node`.
 
-        :param index: Order number of the Socket. (0, 1, 2, ...)
+        :param index: Order number of the QD_Socket. (0, 1, 2, ...)
         :type index: ``int``
-        :param position: `Socket Position Constant` describing where the Socket is located. See :ref:`socket-position-constants`
+        :param position: `QD_Socket Position Constant` describing where the QD_Socket is located. See :ref:`socket-position-constants`
         :type position: ``int``
-        :param num_out_of: Total number of Sockets on this `Socket Position`
+        :param num_out_of: Total number of Sockets on this `QD_Socket Position`
         :type num_out_of: ``int``
-        :return: Position of described Socket on the `QD_Node`
+        :return: Position of described QD_Socket on the `QD_Node`
         :rtype: ``x, y``
         """
         x = self.socket_offsets[position] if (position in (LEFT_TOP, LEFT_CENTER, LEFT_BOTTOM)) else self.gfx.width + self.socket_offsets[position]
@@ -259,12 +259,12 @@ class QD_Node(QD_Serializable):
 
         return [x, y]
 
-    def getSocketScenePosition(self, socket: 'Socket') -> '(x, y)':
+    def getSocketScenePosition(self, socket: 'QD_Socket') -> '(x, y)':
         """
-        Get absolute Socket position in the QD_Scene
+        Get absolute QD_Socket position in the QD_Scene
 
-        :param socket: `Socket` which position we want to know
-        :return: (x, y) Socket's scene position
+        :param socket: `QD_Socket` which position we want to know
+        :return: (x, y) QD_Socket's scene position
         """
         nodepos = self.gfx.pos()
         socketpos = self.getSocketPosition(socket.index, socket.position, socket.count_on_this_node_side)
@@ -460,7 +460,7 @@ class QD_Node(QD_Serializable):
         """
         Get the **first**  `QD_Node` connected to the  Input specified by `index`
 
-        :param index: Order number of the `Input Socket`
+        :param index: Order number of the `Input QD_Socket`
         :type index: ``int``
         :return: :class:`~nodeeditor.node.QD_Node` which is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
         :rtype: :class:`~nodeeditor.node.QD_Node` or ``None``
@@ -475,14 +475,14 @@ class QD_Node(QD_Serializable):
             utils.dumpExcept(e)
             return None
 
-    def getInputWithSocket(self, index: int = 0) -> [('QD_Node', 'Socket'), (None, None)]:
-        """Get the **first**  `QD_Node` connected to the Input specified by `index` and the connection `Socket`
+    def getInputWithSocket(self, index: int = 0) -> [('QD_Node', 'QD_Socket'), (None, None)]:
+        """Get the **first**  `QD_Node` connected to the Input specified by `index` and the connection `QD_Socket`
 
-        :param index: Order number of the `Input Socket`
+        :param index: Order number of the `Input QD_Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node.QD_Node` and :class:`~nodeeditor.socket.Socket` which
+        :return: Tuple containing :class:`~nodeeditor.node.QD_Node` and :class:`~nodeeditor.socket.QD_Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`~nodeeditor.node.QD_Node`, :class:`~nodeeditor.socket.Socket`)
+        :rtype: (:class:`~nodeeditor.node.QD_Node`, :class:`~nodeeditor.socket.QD_Socket`)
         """
         try:
             input_socket = self.inputs[index]
@@ -497,11 +497,11 @@ class QD_Node(QD_Serializable):
 
     def getInputWithSocketIndex(self, index: int = 0) -> ('QD_Node', int):
         """
-        Get the **first**  `QD_Node` connected to the Input specified by `index` and the connection `Socket`
+        Get the **first**  `QD_Node` connected to the Input specified by `index` and the connection `QD_Socket`
 
-        :param index: Order number of the `Input Socket`
+        :param index: Order number of the `Input QD_Socket`
         :type index: ``int``
-        :return: Tuple containing :class:`~nodeeditor.node.QD_Node` and :class:`~nodeeditor.socket.Socket` which
+        :return: Tuple containing :class:`~nodeeditor.node.QD_Node` and :class:`~nodeeditor.socket.QD_Socket` which
             is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
         :rtype: (:class:`~nodeeditor.node.QD_Node`, int)
         """
@@ -520,7 +520,7 @@ class QD_Node(QD_Serializable):
         """
         Get **all** `Nodes` connected to the Input specified by `index`
 
-        :param index: Order number of the `Input Socket`
+        :param index: Order number of the `Input QD_Socket`
         :type index: ``int``
         :return: all :class:`~nodeeditor.node.QD_Node` instances which are connected to the specified `Input` or ``[]`` if there is no connection of index is out of range
         :rtype: List[:class:`~nodeeditor.node.QD_Node`]
@@ -534,7 +534,7 @@ class QD_Node(QD_Serializable):
     def getOutputs(self, index: int = 0) -> 'List[QD_Node]':
         """Get **all** `Nodes` connected to the Output specified by `index`
 
-        :param index: Order number of the `Output Socket`
+        :param index: Order number of the `Output QD_Socket`
         :type index: ``int``
         :return: all :class:`~nodeeditor.node.QD_Node` instances which are connected to the specified `Output` or ``[]`` if there is no connection of index is out of range
         :rtype: List[:class:`~nodeeditor.node.QD_Node`]

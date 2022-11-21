@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""A module containing Graphics representation of a :class:`~nodeeditor.socket.Socket`
+"""A module containing Graphics representation of a :class:`~nodeeditor.socket.QD_Socket`
 """
 from PyQt6.QtWidgets import *
 from PyQt6.QtGui import *
@@ -17,13 +17,13 @@ SOCKET_COLORS = [
 
 
 class QD_SocketGfx(QGraphicsItem):
-    """Class representing Graphic `Socket` in ``QGraphicsScene``
+    """Class representing Graphic `QD_Socket` in ``QGraphicsScene``
     """
 
-    def __init__(self, socket: 'Socket'):
+    def __init__(self, socket: 'QD_Socket'):
         """
-        :param socket: reference to :class:`~nodeeditor.socket.Socket`
-        :type socket: :class:`~nodeeditor.socket.Socket`
+        :param socket: reference to :class:`~nodeeditor.socket.QD_Socket`
+        :type socket: :class:`~nodeeditor.socket.QD_Socket`
         """
         super().__init__(socket.node.gfx)
 
@@ -48,10 +48,10 @@ class QD_SocketGfx(QGraphicsItem):
         return Qt.transparent
 
     def changeSocketType(self):
-        """Change the Socket Type"""
+        """Change the QD_Socket Type"""
         self._color_background = self.getSocketColor(self.socket_type)
         self._brush = QBrush(self._color_background)
-        # print("Socket changed to:", self._color_background.getRgbF())
+        # print("QD_Socket changed to:", self._color_background.getRgbF())
         self.update()
 
     def initAssets(self):
