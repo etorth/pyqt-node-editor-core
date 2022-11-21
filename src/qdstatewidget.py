@@ -11,10 +11,10 @@ from qdedge import QD_Edge, EDGE_TYPE_BEZIER
 from qdviewgfx import QD_ViewGfx
 
 
-class StateNodeWidget(QWidget):
+class QD_StateWidget(QWidget):
     Scene_class = QD_Scene
 
-    """The ``StateNodeWidget`` class
+    """The ``QD_StateWidget`` class
     """
 
     def __init__(self, parent: QWidget = None):
@@ -33,7 +33,7 @@ class StateNodeWidget(QWidget):
         self.initUI()
 
     def initUI(self):
-        """Set up this ``StateNodeWidget`` with its layout,  :class:`~nodeeditor.scene.QD_Scene` and
+        """Set up this ``QD_StateWidget`` with its layout,  :class:`~nodeeditor.scene.QD_Scene` and
         :class:`~nodeeditor.qdviewgfx.QD_ViewGfx`"""
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)

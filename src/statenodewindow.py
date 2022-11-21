@@ -7,11 +7,11 @@ import json
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
-from statenodewidget import StateNodeWidget
+from qdstatewidget import QD_StateWidget
 
 
 class StateNodeWindow(QMainWindow):
-    StateNodeWidget_class = StateNodeWidget
+    StateNodeWidget_class = QD_StateWidget
 
     """Class representing NodeEditor's Main Window
     """
@@ -114,11 +114,11 @@ class StateNodeWindow(QMainWindow):
         """
         return self.getCurrentStateNodeWidget().scene.isModified()
 
-    def getCurrentStateNodeWidget(self) -> StateNodeWidget:
-        """get current :class:`~nodeeditor.StateNodeWidget`
+    def getCurrentStateNodeWidget(self) -> QD_StateWidget:
+        """get current :class:`~nodeeditor.QD_StateWidget`
 
-        :return: get current :class:`~nodeeditor.StateNodeWidget`
-        :rtype: :class:`~nodeeditor.StateNodeWidget`
+        :return: get current :class:`~nodeeditor.QD_StateWidget`
+        :rtype: :class:`~nodeeditor.QD_StateWidget`
         """
         return self.centralWidget()
 

@@ -13,7 +13,7 @@ from qdutils import *
 # images for the dark skin
 import qss.nodeeditor_dark_resources
 
-class MainWindow(StateNodeWindow):
+class QD_MainWindow(StateNodeWindow):
 
     def initUI(self):
         self.stylesheet_filename = os.path.join(os.path.dirname(__file__), "qss/nodeeditor.qss")
@@ -76,7 +76,7 @@ class MainWindow(StateNodeWindow):
         self.actAbout = QAction("&About", self, statusTip="Show the application's About box", triggered=self.about)
 
     def getCurrentStateNodeWidget(self):
-        """ we're returning StateNodeWidget here... """
+        """ we're returning QD_StateWidget here... """
         activeSubWindow = self.mdiArea.activeSubWindow()
         if activeSubWindow:
             return activeSubWindow.widget()

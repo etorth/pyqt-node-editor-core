@@ -6,14 +6,14 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from statenodewidget import StateNodeWidget
+from qdstatewidget import QD_StateWidget
 from qdnode import *
 from qdedge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
 from qdviewgfx import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
 from qdutils import *
 
 
-class QD_StateSubWindow(StateNodeWidget):
+class QD_StateSubWindow(QD_StateWidget):
     def __init__(self):
         super().__init__()
         # self.setAttribute(Qt.WA_DeleteOnClose)
