@@ -15,6 +15,7 @@ class _ContainerContentGfx_repeat(QD_NodeContentGfx):
         self.times = QLineEdit()
         self.times.setValidator(QIntValidator())
         self.times.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.times.editingFinished.connect(self.onEditingFinished)
 
         self.hbox = QHBoxLayout()
         self.hbox.addWidget(QLabel("当结果"))
@@ -28,6 +29,11 @@ class _ContainerContentGfx_repeat(QD_NodeContentGfx):
 
         self.ops = QLabel('操作')
         self.vbox.addWidget(self.ops)
+
+
+    def onEditingFinished(self):
+        if self.times.text() and int(self.times.text()) <= 0:
+            self.times.setText("无穷")
 
 
 class _ContainerContent_repeat(QD_NodeContent):
