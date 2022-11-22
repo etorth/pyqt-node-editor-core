@@ -150,8 +150,7 @@ class QD_Socket(QD_Serializable):
             self.edges.remove(edge)
         else:
             if confg.DEBUG:
-                print("!W:", "QD_Socket::removeEdge", "wanna remove edge", edge,
-                      "from self.edges but it's not in the list!")
+                print("!W:", "QD_Socket::removeEdge", "wanna remove edge", edge, "from self.edges but it's not in the list!")
 
     def removeAllEdges(self, silent=False):
         """Disconnect all `Edges` from this `QD_Socket`"""

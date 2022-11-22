@@ -119,17 +119,8 @@ class QD_Node(QD_Serializable):
         return self.__class__.NodeGfx_class
 
     def initSettings(self):
-        """Initialize properties and socket information"""
         self.socket_spacing = 22
 
-        self.socket_offsets = {
-            LEFT_BOTTOM: -1,
-            LEFT_CENTER: -1,
-            LEFT_TOP: -1,
-            RIGHT_BOTTOM: 1,
-            RIGHT_CENTER: 1,
-            RIGHT_TOP: 1,
-        }
 
     def initSockets(self, inputs: list, outputs: list, reset: bool = True):
         """Create sockets for inputs and outputs
