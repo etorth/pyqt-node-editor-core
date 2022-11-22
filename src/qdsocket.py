@@ -65,7 +65,7 @@ class QD_Socket(QD_Serializable):
             print("QD_Socket -- creating with", self.index, self.position, "for nodeeditor", self.node)
 
         self.gfx = self.__class__.SocketGfx_class(self)
-        self.setSocketPosition()
+        self.updateSocketPosition()
         self.edges = []
 
     def __str__(self):
@@ -94,7 +94,7 @@ class QD_Socket(QD_Serializable):
             return True
         return False
 
-    def setSocketPosition(self):
+    def updateSocketPosition(self):
         """Helper function to set `Graphics QD_Socket` position. Exact socket position is calculated
         inside :class:`node.QD_Node`."""
         self.gfx.setPos(*self.node.getSocketPosition(self.index, self.is_input, self.count_on_this_node_side))

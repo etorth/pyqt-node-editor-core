@@ -244,10 +244,10 @@ class QD_Node(QD_Serializable):
 
     def updateSockets(self):
         for sock in self.inputs:
-            sock.setSocketPosition()
+            sock.updateSocketPosition()
 
         for sock in self.outputs:
-            sock.setSocketPosition()
+            sock.updateSocketPosition()
 
 
     def remove(self):
