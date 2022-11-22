@@ -5,6 +5,7 @@ from collections import OrderedDict
 from qdserializable import QD_Serializable
 from qdsocketgfx import QD_SocketGfx
 from qdutils import *
+from enum import Enum
 
 LEFT_TOP = 1  #:
 LEFT_CENTER = 2  #:
@@ -12,6 +13,8 @@ LEFT_BOTTOM = 3  #:
 RIGHT_TOP = 4  #:
 RIGHT_CENTER = 5  #:
 RIGHT_BOTTOM = 6  #:
+
+SocketType = Enum('SocketType', ('In', 'Out_True', 'Out_False'))
 
 
 class QD_Socket(QD_Serializable):
