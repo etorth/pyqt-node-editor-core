@@ -13,9 +13,6 @@ RIGHT_TOP = 4  #:
 RIGHT_CENTER = 5  #:
 RIGHT_BOTTOM = 6  #:
 
-DEBUG = True
-DEBUG_REMOVE_WARNINGS = False
-
 
 class QD_Socket(QD_Serializable):
     SocketGfx_class = QD_SocketGfx
@@ -152,7 +149,7 @@ class QD_Socket(QD_Serializable):
         if edge in self.edges:
             self.edges.remove(edge)
         else:
-            if DEBUG_REMOVE_WARNINGS:
+            if confg.DEBUG:
                 print("!W:", "QD_Socket::removeEdge", "wanna remove edge", edge,
                       "from self.edges but it's not in the list!")
 
