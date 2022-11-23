@@ -187,7 +187,8 @@ class QD_ViewGfx(QGraphicsView):
         # we store the position of last LMB click
         self.last_lmb_click_scene_pos = self.mapToScene(event.position().toPoint())
 
-        if confg.DEBUG: print("LMB Click on", item, self.debug_modifiers(event))
+        if confg.DEBUG:
+            print("LMB Click on", item, self.debug_modifiers(event))
 
         # logic
         if hasattr(item, "node") or isinstance(item, QD_EdgeGfx) or item is None:
@@ -205,7 +206,8 @@ class QD_ViewGfx(QGraphicsView):
 
         if self.mode == MODE_EDGE_DRAG:
             res = self.edgeDragEnd(item)
-            if res: return
+            if res:
+                return
 
         if item is None:
             if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
