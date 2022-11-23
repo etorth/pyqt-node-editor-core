@@ -10,6 +10,13 @@ class SocketType(int, Enum):
     Out_True = 1
     Out_False = 2
 
+    @property
+    def is_In(self) -> bool:
+        return self is SocketType.In
+
+    def is_Out(self) -> bool:
+        return self is SocketType.Out_True or self is SocketType.Out_False
+
 class QD_SocketGfx(QGraphicsItem):
     def __init__(self, socket: 'QD_Socket'):
         super().__init__(socket.node.gfx)
