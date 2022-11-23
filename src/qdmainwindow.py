@@ -149,14 +149,14 @@ class QD_MainWindow(QMainWindow):
                         self.mdiArea.setActiveSubWindow(existing)
                     else:
                         # we need to create new subWindow and open the file
-                        nodeeditor = QD_StateSubWindow()
-                        if nodeeditor.fileLoad(fname):
+                        statesubwin = QD_StateSubWindow()
+                        if statesubwin.fileLoad(fname):
                             self.statusBar().showMessage("File %s loaded" % fname, 5000)
-                            nodeeditor.setTitle()
-                            subwin = self.createMdiChild(nodeeditor)
+                            statesubwin.setTitle()
+                            subwin = self.createMdiChild(statesubwin)
                             subwin.show()
                         else:
-                            nodeeditor.close()
+                            statesubwin.close()
         except Exception as e:
             utils.dumpExcept(e)
 
