@@ -27,6 +27,7 @@ class _ContainerContent_and(QD_NodeContent):
         content = contentType(None)
         self._nested_contents.append(content)
         self.gfx.vbox.addWidget(content.gfx)
+        return content
 
 
     def serialize(self) -> OrderedDict:
@@ -37,7 +38,7 @@ class _ContainerContent_and(QD_NodeContent):
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
         for content_data in data['nested_contents']:
-            print(content_data)
+            self.addSubNode(utils.get_class_from_opcode(content_data['op_code']).NodeContent_class).deserialize(content_data, hashmap, restore_id)
         return True
 
 

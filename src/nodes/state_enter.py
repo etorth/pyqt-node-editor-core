@@ -24,14 +24,9 @@ class _StateContent_enter(QD_NodeContent):
         return data
 
 
-    def deserialize(self, data, hashmap={}):
-        data = super().deserialize(data, hashmap)
-        try:
-            self.gfx.label.setText(data['value'])
-            return True & data
-        except Exception as e:
-            utils.dumpExcept(e)
-        return data
+    def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
+        super().deserialize(data, hashmap, restore_id)
+        return self.gfx.label.setText(data['value'])
 
 
 @utils.register_opnode
