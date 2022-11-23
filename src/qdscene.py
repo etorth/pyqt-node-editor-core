@@ -272,8 +272,8 @@ class QD_Scene(QD_Serializable):
         :param filename: where to save this scene
         :type filename: ``str``
         """
-        with open(filename, "w") as file:
-            file.write(json.dumps(self.serialize(), indent=4))
+        with open(filename, "w", encoding='utf-8') as file:
+            json.dump(self.serialize(), file, ensure_ascii=False, indent=4)
             print("saving to", filename, "was successfull.")
 
             self.has_been_modified = False
@@ -287,10 +287,9 @@ class QD_Scene(QD_Serializable):
         :raises: :class:`scene.InvalidFile` if there was an error decoding JSON file
         """
 
-        with open(filename, "r") as file:
-            raw_data = file.read()
+        with open(filename, "r", encoding='utf-8') as file:
             try:
-                data = json.loads(raw_data)
+                data = json.load(file)
                 self.deserialize(data)
                 self.has_been_modified = False
             except json.JSONDecodeError:
