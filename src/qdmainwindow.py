@@ -303,9 +303,8 @@ class QD_MainWindow(QMainWindow):
 
     def createStatusBar(self):
         self.statusBar().showMessage("Ready")
-        self.status_mouse_pos = QLabel("LOC: ?, ?")
+        self.status_mouse_pos = QLabel()
         self.statusBar().addPermanentWidget(self.status_mouse_pos)
-        # self.nodeeditor.view.scenePosChanged.connect(self.onScenePosChanged)
 
     def createMdiChild(self, child_widget=None):
         nodeeditor = child_widget if child_widget is not None else QD_StateSubWindow()
@@ -315,6 +314,7 @@ class QD_MainWindow(QMainWindow):
         # nodeeditor.scene.addItemsDeselectedListener(self.updateEditMenu)
         nodeeditor.scene.history.addHistoryModifiedListener(self.updateEditMenu)
         nodeeditor.addCloseEventListener(self.onSubWndClose)
+        nodeeditor.view.scenePosChanged.connect(self.onScenePosChanged)
         return subwin
 
     def createLuaEditorChild(self):
@@ -332,7 +332,7 @@ class QD_MainWindow(QMainWindow):
         :param y: new cursor y position
         :type y:
         """
-        self.status_mouse_pos.setText("QD_Scene Pos: [%d, %d]" % (x, y))
+        self.status_mouse_pos.setText("LOC: [%d, %d]" % (x, y))
 
 
 
