@@ -14,6 +14,12 @@ class _ContainerContentGfx_and(QD_NodeContentGfx):
         self.vbox.setSpacing(0)
 
 
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self.content.node.updateConnectedEdges()
+        self.content.node.updateSockets()
+
+
 class _ContainerContent_and(QD_NodeContent):
     NodeContentGfx_class =_ContainerContentGfx_and
 
@@ -74,7 +80,6 @@ class _Container_and(QD_Node):
 
 
     def addSubNode(self, nodeType):
+        self.gfx.update()
         self.gfx.prepareGeometryChange()
         self.content.addSubNode(nodeType.NodeContent_class)
-        self.updateConnectedEdges()
-        self.updateSockets()
