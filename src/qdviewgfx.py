@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import QGraphicsView, QApplication
 
 from qdsocketgfx import QD_SocketGfx
 from qdedgegfx import QD_EdgeGfx
-from qdedge import QD_Edge, EDGE_TYPE_BEZIER
+from qdedge import QD_Edge, EdgeType
 from qdcutline import QD_CutLine
 from qdutils import *
 
@@ -397,7 +397,7 @@ class QD_ViewGfx(QGraphicsView):
                 print('View::edgeDragStart ~   assign Start QD_Socket to:', item.socket)
 
             self.drag_start_socket = item.socket
-            self.drag_edge = QD_Edge(self.gfx.scene, item.socket, None, EDGE_TYPE_BEZIER)
+            self.drag_edge = QD_Edge(self.gfx.scene, item.socket, None, EdgeType.Bezier)
 
             if confg.DEBUG:
                 print('View::edgeDragStart ~   dragEdge:', self.drag_edge)
@@ -434,7 +434,7 @@ class QD_ViewGfx(QGraphicsView):
                                 socket.removeAllEdges(silent=False)
 
                     ## Create new QD_Edge
-                    new_edge = QD_Edge(self.gfx.scene, self.drag_start_socket, item.socket, edge_type=EDGE_TYPE_BEZIER)
+                    new_edge = QD_Edge(self.gfx.scene, self.drag_start_socket, item.socket, edge_type=EdgeType.Bezier)
                     if confg.DEBUG:
                         print("View::edgeDragEnd ~  created new edge:", new_edge, "connecting", new_edge.start_socket, "<-->", new_edge.end_socket)
 

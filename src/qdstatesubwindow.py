@@ -8,7 +8,7 @@ from PyQt6.QtWidgets import *
 
 from qdstatewidget import QD_StateWidget
 from qdnode import *
-from qdedge import EDGE_TYPE_DIRECT, EDGE_TYPE_BEZIER
+from qdedge import *
 from qdviewgfx import MODE_EDGE_DRAG  # , MODE_EDGES_REROUTING
 from qdutils import *
 
@@ -202,8 +202,8 @@ class QD_StateSubWindow(QD_StateWidget):
         if hasattr(item, 'edge'):
             selected = item.edge
 
-        if selected and action == bezierAct: selected.edge_type = EDGE_TYPE_BEZIER
-        if selected and action == directAct: selected.edge_type = EDGE_TYPE_DIRECT
+        if selected and action == bezierAct: selected.edge_type = EdgeType.Bezier
+        if selected and action == directAct: selected.edge_type = EdgeType.Direct
 
     # helper functions
     def determine_target_socket_of_node(self, was_dragged_flag, new_calc_node):

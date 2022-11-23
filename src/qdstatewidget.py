@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import *
 
 from qdscene import QD_Scene, InvalidFile
 from qdnode import QD_Node
-from qdedge import QD_Edge, EDGE_TYPE_BEZIER
+from qdedge import QD_Edge, EdgeType
 from qdviewgfx import QD_ViewGfx
 
 
@@ -152,9 +152,9 @@ class QD_StateWidget(QWidget):
         node2.setPos(-75, 0)
         node3.setPos(200, -200)
 
-        edge1 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_True), node2.getSocket(SocketType.In), edge_type=EDGE_TYPE_BEZIER)
-        edge2 = QD_Edge(self.scene, node2.getSocket(SocketType.Out_True), node3.getSocket(SocketType.In), edge_type=EDGE_TYPE_BEZIER)
-        edge3 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_True), node3.getSocket(SocketType.In), edge_type=EDGE_TYPE_BEZIER)
+        edge1 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_True), node2.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
+        edge2 = QD_Edge(self.scene, node2.getSocket(SocketType.Out_True), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
+        edge3 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_True), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
 
         self.scene.history.storeInitialHistoryStamp()
 

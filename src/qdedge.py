@@ -1,21 +1,20 @@
 # -*- coding: utf-8 -*-
-"""
-A module containing NodeEditor's class for representing QD_Edge and QD_Edge Type Constants.
-"""
+from enum import Enum, unique
 from collections import OrderedDict
-from qdedgegfx import *
 from qdserializable import QD_Serializable
 from qdutils import *
+from qdedgegfx import *
 
-EDGE_TYPE_DIRECT = 1  #:
-EDGE_TYPE_BEZIER = 2  #:
-
+@unique
+class EdgeType(int, Enum):
+    Direct = 0
+    Bezier = 1
 
 class QD_Edge(QD_Serializable):
     """Class for representing QD_Edge in NodeEditor.
     """
 
-    def __init__(self, scene: 'QD_Scene', start_socket: 'QD_Socket' = None, end_socket: 'QD_Socket' = None, edge_type=EDGE_TYPE_DIRECT):
+    def __init__(self, scene: 'QD_Scene', start_socket: 'QD_Socket' = None, end_socket: 'QD_Socket' = None, edge_type=EdgeType.Direct):
         """
 
         :param scene: Reference to the :py:class:`scene.QD_Scene`
@@ -126,7 +125,7 @@ class QD_Edge(QD_Serializable):
         :rtype: class of `gfx`
         """
         edge_class = GfxEdgeBezier
-        if edge_type == EDGE_TYPE_DIRECT:
+        if edge_type == EdgeType.Direct:
             edge_class = GfxEdgeDirect
         return edge_class
 
