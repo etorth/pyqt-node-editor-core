@@ -9,22 +9,33 @@ from qdnodecontentgfx import *
 
 class _ConditionCheckerContentGfx_level(QD_NodeContentGfx):
     def initUI(self):
-        self.label = QLabel('等级')
-
         self.choice = QComboBox()
         self.choice.addItems(["大于", "小于", "等于", "不等于", "不大于", "不小于"])
 
         self.edit = QLineEdit()
         self.edit.setValidator(QIntValidator())
         self.edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.edit.editingFinished.connect(self.onEditingFinished)
 
         self.hbox = QHBoxLayout(self)
         self.hbox.setContentsMargins(10, 10, 10, 10)
         self.hbox.setSpacing(5)
 
-        self.hbox.addWidget(self.label)
+        self.hbox.addWidget(QLabel('等级'))
         self.hbox.addWidget(self.choice)
         self.hbox.addWidget(self.edit)
+
+
+    def onEditingFinished(self):
+        if self.edit.text():
+            if int(self.edit.text()) < 0:
+                self.content.node.markInvalid(True)
+                self.content.node.gfx.setToolTip('Invalid level integer')
+            else:
+                self.content.node.markInvalid(False)
+                self.content.node.gfx.setToolTip('')
+        else:
+            self.content.node.markDirty(True)
 
 
 class _ConditionCheckerContent_level(QD_NodeContent):
