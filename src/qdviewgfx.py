@@ -168,7 +168,7 @@ class QD_ViewGfx(QGraphicsView):
         # faking events for enable MMB dragging the scene
         releaseEvent = QMouseEvent(QEvent.Type.MouseButtonRelease, event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers())
         super().mouseReleaseEvent(releaseEvent)
-        self.setDragMode(QGraphicsView.ScrollHandDrag)
+        self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
         fakeEvent = QMouseEvent(event.type(), event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, event.buttons() | Qt.MouseButton.LeftButton, event.modifiers())
         super().mousePressEvent(fakeEvent)
 
@@ -176,7 +176,7 @@ class QD_ViewGfx(QGraphicsView):
         """When Middle mouse button was released"""
         fakeEvent = QMouseEvent(event.type(), event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, event.buttons() & ~Qt.MouseButton.LeftButton, event.modifiers())
         super().mouseReleaseEvent(fakeEvent)
-        self.setDragMode(QGraphicsView.RubberBandDrag)
+        self.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
 
     def leftMouseButtonPress(self, event: QMouseEvent):
         """When Left  mouse button was pressed"""
@@ -460,7 +460,7 @@ class QD_ViewGfx(QGraphicsView):
         :type event: ``QMouseEvent``
         :return: ``True`` if we released too far from where we clicked before
         """
-        new_lmb_release_scene_pos = self.mapToScene(event.position())
+        new_lmb_release_scene_pos = self.mapToScene(event.position().toPoint())
         dist_scene = new_lmb_release_scene_pos - self.last_lmb_click_scene_pos
         edge_drag_threshold_sq = EDGE_DRAG_START_THRESHOLD * EDGE_DRAG_START_THRESHOLD
         return (dist_scene.x() * dist_scene.x() + dist_scene.y() * dist_scene.y()) > edge_drag_threshold_sq

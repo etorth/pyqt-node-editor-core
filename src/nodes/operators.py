@@ -41,7 +41,7 @@ class _CalcNode_add(_CalcNodeBase):
 
 
     def evalOperation(self, input1, input2):
-        return input1 + input2
+        return 1
 
 
 @utils.register_opnode
@@ -51,7 +51,7 @@ class _CalcNode_sub(_CalcNodeBase):
 
 
     def evalOperation(self, input1, input2):
-        return input1 - input2
+        return 1
 
 
 @utils.register_opnode
@@ -61,8 +61,7 @@ class _CalcNode_mul(_CalcNodeBase):
 
 
     def evalOperation(self, input1, input2):
-        print('foo')
-        return input1 * input2
+        return 1
 
 
 @utils.register_opnode
@@ -72,4 +71,4 @@ class _CalcNode_div(_CalcNodeBase):
 
 
     def evalOperation(self, input1, input2):
-        return input1 / input2
+        return 1
