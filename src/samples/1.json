@@ -69,7 +69,8 @@
             "content": {
                 "op_code": 1,
                 "choice": 4,
-                "value": "12"
+                "value": "12",
+                "item": 0
             },
             "op_code": 1
         },
@@ -113,16 +114,9 @@
                 }
             ],
             "content": {
-                "nested_contents": [
-                    {
-                        "op_code": 6
-                    },
-                    {
-                        "op_code": 1,
-                        "choice": 3,
-                        "value": "123"
-                    }
-                ]
+                "op_code": 2,
+                "choice": 0,
+                "value": ""
             },
             "op_code": 2
         },

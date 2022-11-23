@@ -16,10 +16,9 @@ from qdutils import *
 class QD_StateSubWindow(QD_StateWidget):
     def __init__(self):
         super().__init__()
-        # self.setAttribute(Qt.WA_DeleteOnClose)
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
 
         self.setTitle()
-
         self.initNewNodeActions()
 
         self.scene.addHasBeenModifiedListener(self.setTitle)
