@@ -22,27 +22,33 @@ class QD_StateWidget(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.layout = QHBoxLayout()
-        self.layout.setContentsMargins(0, 0, 0, 0)
-        self.setLayout(self.layout)
+        self.splitter = QSplitter(Qt.Orientation.Horizontal, self)
 
-        self.attr_layout = QVBoxLayout()
+        self.splitter.addWidget(self.createLeftPannel())
+        self.splitter.addWidget(self.createMiddlePannel())
+
+
+    def createLeftPannel(self):
+        self.attrs = QFrame()
+        self.attrs_layout = QVBoxLayout(self.attrs)
 
         self.attr_timeout_edit = QLineEdit()
         self.attr_timeout_edit.setValidator(QIntValidator())
         self.attr_timeout_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.attr_timeout_edit.editingFinished.connect(self.onAttrTimeoutEditingFinished)
 
-        self.attr_layout.addWidget(QLabel("状态节点限时"))
-        self.attr_layout.addWidget(self.attr_timeout_edit)
-        self.attr_layout.addWidget(QLabel("秒"))
+        self.attrs_layout.addWidget(QLabel("状态节点限时"))
+        self.attrs_layout.addWidget(self.attr_timeout_edit)
+        self.attrs_layout.addWidget(QLabel("秒"))
 
-        self.layout.addLayout(self.attr_layout)
+        return self.attrs
 
+
+    def createMiddlePannel(self):
         self.scene = self.__class__.Scene_class()
-        self.view = QD_ViewGfx(self.scene.gfx, self)
+        self.view = QD_ViewGfx(self.scene.gfx)
 
-        self.layout.addWidget(self.view)
+        return self.view
 
 
     def onAttrTimeoutEditingFinished(self):
