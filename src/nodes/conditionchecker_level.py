@@ -27,15 +27,16 @@ class _ConditionCheckerContentGfx_level(QD_NodeContentGfx):
 
 
     def onEditingFinished(self):
-        if self.edit.text():
-            if int(self.edit.text()) < 0:
-                self.content.node.markInvalid(True)
-                self.content.node.gfx.setToolTip('Invalid level integer')
+        if self.content.node:
+            if self.edit.text():
+                if int(self.edit.text()) < 0:
+                    self.content.node.markInvalid(True)
+                    self.content.node.gfx.setToolTip('Invalid level integer')
+                else:
+                    self.content.node.markInvalid(False)
+                    self.content.node.gfx.setToolTip('')
             else:
-                self.content.node.markInvalid(False)
-                self.content.node.gfx.setToolTip('')
-        else:
-            self.content.node.markDirty(True)
+                self.content.node.markDirty(True)
 
 
 class _ConditionCheckerContent_level(QD_NodeContent):
@@ -43,20 +44,17 @@ class _ConditionCheckerContent_level(QD_NodeContent):
 
 
     def serialize(self):
-        res = super().serialize()
-        res['value'] = self.gfx.edit.text()
-        return res
+        data = super().serialize()
+        data['choice'] = self.gfx.choice.currentIndex()
+        data['value'] = self.gfx.edit.text()
+        return data
 
 
-    def deserialize(self, data, hashmap={}):
-        res = super().deserialize(data, hashmap)
-        try:
-            value = data['value']
-            self.gfx.edit.setText(value)
-            return True & res
-        except Exception as e:
-            utils.dumpExcept(e)
-        return res
+    def deserialize(self, data, hashmap={}, restore_id: bool = True):
+        super().deserialize(data, hashmap)
+        self.gfx.edit.setText(data['value'])
+        self.gfx.choice.setCurrentIndex(data['choice'])
+        return True
 
 
 @utils.register_opnode

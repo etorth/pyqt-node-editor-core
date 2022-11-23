@@ -1,253 +1,187 @@
 {
-  "id": 58625888,
-  "scene_width": 64000,
-  "scene_height": 64000,
-  "nodes": [
-    {
-      "id": 71320968,
-      "title": "Input",
-      "pos_x": -357.0,
-      "pos_y": -200.0,
-      "inputs": [],
-      "outputs": [
+    "id": 1402358470288,
+    "scene_width": 64000,
+    "scene_height": 64000,
+    "nodes": [
         {
-          "id": 71321136,
-          "index": 0,
-          "multi_edges": true,
-          "position": 5,
-          "socket_type": 3
-        }
-      ],
-      "content": {
-        "value": "4"
-      },
-      "op_code": 1
-    },
-    {
-      "id": 71320744,
-      "title": "Input",
-      "pos_x": -348.0,
-      "pos_y": -84.0,
-      "inputs": [],
-      "outputs": [
-        {
-          "id": 71320632,
-          "index": 0,
-          "multi_edges": true,
-          "position": 5,
-          "socket_type": 3
-        }
-      ],
-      "content": {
-        "value": "2"
-      },
-      "op_code": 1
-    },
-    {
-      "id": 71320688,
-      "title": "Output",
-      "pos_x": 258.0,
-      "pos_y": -214.0,
-      "inputs": [
-        {
-          "id": 71354576,
-          "index": 0,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 1
-        }
-      ],
-      "outputs": [],
-      "content": {},
-      "op_code": 2
-    },
-    {
-      "id": 71354520,
-      "title": "Output",
-      "pos_x": 268.0,
-      "pos_y": -111.0,
-      "inputs": [
-        {
-          "id": 71354800,
-          "index": 0,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 1
-        }
-      ],
-      "outputs": [],
-      "content": {},
-      "op_code": 2
-    },
-    {
-      "id": 71354744,
-      "title": "Add",
-      "pos_x": -22.0,
-      "pos_y": -108.0,
-      "inputs": [
-        {
-          "id": 71355024,
-          "index": 0,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 2
+            "id": 1402358673232,
+            "title": "通知消息",
+            "position": [
+                -313.0,
+                -39.0
+            ],
+            "sockets": [
+                {
+                    "id": 1402433968432,
+                    "type": 0
+                },
+                {
+                    "id": 1402433968528,
+                    "type": 1
+                }
+            ],
+            "content": {
+                "op_code": 7,
+                "value": "你好我是anhong"
+            },
+            "op_code": 7
         },
         {
-          "id": 71355080,
-          "index": 1,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 2
-        }
-      ],
-      "outputs": [
-        {
-          "id": 71355136,
-          "index": 0,
-          "multi_edges": true,
-          "position": 5,
-          "socket_type": 1
-        }
-      ],
-      "content": {},
-      "op_code": 3
-    },
-    {
-      "id": 71320800,
-      "title": "Substract",
-      "pos_x": -26.0,
-      "pos_y": 18.0,
-      "inputs": [
-        {
-          "id": 71355304,
-          "index": 0,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 2
+            "id": 2160425603792,
+            "title": "进入节点",
+            "position": [
+                -376.0,
+                -217.0
+            ],
+            "sockets": [
+                {
+                    "id": 2160425604224,
+                    "type": 1
+                }
+            ],
+            "content": {
+                "op_code": 13,
+                "value": "进入"
+            },
+            "op_code": 13
         },
         {
-          "id": 71355360,
-          "index": 1,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 2
-        }
-      ],
-      "outputs": [
-        {
-          "id": 71355416,
-          "index": 0,
-          "multi_edges": true,
-          "position": 5,
-          "socket_type": 1
-        }
-      ],
-      "content": {},
-      "op_code": 4
-    },
-    {
-      "id": 71445864,
-      "title": "Multiply",
-      "pos_x": -6.0,
-      "pos_y": -209.0,
-      "inputs": [
-        {
-          "id": 71446032,
-          "index": 0,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 2
+            "id": 2160425608640,
+            "title": "等级",
+            "position": [
+                -144.0,
+                -18.0
+            ],
+            "sockets": [
+                {
+                    "id": 2160425699072,
+                    "type": 0
+                },
+                {
+                    "id": 2160425699648,
+                    "type": 1
+                },
+                {
+                    "id": 2160425699600,
+                    "type": 2
+                }
+            ],
+            "content": {
+                "op_code": 1,
+                "choice": 4,
+                "value": "12"
+            },
+            "op_code": 1
         },
         {
-          "id": 71446088,
-          "index": 1,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 2
-        }
-      ],
-      "outputs": [
-        {
-          "id": 71446144,
-          "index": 0,
-          "multi_edges": true,
-          "position": 5,
-          "socket_type": 1
-        }
-      ],
-      "content": {},
-      "op_code": 5
-    },
-    {
-      "id": 71446312,
-      "title": "Divide",
-      "pos_x": -126.0,
-      "pos_y": 137.0,
-      "inputs": [
-        {
-          "id": 71446424,
-          "index": 0,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 2
+            "id": 2160425699840,
+            "title": "终止",
+            "position": [
+                277.0,
+                37.0
+            ],
+            "sockets": [
+                {
+                    "id": 2160425702096,
+                    "type": 0
+                }
+            ],
+            "content": {
+                "op_code": 12
+            },
+            "op_code": 12
         },
         {
-          "id": 71446480,
-          "index": 1,
-          "multi_edges": false,
-          "position": 2,
-          "socket_type": 2
-        }
-      ],
-      "outputs": [
+            "id": 1872446345552,
+            "title": "与",
+            "position": [
+                74.0,
+                -178.0
+            ],
+            "sockets": [
+                {
+                    "id": 1872446346128,
+                    "type": 0
+                },
+                {
+                    "id": 1872446346224,
+                    "type": 1
+                },
+                {
+                    "id": 1872446346320,
+                    "type": 2
+                }
+            ],
+            "content": {
+                "nested_contents": [
+                    {
+                        "op_code": 6
+                    },
+                    {
+                        "op_code": 1,
+                        "choice": 3,
+                        "value": "123"
+                    }
+                ]
+            },
+            "op_code": 2
+        },
         {
-          "id": 71782472,
-          "index": 0,
-          "multi_edges": true,
-          "position": 5,
-          "socket_type": 1
+            "id": 1872446056016,
+            "title": "退出节点",
+            "position": [
+                285.0,
+                -219.0
+            ],
+            "sockets": [
+                {
+                    "id": 1872446057216,
+                    "type": 0
+                }
+            ],
+            "content": {
+                "op_code": 14,
+                "value": "退出"
+            },
+            "op_code": 14
         }
-      ],
-      "content": {},
-      "op_code": 6
-    }
-  ],
-  "edges": [
-    {
-      "id": 58778960,
-      "edge_type": 2,
-      "start": 71320632,
-      "end": 71355360
-    },
-    {
-      "id": 71445024,
-      "edge_type": 2,
-      "start": 71355304,
-      "end": 71321136
-    },
-    {
-      "id": 71445192,
-      "edge_type": 2,
-      "start": 71321136,
-      "end": 71355024
-    },
-    {
-      "id": 71445360,
-      "edge_type": 2,
-      "start": 71355080,
-      "end": 71320632
-    },
-    {
-      "id": 71445528,
-      "edge_type": 2,
-      "start": 71355136,
-      "end": 71354576
-    },
-    {
-      "id": 71445696,
-      "edge_type": 2,
-      "start": 71355416,
-      "end": 71354800
-    }
-  ]
+    ],
+    "edges": [
+        {
+            "id": 2160425604176,
+            "edge_type": 1,
+            "start": 2160425604224,
+            "end": 1402433968432
+        },
+        {
+            "id": 2160425699792,
+            "edge_type": 1,
+            "start": 1402433968528,
+            "end": 2160425699072
+        },
+        {
+            "id": 2160425702048,
+            "edge_type": 1,
+            "start": 2160425699600,
+            "end": 2160425702096
+        },
+        {
+            "id": 1872446057312,
+            "edge_type": 1,
+            "start": 2160425699648,
+            "end": 1872446346128
+        },
+        {
+            "id": 1872446057264,
+            "edge_type": 1,
+            "start": 1872446346224,
+            "end": 1872446057216
+        },
+        {
+            "id": 1872446056976,
+            "edge_type": 1,
+            "start": 1872446346320,
+            "end": 2160425702096
+        }
+    ]
 }
