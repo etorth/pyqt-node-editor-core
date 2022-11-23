@@ -22,7 +22,9 @@ class QD_NodeContent(QD_Serializable):
 
 
     def serialize(self) -> OrderedDict:
-        return OrderedDict([])
+        return OrderedDict([
+            ('op_code', self.__class__.op_code), # added by @register_opnode
+        ])
 
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:

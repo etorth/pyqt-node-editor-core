@@ -20,7 +20,6 @@ class _StateContent_enter(QD_NodeContent):
     def serialize(self):
         data = super().serialize()
         data['value'] = self.gfx.label.text()
-        data['op_code'] = self.__class__.op_code
         return data
 
 
