@@ -421,14 +421,13 @@ class QD_ViewGfx(QGraphicsView):
 
         try:
             if isinstance(item, QD_SocketGfx):
-                if item.socket != self.drag_start_socket:
+                if (item.socket != self.drag_start_socket):
                     # if we released dragging on a socket (other then the beginning socket)
 
                     ## First remove old edges / send notifications
                     for socket in (item.socket, self.drag_start_socket):
                         if not socket.is_multi_edges:
                             if socket.is_input:
-                                # print("removing SILENTLY edges from input socket (is_input and !is_multi_edges) [DragStart]:", item.socket.edges)
                                 socket.removeAllEdges(silent=True)
                             else:
                                 socket.removeAllEdges(silent=False)
