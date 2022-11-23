@@ -307,14 +307,17 @@ class QD_MainWindow(QMainWindow):
         self.statusBar().addPermanentWidget(self.status_mouse_pos)
 
     def createMdiChild(self, child_widget=None):
-        nodeeditor = child_widget if child_widget is not None else QD_StateSubWindow()
-        subwin = self.mdiArea.addSubWindow(nodeeditor)
+        if child_widget is None:
+            child_widget = QD_StateSubWindow()
+
+        subwin = self.mdiArea.addSubWindow(child_widget)
         subwin.setWindowIcon(self.empty_icon)
-        # nodeeditor.scene.addItemSelectedListener(self.updateEditMenu)
-        # nodeeditor.scene.addItemsDeselectedListener(self.updateEditMenu)
-        nodeeditor.scene.history.addHistoryModifiedListener(self.updateEditMenu)
-        nodeeditor.addCloseEventListener(self.onSubWndClose)
-        nodeeditor.view.scenePosChanged.connect(self.onScenePosChanged)
+
+        # child_widget.scene.addItemSelectedListener(self.updateEditMenu)
+        # child_widget.scene.addItemsDeselectedListener(self.updateEditMenu)
+        child_widget.scene.history.addHistoryModifiedListener(self.updateEditMenu)
+        child_widget.addCloseEventListener(self.onSubWndClose)
+        child_widget.view.scenePosChanged.connect(self.onScenePosChanged)
         return subwin
 
     def createLuaEditorChild(self):
