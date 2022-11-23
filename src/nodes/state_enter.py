@@ -54,7 +54,6 @@ class _State_enter(QD_Node):
         self.markDescendantsDirty()
 
         self.gfx.setToolTip("")
-
         self.evalChildren()
 
         return self.value
