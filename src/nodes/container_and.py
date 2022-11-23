@@ -18,6 +18,23 @@ class _ContainerContent_and(QD_NodeContent):
     NodeContentGfx_class =_ContainerContentGfx_and
 
 
+    def __init__(self, node: 'QD_Node'):
+        super().__init__(node)
+        self._nested_contents = []
+
+
+    def addSubNode(self, contentType):
+        content = contentType(None)
+        self._nested_contents.append(content)
+        self.gfx.vbox.addWidget(content.gfx)
+
+
+    def serialize(self) -> OrderedDict:
+        return OrderedDict([
+            ('nested_contents', [c.serialize() for c in self._nested_contents]),
+        ])
+
+
 @utils.register_opnode
 class _Container_and(QD_Node):
     icon = "icons/editor.png"
@@ -51,8 +68,6 @@ class _Container_and(QD_Node):
 
     def addSubNode(self, nodeType):
         self.gfx.prepareGeometryChange()
-        content = nodeType.NodeContent_class(None)
-        self.list.append(content)
-        self.content.gfx.vbox.addWidget(content.gfx)
+        self.content.addSubNode(nodeType.NodeContent_class)
         self.updateConnectedEdges()
         self.updateSockets()
