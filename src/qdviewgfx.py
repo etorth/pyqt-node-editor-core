@@ -160,21 +160,21 @@ class QD_ViewGfx(QGraphicsView):
             for edge in self.gfx.scene.edges:
                 print("\t", edge, "\n\t\tgfxEdge:", edge.gfx if edge.gfx is not None else None)
 
-            if event.modifiers() & Qt.CTRL:
+            if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
                 print("  Graphic Items in GraphicScene:")
                 for item in self.gfx.items():
                     print('    ', item)
 
         # faking events for enable MMB dragging the scene
-        releaseEvent = QMouseEvent(QEvent.MouseButtonRelease, event.localPos(), event.screenPos(), Qt.LeftButton, Qt.NoButton, event.modifiers())
+        releaseEvent = QMouseEvent(QEvent.Type.MouseButtonRelease, event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, Qt.NoButton, event.modifiers())
         super().mouseReleaseEvent(releaseEvent)
         self.setDragMode(QGraphicsView.ScrollHandDrag)
-        fakeEvent = QMouseEvent(event.type(), event.localPos(), event.screenPos(), Qt.LeftButton, event.buttons() | Qt.LeftButton, event.modifiers())
+        fakeEvent = QMouseEvent(event.type(), event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, event.buttons() | Qt.MouseButton.LeftButton, event.modifiers())
         super().mousePressEvent(fakeEvent)
 
     def middleMouseButtonRelease(self, event: QMouseEvent):
         """When Middle mouse button was released"""
-        fakeEvent = QMouseEvent(event.type(), event.localPos(), event.screenPos(), Qt.LeftButton, event.buttons() & ~Qt.LeftButton, event.modifiers())
+        fakeEvent = QMouseEvent(event.type(), event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, event.buttons() & ~Qt.MouseButton.LeftButton, event.modifiers())
         super().mouseReleaseEvent(fakeEvent)
         self.setDragMode(QGraphicsView.RubberBandDrag)
 
@@ -185,7 +185,7 @@ class QD_ViewGfx(QGraphicsView):
         item = self.getItemAtClick(event)
 
         # we store the position of last LMB click
-        self.last_lmb_click_scene_pos = self.mapToScene(event.pos())
+        self.last_lmb_click_scene_pos = self.mapToScene(event.position().toPoint())
 
         # if confg.DEBUG: print("LMB Click on", item, self.debug_modifiers(event))
 
@@ -193,7 +193,7 @@ class QD_ViewGfx(QGraphicsView):
         if hasattr(item, "node") or isinstance(item, QD_EdgeGfx) or item is None:
             if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                 event.ignore()
-                fakeEvent = QMouseEvent(QEvent.Type.MouseButtonPress, event.localPos(), event.screenPos(), Qt.MouseButton.LeftButton, event.buttons() | Qt.MouseButton.LeftButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
+                fakeEvent = QMouseEvent(QEvent.Type.MouseButtonPress, event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, event.buttons() | Qt.MouseButton.LeftButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
                 super().mousePressEvent(fakeEvent)
                 return
 
@@ -210,7 +210,7 @@ class QD_ViewGfx(QGraphicsView):
         if item is None:
             if event.modifiers() & Qt.KeyboardModifier.ControlModifier:
                 self.mode = MODE_EDGE_CUT
-                fakeEvent = QMouseEvent(QEvent.Type.MouseButtonRelease, event.localPos(), event.screenPos(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers())
+                fakeEvent = QMouseEvent(QEvent.Type.MouseButtonRelease, event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers())
                 super().mouseReleaseEvent(fakeEvent)
                 QApplication.setOverrideCursor(Qt.CursorShape.CrossCursor)
                 return
@@ -230,7 +230,7 @@ class QD_ViewGfx(QGraphicsView):
             if hasattr(item, "node") or isinstance(item, QD_EdgeGfx) or item is None:
                 if event.modifiers() & Qt.KeyboardModifier.ShiftModifier:
                     event.ignore()
-                    fakeEvent = QMouseEvent(event.type(), event.localPos(), event.screenPos(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
+                    fakeEvent = QMouseEvent(event.type(), event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers() | Qt.KeyboardModifier.ControlModifier)
                     super().mouseReleaseEvent(fakeEvent)
                     return
 
@@ -243,7 +243,7 @@ class QD_ViewGfx(QGraphicsView):
                 self.cutIntersectingEdges()
                 self.cutline.line_points = []
                 self.cutline.update()
-                QApplication.setOverrideCursor(Qt.ArrowCursor)
+                QApplication.setOverrideCursor(Qt.CursorShape.ArrowCursor)
                 self.mode = MODE_NOOP
                 return
 
@@ -286,7 +286,7 @@ class QD_ViewGfx(QGraphicsView):
 
     def mouseMoveEvent(self, event: QMouseEvent):
         """Overriden Qt's ``mouseMoveEvent`` handling QD_Scene/View logic"""
-        scenepos = self.mapToScene(event.pos())
+        scenepos = self.mapToScene(event.position().toPoint())
 
         if self.mode == MODE_EDGE_DRAG:
             # according to sentry: 'NoneType' object has no attribute 'gfx'
@@ -383,9 +383,7 @@ class QD_ViewGfx(QGraphicsView):
         :type event: ``QEvent``
         :return: ``QGraphicsItem`` which the mouse event happened or ``None``
         """
-        pos = event.pos()
-        obj = self.itemAt(pos)
-        return obj
+        return self.itemAt(event.position().toPoint())
 
     def edgeDragStart(self, item: 'QGraphicsItem'):
         """Code handling the start of dragging an `QD_Edge` operation"""
@@ -462,7 +460,7 @@ class QD_ViewGfx(QGraphicsView):
         :type event: ``QMouseEvent``
         :return: ``True`` if we released too far from where we clicked before
         """
-        new_lmb_release_scene_pos = self.mapToScene(event.pos())
+        new_lmb_release_scene_pos = self.mapToScene(event.position())
         dist_scene = new_lmb_release_scene_pos - self.last_lmb_click_scene_pos
         edge_drag_threshold_sq = EDGE_DRAG_START_THRESHOLD * EDGE_DRAG_START_THRESHOLD
         return (dist_scene.x() * dist_scene.x() + dist_scene.y() * dist_scene.y()) > edge_drag_threshold_sq
