@@ -187,7 +187,7 @@ class QD_ViewGfx(QGraphicsView):
         # we store the position of last LMB click
         self.last_lmb_click_scene_pos = self.mapToScene(event.position().toPoint())
 
-        # if confg.DEBUG: print("LMB Click on", item, self.debug_modifiers(event))
+        if confg.DEBUG: print("LMB Click on", item, self.debug_modifiers(event))
 
         # logic
         if hasattr(item, "node") or isinstance(item, QD_EdgeGfx) or item is None:
@@ -371,9 +371,9 @@ class QD_ViewGfx(QGraphicsView):
     def debug_modifiers(self, event):
         """Helper function get string if we hold Ctrl, Shift or Alt modifier keys"""
         out = "MODS: "
-        if event.modifiers() & Qt.ShiftModifier: out += "SHIFT "
-        if event.modifiers() & Qt.ControlModifier: out += "CTRL "
-        if event.modifiers() & Qt.AltModifier: out += "ALT "
+        if event.modifiers() & Qt.KeyboardModifier.ShiftModifier: out += "SHIFT "
+        if event.modifiers() & Qt.KeyboardModifier.ControlModifier: out += "CTRL "
+        if event.modifiers() & Qt.KeyboardModifier.AltModifier: out += "ALT "
         return out
 
     def getItemAtClick(self, event: QEvent) -> 'QGraphicsItem':
