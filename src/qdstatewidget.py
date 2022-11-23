@@ -14,37 +14,42 @@ from qdviewgfx import QD_ViewGfx
 class QD_StateWidget(QWidget):
     Scene_class = QD_Scene
 
-    """The ``QD_StateWidget`` class
-    """
 
     def __init__(self, parent: QWidget = None):
-        """
-        :param parent: parent widget
-        :type parent: ``QWidget``
-
-        :Instance Attributes:
-
-        - **filename** - currently graph's filename or ``None``
-        """
         super().__init__(parent)
-
         self.filename = None
 
         self.initUI()
 
     def initUI(self):
-        """Set up this ``QD_StateWidget`` with its layout,  :class:`scene.QD_Scene` and
-        :class:`qdviewgfx.QD_ViewGfx`"""
-        self.layout = QVBoxLayout()
+        self.layout = QHBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
 
-        # create graphics scene
-        self.scene = self.__class__.Scene_class()
+        self.attr_layout = QVBoxLayout()
 
-        # create graphics view
+        self.attr_timeout_edit = QLineEdit()
+        self.attr_timeout_edit.setValidator(QIntValidator())
+        self.attr_timeout_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self.attr_timeout_edit.editingFinished.connect(self.onAttrTimeoutEditingFinished)
+
+        self.attr_layout.addWidget(QLabel("状态节点限时"))
+        self.attr_layout.addWidget(self.attr_timeout_edit)
+        self.attr_layout.addWidget(QLabel("秒"))
+
+        self.layout.addLayout(self.attr_layout)
+
+        self.scene = self.__class__.Scene_class()
         self.view = QD_ViewGfx(self.scene.gfx, self)
+
         self.layout.addWidget(self.view)
+
+
+    def onAttrTimeoutEditingFinished(self):
+        if self.attr_timeout_edit.text():
+            if int(self.attr_timeout_edit.text()) < 0:
+                self.attr_timeout_edit.setText("无限制")
+
 
     def isModified(self) -> bool:
         """Has the `QD_Scene` been modified?
