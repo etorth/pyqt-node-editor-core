@@ -49,6 +49,7 @@ class Utils:
     def register_opnode(cls, node_type):
         cls._node_type_uid += 1
         node_type.op_code = cls._node_type_uid
+        node_type.NodeContent_class.op_code = cls._node_type_uid
         bisect.insort(cls._node_type_list.setdefault(node_type.op_type, []), node_type, key=lambda x: str(x))
 
 
