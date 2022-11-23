@@ -32,15 +32,21 @@ class QD_StateWidget(QWidget):
         self.attrs = QFrame()
         self.attrs_layout = QVBoxLayout(self.attrs)
 
-        self.attr_timeout_edit = QLineEdit()
-        self.attr_timeout_edit.setValidator(QIntValidator())
-        self.attr_timeout_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self.attr_timeout_edit.editingFinished.connect(self.onAttrTimeoutEditingFinished)
+        attr_timeout_layout = QHBoxLayout()
 
-        self.attrs_layout.addWidget(QLabel("状态节点限时"))
-        self.attrs_layout.addWidget(self.attr_timeout_edit)
-        self.attrs_layout.addWidget(QLabel("秒"))
+        self._attr_timeout_edit = QLineEdit()
+        self._attr_timeout_edit.setValidator(QIntValidator())
+        self._attr_timeout_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
+        self._attr_timeout_edit.editingFinished.connect(self.onAttrTimeoutEditingFinished)
 
+        self._attr_timeout_units = QComboBox()
+        self._attr_timeout_units.addItems(["秒", "分钟", "小时", "天", "周", "月", "年"])
+
+        attr_timeout_layout.addWidget(QLabel("状态限时"))
+        attr_timeout_layout.addWidget(self._attr_timeout_edit)
+        attr_timeout_layout.addWidget(self._attr_timeout_units)
+
+        self.attrs_layout.addLayout(attr_timeout_layout)
         return self.attrs
 
 
@@ -52,9 +58,9 @@ class QD_StateWidget(QWidget):
 
 
     def onAttrTimeoutEditingFinished(self):
-        if self.attr_timeout_edit.text():
-            if int(self.attr_timeout_edit.text()) < 0:
-                self.attr_timeout_edit.setText("无限制")
+        if self._attr_timeout_edit.text():
+            if int(self._attr_timeout_edit.text()) < 0:
+                self._attr_timeout_edit.setText("无限制")
 
 
     def isModified(self) -> bool:
