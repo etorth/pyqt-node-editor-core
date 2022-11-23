@@ -272,7 +272,7 @@ class QD_Scene(QD_Serializable):
         :param filename: where to save this scene
         :type filename: ``str``
         """
-        with open(filename, "w", encoding='utf-8') as file:
+        with open(filename, "w", encoding='utf-8', newline='\n') as file:
             json.dump(self.serialize(), file, ensure_ascii=False, indent=4)
             print("saving to", filename, "was successfull.")
 
