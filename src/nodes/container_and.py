@@ -16,8 +16,9 @@ class _ContainerContentGfx_and(QD_NodeContentGfx):
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
-        self.content.node.updateConnectedEdges()
-        self.content.node.updateSockets()
+        if self.content.node is not None:
+            self.content.node.updateConnectedEdges()
+            self.content.node.updateSockets()
 
 
 class _ContainerContent_and(QD_NodeContent):
