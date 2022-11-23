@@ -35,6 +35,12 @@ class _ContainerContent_and(QD_NodeContent):
         ])
 
 
+    def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
+        for content_data in data['nested_contents']:
+            print(content_data)
+        return True
+
+
 @utils.register_opnode
 class _Container_and(QD_Node):
     icon = "icons/editor.png"
