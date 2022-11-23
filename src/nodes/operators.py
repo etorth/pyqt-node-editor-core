@@ -8,10 +8,10 @@ from qdnodecontentgfx import *
 
 class _CalcNodeBaseContentGfx(QD_NodeContentGfx):
     def initUI(self):
-        if self.content.node is not None:
-            self.label = QLabel(self.content.node.__class__.op_title)
+        if self.content.node is None:
+            self.label = QLabel('operator')
         else:
-            self.label = QLabel('InnerOperator')
+            self.label = QLabel(self.content.node.__class__.op_title)
 
         self.box = QHBoxLayout(self)
         self.box.setContentsMargins(10, 10, 10, 10)
