@@ -14,6 +14,7 @@ class SocketType(int, Enum):
     def is_In(self) -> bool:
         return self is SocketType.In
 
+    @property
     def is_Out(self) -> bool:
         return self is SocketType.Out_True or self is SocketType.Out_False
 
