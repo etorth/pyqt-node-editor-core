@@ -52,20 +52,21 @@ class QD_NodeGfx(QGraphicsItem):
         self._title = value
         self.title_item.setPlainText(self._title)
 
+
     @property
     def width(self) -> int:
-        if self.content is not None:
-            return max(self.content.gfx.width(), self._mini_width)
-        else:
+        if self.content is None:
             return self._mini_width
+        else:
+            return max(self.content.gfx.width(), self._mini_width)
 
 
     @property
     def height(self) -> int:
-        if self.content is not None:
-            return max(self.title_height + self.content.gfx.height(), self._mini_height)
-        else:
+        if self.content is None:
             return self._mini_height
+        else:
+            return max(self.title_height + self.content.gfx.height(), self._mini_height)
 
 
     def initUI(self):
@@ -77,8 +78,8 @@ class QD_NodeGfx(QGraphicsItem):
         # init title
         self.initTitle()
         self.title = self.node.title
-
         self.initContent()
+
 
     def initSizes(self):
         """Set up internal attributes like `width`, `height`, etc."""
