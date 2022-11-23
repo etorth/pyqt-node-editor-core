@@ -98,8 +98,9 @@ class QD_NodeGfx(QGraphicsItem):
         self._title_font = QFont("Ubuntu", 10)
 
         self._color = QColor("#7F000000")
-        self._color_selected = QColor("#FFFFA637")
         self._color_hovered = QColor("#FF37A6FF")
+        self._color_selected = QColor("#FFF7862F")
+        self._color_hover_selected = QColor("#FFFFA637")
 
         self._pen_default = QPen(self._color)
         self._pen_default.setWidthF(2.0)
@@ -107,6 +108,8 @@ class QD_NodeGfx(QGraphicsItem):
         self._pen_selected.setWidthF(2.0)
         self._pen_hovered = QPen(self._color_hovered)
         self._pen_hovered.setWidthF(3.0)
+        self._pen_hover_selected = QPen(self._color_hover_selected)
+        self._pen_hover_selected.setWidthF(3.0)
 
         self._brush_title = QBrush(QColor("#FF313131"))
         self._brush_background = QBrush(QColor("#E3212121"))
@@ -230,12 +233,12 @@ class QD_NodeGfx(QGraphicsItem):
         path_outline.addRoundedRect(-1, -1, self.width + 2, self.height + 2, self.edge_roundness, self.edge_roundness)
         painter.setBrush(Qt.BrushStyle.NoBrush)
         if self.hovered:
-            painter.setPen(self._pen_hovered)
+            painter.setPen(self._pen_hover_selected if self.isSelected() else self._pen_hovered)
             painter.drawPath(path_outline.simplified())
             painter.setPen(self._pen_default)
             painter.drawPath(path_outline.simplified())
         else:
-            painter.setPen(self._pen_default if not self.isSelected() else self._pen_selected)
+            painter.setPen(self._pen_selected if self.isSelected() else self._pen_default)
             painter.drawPath(path_outline.simplified())
 
         offset = 24.0
