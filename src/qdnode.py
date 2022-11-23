@@ -189,12 +189,12 @@ class QD_Node(QD_Serializable):
         if self.getOutSocketCount() == 1:
             return QPointF(self.gfx.width, self.gfx.height / 2)
 
-        y_spacing = min(self.gfx.height / 3, self._max_socket_out_spacing)
+        y_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_out_spacing)
 
         if type is SocketType.Out_True:
-            return QPointF(self.gfx.width, (self.gfx.height - y_spacing) / 2)
+            return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2)
         else:
-            return QPointF(self.gfx.width, (self.gfx.height - y_spacing) / 2 + y_spacing)
+            return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2 + y_spacing)
 
 
     def getSocketScenePosition(self, socket: 'QD_Socket') -> QPointF:
