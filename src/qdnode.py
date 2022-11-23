@@ -2,8 +2,10 @@
 """
 A module containing NodeEditor's class for representing `QD_Node`.
 """
+from PyQt6.QtCore import QPointF
+
 from qdnodegfx import QD_NodeGfx
-from qdnodecontent import QD_NodeContent
+from qdnodecontent import *
 from qdsocket import *
 from qdutils import *
 
@@ -18,22 +20,7 @@ class QD_Node(QD_Serializable):
     icon = ""
     op_title = "Undefined"
 
-    def __init__(self, scene: 'QD_Scene', inputs: list = [], outputs: list = []):
-        """
-        :param scene: reference to the :class:`scene.QD_Scene`
-        :type scene: :class:`scene.QD_Scene`
-        :param inputs: list of :class:`socket.QD_Socket` types from which the `Sockets` will be auto created
-        :param outputs: list of :class:`socket.QD_Socket` types from which the `Sockets` will be auto created
-
-        :Instance Attributes:
-
-            - **scene** - reference to the :class:`scene.QD_Scene`
-            - **gfx** - Instance of :class:`qdnodegfx.QD_NodeGfx` handling graphical representation in the ``QGraphicsScene``. Automatically created in constructor
-            - **content** - Instance of :class:`node_graphics_content.GfxContent` which is child of ``QWidget`` representing container for all inner widgets inside of the QD_Node. Automatically created in constructor
-            - **inputs** - list containin Input :class:`socket.QD_Socket` instances
-            - **outputs** - list containin Output :class:`socket.QD_Socket` instances
-
-        """
+    def __init__(self, scene: 'QD_Scene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
         super().__init__()
         self._title = self.__class__.op_title
         self.scene = scene
@@ -50,10 +37,8 @@ class QD_Node(QD_Serializable):
         self.scene.addNode(self)
         self.scene.gfx.addItem(self.gfx)
 
-        # create socket for inputs and outputs
-        self.inputs = []
-        self.outputs = []
-        self.initSockets(inputs, outputs)
+        self.sockets = []
+        self.initSockets(sockets)
 
         # dirty and evaluation
         self._is_dirty = False
@@ -119,37 +104,20 @@ class QD_Node(QD_Serializable):
         return self.__class__.NodeGfx_class
 
     def initSettings(self):
-        self.socket_spacing = 22
+        self._max_socket_out_spacing = 30
 
 
-    def initSockets(self, inputs: list, outputs: list, reset: bool = True):
-        """Create sockets for inputs and outputs
-
-        :param inputs: list of QD_Socket Types (int)
-        :type inputs: ``list``
-        :param outputs: list of QD_Socket Types (int)
-        :type outputs: ``list``
-        :param reset: if ``True`` destroys and removes old `Sockets`
-        :type reset: ``bool``
-        """
-
+    def initSockets(self, sockets, reset: bool = True):
         if reset:
-            # clear old sockets
-            if hasattr(self, 'inputs') and hasattr(self, 'outputs'):
-                # remove gfxSockets from scene
-                for socket in (self.inputs + self.outputs):
-                    self.scene.gfx.removeItem(socket.gfx)
-                self.inputs = []
-                self.outputs = []
+            for sock in self.sockets:
+                self.scene.gfx.removeItem(socket.gfx)
+            self.sockets = []
 
-        # create new sockets
-        for item in inputs:
-            socket = self.__class__.Socket_class(node=self, index=len(self.inputs), position=LEFT_CENTER, socket_type=item, multi_edges=True, count_on_this_node_side=len(inputs), is_input=True)
-            self.inputs.append(socket)
+        for type in sockets:
+            self.sockets.append(self.__class__.Socket_class(node=self, socktype=type))
 
-        for item in outputs:
-            socket = self.__class__.Socket_class(node=self, index=len(self.outputs), position=RIGHT_CENTER, socket_type=item, multi_edges=False, count_on_this_node_side=len(outputs), is_input=False)
-            self.outputs.append(socket)
+        self.updateSockets()
+
 
     def onEdgeConnectionChanged(self, new_edge: 'QD_Edge'):
         """
@@ -188,65 +156,58 @@ class QD_Node(QD_Serializable):
         self.gfx.doSelect(new_state)
 
     def isSelected(self):
-        """Returns ``True`` if current `QD_Node` is selected"""
         return self.gfx.isSelected()
 
-    def getSocketPosition(self, index: int, is_input: bool, num_out_of: int = 1) -> '(x, y)':
-        """
-        Get the relative `x, y` position of a :class:`socket.QD_Socket`. This is used for placing
-        the `Graphics Sockets` on `Graphics QD_Node`.
+    def getSocket(self, socktype: SocketType) -> [QD_Socket, None]:
+        for sock in self.sockets:
+            if sock.type is socktype:
+                return sock
+        return None
 
-        :param index: Order number of the QD_Socket. (0, 1, 2, ...)
-        :type index: ``int``
-        :param position: `QD_Socket Position Constant` describing where the QD_Socket is located. See :ref:`socket-position-constants`
-        :type position: ``int``
-        :param num_out_of: Total number of Sockets on this `QD_Socket Position`
-        :type num_out_of: ``int``
-        :return: Position of described QD_Socket on the `QD_Node`
-        :rtype: ``x, y``
-        """
+    def getSocketTypeSet(self):
+        return set([sock.type for sock in self.sockets])
 
-        if is_input:
-            x = 0
+
+    def getOutSocketCount(self):
+        if SocketType.Out_True in self.getSocketTypeSet():
+            if SocketType.Out_False in self.getSocketTypeSet():
+                return 2
+            else:
+                return 1
         else:
-            x = self.gfx.width
+            return 0
 
-        top_offset = self.gfx.title_height + 2 * self.gfx.title_vertical_padding + self.gfx.edge_padding
-        available_height = self.gfx.height - top_offset
 
-        total_height_of_all_sockets = num_out_of * self.socket_spacing
-        new_top = available_height - total_height_of_all_sockets
+    def getSocketPosition(self, type: SocketType) -> QPointF:
+        assert type in SocketType
+        assert type in self.getSocketTypeSet()
 
-        y = top_offset + available_height / 2.0 + (index - 0.5) * self.socket_spacing
-        if num_out_of > 1:
-            y -= self.socket_spacing * (num_out_of - 1) / 2
+        if type is SocketType.In:
+            return QPointF(0, self.gfx.title_height + (self.gfx.height - self.gfx.title_height) / 2)
 
-        return [x, y]
+        if self.getOutSocketCount() == 1:
+            return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height) / 2)
 
-    def getSocketScenePosition(self, socket: 'QD_Socket') -> '(x, y)':
-        """
-        Get absolute QD_Socket position in the QD_Scene
+        y_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_out_spacing)
 
-        :param socket: `QD_Socket` which position we want to know
-        :return: (x, y) QD_Socket's scene position
-        """
-        nodepos = self.gfx.pos()
-        socketpos = self.getSocketPosition(socket.index, socket.is_input, socket.count_on_this_node_side)
-        return (nodepos.x() + socketpos[0], nodepos.y() + socketpos[1])
+        if type is SocketType.Out_True:
+            return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2)
+        else:
+            return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2 + y_spacing)
+
+
+    def getSocketScenePosition(self, socket: 'QD_Socket') -> QPointF:
+        return self.gfx.pos() + self.getSocketPosition(socket.type)
+
 
     def updateConnectedEdges(self):
-        """Recalculate (Refresh) positions of all connected `Edges`. Used for updating Graphics Edges"""
-        for socket in self.inputs + self.outputs:
-            # if socket.hasEdge():
-            for edge in socket.edges:
+        for sock in self.sockets:
+            for edge in sock.edges:
                 edge.updatePositions()
 
 
     def updateSockets(self):
-        for sock in self.inputs:
-            sock.updateSocketPosition()
-
-        for sock in self.outputs:
+        for sock in self.sockets:
             sock.updateSocketPosition()
 
 
@@ -259,8 +220,7 @@ class QD_Node(QD_Serializable):
         if confg.DEBUG:
             print(" - remove all edges from sockets")
 
-        for socket in (self.inputs + self.outputs):
-            # if socket.hasEdge():
+        for socket in self.sockets:
             for edge in socket.edges:
                 if confg.DEBUG:
                     print("    - removing from socket:", socket, "edge:", edge)
@@ -368,26 +328,26 @@ class QD_Node(QD_Serializable):
 
 
     def evalImplementation(self):
-        i1 = self.getInput(0)
-        i2 = self.getInput(1)
-
-        if i1 is None or i2 is None:
+        inputs = self.getInputs()
+        if not inputs:
             self.markInvalid()
             self.markDescendantsDirty()
-            self.gfx.setToolTip("Connect all inputs")
+            self.gfx.setToolTip('Node has no input connected')
             return None
 
-        else:
-            val = self.evalOperation(i1.eval(), i2.eval())
-            self.value = val
-            self.markDirty(False)
-            self.markInvalid(False)
-            self.gfx.setToolTip("")
+        i1 = inputs[0]
+        i2 = inputs[0]
 
-            self.markDescendantsDirty()
-            self.evalChildren()
+        val = self.evalOperation(i1.eval(), i2.eval())
+        self.value = val
+        self.markDirty(False)
+        self.markInvalid(False)
+        self.gfx.setToolTip("")
 
-            return val
+        self.markDescendantsDirty()
+        self.evalChildren()
+
+        return val
 
     def eval(self):
         if not self.isDirty() and not self.isInvalid():
@@ -412,133 +372,38 @@ class QD_Node(QD_Serializable):
         for node in self.getChildrenNodes():
             node.eval()
 
-    # traversing nodes functions
-
     def getChildrenNodes(self) -> 'List[QD_Node]':
+        """Retreive all first-level children connected to this QD_Node output
         """
-        Retreive all first-level children connected to this `QD_Node` `Outputs`
-
-        :return: list of `Nodes` connected to this `QD_Node` from all `Outputs`
-        :rtype: List[:class:`node.QD_Node`]
-        """
-        if self.outputs == []: return []
         other_nodes = []
-        for ix in range(len(self.outputs)):
-            for edge in self.outputs[ix].edges:
-                other_node = edge.getOtherSocket(self.outputs[ix]).node
-                other_nodes.append(other_node)
+        for sock in self.sockets:
+            if sock.is_output:
+                for edge in sock.edges:
+                    other_nodes.append(edge.getOtherSocket(sock).node)
         return other_nodes
 
-    def getInput(self, index: int = 0) -> ['QD_Node', None]:
-        """
-        Get the **first**  `QD_Node` connected to the  Input specified by `index`
+    def getInputs(self):
+        sockin = self.getSocket(SocketType.In)
+        if sockin is None:
+            return None
+        return [edge.getOtherSocket(sockin).node for edge in sockin.edges]
 
-        :param index: Order number of the `Input QD_Socket`
-        :type index: ``int``
-        :return: :class:`node.QD_Node` which is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: :class:`node.QD_Node` or ``None``
-        """
-        try:
-            input_socket = self.inputs[index]
-            if len(input_socket.edges) == 0: return None
-            connecting_edge = input_socket.edges[0]
-            other_socket = connecting_edge.getOtherSocket(self.inputs[index])
-            return other_socket.node
-        except Exception as e:
-            utils.dumpExcept(e)
+    def getOutput(self, socktype: SocketType):
+        sockout = self.getSocket(socktype)
+        if sockout is None:
             return None
 
-    def getInputWithSocket(self, index: int = 0) -> [('QD_Node', 'QD_Socket'), (None, None)]:
-        """Get the **first**  `QD_Node` connected to the Input specified by `index` and the connection `QD_Socket`
-
-        :param index: Order number of the `Input QD_Socket`
-        :type index: ``int``
-        :return: Tuple containing :class:`node.QD_Node` and :class:`socket.QD_Socket` which
-            is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`node.QD_Node`, :class:`socket.QD_Socket`)
-        """
-        try:
-            input_socket = self.inputs[index]
-            if len(input_socket.edges) == 0:
-                return None, None
-            connecting_edge = input_socket.edges[0]
-            other_socket = connecting_edge.getOtherSocket(self.inputs[index])
-            return other_socket.node, other_socket
-        except Exception as e:
-            utils.dumpExcept(e)
-            return None, None
-
-    def getInputWithSocketIndex(self, index: int = 0) -> ('QD_Node', int):
-        """
-        Get the **first**  `QD_Node` connected to the Input specified by `index` and the connection `QD_Socket`
-
-        :param index: Order number of the `Input QD_Socket`
-        :type index: ``int``
-        :return: Tuple containing :class:`node.QD_Node` and :class:`socket.QD_Socket` which
-            is connected to the specified `Input` or ``None`` if there is no connection of index is out of range
-        :rtype: (:class:`node.QD_Node`, int)
-        """
-        try:
-            edge = self.inputs[index].edges[0]
-            socket = edge.getOtherSocket(self.inputs[index])
-            return socket.node, socket.index
-        except IndexError:
-            # print("EXC: Trying to get input with socket index %d, but none is attached to" % index, self)
-            return None, None
-        except Exception as e:
-            utils.dumpExcept(e)
-            return None, None
-
-    def getInputs(self, index: int = 0) -> 'List[QD_Node]':
-        """
-        Get **all** `Nodes` connected to the Input specified by `index`
-
-        :param index: Order number of the `Input QD_Socket`
-        :type index: ``int``
-        :return: all :class:`node.QD_Node` instances which are connected to the specified `Input` or ``[]`` if there is no connection of index is out of range
-        :rtype: List[:class:`node.QD_Node`]
-        """
-        ins = []
-        for edge in self.inputs[index].edges:
-            other_socket = edge.getOtherSocket(self.inputs[index])
-            ins.append(other_socket.node)
-        return ins
-
-    def getOutputs(self, index: int = 0) -> 'List[QD_Node]':
-        """Get **all** `Nodes` connected to the Output specified by `index`
-
-        :param index: Order number of the `Output QD_Socket`
-        :type index: ``int``
-        :return: all :class:`node.QD_Node` instances which are connected to the specified `Output` or ``[]`` if there is no connection of index is out of range
-        :rtype: List[:class:`node.QD_Node`]
-        """
-        outs = []
-        for edge in self.outputs[index].edges:
-            other_socket = edge.getOtherSocket(self.outputs[index])
-            outs.append(other_socket.node)
-        return outs
-
-    # serialization functions
+        if sockout.edges:
+            return sockout.edges[0].getOtherSocket(sockout).node
+        return None
 
     def serialize(self) -> OrderedDict:
-        inputs = []
-        outputs = []
-
-        for socket in self.inputs:
-            inputs.append(socket.serialize())
-
-        for socket in self.outputs:
-            outputs.append(socket.serialize())
-
-        ser_content = self.content.serialize() if isinstance(self.content, QD_Serializable) else {}
         return OrderedDict([
             ('id', self.id),
             ('title', self.title),
-            ('pos_x', self.gfx.scenePos().x()),
-            ('pos_y', self.gfx.scenePos().y()),
-            ('inputs', inputs),
-            ('outputs', outputs),
-            ('content', ser_content),
+            ('position', (self.gfx.scenePos().x(), self.gfx.scenePos().y())),
+            ('sockets', [sock.serialize() for sock in self.sockets]),
+            ('content', self.content.serialize()),
             ('op_code', self.__class__.op_code), # added by @register_opnode
         ])
 
@@ -549,65 +414,24 @@ class QD_Node(QD_Serializable):
 
             hashmap[data['id']] = self
 
-            self.setPos(data['pos_x'], data['pos_y'])
+            self.setPos(*data['position'])
             self.title = data['title']
 
-            data['inputs'].sort(key=lambda socket: socket['index'] + socket['position'] * 10000)
-            data['outputs'].sort(key=lambda socket: socket['index'] + socket['position'] * 10000)
-            num_inputs = len(data['inputs'])
-            num_outputs = len(data['outputs'])
-
-            # print("> deserialize node,   num inputs:", num_inputs, "num outputs:", num_outputs)
-            # utils.printObj(data)
-
-            # possible way to do it is reuse existing sockets...
-            # dont create new ones if not necessary
-
-            for socket_data in data['inputs']:
+            for sockdata in data['sockets']:
                 found = None
-                for socket in self.inputs:
-                    # print("\t", socket, socket.index, "=?", socket_data['index'])
-                    if socket.index == socket_data['index']:
-                        found = socket
+                for sock in self.sockets:
+                    if sock.type == sockdata['type']:
+                        found = sock
                         break
-                if found is None:
-                    # print("deserialization of socket data has not found input socket with index:", socket_data['index'])
-                    # print("actual socket data:", socket_data)
-                    # we can create new socket for this
-                    found = self.__class__.Socket_class(
-                        node=self, index=socket_data['index'], position=socket_data['position'],
-                        socket_type=socket_data['socket_type'], count_on_this_node_side=num_inputs,
-                        is_input=True
-                    )
-                    self.inputs.append(found)  # append newly created input to the list
-                found.deserialize(socket_data, hashmap, restore_id)
 
-            for socket_data in data['outputs']:
-                found = None
-                for socket in self.outputs:
-                    # print("\t", socket, socket.index, "=?", socket_data['index'])
-                    if socket.index == socket_data['index']:
-                        found = socket
-                        break
                 if found is None:
-                    # print("deserialization of socket data has not found output socket with index:", socket_data['index'])
-                    # print("actual socket data:", socket_data)
-                    # we can create new socket for this
-                    found = self.__class__.Socket_class(
-                        node=self, index=socket_data['index'], position=socket_data['position'],
-                        socket_type=socket_data['socket_type'], count_on_this_node_side=num_outputs,
-                        is_input=False
-                    )
-                    self.outputs.append(found)  # append newly created output to the list
-                found.deserialize(socket_data, hashmap, restore_id)
+                    found = self.__class__.Socket_class(node=self, socktype=SocketType(sockdata['type']))
+                    self.sockets.append(found)
 
+                found.deserialize(sockdata, hashmap, restore_id)
+
+            self.content.deserialize(data['content'], hashmap)
         except Exception as e:
             utils.dumpExcept(e)
-
-        # also deseralize the content of the node
-        # so far the rest was ok, now as last step the content...
-        if isinstance(self.content, QD_Serializable):
-            res = self.content.deserialize(data['content'], hashmap)
-            return res
 
         return True

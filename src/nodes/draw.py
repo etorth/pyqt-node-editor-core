@@ -36,7 +36,7 @@ class _Draw(QD_Node):
 
 
     def __init__(self, scene):
-        super().__init__(scene, outputs=[3])
+        super().__init__(scene, sockets={SocketType.In})
         self.eval()
 
 

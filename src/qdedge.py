@@ -156,17 +156,15 @@ class QD_Edge(QD_Serializable):
         Updates the internal `Graphics QD_Edge` positions according to the start and end :class:`socket.QD_Socket`.
         This should be called if you update ``QD_Edge`` positions.
         """
-        source_pos = self.start_socket.getSocketPosition()
-        source_pos[0] += self.start_socket.node.gfx.pos().x()
-        source_pos[1] += self.start_socket.node.gfx.pos().y()
-        self.gfx.setSource(*source_pos)
+        source_pos = self.start_socket.getSocketPosition() + self.start_socket.node.gfx.pos()
+        self.gfx.setSource(source_pos.x(), source_pos.y())
+
         if self.end_socket is not None:
-            end_pos = self.end_socket.getSocketPosition()
-            end_pos[0] += self.end_socket.node.gfx.pos().x()
-            end_pos[1] += self.end_socket.node.gfx.pos().y()
-            self.gfx.setDestination(*end_pos)
+            end_pos = self.end_socket.getSocketPosition() + self.end_socket.node.gfx.pos()
+            self.gfx.setDestination(end_pos.x(), end_pos.y())
         else:
-            self.gfx.setDestination(*source_pos)
+            self.gfx.setDestination(source_pos.x(), source_pos.y())
+
         self.gfx.update()
 
     def remove_from_sockets(self):

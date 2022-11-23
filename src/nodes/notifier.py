@@ -44,7 +44,7 @@ class _Notifier_enter(QD_Node):
 
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[2], outputs=[3])
+        super().__init__(scene, sockets=[SocketType.In, SocketType.Out_True])
         self.eval()
 
 

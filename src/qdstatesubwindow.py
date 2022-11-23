@@ -209,9 +209,13 @@ class QD_StateSubWindow(QD_StateWidget):
     def determine_target_socket_of_node(self, was_dragged_flag, new_calc_node):
         target_socket = None
         if was_dragged_flag:
-            if len(new_calc_node.inputs) > 0: target_socket = new_calc_node.inputs[0]
+            if new_calc_node.getSocket(SockType.In):
+                target_socket = new_calc_node.getSocket(SockType.In)
         else:
-            if len(new_calc_node.outputs) > 0: target_socket = new_calc_node.outputs[0]
+            if new_calc_node.getSocket(SockType.Out_True):
+                target_socket = new_calc_node.getSocket(SockType.Out_True)
+            elif new_calc_node.getSocket(SockType.Out_False):
+                target_socket = new_calc_node.getSocket(SockType.Out_False)
         return target_socket
 
     def finish_new_node_state(self, new_calc_node):

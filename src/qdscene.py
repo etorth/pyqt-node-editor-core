@@ -255,7 +255,7 @@ class QD_Scene(QD_Serializable):
         if edge in self.edges:
             self.edges.remove(edge)
         else:
-            if utils.DEBUG:
+            if confg.DEBUG:
                 print("!W:", "QD_Scene::removeEdge", "wanna remove edge", edge, "from self.edges but it's not in the list!")
 
     def clear(self):

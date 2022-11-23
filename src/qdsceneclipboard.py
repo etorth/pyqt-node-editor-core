@@ -41,7 +41,7 @@ class QD_SceneClipboard():
         for item in self.scene.gfx.selectedItems():
             if hasattr(item, 'node'):
                 sel_nodes.append(item.node.serialize())
-                for socket in (item.node.inputs + item.node.outputs):
+                for socket in item.node.sockets:
                     sel_sockets[socket.id] = socket
             elif isinstance(item, QD_EdgeGfx):
                 sel_edges.append(item.edge)
@@ -103,7 +103,7 @@ class QD_SceneClipboard():
         # calculate selected objects bbox and center
         minx, maxx, miny, maxy = 10000000, -10000000, 10000000, -10000000
         for node_data in data['nodes']:
-            x, y = node_data['pos_x'], node_data['pos_y']
+            x, y = node_data['position'][0], node_data['position'][1]
             if x < minx: minx = x
             if x > maxx: maxx = x
             if y < miny: miny = y

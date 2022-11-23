@@ -70,11 +70,13 @@ class QD_EdgeGfx(QGraphicsPathItem):
         self._pen.setWidthF(3.0)
 
     def setColorFromSockets(self) -> bool:
-        """Change color according to connected sockets. Returns ``True`` if color can be determined"""
-        socket_type_start = self.edge.start_socket.socket_type
-        socket_type_end = self.edge.end_socket.socket_type
-        if socket_type_start != socket_type_end: return False
-        self.changeColor(self.edge.start_socket.gfx.getSocketColor(socket_type_start))
+        """Change color according to connected sockets. Returns True if color can be determined
+        """
+        if self.edge.start_socket.type is not self.edge.end_socket.type:
+            return False
+
+        self.changeColor(self.edge.start_socket.color)
+        return True
 
     def onSelected(self):
         """Our event handling when the edge was selected"""

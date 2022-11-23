@@ -42,7 +42,7 @@ class _Container_and(QD_Node):
 
 
     def __init__(self, scene):
-        super().__init__(scene, inputs=[2], outputs=[3])
+        super().__init__(scene, sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
         self.eval()
 
 
