@@ -166,7 +166,7 @@ class QD_ViewGfx(QGraphicsView):
                     print('    ', item)
 
         # faking events for enable MMB dragging the scene
-        releaseEvent = QMouseEvent(QEvent.Type.MouseButtonRelease, event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, Qt.NoButton, event.modifiers())
+        releaseEvent = QMouseEvent(QEvent.Type.MouseButtonRelease, event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, Qt.MouseButton.NoButton, event.modifiers())
         super().mouseReleaseEvent(releaseEvent)
         self.setDragMode(QGraphicsView.ScrollHandDrag)
         fakeEvent = QMouseEvent(event.type(), event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, event.buttons() | Qt.MouseButton.LeftButton, event.modifiers())
