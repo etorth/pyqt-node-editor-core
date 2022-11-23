@@ -9,31 +9,21 @@ from qdnodecontentgfx import *
 
 class _StateContentGfx_abort(QD_NodeContentGfx):
     def initUI(self):
-        self.label = QLabel()
-        self.label.setPixmap(QPixmap("icons/abort.png").scaled(32, 32))
+        self.scene = QGraphicsScene()
+        self.scene.addItem(QGraphicsPixmapItem(QPixmap('icons/abort.png')))
+
+        self.view = QGraphicsView()
+        self.view.setScene(self.scene)
+
+        self.view.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.view.setVerticalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
 
         self.box = QVBoxLayout(self)
-        self.box.addWidget(self.label)
+        self.box.addWidget(self.view)
 
 
 class _StateContent_abort(QD_NodeContent):
     NodeContentGfx_class =_StateContentGfx_abort
-
-    def serialize(self):
-        res = super().serialize()
-        res['value'] = self.gfx.label.text()
-        return res
-
-
-    def deserialize(self, data, hashmap={}):
-        res = super().deserialize(data, hashmap)
-        try:
-            value = data['value']
-            self.gfx.label.setText(value)
-            return True & res
-        except Exception as e:
-            utils.dumpExcept(e)
-        return res
 
 
 @utils.register_opnode

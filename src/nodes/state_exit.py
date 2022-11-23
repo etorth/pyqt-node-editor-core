@@ -57,7 +57,6 @@ class _State_exit(QD_Node):
         self.markDescendantsDirty()
 
         self.gfx.setToolTip("")
-
         self.evalChildren()
 
         return self.value
