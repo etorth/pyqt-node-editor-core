@@ -6,7 +6,7 @@ QSplitter,QMainWindow::separator {
     background:#474747
 }
 QStatusBar {
-    background:#474747;
+    background:#373737;
     color:#ccc
 }
 QTabWidget {
