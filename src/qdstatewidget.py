@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
+import json
+from collections import OrderedDict
 
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
@@ -30,8 +32,8 @@ class QD_StateWidget(QWidget):
 
 
     def createLeftPannel(self):
-        self.stateconfg = QD_StateConfg(self)
-        return self.stateconfg.gfx
+        self.confg = QD_StateConfg(self)
+        return self.confg.gfx
 
 
     def createMiddlePannel(self):
@@ -138,9 +140,16 @@ class QD_StateWidget(QWidget):
         :param filename: file to store the graph
         :type filename: ``str``
         """
-        if filename is not None: self.filename = filename
+        if filename is not None:
+            self.filename = filename
+
         QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
-        self.scene.saveToFile(self.filename)
+
+        with open(self.filename, "w", encoding='utf-8', newline='\n') as f:
+            json.dump(self.serialize(), f, ensure_ascii=False, indent=4)
+            print('saving to %s was successfull.' % self.filename)
+            self.scene.has_been_modified = False
+
         QApplication.restoreOverrideCursor()
         return True
 
@@ -177,6 +186,14 @@ class QD_StateWidget(QWidget):
         node = NNode(self.scene, "A Custom QD_Node 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
 
         print("node content:", node.content)
+
+
+    def serialize(self) -> OrderedDict:
+        return OrderedDict([
+            ('scene', self.scene.serialize()),
+            ('confg', self.confg.serialize()),
+        ])
+
 
     def addDebugContent(self):
         """Testing method to put random QGraphicsItems and elements into QGraphicsScene"""

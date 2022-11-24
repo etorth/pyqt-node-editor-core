@@ -389,7 +389,8 @@ class QD_MainWindow(QMainWindow):
         """Handle File Save operation"""
         current_nodeeditor = self.getCurrentStateNodeWidget()
         if current_nodeeditor is not None:
-            if not current_nodeeditor.isFilenameSet(): return self.onFileSaveAs()
+            if not current_nodeeditor.isFilenameSet():
+                return self.onFileSaveAs()
 
             current_nodeeditor.fileSave()
             self.statusBar().showMessage("Successfully saved %s" % current_nodeeditor.filename, 5000)

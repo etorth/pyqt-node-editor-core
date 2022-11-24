@@ -21,7 +21,6 @@ class QD_StateConfg(QD_Serializable):
 
     def serialize(self) -> OrderedDict:
         return OrderedDict([
-            ('op_code', self.__class__.op_code), # added by @register_opnode
             ('log', self.gfx.log.toPlainText()),
             ('timeout', self.gfx.timeout.text()),
         ])
