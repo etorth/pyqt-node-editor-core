@@ -7,6 +7,7 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
+from qdutils import *
 from qdscene import QD_Scene, InvalidFile
 from qdnode import QD_Node
 from qdedge import QD_Edge, EdgeType
@@ -118,6 +119,11 @@ class QD_StateWidget(QWidget):
         try:
             with open(filename, "r", encoding='utf-8') as f:
                 data = json.load(f)
+
+                if data['version'] != confg.APP_VERSION:
+                    QMessageBox.warning(self, "Incompatible json file version: %s" % data['version'], "Current version is %s" % confg.APP_VERSION)
+                    return False
+
                 self.confg.deserialize(data['confg'])
                 self.scene.deserialize(data['scene'])
 
@@ -129,10 +135,12 @@ class QD_StateWidget(QWidget):
                 return True
 
         except InvalidFile as e:
-            QMessageBox.warning(self, "Error loading json file: %s, error: %s" % (filename, str(e)))
+            QMessageBox.warning(self, "Error loading json file: %s" % filename, str(e))
+            return False
 
         except json.JSONDecodeError as e:
-            QMessageBox.warning(self, "Invalid json file: %s, error: %s" % (filename, str(e)))
+            QMessageBox.warning(self, "Invalid json file: %s" % filename, str(e))
+            return False
 
         finally:
             QApplication.restoreOverrideCursor()
@@ -194,8 +202,9 @@ class QD_StateWidget(QWidget):
 
     def serialize(self) -> OrderedDict:
         return OrderedDict([
-            ('scene', self.scene.serialize()),
+            ('version', confg.APP_VERSION),
             ('confg', self.confg.serialize()),
+            ('scene', self.scene.serialize()),
         ])
 
 
