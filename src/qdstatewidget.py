@@ -16,7 +16,7 @@ from qdstateconfg import QD_StateConfg
 from qddraglistbox import QD_DragListBox
 
 
-class QD_StateWidget(QWidget):
+class QD_StateWidget(QSplitter):
     Scene_class = QD_Scene
 
 
@@ -27,24 +27,17 @@ class QD_StateWidget(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.splitter = QSplitter(self)
-
         self.confg = QD_StateConfg()
-        self.splitter.addWidget(self.confg.gfx)
+        self.addWidget(self.confg.gfx)
 
         self.scene = self.__class__.Scene_class()
         self.view = QD_ViewGfx(self.scene.gfx)
-        self.splitter.addWidget(self.view)
+        self.addWidget(self.view)
 
         self.draglist = QD_DragListBox()
-        self.splitter.addWidget(self.draglist)
+        self.addWidget(self.draglist)
 
-        self.splitter.resize(800, 600)
-        self.splitter.splitterMoved.connect(self.onSplitterMoved)
-
-
-    def onSplitterMoved(self, pos, index):
-        print(self.splitter.sizes())
+        self.setSizes([200, 800, 200])
 
 
     def onAttrTimeoutEditingFinished(self):
@@ -54,68 +47,39 @@ class QD_StateWidget(QWidget):
 
 
     def isModified(self) -> bool:
-        """Has the `QD_Scene` been modified?
-
-        :return: ``True`` if the `QD_Scene` has been modified
-        :rtype: ``bool``
-        """
         return self.scene.isModified()
 
-    def isFilenameSet(self) -> bool:
-        """Do we have graph loaded from file or new one?
 
-        :return: ``True`` if filename is set. ``False`` if its a graph not saved to a file
-        :rtype: ''bool''
-        """
+    def isFilenameSet(self) -> bool:
         return self.filename is not None
 
-    def getSelectedItems(self) -> list:
-        """Shortcut returning `QD_Scene`'s currently selected items
 
-        :return: list of ``QGraphicsItems``
-        :rtype: list[QGraphicsItem]
-        """
+    def getSelectedItems(self) -> list:
         return self.scene.getSelectedItems()
 
     def hasSelectedItems(self) -> bool:
-        """Is there something selected in the :class:`nodeeditor.scene.QD_Scene`?
-
-        :return: ``True`` if there is something selected in the `QD_Scene`
-        :rtype: ``bool``
-        """
         return self.getSelectedItems() != []
 
-    def canUndo(self) -> bool:
-        """Can Undo be performed right now?
 
-        :return: ``True`` if we can undo
-        :rtype: ``bool``
-        """
+    def canUndo(self) -> bool:
         return self.scene.history.canUndo()
 
-    def canRedo(self) -> bool:
-        """Can Redo be performed right now?
 
-        :return: ``True`` if we can redo
-        :rtype: ``bool``
-        """
+    def canRedo(self) -> bool:
         return self.scene.history.canRedo()
 
-    def getUserFriendlyFilename(self) -> str:
-        """Get user friendly filename. Used in window title
 
-        :return: just a base name of the file or `'New Graph'`
-        :rtype: ``str``
-        """
+    def getUserFriendlyFilename(self) -> str:
         name = os.path.basename(self.filename) if self.isFilenameSet() else "New Graph"
         return name + ("*" if self.isModified() else "")
 
+
     def fileNew(self):
-        """Empty the scene (create new file)"""
         self.scene.clear()
         self.filename = None
         self.scene.history.clear()
         self.scene.history.storeInitialHistoryStamp()
+
 
     def fileLoad(self, filename: str):
         QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
@@ -150,11 +114,6 @@ class QD_StateWidget(QWidget):
 
 
     def fileSave(self, filename: str = None):
-        """Save serialized graph to JSON file. When called with empty parameter, we won't store/remember the filename
-
-        :param filename: file to store the graph
-        :type filename: ``str``
-        """
         if filename is not None:
             self.filename = filename
 
@@ -168,8 +127,8 @@ class QD_StateWidget(QWidget):
         QApplication.restoreOverrideCursor()
         return True
 
+
     def addNodes(self):
-        """Testing method to create 3 `Nodes` with 3 `Edges` connecting them"""
         node1 = QD_Node(self.scene, "My Awesome QD_Node 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
         node2 = QD_Node(self.scene, "My Awesome QD_Node 2", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
         node3 = QD_Node(self.scene, "My Awesome QD_Node 3", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
@@ -183,8 +142,8 @@ class QD_StateWidget(QWidget):
 
         self.scene.history.storeInitialHistoryStamp()
 
+
     def addCustomNode(self):
-        """Testing method to create a custom QD_Node with custom content"""
         from qdnodecontent import QD_NodeContent
         from qdserializable import QD_Serializable
 
@@ -212,7 +171,6 @@ class QD_StateWidget(QWidget):
 
 
     def addDebugContent(self):
-        """Testing method to put random QGraphicsItems and elements into QGraphicsScene"""
         greenBrush = QBrush(Qt.green)
         outlinePen = QPen(Qt.black)
         outlinePen.setWidth(2)
