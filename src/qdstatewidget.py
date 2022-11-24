@@ -32,21 +32,37 @@ class QD_StateWidget(QWidget):
         self.attrs = QFrame()
         self.attrs_layout = QVBoxLayout(self.attrs)
 
-        attr_timeout_layout = QHBoxLayout()
+        if "CreateStateNodeLogWidgets":
+            attr_log_layout = QHBoxLayout()
 
-        self._attr_timeout_edit = QLineEdit()
-        self._attr_timeout_edit.setValidator(QIntValidator())
-        self._attr_timeout_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
-        self._attr_timeout_edit.editingFinished.connect(self.onAttrTimeoutEditingFinished)
+            log_label = QLabel("节点日志")
+            log_label.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
 
-        self._attr_timeout_units = QComboBox()
-        self._attr_timeout_units.addItems(["秒", "分钟", "小时", "天", "周", "月", "年"])
+            self._attr_log = QTextEdit()
+            self._attr_log.setMaximumHeight(200)
 
-        attr_timeout_layout.addWidget(QLabel("状态限时"))
-        attr_timeout_layout.addWidget(self._attr_timeout_edit)
-        attr_timeout_layout.addWidget(self._attr_timeout_units)
+            attr_log_layout.addWidget(log_label)
+            attr_log_layout.addWidget(self._attr_log)
 
-        self.attrs_layout.addLayout(attr_timeout_layout)
+            self.attrs_layout.addLayout(attr_log_layout)
+
+        if "CreateStateNodeTimeoutWidgets":
+            attr_timeout_layout = QHBoxLayout()
+
+            self._attr_timeout_edit = QLineEdit()
+            self._attr_timeout_edit.setValidator(QIntValidator())
+            self._attr_timeout_edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
+            self._attr_timeout_edit.editingFinished.connect(self.onAttrTimeoutEditingFinished)
+
+            self._attr_timeout_units = QComboBox()
+            self._attr_timeout_units.addItems(["秒", "分钟", "小时", "天", "周", "月", "年"])
+
+            attr_timeout_layout.addWidget(QLabel("状态限时"))
+            attr_timeout_layout.addWidget(self._attr_timeout_edit)
+            attr_timeout_layout.addWidget(self._attr_timeout_units)
+
+            self.attrs_layout.addLayout(attr_timeout_layout)
+
         return self.attrs
 
 
