@@ -13,6 +13,7 @@ from qdnode import QD_Node
 from qdedge import QD_Edge, EdgeType
 from qdviewgfx import QD_ViewGfx
 from qdstateconfg import QD_StateConfg
+from qddraglistbox import QD_DragListBox
 
 
 class QD_StateWidget(QWidget):
@@ -26,22 +27,24 @@ class QD_StateWidget(QWidget):
         self.initUI()
 
     def initUI(self):
-        self.splitter = QSplitter(Qt.Orientation.Horizontal, self)
+        self.splitter = QSplitter(self)
 
-        self.splitter.addWidget(self.createLeftPannel())
-        self.splitter.addWidget(self.createMiddlePannel())
+        self.confg = QD_StateConfg()
+        self.splitter.addWidget(self.confg.gfx)
 
-
-    def createLeftPannel(self):
-        self.confg = QD_StateConfg(self)
-        return self.confg.gfx
-
-
-    def createMiddlePannel(self):
         self.scene = self.__class__.Scene_class()
         self.view = QD_ViewGfx(self.scene.gfx)
+        self.splitter.addWidget(self.view)
 
-        return self.view
+        self.draglist = QD_DragListBox()
+        self.splitter.addWidget(self.draglist)
+
+        self.splitter.resize(800, 600)
+        self.splitter.splitterMoved.connect(self.onSplitterMoved)
+
+
+    def onSplitterMoved(self, pos, index):
+        print(self.splitter.sizes())
 
 
     def onAttrTimeoutEditingFinished(self):

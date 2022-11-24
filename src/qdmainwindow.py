@@ -44,8 +44,6 @@ class QD_MainWindow(QMainWindow):
         self.windowMapper = QSignalMapper(self)
         # self.windowMapper.mapped[QWidget].connect(self.setActiveSubWindow)
 
-        self.createNodesDock()
-
         self.createActions()
         self.createMenus()
         self.createToolBars()
@@ -243,13 +241,6 @@ class QD_MainWindow(QMainWindow):
     def updateWindowMenu(self):
         self.windowMenu.clear()
 
-        toolbar_nodes = self.windowMenu.addAction("Nodes Toolbar")
-        toolbar_nodes.setCheckable(True)
-        toolbar_nodes.triggered.connect(self.onWindowNodesToolbar)
-        toolbar_nodes.setChecked(self.nodesDock.isVisible())
-
-        self.windowMenu.addSeparator()
-
         self.windowMenu.addAction(self.actOpenNodeEditWindow)
         self.windowMenu.addSeparator()
 
@@ -279,23 +270,9 @@ class QD_MainWindow(QMainWindow):
             action.triggered.connect(self.windowMapper.map)
             self.windowMapper.setMapping(action, window)
 
-    def onWindowNodesToolbar(self):
-        if self.nodesDock.isVisible():
-            self.nodesDock.hide()
-        else:
-            self.nodesDock.show()
-
     def createToolBars(self):
         pass
 
-    def createNodesDock(self):
-        self.nodesListWidget = QD_DragListBox()
-
-        self.nodesDock = QDockWidget("Nodes")
-        self.nodesDock.setWidget(self.nodesListWidget)
-        self.nodesDock.setFloating(False)
-
-        self.addDockWidget(Qt.DockWidgetArea.RightDockWidgetArea, self.nodesDock)
 
     def createStatusBar(self):
         self.statusBar().showMessage("Ready")
