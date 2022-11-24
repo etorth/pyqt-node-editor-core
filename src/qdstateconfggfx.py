@@ -16,23 +16,17 @@ class QD_StateConfgGfx(QWidget):
 
     def initUI(self):
         self.layout = QVBoxLayout(self)
+        self.layout.setSpacing(10)
 
         if "CreateStateNodeLogWidgets":
-            log_layout = QHBoxLayout()
-
-            log_label = QLabel("节点日志")
-            log_label.setSizePolicy(QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
-
             self.log = QTextEdit()
-            self.log.setMaximumHeight(200)
 
-            log_layout.addWidget(log_label)
-            log_layout.addWidget(self.log)
-
-            self.layout.addLayout(log_layout)
+            self.layout.addWidget(QLabel("节点日志"))
+            self.layout.addWidget(self.log)
 
         if "CreateStateNodeTimeoutWidgets":
             timeout_layout = QHBoxLayout()
+            timeout_layout.setSpacing(5)
 
             self.timeout = QLineEdit()
             self.timeout.setValidator(QIntValidator())
@@ -51,5 +45,5 @@ class QD_StateConfgGfx(QWidget):
 
     def onAttrTimeoutEditingFinished(self):
         if self.timeout.text():
-            if int(self.timeout.text()) < 0:
+            if int(self.timeout.text()) <= 0:
                 self.timeout.setText("无限制")
