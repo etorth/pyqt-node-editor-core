@@ -57,10 +57,6 @@ class QD_MainWindow(QMainWindow):
         self.setWindowTitle("Calculator NodeEditor Example")
 
 
-    def sizeHint(self):
-        return QSize(800, 600)
-
-
     def isModified(self) -> bool:
         """Has current :class:`scene.QD_Scene` been modified?
 
