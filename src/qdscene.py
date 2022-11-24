@@ -265,25 +265,6 @@ class QD_Scene(QD_Serializable):
         self.has_been_modified = False
 
 
-    def loadFromFile(self, filename: str):
-        """
-        Load `QD_Scene` from a file on disk
-
-        :param filename: from what file to load the `QD_Scene`
-        :type filename: ``str``
-        :raises: :class:`scene.InvalidFile` if there was an error decoding JSON file
-        """
-
-        with open(filename, "r", encoding='utf-8') as file:
-            try:
-                data = json.load(file)
-                self.deserialize(data)
-                self.has_been_modified = False
-            except json.JSONDecodeError:
-                raise InvalidFile("%s is not a valid JSON file" % os.path.basename(filename))
-            except Exception as e:
-                utils.dumpExcept(e)
-
     def setNodeClassSelector(self, class_selecting_function: 'functon') -> 'QD_Node class type':
         """
         Set the function which decides what `QD_Node` class to instantiate when deserializating `QD_Scene`.

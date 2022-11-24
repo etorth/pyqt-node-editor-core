@@ -114,25 +114,29 @@ class QD_StateWidget(QWidget):
         self.scene.history.storeInitialHistoryStamp()
 
     def fileLoad(self, filename: str):
-        """Load serialized graph from JSON file
-
-        :param filename: file to load
-        :type filename: ``str``
-        """
         QApplication.setOverrideCursor(Qt.CursorShape.WaitCursor)
         try:
-            self.scene.loadFromFile(filename)
-            self.filename = filename
-            self.scene.history.clear()
-            self.scene.history.storeInitialHistoryStamp()
-            return True
+            with open(filename, "r", encoding='utf-8') as f:
+                data = json.load(f)
+                self.confg.deserialize(data['confg'])
+                self.scene.deserialize(data['scene'])
+
+                self.scene.has_been_modified = False
+                self.scene.history.clear()
+                self.scene.history.storeInitialHistoryStamp()
+
+                self.filename = filename
+                return True
+
         except InvalidFile as e:
-            print(e)
-            QApplication.restoreOverrideCursor()
-            QMessageBox.warning(self, "Error loading %s" % os.path.basename(filename), str(e))
-            return False
+            QMessageBox.warning(self, "Error loading json file: %s, error: %s" % (filename, str(e)))
+
+        except json.JSONDecodeError as e:
+            QMessageBox.warning(self, "Invalid json file: %s, error: %s" % (filename, str(e)))
+
         finally:
             QApplication.restoreOverrideCursor()
+
 
     def fileSave(self, filename: str = None):
         """Save serialized graph to JSON file. When called with empty parameter, we won't store/remember the filename
