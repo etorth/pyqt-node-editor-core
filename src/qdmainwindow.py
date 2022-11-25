@@ -4,8 +4,6 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from qdstatewidget import QD_StateWidget
-
 from qdutils import *
 from qdstatesubwindow import QD_StateSubWindow
 from qddraglistbox import QD_DragListBox
@@ -16,7 +14,7 @@ from qdutils import *
 import qss.nodeeditor_dark_resources
 
 class QD_MainWindow(QMainWindow):
-    StateNodeWidget_class = QD_StateWidget
+    StateNodeWidget_class = QD_StateSubWindow
 
 
     def __init__(self):
