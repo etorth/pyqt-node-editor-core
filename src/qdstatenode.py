@@ -2,7 +2,6 @@
 from PyQt6.QtCore import QPointF
 
 from qdstatenodegfx import QD_StateNodeGfx
-from qdnodecontent import *
 from qdsocket import *
 from qdutils import *
 
@@ -10,8 +9,7 @@ from qdutils import *
 class QD_StateNode(QD_Serializable):
     """Class representing `QD_StateNode` in the `QD_StateScene`.
     """
-    NodeGfx_class = QD_StateNodeGfx
-    NodeContent_class = QD_NodeContent
+    StateNodeGfx_class = QD_StateNodeGfx
     Socket_class = QD_Socket
 
     icon = ""
@@ -23,9 +21,7 @@ class QD_StateNode(QD_Serializable):
         self.scene = scene
 
         # just to be sure, init these variables
-        self.content = None
         self.gfx = None
-
         self.sockets = []
 
         self.initInnerClasses()
@@ -84,22 +80,8 @@ class QD_StateNode(QD_Serializable):
         self.gfx.setPos(x, y)
 
     def initInnerClasses(self):
-        """Sets up graphics QD_StateNode (PyQt) and Content Widget"""
-        node_content_class = self.getNodeContentClass()
-        graphics_node_class = self.getGraphicsNodeClass()
+        self.gfx = self.__class__.StateNodeGfx_class(self)
 
-        if node_content_class is not None:
-            self.content = node_content_class(self)
-
-        if graphics_node_class is not None:
-            self.gfx = graphics_node_class(self)
-
-    def getNodeContentClass(self):
-        """Returns class representing nodeeditor content"""
-        return self.__class__.NodeContent_class
-
-    def getGraphicsNodeClass(self):
-        return self.__class__.NodeGfx_class
 
     def initSettings(self):
         self._max_socket_out_spacing = 30
@@ -401,7 +383,6 @@ class QD_StateNode(QD_Serializable):
             ('title', self.title),
             ('position', (self.gfx.scenePos().x(), self.gfx.scenePos().y())),
             ('sockets', [sock.serialize() for sock in self.sockets]),
-            ('content', self.content.serialize()),
             ('op_code', self.__class__.op_code), # added by @register_opnode
         ])
 
@@ -428,7 +409,6 @@ class QD_StateNode(QD_Serializable):
 
                 found.deserialize(sockdata, hashmap, restore_id)
 
-            self.content.deserialize(data['content'], hashmap)
         except Exception as e:
             utils.dumpExcept(e)
 

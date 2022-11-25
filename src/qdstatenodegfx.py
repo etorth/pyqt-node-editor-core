@@ -31,11 +31,6 @@ class QD_StateNodeGfx(QGraphicsItem):
         self.initUI()
 
     @property
-    def content(self):
-        """Reference to `QD_Node Content`"""
-        return self.node.content if self.node else None
-
-    @property
     def title(self):
         """title of this `QD_Node`
 
@@ -53,18 +48,12 @@ class QD_StateNodeGfx(QGraphicsItem):
 
     @property
     def width(self) -> int:
-        if self.content is None:
-            return self._mini_width
-        else:
-            return max(self.content.gfx.width(), self._mini_width)
+        return self._mini_width
 
 
     @property
     def height(self) -> int:
-        if self.content is None:
-            return self._mini_height
-        else:
-            return max(self.title_height + self.content.gfx.height(), self._mini_height)
+        return self._mini_height
 
 
     def initUI(self):
@@ -76,7 +65,6 @@ class QD_StateNodeGfx(QGraphicsItem):
         # init title
         self.initTitle()
         self.title = self.node.title
-        self.initContent()
 
 
     def initSizes(self):
@@ -190,18 +178,6 @@ class QD_StateNodeGfx(QGraphicsItem):
         self.title_item.setFont(self._title_font)
         self.title_item.setPos(self.title_horizontal_padding, 0)
         self.title_item.setTextWidth(self.width - 2 * self.title_horizontal_padding)
-
-    def initContent(self):
-        """Set up the `proxy` - ``QGraphicsProxyWidget`` to have a container for `Graphics Content`"""
-        if self.content.gfx is not None:
-            self.content.gfx.setGeometry(round(self.edge_padding),
-                                     round(self.title_height + self.edge_padding),
-                                     round(self.width - 2 * self.edge_padding),
-                                     round(self.height - 2 * self.edge_padding - self.title_height))
-
-        # get the QGraphicsProxyWidget when inserted into the gfx
-        self.proxy = QGraphicsProxyWidget(self)
-        self.proxy.setWidget(self.content.gfx)
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
