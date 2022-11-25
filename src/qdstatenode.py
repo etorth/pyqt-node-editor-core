@@ -122,6 +122,7 @@ class QD_StateNode(QD_Serializable):
 
     def onDoubleClicked(self, event):
         """Event handling double click on Graphics QD_StateNode in `QD_StateScene`"""
+        print('Double clicked on', self)
         pass
 
     def doSelect(self, new_state: bool = True):
