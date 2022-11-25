@@ -7,13 +7,13 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _ContainerContentGfx_and(QD_NodeContentGfx):
+class _ContainerContentGfx_or(QD_NodeContentGfx):
     def initUI(self):
         self.edit = QLineEdit(self)
 
 
-class _ContainerContent_and(QD_NodeContent):
-    NodeContentGfx_class =_ContainerContentGfx_and
+class _ContainerContent_or(QD_NodeContent):
+    NodeContentGfx_class =_ContainerContentGfx_or
 
     def serialize(self):
         res = super().serialize()
@@ -33,12 +33,12 @@ class _ContainerContent_and(QD_NodeContent):
 
 
 @utils.register_opnode
-class _Container_and(QD_Node):
+class _Container_or(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
     op_title = "或"
 
-    NodeContent_class = _ContainerContent_and
+    NodeContent_class = _ContainerContent_or
 
 
     def __init__(self, scene):

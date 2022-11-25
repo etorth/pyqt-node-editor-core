@@ -9,6 +9,8 @@ class QD_NodeContentGfx(QWidget):
         super().__init__(parent)
 
         self.content = content
+        self.node = content.node
+
         self.resize(0, 0)
         self.initUI()
 
