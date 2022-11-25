@@ -2,9 +2,11 @@
 from PyQt6.QtCore import QPointF
 
 from qdstatenodegfx import QD_StateNodeGfx
+from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 
+global g_mainWindow
 
 class QD_StateNode(QD_Serializable):
     """Class representing `QD_StateNode` in the `QD_StateScene`.
@@ -14,7 +16,7 @@ class QD_StateNode(QD_Serializable):
 
     icon = ""
 
-    def __init__(self, scene: 'QD_StateScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
+    def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
         super().__init__()
         self._title = '状态节点'
         self.scene = scene
@@ -123,7 +125,11 @@ class QD_StateNode(QD_Serializable):
     def onDoubleClicked(self, event):
         """Event handling double click on Graphics QD_StateNode in `QD_StateScene`"""
         print('Double clicked on', self)
-        pass
+
+        stateeditor = QD_StateWidget()
+        subwin = g_mainWindow.createMdiChild(stateeditor)
+        subwin.show()
+
 
     def doSelect(self, new_state: bool = True):
         """Shortcut method for selecting/deselecting the `QD_StateNode`
