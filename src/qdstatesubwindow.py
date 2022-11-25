@@ -109,7 +109,7 @@ class QD_StateSubWindow(QD_StateWidget):
 
     def contextMenuEvent(self, event):
         try:
-            item = self.scene.getItemAt(event.pos())
+            item = self.scene.getItemAt(event.pos() - self.view.pos())
             if confg.DEBUG:
                 print(item)
 
@@ -231,15 +231,14 @@ class QD_StateSubWindow(QD_StateWidget):
 
         if action is not None:
             new_calc_node = utils.get_class_from_opcode(action.data())(self.scene)
-            scene_pos = self.scene.getView().mapToScene(event.pos())
+            scene_pos = self.scene.getView().mapToScene(event.pos() - self.view.pos())
             new_calc_node.setPos(scene_pos.x(), scene_pos.y())
             if confg.DEBUG:
                 print("Selected node:", new_calc_node)
 
             if self.scene.getView().mode == MODE_EDGE_DRAG:
                 # if we were dragging an edge...
-                target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output,
-                                                                     new_calc_node)
+                target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output, new_calc_node)
                 if target_socket is not None:
                     self.scene.getView().edgeDragEnd(target_socket.gfx)
                     self.finish_new_node_state(new_calc_node)
