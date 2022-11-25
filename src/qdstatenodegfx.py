@@ -7,7 +7,7 @@ from PyQt6.QtGui import *
 class QD_StateNodeGfx(QGraphicsItem):
     """Class describing Graphics representation of :class:`node.QD_Node`"""
 
-    def __init__(self, node: 'QD_Node', parent: QGraphicsItem = None):
+    def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         """
         :param node: reference to :class:`node.QD_Node`
         :type node: :class:`node.QD_Node`
