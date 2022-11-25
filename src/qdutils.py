@@ -45,7 +45,20 @@ class Utils:
     _node_type_uid = 0
     _node_type_list = {}
 
-    mainWindow = None
+    _main_window = None
+
+
+    @property
+    def main_window(self):
+        return self._main_window
+
+
+    @main_window.setter
+    def main_window(self, win):
+        if self._main_window is None:
+            self._main_window = win
+        else:
+            raise RuntimeError('Main window has already been created')
 
     @classmethod
     def register_opnode(cls, node_type):

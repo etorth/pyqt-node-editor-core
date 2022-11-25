@@ -126,7 +126,7 @@ class QD_StateNode(QD_Serializable):
         print('Double clicked on', self)
 
         stateeditor = QD_StateWidget()
-        subwin = utils.mainWindow.createMdiChild(stateeditor)
+        subwin = utils.main_window.createMdiChild(stateeditor)
         subwin.show()
 
 
