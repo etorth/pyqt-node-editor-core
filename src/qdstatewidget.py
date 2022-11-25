@@ -20,9 +20,10 @@ class QD_StateWidget(QSplitter):
     Scene_class = QD_StateScene
 
 
-    def __init__(self, parent: QWidget = None):
+    def __init__(self, node: 'QD_StateNode' = None, parent: QWidget = None):
         super().__init__(parent)
 
+        self.node = node
         self.filename = None
 
         self.initUI()

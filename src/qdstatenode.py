@@ -125,7 +125,7 @@ class QD_StateNode(QD_Serializable):
         """Event handling double click on Graphics QD_StateNode in `QD_StateScene`"""
         print('Double clicked on', self)
 
-        stateeditor = QD_StateWidget()
+        stateeditor = QD_StateWidget(self)
         subwin = utils.main_window.createMdiChild(stateeditor)
         subwin.show()
 
