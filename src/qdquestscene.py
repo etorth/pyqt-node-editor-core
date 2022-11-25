@@ -104,7 +104,7 @@ class QD_QuestScene(QD_Serializable):
         :param silent: If ``True`` scene's onItemsDeselected won't be called and history stamp not stored
         :type silent: ``bool``
         """
-        self.resetLastSelectedQuests()
+        self.resetLastSelectedStates()
         if self._last_selected_items != []:
             self._last_selected_items = []
             if not silent:
@@ -182,7 +182,7 @@ class QD_QuestScene(QD_Serializable):
         self.getView().addDropListener(callback)
 
     # custom flag to detect node or edge has been selected....
-    def resetLastSelectedQuests(self):
+    def resetLastSelectedStates(self):
         """Resets internal `selected flags` in all `Nodes` and `Edges` in the `QD_QuestScene`"""
         for node in self.nodes:
             node.gfx._last_selected_state = False
