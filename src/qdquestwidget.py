@@ -10,7 +10,7 @@ from PyQt6.QtWidgets import *
 from qdquestscene import *
 from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
-from qdnode import *
+from qdstatenode import *
 from qdedge import *
 from qdviewgfx import MODE_EDGE_DRAG, QD_ViewGfx  # , MODE_EDGES_REROUTING
 from qdutils import *
@@ -18,6 +18,7 @@ from qdutils import *
 
 class QD_QuestWidget(QSplitter):
     Scene_class = QD_QuestScene
+    StateNode_class = QD_StateNode
 
 
     def __init__(self, parent: QWidget = None):
@@ -337,12 +338,12 @@ class QD_QuestWidget(QSplitter):
 
         if action is not None:
             print(action, 'in QD_QuestWidget')
-            # new_calc_node = utils.get_class_from_opcode(action.data())(self.scene)
-            # scene_pos = self.scene.getView().mapToScene(event.pos() - self.view.pos())
-            # new_calc_node.setPos(scene_pos.x(), scene_pos.y())
-            # if confg.DEBUG:
-            #     print("Selected node:", new_calc_node)
-            #
+            new_state_node = self.__class__.StateNode_class(self.scene)
+            scene_pos = self.scene.getView().mapToScene(event.pos() - self.view.pos())
+            new_state_node.setPos(scene_pos.x(), scene_pos.y())
+            if confg.DEBUG:
+                print("Selected node:", new_state_node)
+
             # if self.scene.getView().mode == MODE_EDGE_DRAG:
             #     # if we were dragging an edge...
             #     target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output, new_calc_node)
