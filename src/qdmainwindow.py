@@ -5,7 +5,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
 from qdutils import *
-from qdstatesubwindow import QD_StateSubWindow
+from qdstatewidget import QD_StateWidget
 from qddraglistbox import QD_DragListBox
 from qdluaeditor import QD_LuaEditor
 from qdutils import *
@@ -14,7 +14,7 @@ from qdutils import *
 import qss.nodeeditor_dark_resources
 
 class QD_MainWindow(QMainWindow):
-    StateNodeWidget_class = QD_StateSubWindow
+    StateWidget_class = QD_StateWidget
 
 
     def __init__(self):
@@ -141,7 +141,7 @@ class QD_MainWindow(QMainWindow):
                         self.mdiArea.setActiveSubWindow(existing)
                     else:
                         # we need to create new subWindow and open the file
-                        statesubwin = QD_StateSubWindow()
+                        statesubwin = QD_StateWidget()
                         if statesubwin.fileLoad(fname):
                             self.statusBar().showMessage("File %s loaded" % fname, 5000)
                             statesubwin.setTitle()
@@ -279,7 +279,7 @@ class QD_MainWindow(QMainWindow):
 
     def createMdiChild(self, child_widget=None):
         if child_widget is None:
-            child_widget = QD_StateSubWindow()
+            child_widget = QD_StateWidget()
 
         subwin = self.mdiArea.addSubWindow(child_widget)
         subwin.setWindowIcon(self.empty_icon)

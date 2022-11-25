@@ -16,7 +16,7 @@ from qdviewgfx import MODE_EDGE_DRAG, QD_ViewGfx  # , MODE_EDGES_REROUTING
 from qdutils import *
 
 
-class QD_StateSubWindow(QSplitter):
+class QD_StateWidget(QSplitter):
     Scene_class = QD_Scene
 
 
