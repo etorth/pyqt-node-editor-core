@@ -21,7 +21,10 @@ class QD_StateConfgGfx(QWidget):
         if "CreateStateNodeLogWidgets":
             self.log = QTextEdit()
 
-            self.layout.addWidget(QLabel("节点日志"))
+            log_label = QLabel("节点日志")
+            log_label.setToolTip('显示于用户任务界面的\"当前任务状态\"')
+
+            self.layout.addWidget(log_label)
             self.layout.addWidget(self.log)
 
         if "CreateStateNodeTimeoutWidgets":
