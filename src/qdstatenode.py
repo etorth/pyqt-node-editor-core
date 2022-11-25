@@ -13,11 +13,10 @@ class QD_StateNode(QD_Serializable):
     Socket_class = QD_Socket
 
     icon = ""
-    op_title = "Undefined"
 
     def __init__(self, scene: 'QD_StateScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
         super().__init__()
-        self._title = self.__class__.op_title
+        self._title = '状态节点'
         self.scene = scene
 
         # just to be sure, init these variables
@@ -26,8 +25,6 @@ class QD_StateNode(QD_Serializable):
 
         self.initInnerClasses()
         self.initSettings()
-
-        self.title = self.__class__.op_title
 
         self.scene.addNode(self)
         self.scene.gfx.addItem(self.gfx)
@@ -42,7 +39,7 @@ class QD_StateNode(QD_Serializable):
         self.markDirty()
 
     def __str__(self):
-        return "<%s:%s %s..%s>" % (self.title, self.__class__.__name__, hex(id(self))[2:5], hex(id(self))[-3:])
+        return "<%s:%s %s..%s>" % (self._title, self.__class__.__name__, hex(id(self))[2:5], hex(id(self))[-3:])
 
     @property
     def title(self):
@@ -380,7 +377,7 @@ class QD_StateNode(QD_Serializable):
     def serialize(self) -> OrderedDict:
         return OrderedDict([
             ('id', self.id),
-            ('title', self.title),
+            ('title', self._title),
             ('position', (self.gfx.scenePos().x(), self.gfx.scenePos().y())),
             ('sockets', [sock.serialize() for sock in self.sockets]),
         ])
@@ -393,7 +390,7 @@ class QD_StateNode(QD_Serializable):
             hashmap[data['id']] = self
 
             self.setPos(*data['position'])
-            self.title = data['title']
+            self._title = data['title']
 
             for sockdata in data['sockets']:
                 found = None
