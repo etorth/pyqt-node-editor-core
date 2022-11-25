@@ -122,10 +122,12 @@ class QD_QuestWidget(QSplitter):
         QApplication.restoreOverrideCursor()
         return True
 
+    def onAddNewStateNode(self):
+        print("onAddNewStateNode")
 
     def initNewNodeActions(self):
         self.node_actions = []
-        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加状态节点'))
+        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加状态', triggered=self.onAddNewStateNode))
 
     def initNodesContextMenu(self):
         context_menu = QMenu(self)
@@ -334,21 +336,22 @@ class QD_QuestWidget(QSplitter):
         action = context_menu.exec(self.mapToGlobal(event.pos()))
 
         if action is not None:
-            new_calc_node = utils.get_class_from_opcode(action.data())(self.scene)
-            scene_pos = self.scene.getView().mapToScene(event.pos() - self.view.pos())
-            new_calc_node.setPos(scene_pos.x(), scene_pos.y())
-            if confg.DEBUG:
-                print("Selected node:", new_calc_node)
-
-            if self.scene.getView().mode == MODE_EDGE_DRAG:
-                # if we were dragging an edge...
-                target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output, new_calc_node)
-                if target_socket is not None:
-                    self.scene.getView().edgeDragEnd(target_socket.gfx)
-                    self.finish_new_node_state(new_calc_node)
-
-            else:
-                self.scene.history.storeHistory("Created %s" % new_calc_node.__class__.__name__)
+            print(action, 'in QD_QuestWidget')
+            # new_calc_node = utils.get_class_from_opcode(action.data())(self.scene)
+            # scene_pos = self.scene.getView().mapToScene(event.pos() - self.view.pos())
+            # new_calc_node.setPos(scene_pos.x(), scene_pos.y())
+            # if confg.DEBUG:
+            #     print("Selected node:", new_calc_node)
+            #
+            # if self.scene.getView().mode == MODE_EDGE_DRAG:
+            #     # if we were dragging an edge...
+            #     target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output, new_calc_node)
+            #     if target_socket is not None:
+            #         self.scene.getView().edgeDragEnd(target_socket.gfx)
+            #         self.finish_new_node_state(new_calc_node)
+            #
+            # else:
+            #     self.scene.history.storeHistory("Created %s" % new_calc_node.__class__.__name__)
 
 
     def addNodes(self):
