@@ -27,6 +27,15 @@ class QD_StateConfgGfx(QWidget):
             self.layout.addWidget(log_label)
             self.layout.addWidget(self.log)
 
+        if "CreateStateNodeCommentWidgets":
+            self.comment = QTextEdit()
+
+            comment_label = QLabel("节点注释")
+            comment_label.setToolTip('任务编辑器可选注释信息')
+
+            self.layout.addWidget(comment_label)
+            self.layout.addWidget(self.comment)
+
         if "CreateStateNodeTimeoutWidgets":
             timeout_layout = QHBoxLayout()
             timeout_layout.setSpacing(5)

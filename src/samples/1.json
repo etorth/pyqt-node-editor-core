@@ -2,6 +2,7 @@
     "version": "0.1",
     "confg": {
         "log": "去道馆张道士处领取奖励。",
+        "comment": "任务完成奖励。",
         "timeout": "30"
     },
     "scene": {
