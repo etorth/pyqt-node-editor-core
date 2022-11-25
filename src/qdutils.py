@@ -45,6 +45,8 @@ class Utils:
     _node_type_uid = 0
     _node_type_list = {}
 
+    mainWindow = None
+
     @classmethod
     def register_opnode(cls, node_type):
         cls._node_type_uid += 1

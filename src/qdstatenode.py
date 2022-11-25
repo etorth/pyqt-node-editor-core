@@ -6,7 +6,6 @@ from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 
-global g_mainWindow
 
 class QD_StateNode(QD_Serializable):
     """Class representing `QD_StateNode` in the `QD_StateScene`.
@@ -127,7 +126,7 @@ class QD_StateNode(QD_Serializable):
         print('Double clicked on', self)
 
         stateeditor = QD_StateWidget()
-        subwin = g_mainWindow.createMdiChild(stateeditor)
+        subwin = utils.mainWindow.createMdiChild(stateeditor)
         subwin.show()
 
 

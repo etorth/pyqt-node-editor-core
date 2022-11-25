@@ -4,8 +4,6 @@ from PyQt6.QtCore import *
 from qdutils import *
 from qdmainwindow import QD_MainWindow
 
-global g_mainWindow
-
 if __name__ == '__main__':
     QCoreApplication.setOrganizationName(confg.APP_ORG)
     QCoreApplication.setApplicationName(confg.APP_NAME)
@@ -13,8 +11,8 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle(confg.APP_STYLE)
 
-    g_mainWindow = QD_MainWindow()
-    g_mainWindow.setWindowTitle(confg.APP_TITLE)
-    g_mainWindow.show()
+    utils.mainWindow = QD_MainWindow()
+    utils.mainWindow.setWindowTitle(confg.APP_TITLE)
+    utils.mainWindow.show()
 
     sys.exit(app.exec())
