@@ -22,19 +22,19 @@ EDGE_DRAG_START_THRESHOLD = 50
 
 class QD_ViewGfx(QGraphicsView):
     """Class representing NodeEditor's `Graphics View`"""
-    #: pyqtSignal emitted when cursor position on the `QD_Scene` has changed
+    #: pyqtSignal emitted when cursor position on the `QD_StateScene` has changed
     scenePosChanged = pyqtSignal(int, int)
 
-    def __init__(self, gfx: 'QD_SceneGfx', parent: 'QWidget' = None):
+    def __init__(self, gfx: 'QD_StateSceneGfx', parent: 'QWidget' = None):
         """
-        :param gfx: reference to the :class:`qdscenegfx.QD_SceneGfx`
-        :type gfx: :class:`qdscenegfx.QD_SceneGfx`
+        :param gfx: reference to the :class:`qdstatescenegfx.QD_StateSceneGfx`
+        :type gfx: :class:`qdstatescenegfx.QD_StateSceneGfx`
         :param parent: parent widget
         :type parent: ``QWidget``
 
         :Instance Attributes:
 
-        - **gfx** - reference to the :class:`qdscenegfx.QD_SceneGfx`
+        - **gfx** - reference to the :class:`qdstatescenegfx.QD_StateSceneGfx`
         - **mode** - state of the `Graphics View`
         - **zoomInFactor**- ``float`` - zoom step scaling, default 1.25
         - **zoomClamp** - ``bool`` - do we clamp zooming or is it infinite?
@@ -287,7 +287,7 @@ class QD_ViewGfx(QGraphicsView):
         super().mouseReleaseEvent(event)
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        """Overriden Qt's ``mouseMoveEvent`` handling QD_Scene/View logic"""
+        """Overriden Qt's ``mouseMoveEvent`` handling QD_StateScene/View logic"""
         scenepos = self.mapToScene(event.position().toPoint())
 
         if self.mode == MODE_EDGE_DRAG:
@@ -362,7 +362,7 @@ class QD_ViewGfx(QGraphicsView):
         self.gfx.scene.history.storeHistory("Delete cutted edges", setModified=True)
 
     def deleteSelected(self):
-        """Shortcut for safe deleting every object selected in the `QD_Scene`."""
+        """Shortcut for safe deleting every object selected in the `QD_StateScene`."""
         for item in self.gfx.selectedItems():
             if isinstance(item, QD_EdgeGfx):
                 item.edge.remove()
@@ -408,7 +408,7 @@ class QD_ViewGfx(QGraphicsView):
         """Code handling the end of dragging an `QD_Edge` operation. In this code return True if skip the
         rest of the mouse event processing
 
-        :param item: Item in the `Graphics QD_Scene` where we ended dragging an `QD_Edge`
+        :param item: Item in the `Graphics QD_StateScene` where we ended dragging an `QD_Edge`
         :type item: ``QGraphicsItem``
         """
         self.mode = MODE_NOOP

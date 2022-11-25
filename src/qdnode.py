@@ -11,7 +11,7 @@ from qdutils import *
 
 
 class QD_Node(QD_Serializable):
-    """Class representing `QD_Node` in the `QD_Scene`.
+    """Class representing `QD_Node` in the `QD_StateScene`.
     """
     NodeGfx_class = QD_NodeGfx
     NodeContent_class = QD_NodeContent
@@ -20,7 +20,7 @@ class QD_Node(QD_Serializable):
     icon = ""
     op_title = "Undefined"
 
-    def __init__(self, scene: 'QD_Scene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
+    def __init__(self, scene: 'QD_StateScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
         super().__init__()
         self._title = self.__class__.op_title
         self.scene = scene
@@ -70,7 +70,7 @@ class QD_Node(QD_Serializable):
     @property
     def pos(self):
         """
-        Retrieve QD_Node's position in the QD_Scene
+        Retrieve QD_Node's position in the QD_StateScene
 
         :return: QD_Node position
         :rtype: ``QPointF``
@@ -81,8 +81,8 @@ class QD_Node(QD_Serializable):
         """
         Sets position of the Graphics QD_Node
 
-        :param x: X `QD_Scene` position
-        :param y: Y `QD_Scene` position
+        :param x: X `QD_StateScene` position
+        :param y: Y `QD_StateScene` position
         """
         self.gfx.setPos(x, y)
 
@@ -145,7 +145,7 @@ class QD_Node(QD_Serializable):
         pass
 
     def onDoubleClicked(self, event):
-        """Event handling double click on Graphics QD_Node in `QD_Scene`"""
+        """Event handling double click on Graphics QD_Node in `QD_StateScene`"""
         pass
 
     def doSelect(self, new_state: bool = True):

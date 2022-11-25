@@ -13,24 +13,24 @@ class QD_SceneClipboard():
     Class contains all the code for serialization/deserialization from Clipboard
     """
 
-    def __init__(self, scene: 'QD_Scene'):
+    def __init__(self, scene: 'QD_StateScene'):
         """
-        :param scene: Reference to the :class:`scene.QD_Scene`
-        :type scene: :class:`scene.QD_Scene`
+        :param scene: Reference to the :class:`scene.QD_StateScene`
+        :type scene: :class:`scene.QD_StateScene`
 
         :Instance Attributes:
 
-        - **scene** - reference to the :class:`scene.QD_Scene`
+        - **scene** - reference to the :class:`scene.QD_StateScene`
         """
         self.scene = scene
 
     def serializeSelected(self, delete: bool = False) -> OrderedDict:
         """
-        Serializes selected items in the QD_Scene into ``OrderedDict``
+        Serializes selected items in the QD_StateScene into ``OrderedDict``
 
         :param delete: True if you want to delete selected items after serialization. Usefull for Cut operation
         :type delete: ``bool``
-        :return: Serialized data of current selection in NodeEditor :class:`scene.QD_Scene`
+        :return: Serialized data of current selection in NodeEditor :class:`scene.QD_StateScene`
         """
         if confg.DEBUG:
             print("-- COPY TO CLIPBOARD ---")
@@ -90,7 +90,7 @@ class QD_SceneClipboard():
         """
         Deserializes data from Clipboard.
 
-        :param data: ``dict`` data for deserialization to the :class:`nodeeditor.scene.QD_Scene`.
+        :param data: ``dict`` data for deserialization to the :class:`nodeeditor.scene.QD_StateScene`.
         :type data: ``dict``
         """
 

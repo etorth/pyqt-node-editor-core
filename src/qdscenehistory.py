@@ -9,14 +9,14 @@ from qdutils import *
 class QD_SceneHistory():
     """Class contains all the code for undo/redo operations"""
 
-    def __init__(self, scene: 'QD_Scene'):
+    def __init__(self, scene: 'QD_StateScene'):
         """
-        :param scene: Reference to the :class:`scene.QD_Scene`
-        :type scene: :class:`scene.QD_Scene`
+        :param scene: Reference to the :class:`scene.QD_StateScene`
+        :type scene: :class:`scene.QD_StateScene`
 
         :Instance Attributes:
 
-        - **scene** - reference to the :class:`scene.QD_Scene`
+        - **scene** - reference to the :class:`scene.QD_StateScene`
         - **history_limit** - number of history steps that can be stored
         """
         self.scene = scene
@@ -124,7 +124,7 @@ class QD_SceneHistory():
 
         :param desc: Description of current History Stamp
         :type desc: ``str``
-        :param setModified: if ``True`` marks :class:`scene.QD_Scene` with `has_been_modified`
+        :param setModified: if ``True`` marks :class:`scene.QD_StateScene` with `has_been_modified`
         :type setModified: ``bool``
 
         Triggers:
@@ -185,7 +185,7 @@ class QD_SceneHistory():
         Create History Stamp. Internally serialize whole scene and current selection
 
         :param desc: Descriptive label for the History Stamp
-        :return: History stamp serializing state of `QD_Scene` and current selection
+        :return: History stamp serializing state of `QD_StateScene` and current selection
         :rtype: ``dict``
         """
         history_stamp = {
@@ -198,7 +198,7 @@ class QD_SceneHistory():
 
     def restoreHistoryStamp(self, history_stamp: dict):
         """
-        Restore History Stamp to current `QD_Scene` with selection of items included
+        Restore History Stamp to current `QD_StateScene` with selection of items included
 
         :param history_stamp: History Stamp to restore
         :type history_stamp: ``dict``

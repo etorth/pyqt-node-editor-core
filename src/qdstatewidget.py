@@ -7,7 +7,7 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from qdscene import *
+from qdstatescene import *
 from qdstateconfg import QD_StateConfg
 from qddraglistbox import QD_DragListBox
 from qdnode import *
@@ -17,7 +17,7 @@ from qdutils import *
 
 
 class QD_StateWidget(QSplitter):
-    Scene_class = QD_Scene
+    Scene_class = QD_StateScene
 
 
     def __init__(self, parent: QWidget = None):

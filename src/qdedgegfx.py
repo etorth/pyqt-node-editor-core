@@ -23,8 +23,8 @@ class QD_EdgeGfx(QGraphicsPathItem):
         :Instance attributes:
 
             - **edge** - reference to :class:`qdedge.QD_Edge`
-            - **posSource** - ``[x, y]`` source position in the `QD_Scene`
-            - **posDestination** - ``[x, y]`` destination position in the `QD_Scene`
+            - **posSource** - ``[x, y]`` source position in the `QD_StateScene`
+            - **posDestination** - ``[x, y]`` destination position in the `QD_StateScene`
         """
         super().__init__(parent)
 

@@ -20,6 +20,7 @@ class QD_QuestConfgGfx(QWidget):
 
         if "CreateQuestNameWidgets":
             self.name = QLineEdit()
+            self.name.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
             name_label = QLabel("任务名称")
             name_label.setToolTip('显示于用户任务界面的\"任务名称\"')

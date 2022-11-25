@@ -14,11 +14,11 @@ class QD_Edge(QD_Serializable):
     """Class for representing QD_Edge in NodeEditor.
     """
 
-    def __init__(self, scene: 'QD_Scene', start_socket: 'QD_Socket' = None, end_socket: 'QD_Socket' = None, edge_type=EdgeType.Direct):
+    def __init__(self, scene: 'QD_StateScene', start_socket: 'QD_Socket' = None, end_socket: 'QD_Socket' = None, edge_type=EdgeType.Direct):
         """
 
-        :param scene: Reference to the :py:class:`scene.QD_Scene`
-        :type scene: :py:class:`scene.QD_Scene`
+        :param scene: Reference to the :py:class:`scene.QD_StateScene`
+        :type scene: :py:class:`scene.QD_StateScene`
         :param start_socket: Reference to the starting socket
         :type start_socket: :py:class:`socket.QD_Socket`
         :param end_socket: Reference to the End socket or ``None``
@@ -27,7 +27,7 @@ class QD_Edge(QD_Serializable):
 
         :Instance Attributes:
 
-            - **scene** - reference to the :class:`scene.QD_Scene`
+            - **scene** - reference to the :class:`scene.QD_StateScene`
             - **gfx** - Instance of :class:`qdedgegfx.QD_EdgeGfx` subclass handling graphical representation in the ``QGraphicsScene``.
         """
         super().__init__()
