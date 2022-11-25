@@ -7,7 +7,7 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from qdstatescene import *
+from qdquestscene import *
 from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
 from qdnode import *
@@ -17,7 +17,7 @@ from qdutils import *
 
 
 class QD_QuestWidget(QSplitter):
-    Scene_class = QD_StateScene
+    Scene_class = QD_QuestScene
 
 
     def __init__(self, parent: QWidget = None):
@@ -49,11 +49,7 @@ class QD_QuestWidget(QSplitter):
         self.view = QD_ViewGfx(self.scene.gfx)
         self.addWidget(self.view)
 
-        self.draglist = QD_DragListBox()
-        self.draglist.setMaximumWidth(200)
-        self.addWidget(self.draglist)
-
-        self.setSizes([200, 800, 200])
+        self.setSizes([200, 800])
 
 
     def getNodeClassFromData(self, data):
