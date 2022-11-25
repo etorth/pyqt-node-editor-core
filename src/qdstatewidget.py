@@ -35,6 +35,7 @@ class QD_StateWidget(QSplitter):
         self.addWidget(self.view)
 
         self.draglist = QD_DragListBox()
+        self.draglist.setMaximumWidth(200)
         self.addWidget(self.draglist)
 
         self.setSizes([200, 800, 200])
