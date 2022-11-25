@@ -1,3 +1,13 @@
+QGroupBox {
+    background: #474747;
+    color:#eee
+}
+
+QRadioButton {
+    background: #474747;
+    color:#eee
+}
+
 QFrame,QDialog,QMainWindow {
     background: #474747
 }

@@ -8,7 +8,7 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
 from qdscene import *
-from qdstateconfg import QD_StateConfg
+from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
 from qdnode import *
 from qdedge import *
@@ -16,7 +16,7 @@ from qdviewgfx import MODE_EDGE_DRAG, QD_ViewGfx  # , MODE_EDGES_REROUTING
 from qdutils import *
 
 
-class QD_StateWidget(QSplitter):
+class QD_QuestWidget(QSplitter):
     Scene_class = QD_Scene
 
 
@@ -42,7 +42,7 @@ class QD_StateWidget(QSplitter):
 
 
     def initUI(self):
-        self.confg = QD_StateConfg()
+        self.confg = QD_QuestConfg()
         self.addWidget(self.confg.gfx)
 
         self.scene = self.__class__.Scene_class()
@@ -168,7 +168,7 @@ class QD_StateWidget(QSplitter):
         return self.scene.history.canRedo()
 
     def getUserFriendlyFilename(self) -> str:
-        name = os.path.basename(self.filename) if self.isFilenameSet() else "New State"
+        name = os.path.basename(self.filename) if self.isFilenameSet() else "New Quest"
         return name + ("*" if self.isModified() else "")
 
 
