@@ -148,7 +148,7 @@ class QD_StateSubWindow(QD_StateWidget):
             return
 
         selected = None
-        item = self.scene.getItemAt(event.pos())
+        item = self.scene.getItemAt(event.pos() - self.view.pos())
 
         if isinstance(item, QGraphicsProxyWidget):
             item = item.widget()
