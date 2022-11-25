@@ -124,15 +124,13 @@ class QD_QuestWidget(QSplitter):
 
 
     def initNewNodeActions(self):
-        self.node_actions = {}
-        for node in utils.valid_node_types():
-            self.node_actions[node.op_code] = QAction(QIcon(node.icon), node.op_title)
-            self.node_actions[node.op_code].setData(node.op_code)
+        self.node_actions = []
+        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加状态节点'))
 
     def initNodesContextMenu(self):
         context_menu = QMenu(self)
-        for type in utils.valid_node_types():
-            context_menu.addAction(self.node_actions[type.op_code])
+        for action in self.node_actions:
+            context_menu.addAction(action)
         return context_menu
 
     def onAttrTimeoutEditingFinished(self):
@@ -330,7 +328,7 @@ class QD_QuestWidget(QSplitter):
 
     def handleNewNodeContextMenu(self, event):
         if confg.DEBUG:
-            print("CONTEXT: EMPTY SPACE")
+            print("CONTEXT: EMPTY SPACE in QS_QuestWidget")
 
         context_menu = self.initNodesContextMenu()
         action = context_menu.exec(self.mapToGlobal(event.pos()))
