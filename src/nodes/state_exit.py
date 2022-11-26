@@ -9,7 +9,10 @@ from qdnodecontentgfx import *
 
 class _StateContentGfx_exit(QD_NodeContentGfx):
     def initUI(self):
-        self.label = QLabel('退出', self)
+        self.edit = QTextEdit()
+        self.box = QVBoxLayout(self)
+        self.box.setContentsMargins(0, 0, 0, 8)
+        self.box.addWidget(self.edit)
 
 
 class _StateContent_exit(QD_NodeContent):
@@ -17,7 +20,7 @@ class _StateContent_exit(QD_NodeContent):
 
     def serialize(self):
         res = super().serialize()
-        res['value'] = self.gfx.label.text()
+        res['value'] = self.gfx.edit.toPlainText()
         return res
 
 
@@ -25,7 +28,7 @@ class _StateContent_exit(QD_NodeContent):
         res = super().deserialize(data, hashmap)
         try:
             value = data['value']
-            self.gfx.label.setText(value)
+            self.gfx.edit.setPlainText(value)
             return True & res
         except Exception as e:
             utils.dumpExcept(e)
@@ -36,7 +39,7 @@ class _StateContent_exit(QD_NodeContent):
 class _State_exit(QD_Node):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
-    op_title = "退出节点"
+    op_title = "退出分支"
 
     NodeContent_class = _StateContent_exit
 
