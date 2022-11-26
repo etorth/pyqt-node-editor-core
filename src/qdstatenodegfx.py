@@ -1,7 +1,29 @@
 # -*- coding: utf-8 -*-
-from PyQt6.QtWidgets import *
-from PyQt6.QtCore import *
 from PyQt6.QtGui import *
+from PyQt6.QtCore import *
+from PyQt6.QtWidgets import *
+
+from qdutils import *
+
+class _StateNodeTitleBox(QGraphicsTextItem):
+    def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
+        super().__init__(parent)
+
+        self._color = Qt.GlobalColor.white
+        self._font = QFont("Ubuntu", 10)
+
+        self.node = node
+        self.setTextInteractionFlags(Qt.TextInteractionFlag.TextEditorInteraction)
+        self.setDefaultTextColor(self._color)
+        self.setFont(self._font)
+
+    def focusOutEvent(self, event: QFocusEvent):
+        super().focusOutEvent(event)
+
+        win = utils.main_window.findMdiChildByStateNode(self.node)
+        if win:
+            widget = win.widget()
+            widget.confg.gfx.log.setText(self.toPlainText())
 
 
 class QD_StateNodeGfx(QGraphicsItem):
@@ -79,10 +101,6 @@ class QD_StateNodeGfx(QGraphicsItem):
         self.title_vertical_padding = 10
 
     def initAssets(self):
-        """Initialize ``QObjects`` like ``QColor``, ``QPen`` and ``QBrush``"""
-        self._title_color = Qt.GlobalColor.white
-        self._title_font = QFont("Ubuntu", 10)
-
         self._color = QColor("#7F000000")
         self._color_hovered = QColor("#FF37A6FF")
         self._color_selected = QColor("#FFF7862F")
@@ -172,10 +190,7 @@ class QD_StateNodeGfx(QGraphicsItem):
 
     def initTitle(self):
         """Set up the title Graphics representation: font, color, position, etc."""
-        self.title_item = QGraphicsTextItem(self)
-        self.title_item.node = self.node
-        self.title_item.setDefaultTextColor(self._title_color)
-        self.title_item.setFont(self._title_font)
+        self.title_item = _StateNodeTitleBox(self.node, self)
         self.title_item.setPos(self.title_horizontal_padding, 0)
         self.title_item.setTextWidth(self.width - 2 * self.title_horizontal_padding)
 
