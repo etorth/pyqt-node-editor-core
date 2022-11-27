@@ -8,6 +8,10 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
+class _NPCChatFrameEditor(QPlainTextEdit):
+    pass
+
+
 class _NPCChatFrameContentGfx(QD_NodeContentGfx):
     def initUI(self):
         self.label = QLabel('NPC对话')
@@ -16,6 +20,10 @@ class _NPCChatFrameContentGfx(QD_NodeContentGfx):
 
 
     def mouseDoubleClickEvent(self, event):
+        chateditor = _NPCChatFrameEditor()
+        subwin = utils.main_window.mdiArea.addSubWindow(chateditor)
+        subwin.setWindowIcon(QIcon('.'))
+        subwin.show()
         print('NPC对话框被双击了')
 
 
