@@ -43,7 +43,7 @@ class _NPCChatFrame(QD_Node):
 
 
     def __init__(self, scene):
-        super().__init__(scene, sockets=[SocketType.Out_True])
+        super().__init__(scene, sockets=[SocketType.In, SocketType.Out_True])
         self.eval()
 
 
