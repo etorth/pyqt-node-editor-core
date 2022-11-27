@@ -8,8 +8,20 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _NPCChatFrameEditor(QPlainTextEdit):
-    pass
+class _NPCChatFrameEditor(QSplitter):
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.initUI()
+        self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
+
+
+    def initUI(self):
+        self.chat = QTextEdit()
+        self.addWidget(self.chat)
+
+        self.list = QTextEdit()
+        self.addWidget(self.list)
 
 
 class _NPCChatFrameContentGfx(QD_NodeContentGfx):
