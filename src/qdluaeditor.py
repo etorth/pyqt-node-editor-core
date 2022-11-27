@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from PyQt6.QtCore import pyqtSlot, Qt, QRect, QRectF, QSize
 from PyQt6.QtGui import QColor, QPainter, QTextFormat
 from PyQt6.QtWidgets import QPlainTextEdit, QWidget, QTextEdit

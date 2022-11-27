@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import sys
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
