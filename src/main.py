@@ -1,4 +1,5 @@
 import sys
+from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 
 from qdutils import *
@@ -12,6 +13,8 @@ if __name__ == '__main__':
     app.setStyle(confg.APP_STYLE)
 
     utils.main_window = QD_MainWindow()
+
+    utils.main_window.setWindowIcon(QIcon(confg.APP_ICON))
     utils.main_window.setWindowTitle(confg.APP_TITLE)
     utils.main_window.show()
 

@@ -26,7 +26,7 @@ class Confg:
     APP_ORG     = 'USTC'
     APP_VERSION = '0.1'
     APP_STYLE   = 'Fusion'
-
+    APP_ICON    = 'icons/qd.png'
 
     DEBUG = True
 
