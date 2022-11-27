@@ -146,7 +146,7 @@ class QD_Node(QD_Serializable):
 
     def onDoubleClicked(self, event):
         """Event handling double click on Graphics QD_Node in `QD_StateScene`"""
-        pass
+        print("Double clicked on", self)
 
     def doSelect(self, new_state: bool = True):
         """Shortcut method for selecting/deselecting the `QD_Node`
