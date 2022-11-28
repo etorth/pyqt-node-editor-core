@@ -15,14 +15,19 @@ class _NPCChatSelection(QWidget):
 
 
     def initUI(self):
-        self.layout = QHBoxLayout(self)
+        vbox = QVBoxLayout(self)
+        hbox = QHBoxLayout()
+
         self.text = QLineEdit()
+        self.close = QCheckBox('关闭界面')
 
-        self.layout.addWidget(self.text)
+        hbox.addWidget(self.text)
+        hbox.addWidget(self.close)
 
-        self.close = QCheckBox('关闭聊天界面')
-        self.layout.addWidget(self.close)
+        vbox.addLayout(hbox)
 
+        self.comment = QTextEdit()
+        vbox.addWidget(self.comment)
 
 class _NPCChatFrameEditor(QSplitter):
     def __init__(self, parent: QWidget = None):
@@ -38,14 +43,17 @@ class _NPCChatFrameEditor(QSplitter):
             content_layout = QVBoxLayout(content_widget)
             content_layout.setSpacing(10)
 
-            content_layout.addWidget(QLabel('聊天内容'))
-
             self.content = QTextEdit()
+            content_layout.addWidget(QLabel('聊天内容'))
             content_layout.addWidget(self.content)
+
+            self.comment = QTextEdit()
+            content_layout.addWidget(QLabel('节点注释'))
+            content_layout.addWidget(self.comment)
 
             self.addWidget(content_widget)
 
-        if 'CreateChatSelection':
+        if 'CreateChatSelections':
             selection_widget = QWidget()
             content_layout = QVBoxLayout(selection_widget)
 
@@ -72,7 +80,6 @@ class _NPCChatFrameContentGfx(QD_NodeContentGfx):
         subwin = utils.main_window.mdiArea.addSubWindow(chateditor)
         subwin.setWindowIcon(QIcon('.'))
         subwin.show()
-        print('NPC对话框被双击了')
 
 
 class _NPCChatFrameContent(QD_NodeContent):
