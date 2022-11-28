@@ -90,36 +90,41 @@ class _NPCChatFrameEditor(QSplitter):
 
 
     def initUI(self):
-        if 'CreateChatNPC':
-            content_widget = QWidget()
-            content_layout = QVBoxLayout(content_widget)
-            content_layout.setSpacing(10)
+        if 'CreateLeftPannel':
+            left_pannel = QWidget()
+            self.addWidget(left_pannel)
 
-            content_layout.addWidget(QLabel('聊天对象'))
+            left_pannel_layout = QVBoxLayout(left_pannel)
+            left_pannel_layout.setSpacing(10)
 
-            npc_hbox = QHBoxLayout()
-            content_layout.addLayout(npc_hbox)
+            if 'CreateNPCSelector':
+                left_pannel_layout.addWidget(QLabel('聊天对象'))
 
-            self.map = QComboBox()
-            self.map.addItems(["道馆", "比奇省", "边境城市"])
-            npc_hbox.addWidget(self.map)
+                npc_hbox = QHBoxLayout()
+                left_pannel_layout.addLayout(npc_hbox)
 
-            self.npc = QComboBox()
-            self.npc.addItems(["张三", "李四", "王五"])
-            npc_hbox.addWidget(self.npc)
+                self.map = QComboBox()
+                self.map.addItems(["道馆", "比奇省", "边境城市"])
+                npc_hbox.addWidget(self.map)
 
-            self.content = QTextEdit()
-            content_layout.addWidget(QLabel('聊天内容'))
-            content_layout.addWidget(self.content)
+                self.npc = QComboBox()
+                self.npc.addItems(["张三", "李四", "王五"])
+                npc_hbox.addWidget(self.npc)
 
-            self.comment = QTextEdit()
-            content_layout.addWidget(QLabel('节点注释'))
-            content_layout.addWidget(self.comment)
+            if 'CreateChatContent':
+                self.content = QTextEdit()
+                left_pannel_layout.addWidget(QLabel('聊天内容'))
+                left_pannel_layout.addWidget(self.content)
 
-            self.addWidget(content_widget)
+            if 'CreateChatComment':
+                self.comment = QTextEdit()
+                left_pannel_layout.addWidget(QLabel('节点注释'))
+                left_pannel_layout.addWidget(self.comment)
 
         if 'CreateChatSelections':
             selection_widget = _NPCChatSelectionPannel()
+            self.addWidget(selection_widget)
+
             self.selection_layout = QVBoxLayout(selection_widget)
 
             self.selection_layout.setSpacing(10)
@@ -131,8 +136,6 @@ class _NPCChatFrameEditor(QSplitter):
             self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout), 1)
 
             self.selection_layout.addWidget(QFrame(), 1)
-
-            self.addWidget(selection_widget)
 
 
 class _NPCChatFrameContentGfx(QD_NodeContentGfx):
