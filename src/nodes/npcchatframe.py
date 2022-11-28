@@ -99,9 +99,10 @@ class _NPCChatSelectionPannel(QWidget):
 
 
 class _NPCChatFrameEditor(QSplitter):
-    def __init__(self, parent: QWidget = None):
+    def __init__(self, node: QD_Node, parent: QWidget = None):
         super().__init__(parent)
 
+        self.node = node
         self.initUI()
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
 
@@ -122,10 +123,12 @@ class _NPCChatFrameEditor(QSplitter):
 
                 self.map = QComboBox()
                 self.map.addItems(["道馆", "比奇省", "边境城市"])
+                self.map.currentIndexChanged.connect(self.onNPCChanged)
                 npc_hbox.addWidget(self.map)
 
                 self.npc = QComboBox()
                 self.npc.addItems(["张三", "李四", "王五"])
+                self.npc.currentIndexChanged.connect(self.onNPCChanged)
                 npc_hbox.addWidget(self.npc)
 
             if 'CreateChatContent':
@@ -159,6 +162,10 @@ class _NPCChatFrameEditor(QSplitter):
             right_pannel_layout.addWidget(QFrame(), 1)
 
 
+    def onNPCChanged(self, index: int):
+        self.node.content.gfx.setText('与%s的%s对话' % (self.map.currentText(), self.npc.currentText()))
+
+
 class _NPCChatFrameContentGfx(QD_NodeContentGfx):
     def initUI(self):
         self.label = QLabel('NPC对话')
@@ -167,10 +174,16 @@ class _NPCChatFrameContentGfx(QD_NodeContentGfx):
 
 
     def mouseDoubleClickEvent(self, event):
-        chateditor = _NPCChatFrameEditor()
+        chateditor = _NPCChatFrameEditor(self.node)
         subwin = utils.main_window.mdiArea.addSubWindow(chateditor)
         subwin.setWindowIcon(QIcon('.'))
         subwin.show()
+
+
+    def setText(self, s: str):
+        if not s:
+            s = 'NPC对话'
+        self.label.setText(s)
 
 
 class _NPCChatFrameContent(QD_NodeContent):
