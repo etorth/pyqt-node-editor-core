@@ -15,7 +15,7 @@ class QD_StateNode(QD_Serializable):
 
     icon = ""
 
-    def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In, SocketType.Out_0, SocketType.Out_1}):
+    def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
         super().__init__()
         self._title = '状态节点'
         self.scene = scene
@@ -156,8 +156,8 @@ class QD_StateNode(QD_Serializable):
 
 
     def getOutSocketCount(self):
-        if SocketType.Out_1 in self.getSocketTypeSet():
-            if SocketType.Out_0 in self.getSocketTypeSet():
+        if SocketType.Out_True in self.getSocketTypeSet():
+            if SocketType.Out_False in self.getSocketTypeSet():
                 return 2
             else:
                 return 1
@@ -177,7 +177,7 @@ class QD_StateNode(QD_Serializable):
 
         y_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_out_spacing)
 
-        if type is SocketType.Out_1:
+        if type is SocketType.Out_True:
             return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2)
         else:
             return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2 + y_spacing)

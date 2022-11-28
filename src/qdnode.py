@@ -20,7 +20,7 @@ class QD_Node(QD_Serializable):
     icon = ""
     op_title = "Undefined"
 
-    def __init__(self, scene: 'QD_StateScene', sockets: set = {SocketType.In, SocketType.Out_0, SocketType.Out_1}):
+    def __init__(self, scene: 'QD_StateScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
         super().__init__()
         self._title = self.__class__.op_title
         self.scene = scene
@@ -170,13 +170,13 @@ class QD_Node(QD_Serializable):
 
 
     def getOutSocketCount(self):
-        if SocketType.Out_1 in self.getSocketTypeSet():
-            if SocketType.Out_0 in self.getSocketTypeSet():
-                return 2
-            else:
-                return 1
-        else:
-            return 0
+        count = 0
+        sockset = self.getSocketTypeSet()
+
+        for socktype in [SocketType.Out_True, SocketType.Out_False]:
+            if socktype in sockset:
+                count += 1
+        return count
 
 
     def getSocketPosition(self, type: SocketType) -> QPointF:
@@ -191,7 +191,7 @@ class QD_Node(QD_Serializable):
 
         y_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_out_spacing)
 
-        if type is SocketType.Out_1:
+        if type is SocketType.Out_True:
             return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2)
         else:
             return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2 + y_spacing)

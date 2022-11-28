@@ -6,17 +6,9 @@ from PyQt6.QtWidgets import *
 
 @unique
 class SocketType(int, Enum):
-    In = -1
-    Out_0 = 0
-    Out_1 = 1
-    Out_2 = 2
-    Out_3 = 3
-    Out_4 = 4
-    Out_5 = 5
-    Out_6 = 6
-    Out_7 = 7
-    Out_8 = 8
-    Out_9 = 9
+    In = 0
+    Out_True = 1
+    Out_False = 2
 
     @property
     def is_In(self) -> bool:
@@ -50,8 +42,8 @@ class QD_SocketGfx(QGraphicsItem):
     def getSocketColor(socktype: SocketType) -> QColor:
         match socktype:
             case SocketType.In       : return QColor("#FF0056a6")
-            case SocketType.Out_1 : return QColor("#FF52e220")
-            case SocketType.Out_0: return QColor("#FFf20316")
+            case SocketType.Out_True : return QColor("#FF52e220")
+            case SocketType.Out_False: return QColor("#FFf20316")
             case                    _: raise ValueError("Unknown socktype %s" % socktype)
 
     def changeSocketType(self):

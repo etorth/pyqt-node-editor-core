@@ -67,7 +67,7 @@ class _ConditionChecker_level(QD_Node):
     NodeContent_class = _ConditionCheckerContent_level
 
     def __init__(self, scene):
-        super().__init__(scene, sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
+        super().__init__(scene, sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
         self.eval()
 
 

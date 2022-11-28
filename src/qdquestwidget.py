@@ -356,16 +356,16 @@ class QD_QuestWidget(QSplitter):
 
 
     def addNodes(self):
-        node1 = QD_Node(self.scene, "My Awesome QD_Node 1", sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
-        node2 = QD_Node(self.scene, "My Awesome QD_Node 2", sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
-        node3 = QD_Node(self.scene, "My Awesome QD_Node 3", sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
+        node1 = QD_Node(self.scene, "My Awesome QD_Node 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
+        node2 = QD_Node(self.scene, "My Awesome QD_Node 2", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
+        node3 = QD_Node(self.scene, "My Awesome QD_Node 3", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
         node1.setPos(-350, -250)
         node2.setPos(-75, 0)
         node3.setPos(200, -200)
 
-        edge1 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_1), node2.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
-        edge2 = QD_Edge(self.scene, node2.getSocket(SocketType.Out_1), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
-        edge3 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_1), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
+        edge1 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_True), node2.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
+        edge2 = QD_Edge(self.scene, node2.getSocket(SocketType.Out_True), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
+        edge3 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_True), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
 
         self.scene.history.storeInitialHistoryStamp()
 
@@ -384,7 +384,7 @@ class QD_QuestWidget(QSplitter):
             NodeContent_class = NNodeContent
 
         self.scene.setNodeClassSelector(lambda data: NNode)
-        node = NNode(self.scene, "A Custom QD_Node 1", sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
+        node = NNode(self.scene, "A Custom QD_Node 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
 
         print("node content:", node.content)
 
