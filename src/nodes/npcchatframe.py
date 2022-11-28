@@ -44,8 +44,41 @@ class _NPCChatSelection(QWidget):
 
 
     def onDeleteClicked(self, checked: bool):
-        self.in_layout.removeWidget(self)
-        self.deleteLater()
+        msgbox = QMessageBox()
+        msgbox.setWindowTitle('删除对话选项')
+        msgbox.setIcon(QMessageBox.Icon.Warning)
+        msgbox.setText('确定要删除这个对话选项吗？')
+        msgbox.setStandardButtons(QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No)
+        msgbox.setDefaultButton(QMessageBox.StandardButton.No)
+        ret = msgbox.exec()
+
+        if ret == QMessageBox.StandardButton.Yes:
+            self.in_layout.removeWidget(self)
+            self.deleteLater()
+
+
+class _NPCChatSelectionPannel(QWidget):
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.actions = []
+        self.initActions()
+
+
+    def initActions(self):
+        self.actions.append(QAction(QIcon('icons/state.png'), '添加状态', triggered=self.onAddNewSelection))
+
+
+    def contextMenuEvent(self, event):
+        context_menu = QMenu(self)
+        for act in self.actions:
+            context_menu.addAction(act)
+
+        context_menu.exec(self.mapToGlobal(event.pos()))
+
+
+    def onAddNewSelection(self):
+        self.layout().insertWidget(self.layout().count() - 1, _NPCChatSelection(self.layout()), 1)
 
 
 class _NPCChatFrameEditor(QSplitter):
@@ -73,16 +106,18 @@ class _NPCChatFrameEditor(QSplitter):
             self.addWidget(content_widget)
 
         if 'CreateChatSelections':
-            selection_widget = QWidget()
+            selection_widget = _NPCChatSelectionPannel()
             self.selection_layout = QVBoxLayout(selection_widget)
 
             self.selection_layout.setSpacing(10)
             self.selection_layout.addWidget(QLabel('选择分支'))
 
-            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout))
-            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout))
-            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout))
-            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout))
+            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout), 1)
+            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout), 1)
+            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout), 1)
+            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout), 1)
+
+            self.selection_layout.addWidget(QFrame(), 1)
 
             self.addWidget(selection_widget)
 
