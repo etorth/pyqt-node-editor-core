@@ -103,11 +103,23 @@ class QD_SocketGfx(QGraphicsItem):
     @staticmethod
     def getSocketColor(socktype: SocketType) -> QColor:
         match socktype:
-            case SocketType.In       : return QColor("#FF0056a6")
-            case SocketType.Out_True : return QColor("#FF52e220")
-            case SocketType.Out_False: return QColor("#FFf20316")
-            case                    _: return QColor("#FF00FF00")
-            # case                    _: raise ValueError("Unknown socktype %s" % socktype)
+            case SocketType.In:
+                return QColor("#FF0056a6")
+            case SocketType.Out_True:
+                return QColor("#FF52e220")
+            case SocketType.Out_False:
+                return QColor("#FFf20316")
+            case _:
+                min_r, max_r = 0.001, 0.700
+                min_g, max_g = 0.500, 1.000
+                min_b, max_b = 0.100, 0.300
+
+                ratio = socktype.as_index / (SocketType.IndexOut_max() - SocketType.IndexOut_min())
+                return QColor.fromRgbF(
+                        min_r * ratio + max_r * (1.0 - ratio),
+                        min_g * ratio + max_g * (1.0 - ratio),
+                        min_b * ratio + max_b * (1.0 - ratio))
+
 
     def changeSocketType(self):
         self._brush = QBrush(self.color)
