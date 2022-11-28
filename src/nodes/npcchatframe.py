@@ -165,7 +165,7 @@ class _NPCChatFrameEditor(QSplitter):
 
 
     def onNPCChanged(self, index: int):
-        self.node.content.gfx.setText('与%s的%s对话' % (self.map.currentText(), self.npc.currentText()))
+        self.node.content.gfx.setText('与<font color=yellow>%s</font>的<font color=yellow>%s</font>对话' % (self.map.currentText(), self.npc.currentText()))
 
 
     def onChatOutputsChanged(self):
