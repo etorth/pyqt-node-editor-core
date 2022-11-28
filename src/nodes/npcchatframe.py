@@ -9,10 +9,10 @@ from qdnodecontentgfx import *
 
 
 class _NPCChatSelection(QWidget):
-    def __init__(self, layout: QBoxLayout, parent: QWidget = None):
+    def __init__(self, node: QD_Node, parent: QWidget = None):
         super().__init__(parent)
 
-        self.in_layout = layout
+        self.node = node
         self.initUI()
 
 
@@ -46,17 +46,17 @@ class _NPCChatSelection(QWidget):
 
 
     def onUpClicked(self, checked: bool):
-        index = self.in_layout.indexOf(self)
+        index = self.node.content.gfx.editor.selections.indexOf(self)
         if index >= 1:
-            self.in_layout.removeWidget(self)
-            self.in_layout.insertWidget(index - 1, self)
+            self.node.content.gfx.editor.selections.removeWidget(self)
+            self.node.content.gfx.editor.selections.insertWidget(index - 1, self)
 
 
     def onDownClicked(self, checked: bool):
-        index = self.in_layout.indexOf(self)
-        if index >= 0 and index < self.in_layout.count() - 1:
-            self.in_layout.removeWidget(self)
-            self.in_layout.insertWidget(index + 1, self)
+        index = self.node.content.gfx.editor.selections.indexOf(self)
+        if index >= 0 and index < self.node.content.gfx.editor.selections.count() - 1:
+            self.node.content.gfx.editor.selections.removeWidget(self)
+            self.node.content.gfx.editor.selections.insertWidget(index + 1, self)
 
 
     def onDeleteClicked(self, checked: bool):
@@ -69,8 +69,10 @@ class _NPCChatSelection(QWidget):
         ret = msgbox.exec()
 
         if ret == QMessageBox.StandardButton.Yes:
-            self.in_layout.removeWidget(self)
+            self.node.content.gfx.editor.selections.removeWidget(self)
             self.deleteLater()
+
+        self.node.content.gfx.editor.onChatOutputsChanged()
 
 
 class _NPCChatSelectionPannel(QWidget):
@@ -151,13 +153,13 @@ class _NPCChatFrameEditor(QSplitter):
             right_pannel_layout.addWidget(QLabel('选择分支'), 0)
 
             if 'InsertSelections':
-                insertions_layout = QVBoxLayout()
-                right_pannel_layout.addLayout(insertions_layout, 1)
+                self.selections = QVBoxLayout()
+                right_pannel_layout.addLayout(self.selections, 1)
 
-                insertions_layout.addWidget(_NPCChatSelection(insertions_layout))
-                insertions_layout.addWidget(_NPCChatSelection(insertions_layout))
-                insertions_layout.addWidget(_NPCChatSelection(insertions_layout))
-                insertions_layout.addWidget(_NPCChatSelection(insertions_layout))
+                self.selections.addWidget(_NPCChatSelection(self.node))
+                self.selections.addWidget(_NPCChatSelection(self.node))
+                self.selections.addWidget(_NPCChatSelection(self.node))
+                self.selections.addWidget(_NPCChatSelection(self.node))
 
             right_pannel_layout.addWidget(QFrame(), 1)
 
@@ -166,16 +168,22 @@ class _NPCChatFrameEditor(QSplitter):
         self.node.content.gfx.setText('与%s的%s对话' % (self.map.currentText(), self.npc.currentText()))
 
 
+    def onChatOutputsChanged(self):
+        self.node.content.gfx.setOutputs([SocketType.In] + [SocketType(index + SocketType.IndexOut_min()) for index in range(0, self.selections.count())])
+
+
 class _NPCChatFrameContentGfx(QD_NodeContentGfx):
     def initUI(self):
+        self.editor = None
         self.label = QLabel('NPC对话')
+
         self.box = QVBoxLayout(self)
         self.box.addWidget(self.label)
 
 
     def mouseDoubleClickEvent(self, event):
-        chateditor = _NPCChatFrameEditor(self.node)
-        subwin = utils.main_window.mdiArea.addSubWindow(chateditor)
+        self.editor = _NPCChatFrameEditor(self.node)
+        subwin = utils.main_window.mdiArea.addSubWindow(self.editor)
         subwin.setWindowIcon(QIcon('.'))
         subwin.show()
 
@@ -184,6 +192,10 @@ class _NPCChatFrameContentGfx(QD_NodeContentGfx):
         if not s:
             s = 'NPC对话'
         self.label.setText(s)
+
+
+    def setOutputs(self, sockets):
+        self.node.initSockets(sockets, True)
 
 
 class _NPCChatFrameContent(QD_NodeContent):

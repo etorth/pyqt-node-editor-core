@@ -24,12 +24,12 @@ class SocketType(int, Enum):
 
     @staticmethod
     def IndexOut_min():
-        return IndexOut_0
+        return SocketType.IndexOut_0
 
 
     @staticmethod
     def IndexOut_max():
-        return IndexOut_9
+        return SocketType.IndexOut_9
 
 
     @property
@@ -59,13 +59,13 @@ class SocketType(int, Enum):
 
     @property
     def is_index(self) -> bool:
-        return self >= SocketType.IndexOut_min and self <= SocketType.IndexOut_max
+        return self >= SocketType.IndexOut_min() and self <= SocketType.IndexOut_max()
 
 
     @property
     def as_index(self) -> int:
         if self.is_index:
-            return self - SocketType.IndexOut_min
+            return self - SocketType.IndexOut_min()
         else:
             raise ValueError(self)
 
@@ -96,7 +96,8 @@ class QD_SocketGfx(QGraphicsItem):
             case SocketType.In       : return QColor("#FF0056a6")
             case SocketType.Out_True : return QColor("#FF52e220")
             case SocketType.Out_False: return QColor("#FFf20316")
-            case                    _: raise ValueError("Unknown socktype %s" % socktype)
+            case                    _: return QColor("#FF00FF00")
+            # case                    _: raise ValueError("Unknown socktype %s" % socktype)
 
     def changeSocketType(self):
         self._brush = QBrush(self.color)
