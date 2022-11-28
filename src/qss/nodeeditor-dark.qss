@@ -15,6 +15,11 @@ QFrame,QDialog,QMainWindow {
 QSplitter,QMainWindow::separator {
     background:#474747
 }
+
+QSplitter::handle {
+    background:#575757;
+}
+
 QStatusBar {
     background:#373737;
     color:#ccc
