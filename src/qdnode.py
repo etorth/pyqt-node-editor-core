@@ -25,6 +25,11 @@ class QD_Node(QD_Serializable):
         self._title = self.__class__.op_title
         self.scene = scene
 
+        outtypes = set([sock.cast_type() for sock in sockets if sock is not SocketType.In])
+        if len(outtypes) > 1:
+            raise ValueError(sockets)
+
+
         # just to be sure, init these variables
         self.content = None
         self.gfx = None

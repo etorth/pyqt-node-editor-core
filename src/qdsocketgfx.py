@@ -70,6 +70,16 @@ class SocketType(int, Enum):
             raise ValueError(self)
 
 
+    @property
+    def cast_type(self):
+        if self.is_bool:
+            return bool
+        elif self.is_index:
+            return int
+        else:
+            raise ValueError(self)
+
+
 class QD_SocketGfx(QGraphicsItem):
     def __init__(self, socket: 'QD_Socket'):
         super().__init__(socket.node.gfx)
