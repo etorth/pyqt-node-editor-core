@@ -51,7 +51,7 @@ class _Container_repeat(QD_Node):
 
 
     def __init__(self, scene):
-        super().__init__(scene, sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
+        super().__init__(scene, sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
         self.eval()
 
 

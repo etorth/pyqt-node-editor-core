@@ -322,10 +322,10 @@ class QD_StateWidget(QSplitter):
             if new_calc_node.getSocket(SockType.In):
                 target_socket = new_calc_node.getSocket(SockType.In)
         else:
-            if new_calc_node.getSocket(SockType.Out_True):
-                target_socket = new_calc_node.getSocket(SockType.Out_True)
-            elif new_calc_node.getSocket(SockType.Out_False):
-                target_socket = new_calc_node.getSocket(SockType.Out_False)
+            if new_calc_node.getSocket(SockType.Out_1):
+                target_socket = new_calc_node.getSocket(SockType.Out_1)
+            elif new_calc_node.getSocket(SockType.Out_0):
+                target_socket = new_calc_node.getSocket(SockType.Out_0)
         return target_socket
 
     def finish_new_node_state(self, new_calc_node):
@@ -359,16 +359,16 @@ class QD_StateWidget(QSplitter):
 
 
     def addNodes(self):
-        node1 = QD_Node(self.scene, "My Awesome QD_Node 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
-        node2 = QD_Node(self.scene, "My Awesome QD_Node 2", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
-        node3 = QD_Node(self.scene, "My Awesome QD_Node 3", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
+        node1 = QD_Node(self.scene, "My Awesome QD_Node 1", sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
+        node2 = QD_Node(self.scene, "My Awesome QD_Node 2", sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
+        node3 = QD_Node(self.scene, "My Awesome QD_Node 3", sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
         node1.setPos(-350, -250)
         node2.setPos(-75, 0)
         node3.setPos(200, -200)
 
-        edge1 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_True), node2.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
-        edge2 = QD_Edge(self.scene, node2.getSocket(SocketType.Out_True), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
-        edge3 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_True), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
+        edge1 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_1), node2.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
+        edge2 = QD_Edge(self.scene, node2.getSocket(SocketType.Out_1), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
+        edge3 = QD_Edge(self.scene, node1.getSocket(SocketType.Out_1), node3.getSocket(SocketType.In), edge_type=EdgeType.Bezier)
 
         self.scene.history.storeInitialHistoryStamp()
 
@@ -387,7 +387,7 @@ class QD_StateWidget(QSplitter):
             NodeContent_class = NNodeContent
 
         self.scene.setNodeClassSelector(lambda data: NNode)
-        node = NNode(self.scene, "A Custom QD_Node 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
+        node = NNode(self.scene, "A Custom QD_Node 1", sockets={SocketType.In, SocketType.Out_0, SocketType.Out_1})
 
         print("node content:", node.content)
 

@@ -26,11 +26,11 @@ class QD_Socket(QD_Serializable):
 
     @property
     def is_input(self) -> bool:
-        return True if self.type == SocketType.In else False
+        return self.type.is_In
 
     @property
     def is_output(self) -> bool:
-        return True if self.type == SocketType.Out_True or self.type == SocketType.Out_False else False
+        return self.type.is_Out
 
     def delete(self):
         """Delete this QD_Socket from graphics scene for sure
