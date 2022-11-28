@@ -10,13 +10,65 @@ class SocketType(int, Enum):
     Out_True = 1
     Out_False = 2
 
+    IndexOut_0 = 10
+    IndexOut_1 = 11
+    IndexOut_2 = 12
+    IndexOut_3 = 13
+    IndexOut_4 = 14
+    IndexOut_5 = 15
+    IndexOut_6 = 16
+    IndexOut_7 = 17
+    IndexOut_8 = 18
+    IndexOut_9 = 19
+
+
+    @staticmethod
+    def IndexOut_min():
+        return IndexOut_0
+
+
+    @staticmethod
+    def IndexOut_max():
+        return IndexOut_9
+
+
     @property
     def is_In(self) -> bool:
         return self is SocketType.In
 
+
     @property
     def is_Out(self) -> bool:
         return not self.is_In
+
+
+    @property
+    def is_bool(self) -> bool:
+        return self in (SocketType.Out_True, SocketType.Out_False)
+
+
+    @property
+    def as_bool(self) -> bool:
+        if self is SocketType.Out_True:
+            return True
+        elif self is SocketType.Out_False:
+            return False
+        else:
+            raise ValueError(self)
+
+
+    @property
+    def is_index(self) -> bool:
+        return self >= SocketType.IndexOut_min and self <= SocketType.IndexOut_max
+
+
+    @property
+    def as_index(self) -> int:
+        if self.is_index:
+            return self - SocketType.IndexOut_min
+        else:
+            raise ValueError(self)
+
 
 class QD_SocketGfx(QGraphicsItem):
     def __init__(self, socket: 'QD_Socket'):
