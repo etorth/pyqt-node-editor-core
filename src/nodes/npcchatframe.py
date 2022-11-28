@@ -54,7 +54,7 @@ class _NPCChatSelection(QWidget):
 
     def onDownClicked(self, checked: bool):
         index = self.in_layout.indexOf(self)
-        if index >= 0 and index < self.in_layout.count() - 2:
+        if index >= 0 and index < self.in_layout.count() - 1:
             self.in_layout.removeWidget(self)
             self.in_layout.insertWidget(index + 1, self)
 
@@ -94,7 +94,8 @@ class _NPCChatSelectionPannel(QWidget):
 
 
     def onAddNewSelection(self):
-        self.layout().insertWidget(self.layout().count() - 1, _NPCChatSelection(self.layout()), 1)
+        selections_layout = self.layout().itemAt(1).layout()
+        selections_layout.addWidget(_NPCChatSelection(selections_layout))
 
 
 class _NPCChatFrameEditor(QSplitter):
@@ -138,20 +139,24 @@ class _NPCChatFrameEditor(QSplitter):
                 left_pannel_layout.addWidget(self.comment)
 
         if 'CreateChatSelections':
-            selection_widget = _NPCChatSelectionPannel()
-            self.addWidget(selection_widget)
+            right_pannel = _NPCChatSelectionPannel()
+            self.addWidget(right_pannel)
 
-            self.selection_layout = QVBoxLayout(selection_widget)
+            right_pannel_layout = QVBoxLayout(right_pannel)
+            right_pannel_layout.setSpacing(10)
 
-            self.selection_layout.setSpacing(10)
-            self.selection_layout.addWidget(QLabel('选择分支'))
+            right_pannel_layout.addWidget(QLabel('选择分支'), 0)
 
-            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout), 1)
-            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout), 1)
-            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout), 1)
-            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout), 1)
+            if 'InsertSelections':
+                insertions_layout = QVBoxLayout()
+                right_pannel_layout.addLayout(insertions_layout, 1)
 
-            self.selection_layout.addWidget(QFrame(), 1)
+                insertions_layout.addWidget(_NPCChatSelection(insertions_layout))
+                insertions_layout.addWidget(_NPCChatSelection(insertions_layout))
+                insertions_layout.addWidget(_NPCChatSelection(insertions_layout))
+                insertions_layout.addWidget(_NPCChatSelection(insertions_layout))
+
+            right_pannel_layout.addWidget(QFrame(), 1)
 
 
 class _NPCChatFrameContentGfx(QD_NodeContentGfx):
