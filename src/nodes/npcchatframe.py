@@ -15,19 +15,30 @@ class _NPCChatSelection(QWidget):
 
 
     def initUI(self):
-        vbox = QVBoxLayout(self)
-        hbox = QHBoxLayout()
+        hbox = QHBoxLayout(self)
+        if 'CreateLeftPannel':
+            self.text = QLineEdit()
+            self.comment = QTextEdit()
 
-        self.text = QLineEdit()
-        self.close = QCheckBox('关闭界面')
+            vbox = QVBoxLayout()
+            hbox.addLayout(vbox)
 
-        hbox.addWidget(self.text)
-        hbox.addWidget(self.close)
+            vbox.addWidget(self.text)
+            vbox.addWidget(self.comment)
 
-        vbox.addLayout(hbox)
+        if 'CreateRightPannel':
+            delete_button = QPushButton('删除选项')
+            delete_button.setToolTip('从对话中删除当前选项')
 
-        self.comment = QTextEdit()
-        vbox.addWidget(self.comment)
+            close_box = QCheckBox('关闭界面')
+            close_box.setToolTip('对话时选择此选项将关闭对话界面')
+
+            vbox = QVBoxLayout()
+            hbox.addLayout(vbox)
+
+            vbox.addWidget(delete_button)
+            vbox.addWidget(close_box)
+
 
 class _NPCChatFrameEditor(QSplitter):
     def __init__(self, parent: QWidget = None):
