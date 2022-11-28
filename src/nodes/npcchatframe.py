@@ -30,12 +30,18 @@ class _NPCChatSelection(QWidget):
         button_down   = QPushButton('下移选项')
         button_delete = QPushButton('删除选项')
 
+        button_delete.clicked.connect(self.onDeleteClicked)
+
         vbox = QVBoxLayout()
         vbox.addWidget(button_up)
         vbox.addWidget(button_down)
         vbox.addWidget(button_delete)
 
         self.gbox.addLayout(vbox, 1, 1)
+
+
+    def onDeleteClicked(self, checked: bool):
+        print('onDeleteClicked', checked)
 
 
 class _NPCChatFrameEditor(QSplitter):

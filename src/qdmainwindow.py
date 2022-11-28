@@ -226,15 +226,15 @@ class QD_MainWindow(QMainWindow):
             active = self.getCurrentStateNodeWidget()
             hasMdiChild = (active is not None)
 
-            if not issubclass(type(active), QD_LuaEditor):
-                self.actPaste.setEnabled(hasMdiChild)
-
-                self.actCut.setEnabled(hasMdiChild and active.hasSelectedItems())
-                self.actCopy.setEnabled(hasMdiChild and active.hasSelectedItems())
-                self.actDelete.setEnabled(hasMdiChild and active.hasSelectedItems())
-
-                self.actUndo.setEnabled(hasMdiChild and active.canUndo())
-                self.actRedo.setEnabled(hasMdiChild and active.canRedo())
+            # if not issubclass(type(active), QD_LuaEditor):
+            #     self.actPaste.setEnabled(hasMdiChild)
+            #
+            #     self.actCut.setEnabled(hasMdiChild and active.hasSelectedItems())
+            #     self.actCopy.setEnabled(hasMdiChild and active.hasSelectedItems())
+            #     self.actDelete.setEnabled(hasMdiChild and active.hasSelectedItems())
+            #
+            #     self.actUndo.setEnabled(hasMdiChild and active.canUndo())
+            #     self.actRedo.setEnabled(hasMdiChild and active.canRedo())
         except Exception as e:
             utils.dumpExcept(e)
 
