@@ -9,8 +9,10 @@ from qdnodecontentgfx import *
 
 
 class _NPCChatSelection(QWidget):
-    def __init__(self, parent: QWidget = None):
+    def __init__(self, layout: QBoxLayout, parent: QWidget = None):
         super().__init__(parent)
+
+        self.in_layout = layout
         self.initUI()
 
 
@@ -36,12 +38,14 @@ class _NPCChatSelection(QWidget):
         vbox.addWidget(button_up)
         vbox.addWidget(button_down)
         vbox.addWidget(button_delete)
+        vbox.addWidget(QFrame())
 
         self.gbox.addLayout(vbox, 1, 1)
 
 
     def onDeleteClicked(self, checked: bool):
-        print('onDeleteClicked', checked)
+        self.in_layout.removeWidget(self)
+        self.deleteLater()
 
 
 class _NPCChatFrameEditor(QSplitter):
@@ -70,15 +74,15 @@ class _NPCChatFrameEditor(QSplitter):
 
         if 'CreateChatSelections':
             selection_widget = QWidget()
-            content_layout = QVBoxLayout(selection_widget)
+            self.selection_layout = QVBoxLayout(selection_widget)
 
-            content_layout.setSpacing(10)
-            content_layout.addWidget(QLabel('选择分支'))
+            self.selection_layout.setSpacing(10)
+            self.selection_layout.addWidget(QLabel('选择分支'))
 
-            content_layout.addWidget(_NPCChatSelection())
-            content_layout.addWidget(_NPCChatSelection())
-            content_layout.addWidget(_NPCChatSelection())
-            content_layout.addWidget(_NPCChatSelection())
+            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout))
+            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout))
+            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout))
+            self.selection_layout.addWidget(_NPCChatSelection(self.selection_layout))
 
             self.addWidget(selection_widget)
 
