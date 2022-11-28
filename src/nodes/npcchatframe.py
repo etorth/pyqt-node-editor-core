@@ -90,10 +90,23 @@ class _NPCChatFrameEditor(QSplitter):
 
 
     def initUI(self):
-        if 'CreateChatContent':
+        if 'CreateChatNPC':
             content_widget = QWidget()
             content_layout = QVBoxLayout(content_widget)
             content_layout.setSpacing(10)
+
+            content_layout.addWidget(QLabel('聊天对象'))
+
+            npc_hbox = QHBoxLayout()
+            content_layout.addLayout(npc_hbox)
+
+            self.map = QComboBox()
+            self.map.addItems(["道馆", "比奇省", "边境城市"])
+            npc_hbox.addWidget(self.map)
+
+            self.npc = QComboBox()
+            self.npc.addItems(["张三", "李四", "王五"])
+            npc_hbox.addWidget(self.npc)
 
             self.content = QTextEdit()
             content_layout.addWidget(QLabel('聊天内容'))
