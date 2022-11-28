@@ -8,6 +8,22 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
+class _NPCChatSelection(QWidget):
+    def __init__(self, parent: QWidget = None):
+        super().__init__(parent)
+        self.initUI()
+
+
+    def initUI(self):
+        self.layout = QHBoxLayout(self)
+        self.text = QLineEdit()
+
+        self.layout.addWidget(self.text)
+
+        self.close = QCheckBox('关闭聊天界面')
+        self.layout.addWidget(self.close)
+
+
 class _NPCChatFrameEditor(QSplitter):
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
@@ -17,11 +33,31 @@ class _NPCChatFrameEditor(QSplitter):
 
 
     def initUI(self):
-        self.chat = QTextEdit()
-        self.addWidget(self.chat)
+        if 'CreateChatContent':
+            content_widget = QWidget()
+            content_layout = QVBoxLayout(content_widget)
+            content_layout.setSpacing(10)
 
-        self.list = QTextEdit()
-        self.addWidget(self.list)
+            content_layout.addWidget(QLabel('聊天内容'))
+
+            self.content = QTextEdit()
+            content_layout.addWidget(self.content)
+
+            self.addWidget(content_widget)
+
+        if 'CreateChatSelection':
+            selection_widget = QWidget()
+            content_layout = QVBoxLayout(selection_widget)
+
+            content_layout.setSpacing(10)
+            content_layout.addWidget(QLabel('选择分支'))
+
+            content_layout.addWidget(_NPCChatSelection())
+            content_layout.addWidget(_NPCChatSelection())
+            content_layout.addWidget(_NPCChatSelection())
+            content_layout.addWidget(_NPCChatSelection())
+
+            self.addWidget(selection_widget)
 
 
 class _NPCChatFrameContentGfx(QD_NodeContentGfx):
