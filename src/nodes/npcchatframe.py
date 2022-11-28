@@ -32,6 +32,8 @@ class _NPCChatSelection(QWidget):
         button_down   = QPushButton('下移选项')
         button_delete = QPushButton('删除选项')
 
+        button_up.clicked.connect(self.onUpClicked)
+        button_down.clicked.connect(self.onDownClicked)
         button_delete.clicked.connect(self.onDeleteClicked)
 
         vbox = QVBoxLayout()
@@ -41,6 +43,20 @@ class _NPCChatSelection(QWidget):
         vbox.addWidget(QFrame())
 
         self.gbox.addLayout(vbox, 1, 1)
+
+
+    def onUpClicked(self, checked: bool):
+        index = self.in_layout.indexOf(self)
+        if index >= 1:
+            self.in_layout.removeWidget(self)
+            self.in_layout.insertWidget(index - 1, self)
+
+
+    def onDownClicked(self, checked: bool):
+        index = self.in_layout.indexOf(self)
+        if index >= 0 and index < self.in_layout.count() - 2:
+            self.in_layout.removeWidget(self)
+            self.in_layout.insertWidget(index + 1, self)
 
 
     def onDeleteClicked(self, checked: bool):
