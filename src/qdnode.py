@@ -204,7 +204,7 @@ class QD_Node(QD_Serializable):
         if self.output_type is bool or self.getOutSocketCount() == 2:
             y_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_out_spacing)
 
-            if socktype is SocketType.Out_True:
+            if socktype is SocketType.Out_True or socktype is SocketType.IndexOut_0:
                 return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2)
             else:
                 return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2 + y_spacing)

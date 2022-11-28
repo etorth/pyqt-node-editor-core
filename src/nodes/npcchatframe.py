@@ -76,9 +76,10 @@ class _NPCChatSelection(QWidget):
 
 
 class _NPCChatSelectionPannel(QWidget):
-    def __init__(self, parent: QWidget = None):
+    def __init__(self, node: QD_Node, parent: QWidget = None):
         super().__init__(parent)
 
+        self.node = node
         self.actions = []
         self.initActions()
 
@@ -96,8 +97,7 @@ class _NPCChatSelectionPannel(QWidget):
 
 
     def onAddNewSelection(self):
-        selections_layout = self.layout().itemAt(1).layout()
-        selections_layout.addWidget(_NPCChatSelection(selections_layout))
+        self.node.content.gfx.editor.selections.addWidget(_NPCChatSelection(self.node))
 
 
 class _NPCChatFrameEditor(QSplitter):
@@ -144,7 +144,7 @@ class _NPCChatFrameEditor(QSplitter):
                 left_pannel_layout.addWidget(self.comment)
 
         if 'CreateChatSelections':
-            right_pannel = _NPCChatSelectionPannel()
+            right_pannel = _NPCChatSelectionPannel(self.node)
             self.addWidget(right_pannel)
 
             right_pannel_layout = QVBoxLayout(right_pannel)
