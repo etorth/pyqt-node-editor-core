@@ -18,7 +18,7 @@ class QD_QuestConfgGfx(QWidget):
         self.layout = QVBoxLayout(self)
         self.layout.setSpacing(10)
 
-        if "CreateQuestNameWidgets":
+        if "CreateQuestName":
             self.name = QLineEdit()
             self.name.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
@@ -28,7 +28,7 @@ class QD_QuestConfgGfx(QWidget):
             self.layout.addWidget(name_label)
             self.layout.addWidget(self.name)
 
-        if "CreateQuestDescriptionWidgets":
+        if "CreateQuestDescription":
             self.description = QTextEdit()
 
             description_label = QLabel("任务描述")
@@ -37,7 +37,7 @@ class QD_QuestConfgGfx(QWidget):
             self.layout.addWidget(description_label)
             self.layout.addWidget(self.description)
 
-        if "CreateQuestCommentWidgets":
+        if "CreateQuestComment":
             self.comment = QTextEdit()
 
             comment_label = QLabel("任务注释")
@@ -46,7 +46,22 @@ class QD_QuestConfgGfx(QWidget):
             self.layout.addWidget(comment_label)
             self.layout.addWidget(self.comment)
 
-        if "CreateQuestTriggerMethodWidgets":
+        if "CreateQuestAllocationMethods":
+            char_alloc_group_box = QGroupBox("角色分配方式")
+            char_alloc_group_box.setToolTip('选择角色分配方式')
+
+            char_alloced_by_order = QRadioButton("按队伍顺序")
+            char_alloced_random   = QRadioButton("随机")
+
+            char_alloced_by_order.setChecked(True)
+
+            char_alloc_layout = QVBoxLayout(char_alloc_group_box)
+            char_alloc_layout.addWidget(char_alloced_by_order)
+            char_alloc_layout.addWidget(char_alloced_random)
+
+            self.layout.addWidget(char_alloc_group_box)
+
+        if "CreateQuestTriggerMethods":
             trigger_group_box = QGroupBox("触发方式")
             trigger_group_box.setToolTip('选择任务触发方式')
 
