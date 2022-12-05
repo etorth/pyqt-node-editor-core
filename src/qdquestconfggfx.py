@@ -61,6 +61,28 @@ class QD_QuestConfgGfx(QWidget):
 
             self.layout.addWidget(trigger_group_box)
 
+        if "CreateQuestPlayerLimits":
+            player_limit_layout = QHBoxLayout()
+            player_limit_layout.setSpacing(5)
+
+            player_limit_layout.addWidget(QLabel("人数限制"))
+
+            self._attr_player_limit_min = QComboBox()
+            self._attr_player_limit_min.addItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
+            self._attr_player_limit_min.currentIndexChanged.connect(self.onAttrPlayerMinLimitChanged)
+            player_limit_layout.addWidget(self._attr_player_limit_min)
+
+            player_limit_layout.addWidget(QLabel("至"))
+
+            self._attr_player_limit_max = QComboBox()
+            self._attr_player_limit_max.addItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "无限制"])
+            player_limit_layout.addWidget(self._attr_player_limit_max)
+
+            player_limit_layout.addWidget(QLabel("人"))
+
+            player_limit_layout.addWidget(QFrame(), 1)
+
+            self.layout.addLayout(player_limit_layout)
 
         if "CreateQuestTimeoutWidgets":
             timeout_layout = QHBoxLayout()
@@ -85,3 +107,11 @@ class QD_QuestConfgGfx(QWidget):
         if self.timeout.text():
             if int(self.timeout.text()) <= 0:
                 self.timeout.setText("无限制")
+
+
+    def onAttrPlayerMinLimitChanged(self, index):
+        if self._attr_player_limit_max.currentIndex() < index:
+            self._attr_player_limit_max.setCurrentIndex(index)
+
+        for i in range(0, self._attr_player_limit_max.count()):
+            self._attr_player_limit_max.model().item(i).setEnabled(i >= index)
