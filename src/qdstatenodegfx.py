@@ -10,12 +10,10 @@ class _StateNodeTitleBox(QGraphicsTextItem):
         super().__init__(parent)
 
         self._color = Qt.GlobalColor.white
-        self._font = QFont("Ubuntu", 10)
 
         self.node = node
         self.setTextInteractionFlags(Qt.TextInteractionFlag.TextEditorInteraction)
         self.setDefaultTextColor(self._color)
-        self.setFont(self._font)
 
     def focusOutEvent(self, event: QFocusEvent):
         super().focusOutEvent(event)

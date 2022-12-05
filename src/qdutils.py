@@ -4,6 +4,7 @@ import pprint
 import traceback
 
 from PyQt6.QtCore import QFile
+from PyQt6.QtGui import QFontDatabase
 from PyQt6.QtWidgets import QApplication
 
 LISTBOX_MIMETYPE = "application/x-item"
@@ -46,6 +47,7 @@ class Utils:
     _node_type_list = {}
 
     _main_window = None
+    _mono_font_families = None
 
 
     @property
@@ -59,6 +61,16 @@ class Utils:
             self._main_window = win
         else:
             raise RuntimeError('Main window has already been created')
+
+    @property
+    def mono_font(self):
+        if self._mono_font_families is None:
+            mono_font_path = 'fonts/YaHeiMonacoHybrid.ttf'
+            loaded_font = QFontDatabase.addApplicationFont(mono_font_path)
+            if loaded_font < 0:
+                raise RuntimeError('Cannot load customized font: %s' % mono_font_path)
+            self._mono_font_families = QFontDatabase.applicationFontFamilies(loaded_font)
+        return self._mono_font_families[0]
 
     @classmethod
     def register_opnode(cls, node_type):
