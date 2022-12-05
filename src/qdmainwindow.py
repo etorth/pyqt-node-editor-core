@@ -282,9 +282,9 @@ class QD_MainWindow(QMainWindow):
     def createMdiChild(self, child_widget=None):
         if child_widget is None:
             child_widget = QD_QuestWidget()
+            child_widget.setWindowIcon(QIcon('icons/qd.png'))
 
         subwin = self.mdiArea.addSubWindow(child_widget)
-        subwin.setWindowIcon(self.empty_icon)
 
         # child_widget.scene.addItemSelectedListener(self.updateEditMenu)
         # child_widget.scene.addItemsDeselectedListener(self.updateEditMenu)
