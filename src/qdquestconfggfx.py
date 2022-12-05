@@ -66,16 +66,17 @@ class QD_QuestConfgGfx(QWidget):
             player_limit_layout.setSpacing(5)
 
             player_limit_layout.addWidget(QLabel("人数限制"))
+            player_limit_list = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"]
 
             self._attr_player_limit_min = QComboBox()
-            self._attr_player_limit_min.addItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"])
+            self._attr_player_limit_min.addItems(player_limit_list)
             self._attr_player_limit_min.currentIndexChanged.connect(self.onAttrPlayerMinLimitChanged)
             player_limit_layout.addWidget(self._attr_player_limit_min)
 
             player_limit_layout.addWidget(QLabel("至"))
 
             self._attr_player_limit_max = QComboBox()
-            self._attr_player_limit_max.addItems(["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "无限制"])
+            self._attr_player_limit_max.addItems(player_limit_list + ["无限制"])
             player_limit_layout.addWidget(self._attr_player_limit_max)
 
             player_limit_layout.addWidget(QLabel("人"))
