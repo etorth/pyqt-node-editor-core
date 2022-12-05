@@ -128,6 +128,8 @@ class QD_QuestWidget(QSplitter):
 
     def initNewNodeActions(self):
         self.node_actions = []
+        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加起始节点', triggered=self.onAddNewStateNode))
+        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加终止节点', triggered=self.onAddNewStateNode))
         self.node_actions.append(QAction(QIcon('icons/state.png'), '添加状态', triggered=self.onAddNewStateNode))
 
     def initNodesContextMenu(self):
