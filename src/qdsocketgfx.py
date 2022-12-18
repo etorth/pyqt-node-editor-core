@@ -136,11 +136,13 @@ class QD_SocketGfx(QGraphicsItem):
         self._pen_highlighted.setWidthF(2.0)
 
         self._brush = QBrush(self.color)
+        self._icon = QImage("icons/interrupt.png")
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         painter.setBrush(self._brush)
         painter.setPen(self._pen_highlighted if self.is_highlighted else self._pen)
         painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
+        painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._icon)
 
     def boundingRect(self) -> QRectF:
         return QRectF(-self.radius_outline, -self.radius_outline, 2 * self.radius_outline, 2 * self.radius_outline)
