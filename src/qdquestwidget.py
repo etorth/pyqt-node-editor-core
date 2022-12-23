@@ -250,7 +250,7 @@ class QD_QuestWidget(QSplitter):
                 item = item.widget()
 
             if hasattr(item, 'node') or hasattr(item, 'socket'):
-                self.handleNodeContextMenu(event)
+                self.handleNodeContextMenu(item.node, event)
             elif hasattr(item, 'edge'):
                 self.handleEdgeContextMenu(event)
             # elif item is None:
@@ -261,7 +261,7 @@ class QD_QuestWidget(QSplitter):
         except Exception as e:
             utils.dumpExcept(e)
 
-    def handleNodeContextMenu(self, event):
+    def handleNodeContextMenu(self, node, event):
         if confg.DEBUG:
             print("CONTEXT: NODE")
         context_menu = QMenu(self)
@@ -270,6 +270,11 @@ class QD_QuestWidget(QSplitter):
         markInvalidAct = context_menu.addAction("Mark Invalid")
         unmarkInvalidAct = context_menu.addAction("Unmark Invalid")
         evalAct = context_menu.addAction("Eval")
+
+        if SocketType.PulseIn in node.getSocketTypeSet():
+            delPulseAct = context_menu.addAction("Delete Pulse Input Socket")
+        else:
+            addPulseAct = context_menu.addAction("Add Pulse Input Socket")
 
         addNodeMenu = context_menu.addMenu('Add Node')
         addedActDict = {}
