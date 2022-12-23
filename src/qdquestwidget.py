@@ -149,7 +149,7 @@ class QD_QuestWidget(QSplitter):
         act.node_type = self.__class__.EndNode_class
         self.node_actions.append(act)
 
-        act = QAction(QIcon('icons/state.png'), '添加观察节点')
+        act = QAction(QIcon('icons/state.png'), '添加脉冲节点')
         act.node_type = self.__class__.InterruptNode_class
         self.node_actions.append(act)
 
