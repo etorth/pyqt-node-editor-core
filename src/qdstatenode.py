@@ -220,6 +220,17 @@ class QD_StateNode(QD_Serializable):
         self.updateSockets()
 
 
+    def deletePulseIn(self):
+        for socket in self.sockets:
+            if socket.type is SocketType.PulseIn:
+                for edge in socket.edges:
+                    if confg.DEBUG:
+                        print("    - removing from socket:", socket, "edge:", edge)
+                    edge.remove()
+                self.sockets.remove(socket)
+        self.updateSockets()
+
+
     def remove(self):
         """Safely remove this QD_StateNode
         """
