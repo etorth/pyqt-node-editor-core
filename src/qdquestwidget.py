@@ -12,8 +12,8 @@ from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
 from qdstatenode import *
 from statenodes.qdpulsenode import *
-from qdstartnode import *
-from qdendnode import *
+from statenodes.qdstartnode import *
+from statenodes.qdendnode import *
 from qdedge import *
 from qdviewgfx import MODE_EDGE_DRAG, QD_ViewGfx  # , MODE_EDGES_REROUTING
 from qdutils import *
