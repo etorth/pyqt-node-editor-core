@@ -421,7 +421,7 @@ class QD_ViewGfx(QGraphicsView):
 
         try:
             if isinstance(item, QD_SocketGfx):
-                if (item.socket != self.drag_start_socket) and (item.socket.type.is_in == self.drag_start_socket.type.is_out):
+                if (item.socket != self.drag_start_socket) and (item.socket.type.is_in == self.drag_start_socket.type.is_out) and (item.socket.type.is_pulse == self.drag_start_socket.type.is_pulse):
                     # if we released dragging on a socket (other then the beginning socket)
 
                     ## First remove old edges / send notifications
