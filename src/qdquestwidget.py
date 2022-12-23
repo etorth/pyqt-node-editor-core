@@ -270,7 +270,7 @@ class QD_QuestWidget(QSplitter):
 
     def onDeletePulseInSocket(self, node):
         def doDeletePulseInSocket():
-            node.deletePulseIn()
+            node.removePulseIn()
         return doDeletePulseInSocket
 
 

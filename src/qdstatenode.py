@@ -220,13 +220,14 @@ class QD_StateNode(QD_Serializable):
         self.updateSockets()
 
 
-    def deletePulseIn(self):
+    def removePulseIn(self):
         for socket in self.sockets:
             if socket.type is SocketType.PulseIn:
                 for edge in socket.edges:
                     if confg.DEBUG:
                         print("    - removing from socket:", socket, "edge:", edge)
                     edge.remove()
+                self.scene.gfx.removeItem(socket.gfx)
                 self.sockets.remove(socket)
         self.updateSockets()
 
