@@ -261,6 +261,17 @@ class QD_QuestWidget(QSplitter):
         except Exception as e:
             utils.dumpExcept(e)
 
+
+    def onAddPulseInSocket(self, node):
+        def doAddPulseInSocket():
+            node.addPulseIn()
+        return doAddPulseInSocket
+
+
+    def onDelPulseInSocket(self):
+        print('onDelPulseInSocket')
+
+
     def handleNodeContextMenu(self, node, event):
         if confg.DEBUG:
             print("CONTEXT: NODE")
@@ -272,9 +283,9 @@ class QD_QuestWidget(QSplitter):
         evalAct = context_menu.addAction("Eval")
 
         if SocketType.PulseIn in node.getSocketTypeSet():
-            delPulseAct = context_menu.addAction("Delete Pulse Input Socket")
+            context_menu.addAction("Delete Pulse Input Socket").triggered.connect(self.onDelPulseInSocket)
         else:
-            addPulseAct = context_menu.addAction("Add Pulse Input Socket")
+            context_menu.addAction("Add Pulse Input Socket").triggered.connect(self.onAddPulseInSocket(node))
 
         addNodeMenu = context_menu.addMenu('Add Node')
         addedActDict = {}

@@ -196,6 +196,14 @@ class QD_StateNode(QD_Serializable):
             sock.updateSocketPosition()
 
 
+    def addPulseIn(self):
+        if self.getSocket(SocketType.PulseIn):
+            return
+
+        self.sockets.append(self.__class__.Socket_class(node=self, socktype=SocketType.PulseIn))
+        self.updateSockets()
+
+
     def remove(self):
         """Safely remove this QD_StateNode
         """
