@@ -49,15 +49,18 @@ class QD_EdgeGfx(QGraphicsPathItem):
 
     def initAssets(self):
         """Initialize ``QObjects`` like ``QColor``, ``QPen`` and ``QBrush``"""
-        self._color = self._default_color = QColor("#001000")
+        self._color = QColor("#001000")
+        self._color_pulse = QColor("#009999")
         self._color_selected = QColor("#00ff00")
         self._color_hovered = QColor("#FF37A6FF")
         self._pen = QPen(self._color)
+        self._pen_pulse = QPen(self._color_pulse)
         self._pen_selected = QPen(self._color_selected)
         self._pen_dragging = QPen(self._color)
         self._pen_hovered = QPen(self._color_hovered)
         self._pen_dragging.setStyle(Qt.PenStyle.DashLine)
         self._pen.setWidthF(3.0)
+        self._pen_pulse.setWidthF(3.0)
         self._pen_selected.setWidthF(3.0)
         self._pen_dragging.setWidthF(3.0)
         self._pen_hovered.setWidthF(5.0)
@@ -155,7 +158,12 @@ class QD_EdgeGfx(QGraphicsPathItem):
         if self.edge.end_socket is None:
             painter.setPen(self._pen_dragging)
         else:
-            painter.setPen(self._pen if not self.isSelected() else self._pen_selected)
+            if self.isSelected():
+                painter.setPen(self._pen_selected)
+            elif self.edge.start_socket.type.is_pulse:
+                painter.setPen(self._pen_pulse)
+            else:
+                painter.setPen(self._pen)
 
         painter.drawPath(self.path())
 
