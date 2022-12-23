@@ -117,7 +117,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         self._brush_background = QBrush(QColor("#E3212121"))
 
         self._icons = QImage("icons/status_icons.png")
-        self._image = QImage("icons/pulse.png")
+        self._image = QImage("icons/dst.png")
 
     def onSelected(self):
         """Our event handling when the node was selected"""

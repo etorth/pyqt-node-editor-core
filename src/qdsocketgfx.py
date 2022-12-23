@@ -148,7 +148,7 @@ class QD_SocketGfx(QGraphicsItem):
         self._pen_highlighted.setWidthF(2.0)
 
         self._brush = QBrush(self.color)
-        self._icon = QImage("icons/interrupt.png")
+        self._icon = QImage("icons/socket_pulse.png")
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         painter.setBrush(self._brush)
