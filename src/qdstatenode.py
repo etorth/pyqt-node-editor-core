@@ -82,6 +82,7 @@ class QD_StateNode(QD_Serializable):
 
 
     def initSettings(self):
+        self._max_socket_in_spacing = 20
         self._max_socket_out_spacing = 30
 
 
@@ -163,22 +164,37 @@ class QD_StateNode(QD_Serializable):
         return count
 
 
+    def getInSocketCount(self):
+        count = 0
+        for socktype in self.getSocketTypeSet():
+            if socktype.is_in:
+                count += 1
+        return count
+
+
     def getSocketPosition(self, type: SocketType) -> QPointF:
         assert type in SocketType
         assert type in self.getSocketTypeSet()
 
-        if type is SocketType.In:
-            return QPointF(0, self.gfx.height / 2)
+        if type.is_in:
+            if self.getInSocketCount() == 1:
+                return QPointF(0, self.gfx.height / 2)
+            else:
+                y_in_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_in_spacing)
+                if type is SocketType.In:
+                    return QPointF(0, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_in_spacing) / 2)
+                else:
+                    return QPointF(0, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_in_spacing) / 2 + y_in_spacing)
 
         if self.getOutSocketCount() == 1:
             return QPointF(self.gfx.width, self.gfx.height / 2)
 
-        y_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_out_spacing)
+        y_out_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_out_spacing)
 
         if type is SocketType.Out_True:
-            return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2)
+            return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_out_spacing) / 2)
         else:
-            return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_spacing) / 2 + y_spacing)
+            return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_out_spacing) / 2 + y_out_spacing)
 
 
     def getSocketScenePosition(self, socket: 'QD_Socket') -> QPointF:
