@@ -131,9 +131,9 @@ class QD_QuestWidget(QSplitter):
         self.node_actions.append(QAction(QIcon('icons/state.png'), '添加起始节点', triggered=self.onAddNewStateNode))
         self.node_actions.append(QAction(QIcon('icons/state.png'), '添加终止节点', triggered=self.onAddNewStateNode))
         self.node_actions.append(QAction(QIcon('icons/state.png'), '添加观察节点', triggered=self.onAddNewStateNode))
-        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加状态', triggered=self.onAddNewStateNode))
+        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加状态节点', triggered=self.onAddNewStateNode))
 
-    def initNodesContextMenu(self):
+    def createNodesContextMenu(self):
         context_menu = QMenu(self)
         for action in self.node_actions:
             context_menu.addAction(action)
@@ -336,7 +336,7 @@ class QD_QuestWidget(QSplitter):
         if confg.DEBUG:
             print("CONTEXT: EMPTY SPACE in QS_QuestWidget")
 
-        context_menu = self.initNodesContextMenu()
+        context_menu = self.createNodesContextMenu()
         action = context_menu.exec(self.mapToGlobal(event.pos()))
 
         if action is not None:

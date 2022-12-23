@@ -134,7 +134,7 @@ class QD_StateWidget(QSplitter):
             self.node_actions[node.op_code] = QAction(QIcon(node.icon), node.op_title)
             self.node_actions[node.op_code].setData(node.op_code)
 
-    def initNodesContextMenu(self):
+    def createNodesContextMenu(self):
         context_menu = QMenu(self)
         for type in utils.valid_node_types():
             context_menu.addAction(self.node_actions[type.op_code])
@@ -337,7 +337,7 @@ class QD_StateWidget(QSplitter):
         if confg.DEBUG:
             print("CONTEXT: EMPTY SPACE")
 
-        context_menu = self.initNodesContextMenu()
+        context_menu = self.createNodesContextMenu()
         action = context_menu.exec(self.mapToGlobal(event.pos()))
 
         if action is not None:
