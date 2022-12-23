@@ -11,7 +11,7 @@ from qdquestscene import *
 from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
 from qdstatenode import *
-from qdpulsenode import *
+from statenodes.qdpulsenode import *
 from qdstartnode import *
 from qdendnode import *
 from qdedge import *
