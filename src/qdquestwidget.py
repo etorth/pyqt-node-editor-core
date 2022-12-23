@@ -11,6 +11,7 @@ from qdquestscene import *
 from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
 from qdstatenode import *
+from qdinterruptnode import *
 from qdedge import *
 from qdviewgfx import MODE_EDGE_DRAG, QD_ViewGfx  # , MODE_EDGES_REROUTING
 from qdutils import *
@@ -19,6 +20,7 @@ from qdutils import *
 class QD_QuestWidget(QSplitter):
     Scene_class = QD_QuestScene
     StateNode_class = QD_StateNode
+    InterruptNode_class = QD_InterruptNode
 
 
     def __init__(self, parent: QWidget = None):
@@ -126,11 +128,27 @@ class QD_QuestWidget(QSplitter):
     def onAddNewStateNode(self):
         print("onAddNewStateNode")
 
+    def onAddNewStateNode2(self):
+        print("onAddNewStateNode2")
+
+
+    def onAddNewInterruptNode(self):
+        print("onAddNewInterruptNode")
+
     def initNewNodeActions(self):
         self.node_actions = []
-        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加起始节点', triggered=self.onAddNewStateNode))
+        act = QAction(QIcon('icons/state.png'), '添加起始节点')
+        act.triggered.connect(self.onAddNewStateNode)
+        self.node_actions.append(act)
+
         self.node_actions.append(QAction(QIcon('icons/state.png'), '添加终止节点', triggered=self.onAddNewStateNode))
-        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加观察节点', triggered=self.onAddNewStateNode))
+
+
+        act = QAction(QIcon('icons/state.png'), '添加观察节点')
+        act.node_type = self.__class__.InterruptNode_class
+        self.node_actions.append(act)
+
+
         self.node_actions.append(QAction(QIcon('icons/state.png'), '添加状态节点', triggered=self.onAddNewStateNode))
 
     def createNodesContextMenu(self):
@@ -340,8 +358,13 @@ class QD_QuestWidget(QSplitter):
         action = context_menu.exec(self.mapToGlobal(event.pos()))
 
         if action is not None:
+            if hasattr(action, 'node_type'):
+                new_node_type = action.node_type
+            else:
+                new_node_type = self.__class__.StateNode_class
+
             print(action, 'in QD_QuestWidget')
-            new_state_node = self.__class__.StateNode_class(self.scene)
+            new_state_node = new_node_type(self.scene)
             scene_pos = self.scene.getView().mapToScene(event.pos() - self.view.pos())
             new_state_node.setPos(scene_pos.x(), scene_pos.y())
             if confg.DEBUG:
