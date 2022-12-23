@@ -117,6 +117,10 @@ class QD_SocketGfx(QGraphicsItem):
                 return QColor("#FF52e220")
             case SocketType.Out_False:
                 return QColor("#FFf20316")
+            case SocketType.PulseIn:
+                return QColor("#FF2ac6a6")
+            case SocketType.PulseOut:
+                return QColor("#FF2af6a6")
             case _:
                 min_r, max_r = 0.001, 0.700
                 min_g, max_g = 0.500, 1.000
