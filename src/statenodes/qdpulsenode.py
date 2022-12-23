@@ -6,6 +6,7 @@ from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 from qdstatenode import QD_StateNode
+from qdstatenodegfx import QD_StateNodeGfx
 
 
 class QD_PulseNode(QD_StateNode):
