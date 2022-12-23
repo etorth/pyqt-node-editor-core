@@ -88,7 +88,7 @@ class QD_StateNode(QD_Serializable):
     def initSockets(self, sockets, reset: bool = True):
         if reset:
             for sock in self.sockets:
-                self.scene.gfx.removeItem(socket.gfx)
+                self.scene.gfx.removeItem(sock.gfx)
             self.sockets = []
 
         for type in sockets:
@@ -156,13 +156,11 @@ class QD_StateNode(QD_Serializable):
 
 
     def getOutSocketCount(self):
-        if SocketType.Out_True in self.getSocketTypeSet():
-            if SocketType.Out_False in self.getSocketTypeSet():
-                return 2
-            else:
-                return 1
-        else:
-            return 0
+        count = 0
+        for socktype in self.getSocketTypeSet():
+            if socktype.is_out:
+                count += 1
+        return count
 
 
     def getSocketPosition(self, type: SocketType) -> QPointF:
