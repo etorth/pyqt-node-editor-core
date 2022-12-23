@@ -21,6 +21,9 @@ class SocketType(int, Enum):
     IndexOut_8 = 18
     IndexOut_9 = 19
 
+    PulseIn = 100
+    PulseOut = 101
+
 
     @staticmethod
     def IndexOut_min():
@@ -34,12 +37,17 @@ class SocketType(int, Enum):
 
     @property
     def is_In(self) -> bool:
-        return self is SocketType.In
+        return self in (SocketType.In, SocketType.PulseIn)
 
 
     @property
     def is_Out(self) -> bool:
         return not self.is_In
+
+
+    @property
+    def is_pulse(self) -> bool:
+        return self in (SocketType.PulseIn, SocketType.PulseOut)
 
 
     @property
