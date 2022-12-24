@@ -392,11 +392,7 @@ class QD_StateWidget(QSplitter):
 
 
     def serialize(self) -> dict:
-        return {
-            'version': confg.APP_VERSION,
-            'confg': self.confg.serialize(),
-            'scene': self.scene.serialize(),
-        }
+        return {'version': confg.APP_VERSION, 'confg': self.confg.serialize(), 'scene': self.scene.serialize()}
 
 
     def addDebugContent(self):
