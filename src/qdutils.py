@@ -3,8 +3,8 @@ import bisect
 import pprint
 import traceback
 
-from PyQt6.QtCore import QFile
-from PyQt6.QtGui import QFontDatabase
+from PyQt6.QtCore import QFile, QRectF
+from PyQt6.QtGui import QFontDatabase, QImage, QPainter
 from PyQt6.QtWidgets import QApplication
 
 LISTBOX_MIMETYPE = "application/x-item"
@@ -49,6 +49,7 @@ class Utils:
     _main_window = None
     _mono_font_families = None
 
+    _node_state_icons = QImage("icons/status_icons.png")
 
     @property
     def main_window(self):
@@ -97,6 +98,20 @@ class Utils:
 
     def __init__(self):
         self._pprint = pprint.PrettyPrinter(indent=4)
+
+
+    def draw_node_state_icon(self, painter: QPainter, index: int, x: float, y: float, topleft: bool = True):
+        icon_size = 24.0
+        if not topleft:
+            x -= icon_size / 2.0
+            y -= icon_size / 2.0
+
+        match index % 3:
+            case 0: offset = icon_size * 1
+            case 1: offset = icon_size * 0
+            case _: offset = icon_size * 2
+
+        painter.drawImage(QRectF(x, y, icon_size, icon_size), self._node_state_icons, QRectF(offset, 0, icon_size, icon_size))
 
 
     def printObj(self, obj):
