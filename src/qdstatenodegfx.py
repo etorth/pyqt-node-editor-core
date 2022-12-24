@@ -186,6 +186,13 @@ class QD_StateNodeGfx(QGraphicsItem):
         return QRectF(0, 0, self.width, self.height).normalized()
 
 
+    def title_background_brush(self) -> QBrush:
+        for root in self.node.getRoots():
+            if hasattr(root, 'index'):
+                return QBrush(utils.player_color(root.index))
+        return self._brush_title
+
+
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         """Painting the rounded rectanglar `QD_Node`"""
         # title
@@ -195,7 +202,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         path_title.addRect(0, self.title_height - self.edge_roundness, self.edge_roundness, self.edge_roundness)
         path_title.addRect(self.width - self.edge_roundness, self.title_height - self.edge_roundness, self.edge_roundness, self.edge_roundness)
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(self._brush_title)
+        painter.setBrush(self.title_background_brush())
         painter.drawPath(path_title.simplified())
 
         painter.setPen(self._pen_text)

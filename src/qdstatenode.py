@@ -407,7 +407,7 @@ class QD_StateNode(QD_Serializable):
         sockin = self.getSocket(SocketType.In)
         if sockin is None:
             return None
-        return [edge.getOtherSocket(sockin).node for edge in sockin.edges]
+        return [edge.getOtherSocket(sockin).node for edge in sockin.edges if hasattr(edge.getOtherSocket(sockin), 'node')]
 
     def getOutput(self, socktype: SocketType):
         sockout = self.getSocket(socktype)
@@ -437,7 +437,7 @@ class QD_StateNode(QD_Serializable):
         result = []
         nextnodes = [self]
 
-        while not nextnodes:
+        while nextnodes:
             currnode = nextnodes.pop(0)
             inputs = currnode.getInputs()
 
