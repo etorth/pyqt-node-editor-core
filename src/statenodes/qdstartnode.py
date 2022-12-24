@@ -53,12 +53,15 @@ class _StartNodeGfx(QGraphicsItem):
 
     def initAssets(self):
         self._color = QColor("#7F000000")
+        self._color_text = QColor("#FFFFFFFF")
         self._color_hovered = QColor("#FF37A6FF")
         self._color_selected = QColor("#FFF7862F")
         self._color_hover_selected = QColor("#FFFFA637")
 
         self._pen_default = QPen(self._color)
         self._pen_default.setWidthF(2.0)
+        self._pen_text = QPen(self._color_text)
+        self._pen_text.setWidthF(2.0)
         self._pen_selected = QPen(self._color_selected)
         self._pen_selected.setWidthF(2.0)
         self._pen_hovered = QPen(self._color_hovered)
@@ -142,7 +145,8 @@ class _StartNodeGfx(QGraphicsItem):
         text_y = max(0, (self.height - self._rect_text_height) / 2)
         text_w = self.width  - 2 * text_x
         text_h = self.height - 2 * text_y
-        painter.drawText(QRectF(text_x, text_y, text_w, text_h), Qt.AlignmentFlag.AlignCenter, "Start")
+        painter.setPen(self._pen_text)
+        painter.drawText(QRectF(text_x, text_y, text_w, text_h), Qt.AlignmentFlag.AlignCenter, "10")
 
         path_outline = QPainterPath()
         path_outline.addEllipse(QRectF(-1, -1, self.width + 2, self.height + 2))
