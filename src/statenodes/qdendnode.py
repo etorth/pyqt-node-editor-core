@@ -44,8 +44,10 @@ class _EndNodeGfx(QGraphicsItem):
 
 
     def initSizes(self):
-        self._rect_width = 100
-        self._rect_height = 80
+        self._rect_width  = 60
+        self._rect_height = 50
+        self._rect_image_width  = 40
+        self._rect_image_height = 40
 
 
     def initAssets(self):
@@ -66,7 +68,6 @@ class _EndNodeGfx(QGraphicsItem):
         self._brush_title = QBrush(QColor("#FF313131"))
         self._brush_background = QBrush(QColor("#E3212121"))
 
-        self._icons = QImage("icons/status_icons.png")
         self._image = QImage("icons/dst.png")
 
     def onSelected(self):
@@ -142,8 +143,14 @@ class _EndNodeGfx(QGraphicsItem):
             painter.setPen(self._pen_selected if self.isSelected() else self._pen_default)
             painter.drawPath(path_outline.simplified())
 
+        img_x = max(0, (self.width  - self._rect_image_width ) / 2)
+        img_y = max(0, (self.height - self._rect_image_height) / 2)
 
-        painter.drawImage(QRectF(25, 20, 50, 50), self._image)
+        img_w = self.width  - 2 * img_x
+        img_h = self.height - 2 * img_y
+
+        painter.drawImage(QRectF(img_x, img_y, img_w, img_h), self._image)
+
         if self.node.isDirty():
             utils.draw_node_state_icon(painter, 1, self.width / 2, 0, False)
         elif self.node.isInvalid():
