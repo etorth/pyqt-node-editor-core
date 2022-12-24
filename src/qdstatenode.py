@@ -418,6 +418,36 @@ class QD_StateNode(QD_Serializable):
             return sockout.edges[0].getOtherSocket(sockout).node
         return None
 
+
+    def getRoots(self):
+        """can be more than one root node
+
+           +---+        +---+       +---+
+           | 1 +--------+ 2 +-------+ 4 |
+           |   |.....   +---+    +--+   |
+           +---+    .            |  +---+
+                    .            |
+                    .   +---+    |
+                    ....| 3 +----+
+                        +---+
+
+           the dash line has not been conencted yet
+           so for node-4, it has two roots now: node-1 and node-3
+        """
+        result = []
+        nextnodes = [self]
+
+        while not nextnodes:
+            currnode = nextnodes.pop(0)
+            inputs = currnode.getInputs()
+
+            if inputs:
+                nextnodes += inputs
+            else:
+                result.append(currnode)
+        return result
+
+
     def serialize(self) -> OrderedDict:
         return OrderedDict([
             ('id', self.id),

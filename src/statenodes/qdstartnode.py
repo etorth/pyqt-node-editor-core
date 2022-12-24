@@ -69,9 +69,6 @@ class _StartNodeGfx(QGraphicsItem):
         self._pen_hover_selected = QPen(self._color_hover_selected)
         self._pen_hover_selected.setWidthF(3.0)
 
-        self._brush_background = QBrush(QColor("#E300875F"))
-        self._brush_text_background = QBrush(QColor("#E3FFFFFF"))
-
         self._image = QImage("icons/src.png")
 
     def onSelected(self):
@@ -132,7 +129,7 @@ class _StartNodeGfx(QGraphicsItem):
         path_content.setFillRule(Qt.FillRule.WindingFill)
         path_content.addEllipse(QRectF(0, 0, self.width, self.height))
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(self._brush_background)
+        painter.setBrush(QBrush(utils.player_color(self.node.index)))
         painter.drawPath(path_content.simplified())
 
         path_text = QPainterPath()
@@ -145,7 +142,7 @@ class _StartNodeGfx(QGraphicsItem):
 
         path_text.addPolygon(QPolygonF([QPointF(text_x, text_y), QPointF(text_x + text_w, text_y), QPointF(self.width, self.height / 2), QPointF(text_x + text_w, text_y + text_h), QPointF(text_x, text_y + text_h)]))
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(self._brush_text_background)
+        painter.setBrush(QBrush(QColor("#E3FFFFFF")))
         painter.drawPath(path_text.simplified())
 
         painter.setPen(self._pen_text)

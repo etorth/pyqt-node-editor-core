@@ -4,7 +4,7 @@ import pprint
 import traceback
 
 from PyQt6.QtCore import QFile, QRectF
-from PyQt6.QtGui import QFontDatabase, QImage, QPainter
+from PyQt6.QtGui import QFontDatabase, QImage, QPainter, QColor
 from PyQt6.QtWidgets import QApplication
 
 LISTBOX_MIMETYPE = "application/x-item"
@@ -149,6 +149,18 @@ class Utils:
             return '容器'
         else:
             return '未知'
+
+
+    def player_color(self, index) -> QColor:
+        match index % 7:
+            case 0: return QColor('#800000')
+            case 1: return QColor('#008000')
+            case 2: return QColor('#808000')
+            case 3: return QColor('#000080')
+            case 4: return QColor('#800080')
+            case 5: return QColor('#008080')
+            case 6: return QColor('#005f87')
+            case _: return QColor('#00875f')
 
 utils = Utils()
 
