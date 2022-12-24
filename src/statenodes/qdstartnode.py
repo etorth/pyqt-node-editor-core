@@ -48,7 +48,7 @@ class _StartNodeGfx(QGraphicsItem):
         self._rect_image_radius = 59
 
         self._rect_text_width  = 30
-        self._rect_text_height = 20
+        self._rect_text_height = 25
 
 
     def initAssets(self):
@@ -58,8 +58,8 @@ class _StartNodeGfx(QGraphicsItem):
         self._color_selected = QColor("#FFF7862F")
         self._color_hover_selected = QColor("#FFFFA637")
 
-        self._pen_default = QPen(self._color)
-        self._pen_default.setWidthF(2.0)
+        self._pen = QPen(self._color)
+        self._pen.setWidthF(2.0)
         self._pen_text = QPen(self._color_text)
         self._pen_text.setWidthF(2.0)
         self._pen_selected = QPen(self._color_selected)
@@ -69,8 +69,7 @@ class _StartNodeGfx(QGraphicsItem):
         self._pen_hover_selected = QPen(self._color_hover_selected)
         self._pen_hover_selected.setWidthF(3.0)
 
-        self._brush_title = QBrush(QColor("#FF313131"))
-        self._brush_background = QBrush(QColor("#E321F121"))
+        self._brush_background = QBrush(QColor("#E300875F"))
         self._brush_text_background = QBrush(QColor("#E3FFFFFF"))
 
         self._image = QImage("icons/src.png")
@@ -158,10 +157,10 @@ class _StartNodeGfx(QGraphicsItem):
         if self.hovered:
             painter.setPen(self._pen_hover_selected if self.isSelected() else self._pen_hovered)
             painter.drawPath(path_outline.simplified())
-            painter.setPen(self._pen_default)
+            painter.setPen(self._pen)
             painter.drawPath(path_outline.simplified())
         else:
-            painter.setPen(self._pen_selected if self.isSelected() else self._pen_default)
+            painter.setPen(self._pen_selected if self.isSelected() else self._pen)
             painter.drawPath(path_outline.simplified())
 
         if self.node.isDirty():
