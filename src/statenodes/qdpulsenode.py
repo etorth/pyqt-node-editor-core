@@ -7,6 +7,7 @@ from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 from qdstatenode import QD_StateNode
+import math
 
 
 from qdutils import *
@@ -20,6 +21,7 @@ class _PulseNodeGfx(QGraphicsItem):
         self.hovered = False
         self._was_moved = False
         self._last_selected_state = False
+        self.pulse_angle = 40
 
         self.initSizes()
         self.initAssets()
@@ -44,8 +46,8 @@ class _PulseNodeGfx(QGraphicsItem):
 
 
     def initSizes(self):
-        self._rect_width  = 60
-        self._rect_height = 50
+        self._rect_width  = 80
+        self._rect_height = 60
         self._rect_image_width  = 40
         self._rect_image_height = 40
         self.title_height = 0
@@ -165,4 +167,17 @@ class QD_PulseNode(QD_StateNode):
     StateNodeGfx_class = _PulseNodeGfx
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.PulseOut}):
         super().__init__(scene, sockets)
-        self.title = '脉冲节点'
+
+
+    def getSocketPosition(self, socktype: SocketType) -> QPointF:
+        match socktype:
+            case SocketType.In:
+                return QPointF(0, self.gfx.height / 2)
+            case SocketType.Out_True:
+                return QPointF(self.gfx.width, self.gfx.height / 2)
+            case SocketType.PulseOut:
+                return QPointF(
+                        self.gfx.width  / 2 * (1.0 + math.cos(math.radians(self.gfx.pulse_angle))),
+                        self.gfx.height / 2 * (1.0 + math.sin(math.radians(self.gfx.pulse_angle))))
+            case _:
+                raise ValueError('Invalid socket type %d' % socktype)
