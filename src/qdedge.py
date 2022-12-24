@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 from enum import Enum, unique
-from collections import OrderedDict
 from qdserializable import QD_Serializable
 from qdutils import *
 from qdedgegfx import *
@@ -242,13 +241,13 @@ class QD_Edge(QD_Serializable):
         except Exception as e:
             utils.dumpExcept(e)
 
-    def serialize(self) -> OrderedDict:
-        return OrderedDict([
-            ('id', self.id),
-            ('edge_type', self.edge_type),
-            ('start', self.start_socket.id if self.start_socket is not None else None),
-            ('end', self.end_socket.id if self.end_socket is not None else None),
-        ])
+    def serialize(self) -> dict:
+        return {
+            'id': self.id,
+            'edge_type': self.edge_type,
+            'start': self.start_socket.id if self.start_socket is not None else None,
+            'end': self.end_socket.id if self.end_socket is not None else None,
+        }
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
         if restore_id: self.id = data['id']

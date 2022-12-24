@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-from collections import OrderedDict
 from qdutils import *
 from qdserializable import QD_Serializable
 from qdquestscenegfx import QD_QuestSceneGfx
@@ -280,17 +279,17 @@ class QD_QuestScene(QD_Serializable):
         return QD_Node if self.node_class_selector is None else self.node_class_selector(data)
 
 
-    def serialize(self) -> OrderedDict:
+    def serialize(self) -> dict:
         nodes, edges = [], []
         for node in self.nodes: nodes.append(node.serialize())
         for edge in self.edges: edges.append(edge.serialize())
-        return OrderedDict([
-            ('id', self.id),
-            ('scene_width', self.scene_width),
-            ('scene_height', self.scene_height),
-            ('nodes', nodes),
-            ('edges', edges),
-        ])
+        return {
+            'id': self.id,
+            'scene_width': self.scene_width,
+            'scene_height': self.scene_height,
+            'nodes': nodes,
+            'edges': edges,
+        }
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
         hashmap = {}

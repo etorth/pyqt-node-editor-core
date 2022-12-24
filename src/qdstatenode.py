@@ -448,13 +448,13 @@ class QD_StateNode(QD_Serializable):
         return result
 
 
-    def serialize(self) -> OrderedDict:
-        return OrderedDict([
-            ('id', self.id),
-            ('title', self._title),
-            ('position', (self.gfx.scenePos().x(), self.gfx.scenePos().y())),
-            ('sockets', [sock.serialize() for sock in self.sockets]),
-        ])
+    def serialize(self) -> dict:
+        return {
+            'id': self.id,
+            'title': self._title,
+            'position': (self.gfx.scenePos().x(), self.gfx.scenePos().y()),
+            'sockets': [sock.serialize() for sock in self.sockets],
+        }
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
         try:

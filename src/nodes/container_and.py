@@ -38,10 +38,8 @@ class _ContainerContent_and(QD_NodeContent):
         return content
 
 
-    def serialize(self) -> OrderedDict:
-        return OrderedDict([
-            ('nested_contents', [c.serialize() for c in self._nested_contents]),
-        ])
+    def serialize(self) -> dict:
+        return {'nested_contents': [content.serialize() for content in self._nested_contents]}
 
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:

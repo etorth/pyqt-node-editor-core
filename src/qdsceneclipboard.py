@@ -2,7 +2,6 @@
 """
 A module containing all code for working with Clipboard
 """
-from collections import OrderedDict
 from qdedgegfx import QD_EdgeGfx
 from qdedge import QD_Edge
 from qdutils import *
@@ -24,9 +23,9 @@ class QD_SceneClipboard():
         """
         self.scene = scene
 
-    def serializeSelected(self, delete: bool = False) -> OrderedDict:
+    def serializeSelected(self, delete: bool = False) -> dict:
         """
-        Serializes selected items in the QD_StateScene into ``OrderedDict``
+        Serializes selected items in the QD_StateScene into dict
 
         :param delete: True if you want to delete selected items after serialization. Usefull for Cut operation
         :type delete: ``bool``
@@ -73,10 +72,10 @@ class QD_SceneClipboard():
         if confg.DEBUG:
             print("our final edge list:", edges_final)
 
-        data = OrderedDict([
-            ('nodes', sel_nodes),
-            ('edges', edges_final),
-        ])
+        data = {
+            'nodes': sel_nodes,
+            'edges': edges_final,
+        }
 
         # if CUT (aka delete) remove selected items
         if delete:

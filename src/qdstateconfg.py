@@ -13,12 +13,12 @@ class QD_StateConfg(QD_Serializable):
         self.gfx = self.__class__.StateConfgGfx_class(parent)
 
 
-    def serialize(self) -> OrderedDict:
-        return OrderedDict([
-            ('log', self.gfx.log.toPlainText()),
-            ('comment', self.gfx.comment.toPlainText()),
-            ('timeout', self.gfx.timeout.text()),
-        ])
+    def serialize(self) -> dict:
+        return {
+            'log': self.gfx.log.toPlainText(),
+            'comment': self.gfx.comment.toPlainText(),
+            'timeout': self.gfx.timeout.text(),
+        }
 
 
     def deserialize(self, data: dict) -> bool:

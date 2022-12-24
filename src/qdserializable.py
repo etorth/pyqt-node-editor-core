@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
-from collections import OrderedDict
 
 class QD_Serializable():
     def __init__(self):
         self.id = id(self)
 
-    def serialize(self) -> OrderedDict:
+    def serialize(self) -> dict:
         raise NotImplementedError()
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:

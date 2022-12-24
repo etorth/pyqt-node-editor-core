@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
 import json
-from collections import OrderedDict
 
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
@@ -392,12 +391,12 @@ class QD_StateWidget(QSplitter):
         print("node content:", node.content)
 
 
-    def serialize(self) -> OrderedDict:
-        return OrderedDict([
-            ('version', confg.APP_VERSION),
-            ('confg', self.confg.serialize()),
-            ('scene', self.scene.serialize()),
-        ])
+    def serialize(self) -> dict:
+        return {
+            'version': confg.APP_VERSION,
+            'confg': self.confg.serialize(),
+            'scene': self.scene.serialize(),
+        }
 
 
     def addDebugContent(self):

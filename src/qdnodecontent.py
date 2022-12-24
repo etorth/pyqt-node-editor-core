@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from collections import OrderedDict
 from qdserializable import QD_Serializable
 from qdnodecontentgfx import QD_NodeContentGfx
 
@@ -21,10 +20,8 @@ class QD_NodeContent(QD_Serializable):
         self.gfx = self.NodeContentGfx_class(self)
 
 
-    def serialize(self) -> OrderedDict:
-        return OrderedDict([
-            ('op_code', self.__class__.op_code), # added by @register_opnode
-        ])
+    def serialize(self) -> dict:
+        return {'op_code': self.__class__.op_code} # added by @register_opnode
 
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:

@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-from collections import OrderedDict
-
 from qdutils import *
 from qdsocketgfx import *
 from qdserializable import QD_Serializable
@@ -70,11 +68,11 @@ class QD_Socket(QD_Serializable):
             edge = self.edges.pop(0)
             edge.remove(silent_for_socket=(self if silent else None))
 
-    def serialize(self) -> OrderedDict:
-        return OrderedDict([
-            ('id', self.id),
-            ('type', self.type),
-        ])
+    def serialize(self) -> dict:
+        return {
+            'id': self.id,
+            'type': self.type,
+        }
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True):
         if restore_id:
