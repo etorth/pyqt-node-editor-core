@@ -63,7 +63,6 @@ class QD_StateNodeGfx(QGraphicsItem):
     @title.setter
     def title(self, value):
         self._title = value
-        self.title_item.setPlainText(self._title)
 
 
     @property
@@ -83,7 +82,6 @@ class QD_StateNodeGfx(QGraphicsItem):
         self.setAcceptHoverEvents(True)
 
         # init title
-        self.initTitle()
         self.title = self.node.title
 
 
@@ -93,19 +91,19 @@ class QD_StateNodeGfx(QGraphicsItem):
         self._mini_height = 80
 
         self.edge_roundness = 6
-        self.edge_padding = 4
         self.title_height = 24
-        self.title_horizontal_padding = 8
-        self.title_vertical_padding = 10
 
     def initAssets(self):
         self._color = QColor("#7F000000")
+        self._color_text = QColor("#FFFFFFFF")
         self._color_hovered = QColor("#FF37A6FF")
         self._color_selected = QColor("#FFF7862F")
         self._color_hover_selected = QColor("#FFFFA637")
 
-        self._pen_default = QPen(self._color)
-        self._pen_default.setWidthF(2.0)
+        self._pen = QPen(self._color)
+        self._pen.setWidthF(2.0)
+        self._pen_text = QPen(self._color_text)
+        self._pen_text.setWidthF(2.0)
         self._pen_selected = QPen(self._color_selected)
         self._pen_selected.setWidthF(2.0)
         self._pen_hovered = QPen(self._color_hovered)
@@ -187,12 +185,6 @@ class QD_StateNodeGfx(QGraphicsItem):
         """Defining Qt' bounding rectangle"""
         return QRectF(0, 0, self.width, self.height).normalized()
 
-    def initTitle(self):
-        """Set up the title Graphics representation: font, color, position, etc."""
-        self.title_item = _StateNodeTitleBox(self.node, self)
-        self.title_item.setPos(self.title_horizontal_padding, 0)
-        self.title_item.setTextWidth(self.width - 2 * self.title_horizontal_padding)
-
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         """Painting the rounded rectanglar `QD_Node`"""
@@ -205,6 +197,9 @@ class QD_StateNodeGfx(QGraphicsItem):
         painter.setPen(Qt.PenStyle.NoPen)
         painter.setBrush(self._brush_title)
         painter.drawPath(path_title.simplified())
+
+        painter.setPen(self._pen_text)
+        painter.drawText(QRectF(self.edge_roundness, 0, self.width - self.edge_roundness * 2, self.title_height), Qt.AlignmentFlag.AlignCenter, self.title)
 
         # content
         path_content = QPainterPath()
@@ -223,10 +218,10 @@ class QD_StateNodeGfx(QGraphicsItem):
         if self.hovered:
             painter.setPen(self._pen_hover_selected if self.isSelected() else self._pen_hovered)
             painter.drawPath(path_outline.simplified())
-            painter.setPen(self._pen_default)
+            painter.setPen(self._pen)
             painter.drawPath(path_outline.simplified())
         else:
-            painter.setPen(self._pen_selected if self.isSelected() else self._pen_default)
+            painter.setPen(self._pen_selected if self.isSelected() else self._pen)
             painter.drawPath(path_outline.simplified())
 
         offset = 24.0
