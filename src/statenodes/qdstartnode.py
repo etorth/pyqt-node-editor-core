@@ -149,7 +149,7 @@ class _StartNodeGfx(QGraphicsItem):
         painter.drawPath(path_text.simplified())
 
         painter.setPen(self._pen_text)
-        painter.drawText(QRectF(text_x, text_y, text_w, text_h), Qt.AlignmentFlag.AlignCenter, "10")
+        painter.drawText(QRectF(text_x, text_y, text_w, text_h), Qt.AlignmentFlag.AlignCenter, str(self.node.index))
 
         path_outline = QPainterPath()
         path_outline.addEllipse(QRectF(-1, -1, self.width + 2, self.height + 2))
@@ -175,6 +175,7 @@ class QD_StartNode(QD_StateNode):
     StateNodeGfx_class = _StartNodeGfx
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.Out_True}):
         super().__init__(scene, sockets)
+        self.index = 2
 
 
     def getSocketPosition(self, socktype: SocketType) -> QPointF:
