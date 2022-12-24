@@ -47,13 +47,13 @@ class _StartNodeGfx(QGraphicsItem):
         self._rect_radius = 60
         self._rect_image_radius = 59
 
-        self._rect_text_width  = 20
+        self._rect_text_width  = 30
         self._rect_text_height = 20
 
 
     def initAssets(self):
         self._color = QColor("#7F000000")
-        self._color_text = QColor("#FFFFFFFF")
+        self._color_text = QColor("#FF2F2835")
         self._color_hovered = QColor("#FF37A6FF")
         self._color_selected = QColor("#FFF7862F")
         self._color_hover_selected = QColor("#FFFFA637")
@@ -70,7 +70,8 @@ class _StartNodeGfx(QGraphicsItem):
         self._pen_hover_selected.setWidthF(3.0)
 
         self._brush_title = QBrush(QColor("#FF313131"))
-        self._brush_background = QBrush(QColor("#E3212121"))
+        self._brush_background = QBrush(QColor("#E321F121"))
+        self._brush_text_background = QBrush(QColor("#E3FFFFFF"))
 
         self._image = QImage("icons/src.png")
 
@@ -135,16 +136,19 @@ class _StartNodeGfx(QGraphicsItem):
         painter.setBrush(self._brush_background)
         painter.drawPath(path_content.simplified())
 
-        img_x = max(0, (self.width  - self._rect_image_radius) / 2)
-        img_y = max(0, (self.height - self._rect_image_radius) / 2)
-        img_w = self.width  - 2 * img_x
-        img_h = self.height - 2 * img_y
-        painter.drawImage(QRectF(img_x, img_y, img_w, img_h), self._image)
+        path_text = QPainterPath()
+        path_text.setFillRule(Qt.FillRule.WindingFill)
 
         text_x = max(0, (self.width  - self._rect_text_width ) / 2)
         text_y = max(0, (self.height - self._rect_text_height) / 2)
         text_w = self.width  - 2 * text_x
         text_h = self.height - 2 * text_y
+
+        path_text.addPolygon(QPolygonF([QPointF(text_x, text_y), QPointF(text_x + text_w, text_y), QPointF(self.width, self.height / 2), QPointF(text_x + text_w, text_y + text_h), QPointF(text_x, text_y + text_h)]))
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.setBrush(self._brush_text_background)
+        painter.drawPath(path_text.simplified())
+
         painter.setPen(self._pen_text)
         painter.drawText(QRectF(text_x, text_y, text_w, text_h), Qt.AlignmentFlag.AlignCenter, "10")
 
