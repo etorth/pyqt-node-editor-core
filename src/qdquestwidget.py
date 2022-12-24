@@ -273,6 +273,14 @@ class QD_QuestWidget(QSplitter):
         return doDeletePulseInSocket
 
 
+    def onSwitchPulseSocketPosition(self, node):
+        def doSwitchPulseSocketPosition():
+            node.gfx.switchSocketPosition()
+            # not working
+            # self.scene.getView().viewport().repaint()
+        return doSwitchPulseSocketPosition
+
+
     def handleNodeContextMenu(self, node, event):
         if confg.DEBUG:
             print("CONTEXT: NODE")
@@ -287,6 +295,10 @@ class QD_QuestWidget(QSplitter):
             context_menu.addAction("Delete Pulse Input Socket").triggered.connect(self.onDeletePulseInSocket(node))
         else:
             context_menu.addAction("Add Pulse Input Socket").triggered.connect(self.onAddPulseInSocket(node))
+
+        if isinstance(node, QD_PulseNode):
+            context_menu.addAction("Switch Pulse Socket Position").triggered.connect(self.onSwitchPulseSocketPosition(node))
+
 
         addNodeMenu = context_menu.addMenu('Add Node')
         addedActDict = {}

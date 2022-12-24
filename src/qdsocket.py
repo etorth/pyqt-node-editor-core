@@ -44,6 +44,8 @@ class QD_Socket(QD_Serializable):
 
     def updateSocketPosition(self):
         self.gfx.setPos(self.getSocketPosition())
+        for edge in self.edges:
+            edge.gfx.update()
 
     def getSocketPosition(self):
         """Position of socket it should be, not it actually be, which is self.gfx.pos()

@@ -73,6 +73,13 @@ class _PulseNodeGfx(QGraphicsItem):
 
         self._image = QImage("icons/pulse.png")
 
+
+    def switchSocketPosition(self):
+        self.pulse_angle *= -1
+        self.node.updateSockets()
+        self.update()
+
+
     def onSelected(self):
         self.node.scene.gfx.itemSelected.emit()
 
