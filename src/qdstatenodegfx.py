@@ -12,7 +12,7 @@ class _StateNodeTitleBox(QGraphicsTextItem):
         self._color = Qt.GlobalColor.white
 
         self.node = node
-        self.setTextInteractionFlags(Qt.TextInteractionFlag.TextEditorInteraction)
+        # self.setTextInteractionFlags(Qt.TextInteractionFlag.TextEditorInteraction)
         self.setDefaultTextColor(self._color)
 
     def focusOutEvent(self, event: QFocusEvent):

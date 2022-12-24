@@ -28,12 +28,12 @@ class _StartNodeGfx(QGraphicsItem):
 
     @property
     def width(self) -> int:
-        return self._rect_radius
+        return self._rect_width
 
 
     @property
     def height(self) -> int:
-        return self._rect_radius
+        return self._rect_height
 
 
     def initUI(self):
@@ -44,10 +44,10 @@ class _StartNodeGfx(QGraphicsItem):
 
 
     def initSizes(self):
-        self._rect_radius = 60
-        self._rect_image_radius = 59
+        self._rect_width = 80
+        self._rect_height = 60
 
-        self._rect_text_width  = 30
+        self._rect_text_width  = 50
         self._rect_text_height = 25
 
 
@@ -149,7 +149,7 @@ class _StartNodeGfx(QGraphicsItem):
         painter.drawPath(path_text.simplified())
 
         painter.setPen(self._pen_text)
-        painter.drawText(QRectF(text_x, text_y, text_w, text_h), Qt.AlignmentFlag.AlignCenter, str(self.node.index))
+        painter.drawText(QRectF(text_x, text_y, text_w, text_h), Qt.AlignmentFlag.AlignCenter, '玩家%d' % self.node.index)
 
         path_outline = QPainterPath()
         path_outline.addEllipse(QRectF(-1, -1, self.width + 2, self.height + 2))
