@@ -7,6 +7,7 @@ from qdserializable import QD_Serializable
 from qdquestscenegfx import QD_QuestSceneGfx
 from qdnode import QD_Node
 from qdedge import QD_Edge
+from statenodes.qdstartnode import QD_StartNode
 from qdscenehistory import QD_SceneHistory
 from qdsceneclipboard import QD_SceneClipboard
 
@@ -280,7 +281,16 @@ class QD_QuestScene(QD_Serializable):
 
 
     def get_next_valid_start_index(self):
-        return 1
+        indices = {}
+        for item in self.gfx.items():
+            if isinstance(item, QD_StartNode.StateNodeGfx_class):
+                if hasattr(item.node, 'index'):
+                    indices[item.node.index] = True
+
+        i = 1
+        while i in indices:
+            i += 1
+        return i
 
 
     def serialize(self) -> OrderedDict:

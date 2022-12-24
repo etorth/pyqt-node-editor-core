@@ -175,6 +175,10 @@ class QD_StartNode(QD_StateNode):
     StateNodeGfx_class = _StartNodeGfx
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.Out_True}):
         super().__init__(scene, sockets)
+
+        # TODO
+        # get_next_valid_start_index() searches all QD_StartNode for existing index
+        # but also searches to this obj under construction which has no index yet, bad design
         self.index = scene.get_next_valid_start_index()
 
 
