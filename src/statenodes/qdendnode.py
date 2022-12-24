@@ -44,8 +44,8 @@ class _EndNodeGfx(QGraphicsItem):
 
 
     def initSizes(self):
-        self._rect_width  = 60
-        self._rect_height = 50
+        self._rect_width  = 80
+        self._rect_height = 60
         self._rect_image_width  = 25
         self._rect_image_height = 25
 
