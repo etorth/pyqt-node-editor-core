@@ -278,6 +278,11 @@ class QD_QuestScene(QD_Serializable):
         """
         return QD_Node if self.node_class_selector is None else self.node_class_selector(data)
 
+
+    def get_next_valid_start_index(self):
+        return 1
+
+
     def serialize(self) -> OrderedDict:
         nodes, edges = [], []
         for node in self.nodes: nodes.append(node.serialize())

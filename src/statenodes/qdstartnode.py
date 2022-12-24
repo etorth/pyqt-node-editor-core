@@ -175,7 +175,7 @@ class QD_StartNode(QD_StateNode):
     StateNodeGfx_class = _StartNodeGfx
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.Out_True}):
         super().__init__(scene, sockets)
-        self.index = 2
+        self.index = scene.get_next_valid_start_index()
 
 
     def getSocketPosition(self, socktype: SocketType) -> QPointF:

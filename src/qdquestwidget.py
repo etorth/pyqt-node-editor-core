@@ -355,6 +355,7 @@ class QD_QuestWidget(QSplitter):
         if selected and action == bezierAct: selected.edge_type = EdgeType.Bezier
         if selected and action == directAct: selected.edge_type = EdgeType.Direct
 
+
     # helper functions
     def determine_target_socket_of_node(self, was_dragged_flag, new_calc_node):
         target_socket = None
@@ -372,6 +373,7 @@ class QD_QuestWidget(QSplitter):
         self.scene.doDeselectItems()
         new_calc_node.gfx.doSelect(True)
         new_calc_node.gfx.onSelected()
+
 
     def handleNewNodeContextMenu(self, event):
         if confg.DEBUG:
