@@ -179,7 +179,18 @@ class QD_StartNode(QD_StateNode):
         # TODO
         # get_next_valid_start_index() searches all QD_StartNode for existing index
         # but also searches to this obj under construction which has no index yet, bad design
-        self.index = scene.get_next_valid_start_index()
+
+        indics = {}
+        for item in scene.gfx.items():
+            if isinstance(item, QD_StartNode.StateNodeGfx_class):
+                if hasattr(item.node, 'index'):
+                    indics[item.node.index] = True
+
+        i = 1
+        while i in indics:
+            i += 1
+
+        self.index = i
 
 
     def getSocketPosition(self, socktype: SocketType) -> QPointF:

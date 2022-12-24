@@ -280,19 +280,6 @@ class QD_QuestScene(QD_Serializable):
         return QD_Node if self.node_class_selector is None else self.node_class_selector(data)
 
 
-    def get_next_valid_start_index(self):
-        indices = {}
-        for item in self.gfx.items():
-            if isinstance(item, QD_StartNode.StateNodeGfx_class):
-                if hasattr(item.node, 'index'):
-                    indices[item.node.index] = True
-
-        i = 1
-        while i in indices:
-            i += 1
-        return i
-
-
     def serialize(self) -> OrderedDict:
         nodes, edges = [], []
         for node in self.nodes: nodes.append(node.serialize())
