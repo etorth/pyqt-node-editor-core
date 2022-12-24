@@ -182,9 +182,8 @@ class QD_StartNode(QD_StateNode):
 
         indics = {}
         for item in scene.gfx.items():
-            if isinstance(item, QD_StartNode.StateNodeGfx_class):
-                if hasattr(item.node, 'index'):
-                    indics[item.node.index] = True
+            if isinstance(item, QD_StartNode.StateNodeGfx_class) and hasattr(item.node, 'index'):
+                indics[item.node.index] = True
 
         i = 1
         while i in indics:
