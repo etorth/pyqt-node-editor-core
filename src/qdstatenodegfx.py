@@ -112,12 +112,27 @@ class QD_StateNodeGfx(QGraphicsItem):
 
         # init title
         self.title = self.node.title
+        self.proxy = QGraphicsProxyWidget(self)
+
+        widget_x = self._widget_margin
+        widget_y = self.title_height + self._widget_margin
+        widget_w = max(self.width - self._widget_margin * 2, 0)
+        widget_h = max(self.height - self.title_height - self._widget_margin * 2, 0)
+
+        frame = QFrame()
+        frame.setMinimumSize(widget_w, widget_h)
+        frame.setGeometry(widget_x, widget_y, widget_w, widget_h)
+
+        self.proxy.setWidget(frame)
+        self.vbox = QVBoxLayout(frame)
+        self.vbox.addWidget(QTextEdit())
 
 
     def initSizes(self):
         """Set up internal attributes like `width`, `height`, etc."""
-        self._mini_width = 100
-        self._mini_height = 80
+        self._mini_width = 120
+        self._mini_height = 100
+        self._widget_margin = 5
 
         self._width = self._mini_width
         self._height = self._mini_height
