@@ -25,7 +25,28 @@ class _StateNodeTitleBox(QGraphicsTextItem):
 
 
 class QD_StateNodeGfx(QGraphicsItem):
-    """Class describing Graphics representation of :class:`node.QD_Node`"""
+    dragSensitiveDistance = 8.0
+
+    handleTopLeft = 1
+    handleTopMiddle = 2
+    handleTopRight = 3
+    handleMiddleLeft = 4
+    handleMiddleRight = 5
+    handleBottomLeft = 6
+    handleBottomMiddle = 7
+    handleBottomRight = 8
+
+    handleCursors = {
+        handleTopLeft: Qt.CursorShape.SizeFDiagCursor,
+        handleTopMiddle: Qt.CursorShape.SizeVerCursor,
+        handleTopRight: Qt.CursorShape.SizeBDiagCursor,
+        handleMiddleLeft: Qt.CursorShape.SizeHorCursor,
+        handleMiddleRight: Qt.CursorShape.SizeHorCursor,
+        handleBottomLeft: Qt.CursorShape.SizeBDiagCursor,
+        handleBottomMiddle: Qt.CursorShape.SizeVerCursor,
+        handleBottomRight: Qt.CursorShape.SizeFDiagCursor,
+    }
+
 
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         """

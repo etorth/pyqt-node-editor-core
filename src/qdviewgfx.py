@@ -13,8 +13,9 @@ from qdcutline import QD_CutLine
 from qdutils import *
 
 MODE_NOOP = 1  #: Mode representing ready state
-MODE_EDGE_DRAG = 2  #: Mode representing when we drag edge state
-MODE_EDGE_CUT = 3  #: Mode representing when we draw a cutting edge
+MODE_NODE_RESIZE = 2 # Mode representing when we resize a node
+MODE_EDGE_DRAG = 3  #: Mode representing when we drag edge state
+MODE_EDGE_CUT = 4  #: Mode representing when we draw a cutting edge
 
 #: Distance when click on socket to enable `Drag QD_Edge`
 EDGE_DRAG_START_THRESHOLD = 50
