@@ -30,6 +30,7 @@ class QD_StateNode(QD_Serializable):
         self.scene.addNode(self)
         self.scene.gfx.addItem(self.gfx)
 
+        self.pulse_on_bottom = True
         self.initSockets(sockets)
 
         # dirty and evaluation
@@ -95,6 +96,11 @@ class QD_StateNode(QD_Serializable):
         for type in sockets:
             self.sockets.append(self.__class__.Socket_class(node=self, socktype=type))
 
+        self.updateSockets()
+
+
+    def switchPulseSocketPosition(self):
+        self.pulse_on_bottom = not self.pulse_on_bottom
         self.updateSockets()
 
 
@@ -172,16 +178,16 @@ class QD_StateNode(QD_Serializable):
         return count
 
 
-    def getSocketPosition(self, type: SocketType) -> QPointF:
-        assert type in SocketType
-        assert type in self.getSocketTypeSet()
+    def getSocketPosition(self, socktype: SocketType) -> QPointF:
+        assert socktype in SocketType
+        assert socktype in self.getSocketTypeSet()
 
-        if type.is_in:
+        if socktype.is_in:
             if self.getInSocketCount() == 1:
                 return QPointF(0, self.gfx.height / 2)
             else:
                 y_in_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_in_spacing)
-                if type is SocketType.In:
+                if (socktype is SocketType.In) == self.pulse_on_bottom:
                     return QPointF(0, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_in_spacing) / 2)
                 else:
                     return QPointF(0, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_in_spacing) / 2 + y_in_spacing)
@@ -191,7 +197,7 @@ class QD_StateNode(QD_Serializable):
 
         y_out_spacing = min((self.gfx.height - self.gfx.title_height) / 3, self._max_socket_out_spacing)
 
-        if type is SocketType.Out_True:
+        if socktype is SocketType.Out_True:
             return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_out_spacing) / 2)
         else:
             return QPointF(self.gfx.width, self.gfx.title_height + (self.gfx.height - self.gfx.title_height - y_out_spacing) / 2 + y_out_spacing)

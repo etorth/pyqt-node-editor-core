@@ -273,6 +273,12 @@ class QD_QuestWidget(QSplitter):
         return doDeletePulseInSocket
 
 
+    def onSwitchPulseInSocketPosition(self, node):
+        def doSwitchPulseInSocketPosition():
+            node.switchPulseSocketPosition()
+        return doSwitchPulseInSocketPosition
+
+
     def onSwitchPulseSocketPosition(self, node):
         def doSwitchPulseSocketPosition():
             node.gfx.switchSocketPosition()
@@ -293,6 +299,7 @@ class QD_QuestWidget(QSplitter):
 
         if SocketType.PulseIn in node.getSocketTypeSet():
             context_menu.addAction("Delete Pulse Input Socket").triggered.connect(self.onDeletePulseInSocket(node))
+            context_menu.addAction("Switch Pulse Input Socket Position").triggered.connect(self.onSwitchPulseInSocketPosition(node))
         else:
             context_menu.addAction("Add Pulse Input Socket").triggered.connect(self.onAddPulseInSocket(node))
 
