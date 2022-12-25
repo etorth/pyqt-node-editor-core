@@ -304,9 +304,7 @@ class QD_ViewGfx(QGraphicsView):
             self.cutline.update()
 
         self.last_scene_mouse_position = scenepos
-
         self.scenePosChanged.emit(int(scenepos.x()), int(scenepos.y()))
-
         super().mouseMoveEvent(event)
 
     def keyPressEvent(self, event: QKeyEvent):

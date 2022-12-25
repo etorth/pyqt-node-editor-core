@@ -176,6 +176,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         self._width = max(rect.width(), self._mini_width)
         self._height = max(rect.height(), self._mini_height)
         self.node.updateSockets()
+        self.update()
 
 
     def handleAt(self, point):
@@ -185,14 +186,18 @@ class QD_StateNodeGfx(QGraphicsItem):
                 if QLineF(self.node.getSocketPosition(socktype), point).length() <= self.dragSensitiveDistance:
                     return None
 
-            if QLineF(point, b.topLeft    ()).length() <= self.dragSensitiveDistance: return self.handleTopLeft
-            if QLineF(point, b.topRight   ()).length() <= self.dragSensitiveDistance: return self.handleTopRight
-            if QLineF(point, b.bottomLeft ()).length() <= self.dragSensitiveDistance: return self.handleBottomLeft
+            # TODO
+            # don't know why, I can not change pos() by mouse resize
+            # it gives me wired result
+
+            # if QLineF(point, b.topLeft    ()).length() <= self.dragSensitiveDistance: return self.handleTopLeft
+            # if QLineF(point, b.topRight   ()).length() <= self.dragSensitiveDistance: return self.handleTopRight
+            # if QLineF(point, b.bottomLeft ()).length() <= self.dragSensitiveDistance: return self.handleBottomLeft
             if QLineF(point, b.bottomRight()).length() <= self.dragSensitiveDistance: return self.handleBottomRight
 
-            if abs(point.x() - b.left  ()) <= self.dragSensitiveDistance: return self.handleMiddleLeft
+            # if abs(point.x() - b.left  ()) <= self.dragSensitiveDistance: return self.handleMiddleLeft
             if abs(point.x() - b.right ()) <= self.dragSensitiveDistance: return self.handleMiddleRight
-            if abs(point.y() - b.top   ()) <= self.dragSensitiveDistance: return self.handleTopMiddle
+            # if abs(point.y() - b.top   ()) <= self.dragSensitiveDistance: return self.handleTopMiddle
             if abs(point.y() - b.bottom()) <= self.dragSensitiveDistance: return self.handleBottomMiddle
         return None
 
