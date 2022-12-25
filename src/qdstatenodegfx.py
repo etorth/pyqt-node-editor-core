@@ -133,6 +133,10 @@ class QD_StateNodeGfx(QGraphicsItem):
         if new_state:
             self.onSelected()
 
+    def mousePressEvent(self, event):
+        super().mousePressEvent(event)
+
+
     def mouseMoveEvent(self, event):
         """Overriden event to detect that we moved with this `QD_Node`"""
         super().mouseMoveEvent(event)
