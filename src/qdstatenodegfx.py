@@ -166,15 +166,11 @@ class QD_StateNodeGfx(QGraphicsItem):
             self.onSelected()
 
 
-    def rect(self) -> QRectF:
-        return QRectF(self.pos(), QSizeF(self.width, self.height))
-
-
-    def setRect(self, rect: QRectF):
+    def updatePosAndSize(self, dx: float, dy: float, dw: float, dh: float):
         self.prepareGeometryChange()
-        self.setPos(rect.topLeft())
-        self._width = max(rect.width(), self._mini_width)
-        self._height = max(rect.height(), self._mini_height)
+        self.setPos(self.mousePressRect.topLeft() + QPointF(dx, dy))
+        self._width = max(self.mousePressRect.width() + dw, self._mini_width)
+        self._height = max(self.mousePressRect.height() + dh, self._mini_height)
         self._was_moved = True
         self.node.updateSockets()
         self.update()
@@ -187,67 +183,39 @@ class QD_StateNodeGfx(QGraphicsItem):
                 if QLineF(self.node.getSocketPosition(socktype), point).length() <= self.dragSensitiveDistance:
                     return None
 
-            # TODO
-            # don't know why, I can not change pos() by mouse resize
-            # it gives me wired result
-            # looks related to the setPos in setRect(), if don't call it, mouseMoveEvent() receives correct mouse coordinates
-
-            # if QLineF(point, b.topLeft    ()).length() <= self.dragSensitiveDistance: return self.handleTopLeft
-            # if QLineF(point, b.topRight   ()).length() <= self.dragSensitiveDistance: return self.handleTopRight
-            # if QLineF(point, b.bottomLeft ()).length() <= self.dragSensitiveDistance: return self.handleBottomLeft
+            if QLineF(point, b.topLeft    ()).length() <= self.dragSensitiveDistance: return self.handleTopLeft
+            if QLineF(point, b.topRight   ()).length() <= self.dragSensitiveDistance: return self.handleTopRight
+            if QLineF(point, b.bottomLeft ()).length() <= self.dragSensitiveDistance: return self.handleBottomLeft
             if QLineF(point, b.bottomRight()).length() <= self.dragSensitiveDistance: return self.handleBottomRight
 
-            # if abs(point.x() - b.left  ()) <= self.dragSensitiveDistance: return self.handleMiddleLeft
+            if abs(point.x() - b.left  ()) <= self.dragSensitiveDistance: return self.handleMiddleLeft
             if abs(point.x() - b.right ()) <= self.dragSensitiveDistance: return self.handleMiddleRight
-            # if abs(point.y() - b.top   ()) <= self.dragSensitiveDistance: return self.handleTopMiddle
+            if abs(point.y() - b.top   ()) <= self.dragSensitiveDistance: return self.handleTopMiddle
             if abs(point.y() - b.bottom()) <= self.dragSensitiveDistance: return self.handleBottomMiddle
         return None
 
 
     def interactiveResize(self, mousePos):
-        rect = self.rect()
-        if self.handleSelected == self.handleTopLeft:
-            rect.setLeft(self.mousePressRect.left() + mousePos.x() - self.mousePressPos.x())
-            rect.setTop(self.mousePressRect.top() + mousePos.y() - self.mousePressPos.y())
-            self.setRect(rect)
+        dx = mousePos.x() - self.mousePressPos.x()
+        dy = mousePos.y() - self.mousePressPos.y()
 
-        elif self.handleSelected == self.handleTopMiddle:
-            rect.setTop(self.mousePressRect.top() + mousePos.y() - self.mousePressPos.y())
-            self.setRect(rect)
-
-        elif self.handleSelected == self.handleTopRight:
-            rect.setRight(self.mousePressRect.right() + mousePos.x() - self.mousePressPos.x())
-            rect.setTop(self.mousePressRect.top() + mousePos.y() - self.mousePressPos.y())
-            self.setRect(rect)
-
-        elif self.handleSelected == self.handleMiddleLeft:
-            rect.setLeft(self.mousePressRect.left() + mousePos.x() - self.mousePressPos.x())
-            self.setRect(rect)
-
-        elif self.handleSelected == self.handleMiddleRight:
-            rect.setRight(self.mousePressRect.right() + mousePos.x() - self.mousePressPos.x())
-            self.setRect(rect)
-
-        elif self.handleSelected == self.handleBottomLeft:
-            rect.setLeft(self.mousePressRect.left() + mousePos.x() - self.mousePressPos.x())
-            rect.setBottom(self.mousePressRect.bottom() + mousePos.y() - self.mousePressPos.y())
-            self.setRect(rect)
-
-        elif self.handleSelected == self.handleBottomMiddle:
-            rect.setBottom(self.mousePressRect.bottom() + mousePos.y() - self.mousePressPos.y())
-            self.setRect(rect)
-
-        elif self.handleSelected == self.handleBottomRight:
-            rect.setRight(self.mousePressRect.right() + mousePos.x() - self.mousePressPos.x())
-            rect.setBottom(self.mousePressRect.bottom() + mousePos.y() - self.mousePressPos.y())
-            self.setRect(rect)
+        match self.handleSelected:
+            case self.handleTopLeft     : self.updatePosAndSize(dx, dy, -dx, -dy)
+            case self.handleTopMiddle   : self.updatePosAndSize( 0, dy,   0, -dy)
+            case self.handleTopRight    : self.updatePosAndSize( 0, dy,  dx, -dy)
+            case self.handleMiddleLeft  : self.updatePosAndSize(dx,  0, -dx,   0)
+            case self.handleMiddleRight : self.updatePosAndSize( 0,  0,  dx,   0)
+            case self.handleBottomLeft  : self.updatePosAndSize(dx,  0, -dx,  dy)
+            case self.handleBottomMiddle: self.updatePosAndSize( 0,  0,   0,  dy)
+            case self.handleBottomRight : self.updatePosAndSize( 0,  0,  dx,  dy)
+            case _: raise ValueError("Invalid selected handle", self.handleSelected)
 
 
     def mousePressEvent(self, event):
         self.handleSelected = self.handleAt(event.pos())
         if self.handleSelected:
-            self.mousePressPos = event.pos()
-            self.mousePressRect = self.rect()
+            self.mousePressPos = event.scenePos()
+            self.mousePressRect = QRectF(self.pos(), QSizeF(self.width, self.height))
         super().mousePressEvent(event)
 
 
@@ -259,7 +227,7 @@ class QD_StateNodeGfx(QGraphicsItem):
                     node.updateConnectedEdges()
             self._was_moved = True
         else:
-            self.interactiveResize(event.pos())
+            self.interactiveResize(event.scenePos())
 
 
     def mouseReleaseEvent(self, event):
