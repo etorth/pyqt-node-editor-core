@@ -190,6 +190,7 @@ class QD_StateNodeGfx(QGraphicsItem):
             # TODO
             # don't know why, I can not change pos() by mouse resize
             # it gives me wired result
+            # looks related to the setPos in setRect(), if don't call it, mouseMoveEvent() receives correct mouse coordinates
 
             # if QLineF(point, b.topLeft    ()).length() <= self.dragSensitiveDistance: return self.handleTopLeft
             # if QLineF(point, b.topRight   ()).length() <= self.dragSensitiveDistance: return self.handleTopRight
