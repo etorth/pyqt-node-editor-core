@@ -62,6 +62,10 @@ class QD_StateNodeGfx(QGraphicsItem):
         super().__init__(parent)
         self.node = node
 
+        self.handleSelected = None
+        self.mousePressPos = None
+        self.mousePressRect = None
+
         # init our flags
         self.hovered = False
         self._was_moved = False
@@ -70,6 +74,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         self.initSizes()
         self.initAssets()
         self.initUI()
+
 
     @property
     def title(self):
@@ -81,6 +86,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         """
         return self._title
 
+
     @title.setter
     def title(self, value):
         self._title = value
@@ -88,18 +94,20 @@ class QD_StateNodeGfx(QGraphicsItem):
 
     @property
     def width(self) -> int:
-        return self._mini_width
+        return self._width
 
 
     @property
     def height(self) -> int:
-        return self._mini_height
+        return self._height
 
 
     def initUI(self):
         """Set up this ``QGraphicsItem``"""
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
         self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemSendsGeometryChanges)
+        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsFocusable)
         self.setAcceptHoverEvents(True)
 
         # init title
@@ -110,6 +118,9 @@ class QD_StateNodeGfx(QGraphicsItem):
         """Set up internal attributes like `width`, `height`, etc."""
         self._mini_width = 100
         self._mini_height = 80
+
+        self._width = self._mini_width
+        self._height = self._mini_height
 
         self.edge_roundness = 6
         self.title_height = 24
@@ -154,23 +165,98 @@ class QD_StateNodeGfx(QGraphicsItem):
         if new_state:
             self.onSelected()
 
+
+    def rect(self) -> QRectF:
+        return QRectF(self.pos(), QSizeF(self.width, self.height))
+
+
+    def setRect(self, rect: QRectF):
+        self.setPos(rect.topLeft())
+        self._width = rect.width()
+        self._height = rect.height()
+
+
+    def handleAt(self, point):
+        b = self.boundingRect()
+        if b.contains(point):
+            if QLineF(point, b.topLeft    ()).length() <= self.dragSensitiveDistance: return self.handleTopLeft
+            if QLineF(point, b.topRight   ()).length() <= self.dragSensitiveDistance: return self.handleTopRight
+            if QLineF(point, b.bottomLeft ()).length() <= self.dragSensitiveDistance: return self.handleBottomLeft
+            if QLineF(point, b.bottomRight()).length() <= self.dragSensitiveDistance: return self.handleBottomRight
+
+            if abs(point.x() - b.left  ()) <= self.dragSensitiveDistance: return self.handleMiddleLeft
+            if abs(point.x() - b.right ()) <= self.dragSensitiveDistance: return self.handleMiddleRight
+            if abs(point.y() - b.top   ()) <= self.dragSensitiveDistance: return self.handleTopMiddle
+            if abs(point.y() - b.bottom()) <= self.dragSensitiveDistance: return self.handleBottomMiddle
+        return None
+
+
+    def interactiveResize(self, mousePos):
+        self.prepareGeometryChange()
+        rect = self.rect()
+
+        if self.handleSelected == self.handleTopLeft:
+            rect.setLeft(self.mousePressRect.left() + mousePos.x() - self.mousePressPos.x())
+            rect.setTop(self.mousePressRect.top() + mousePos.y() - self.mousePressPos.y())
+            self.setRect(rect)
+
+        elif self.handleSelected == self.handleTopMiddle:
+            rect.setTop(self.mousePressRect.top() + mousePos.y() - self.mousePressPos.y())
+            self.setRect(rect)
+
+        elif self.handleSelected == self.handleTopRight:
+            rect.setRight(self.mousePressRect.right() + mousePos.x() - self.mousePressPos.x())
+            rect.setTop(self.mousePressRect.top() + mousePos.y() - self.mousePressPos.y())
+            self.setRect(rect)
+
+        elif self.handleSelected == self.handleMiddleLeft:
+            rect.setLeft(self.mousePressRect.left() + mousePos.x() - self.mousePressPos.x())
+            self.setRect(rect)
+
+        elif self.handleSelected == self.handleMiddleRight:
+            rect.setRight(self.mousePressRect.right() + mousePos.x() - self.mousePressPos.x())
+            self.setRect(rect)
+
+        elif self.handleSelected == self.handleBottomLeft:
+            rect.setLeft(self.mousePressRect.left() + mousePos.x() - self.mousePressPos.x())
+            rect.setBottom(self.mousePressRect.bottom() + mousePos.y() - self.mousePressPos.y())
+            self.setRect(rect)
+
+        elif self.handleSelected == self.handleBottomMiddle:
+            rect.setBottom(self.mousePressRect.bottom() + mousePos.y() - self.mousePressPos.y())
+            self.setRect(rect)
+
+        elif self.handleSelected == self.handleBottomRight:
+            rect.setRight(self.mousePressRect.right() + mousePos.x() - self.mousePressPos.x())
+            rect.setBottom(self.mousePressRect.bottom() + mousePos.y() - self.mousePressPos.y())
+            self.setRect(rect)
+
+
     def mousePressEvent(self, event):
+        self.handleSelected = self.handleAt(event.pos())
+        if self.handleSelected:
+            self.mousePressPos = event.pos()
+            self.mousePressRect = self.boundingRect()
         super().mousePressEvent(event)
 
 
     def mouseMoveEvent(self, event):
-        """Overriden event to detect that we moved with this `QD_Node`"""
-        super().mouseMoveEvent(event)
+        if self.handleSelected is None:
+            super().mouseMoveEvent(event)
+            for node in self.scene().scene.nodes:
+                if node.gfx.isSelected():
+                    node.updateConnectedEdges()
+            self._was_moved = True
+        else:
+            self.interactiveResize(event.pos())
 
-        # optimize me! just update the selected nodes
-        for node in self.scene().scene.nodes:
-            if node.gfx.isSelected():
-                node.updateConnectedEdges()
-        self._was_moved = True
 
     def mouseReleaseEvent(self, event):
-        """Overriden event to handle when we moved, selected or deselected this `QD_Node`"""
         super().mouseReleaseEvent(event)
+        self.handleSelected = None
+        self.mousePressPos = None
+        self.mousePressRect = None
+        self.update()
 
         # handle when gfx moved
         if self._was_moved:
@@ -192,22 +278,34 @@ class QD_StateNodeGfx(QGraphicsItem):
             self._last_selected_state = self.isSelected()
             self.onSelected()
 
+
     def mouseDoubleClickEvent(self, event):
-        """Overriden event for doubleclick. Resend to `QD_Node::onDoubleClicked`"""
         self.node.onDoubleClicked(event)
 
+
     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
-        """Handle hover effect"""
         self.hovered = True
         self.update()
 
+
+    def hoverMoveEvent(self, event):
+        if self.isSelected():
+            handle = self.handleAt(event.pos())
+            if handle is None:
+                cursor = Qt.CursorShape.ArrowCursor
+            else:
+                cursor = self.handleCursors[handle]
+            self.setCursor(cursor)
+        super().hoverMoveEvent(event)
+
+
     def hoverLeaveEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
-        """Handle hover effect"""
         self.hovered = False
+        self.setCursor(Qt.CursorShape.ArrowCursor)
         self.update()
+        super().hoverLeaveEvent(event)
 
     def boundingRect(self) -> QRectF:
-        """Defining Qt' bounding rectangle"""
         return QRectF(0, 0, self.width, self.height).normalized()
 
 
@@ -219,7 +317,6 @@ class QD_StateNodeGfx(QGraphicsItem):
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
-        """Painting the rounded rectanglar `QD_Node`"""
         # title
         path_title = QPainterPath()
         path_title.setFillRule(Qt.FillRule.WindingFill)
