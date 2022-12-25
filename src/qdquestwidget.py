@@ -245,14 +245,15 @@ class QD_QuestWidget(QSplitter):
             if confg.DEBUG:
                 print(item)
 
-            if type(item) == QGraphicsProxyWidget:
+            if isinstance(item, QGraphicsProxyWidget):
                 item = item.widget()
 
-            if hasattr(item, 'node') or hasattr(item, 'socket'):
+            if hasattr(item, 'node'):
                 self.handleNodeContextMenu(item.node, event)
+            elif hasattr(item, 'socket'):
+                self.handleNodeContextMenu(item.socket.node, event)
             elif hasattr(item, 'edge'):
                 self.handleEdgeContextMenu(event)
-            # elif item is None:
             else:
                 self.handleNewNodeContextMenu(event)
 
@@ -325,8 +326,8 @@ class QD_QuestWidget(QSplitter):
         if confg.DEBUG:
             print("CONTEXT: EDGE")
         context_menu = QMenu(self)
-        bezierAct = context_menu.addAction("Bezier QD_Edge")
-        directAct = context_menu.addAction("Direct QD_Edge")
+        bezierAct = context_menu.addAction("Bezier Edge")
+        directAct = context_menu.addAction("Direct Edge")
         action = context_menu.exec(self.mapToGlobal(event.pos()))
 
         selected = None
