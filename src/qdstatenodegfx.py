@@ -159,7 +159,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         self._pen_hover_selected.setWidthF(3.0)
 
         self._brush_title = QBrush(QColor("#FF313131"))
-        self._brush_background = QBrush(QColor("#E3212121"))
+        self._brush_background = QBrush(QColor("#E3474747"))
 
         self._icons = QImage("icons/status_icons.png")
         self._image = QImage("icons/src.png")
