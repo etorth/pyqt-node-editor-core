@@ -25,7 +25,7 @@ class _StateNodeTitleBox(QGraphicsTextItem):
 
 
 class QD_StateNodeGfx(QGraphicsItem):
-    dragSensitiveDistance = 8.0
+    dragSensitiveDistance = 5.0
 
     handleTopLeft = 1
     handleTopMiddle = 2
@@ -181,6 +181,10 @@ class QD_StateNodeGfx(QGraphicsItem):
     def handleAt(self, point):
         b = self.boundingRect()
         if b.contains(point):
+            for socktype in self.node.getSocketTypeSet():
+                if QLineF(self.node.getSocketPosition(socktype), point).length() <= self.dragSensitiveDistance:
+                    return None
+
             if QLineF(point, b.topLeft    ()).length() <= self.dragSensitiveDistance: return self.handleTopLeft
             if QLineF(point, b.topRight   ()).length() <= self.dragSensitiveDistance: return self.handleTopRight
             if QLineF(point, b.bottomLeft ()).length() <= self.dragSensitiveDistance: return self.handleBottomLeft
@@ -236,7 +240,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         self.handleSelected = self.handleAt(event.pos())
         if self.handleSelected:
             self.mousePressPos = event.pos()
-            self.mousePressRect = self.boundingRect()
+            self.mousePressRect = self.rect()
         super().mousePressEvent(event)
 
 
