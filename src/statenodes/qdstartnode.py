@@ -8,8 +8,24 @@ from qdsocket import *
 from qdutils import *
 from qdstatenode import QD_StateNode
 
-
 from qdutils import *
+
+
+class QD_StateStartWidget(QWidget):
+    def __init__(self, node: 'QD_StartNode' = None, parent: QWidget = None):
+        super().__init__(parent)
+
+        self.node = node
+        self.scene = self.node.scene
+        self.initUI()
+
+
+    def initUI(self):
+        self.vbox = QVBoxLayout(self)
+
+        self.job = QComboBox()
+        self.job.addItems(["战士", "法师", "道士"])
+        self.vbox.addWidget(self.job)
 
 
 class _StartNodeGfx(QGraphicsItem):
@@ -192,3 +208,12 @@ class QD_StartNode(QD_StateNode):
     def getSocketPosition(self, socktype: SocketType) -> QPointF:
         assert socktype is SocketType.Out_True, socktype
         return QPointF(self.gfx.width, self.gfx.height / 2)
+
+
+    def onDoubleClicked(self, event):
+        win = utils.main_window.findMdiChildByStateNode(self)
+        if win:
+            utils.main_window.mdiArea.setActiveSubWindow(win)
+        else:
+            subwin = utils.main_window.createMdiChild(QD_StateStartWidget(self))
+            subwin.show()

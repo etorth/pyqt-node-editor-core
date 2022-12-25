@@ -288,9 +288,10 @@ class QD_MainWindow(QMainWindow):
 
         # child_widget.scene.addItemSelectedListener(self.updateEditMenu)
         # child_widget.scene.addItemsDeselectedListener(self.updateEditMenu)
-        child_widget.scene.history.addHistoryModifiedListener(self.updateEditMenu)
-        child_widget.addCloseEventListener(self.onSubWndClose)
-        child_widget.view.scenePosChanged.connect(self.onScenePosChanged)
+
+        # child_widget.scene.history.addHistoryModifiedListener(self.updateEditMenu)
+        # child_widget.addCloseEventListener(self.onSubWndClose)
+        # child_widget.view.scenePosChanged.connect(self.onScenePosChanged)
         return subwin
 
     def createLuaEditorChild(self):

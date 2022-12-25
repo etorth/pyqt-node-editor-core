@@ -123,10 +123,12 @@ class QD_StateNode(QD_Serializable):
         self.markDescendantsDirty()
         self.eval()
 
+
     def onDeserialized(self, data: dict):
         """Event manually called when this node was deserialized. Currently called when node is deserialized from scene
         Passing `data` containing the data which have been deserialized """
         pass
+
 
     def onDoubleClicked(self, event):
         """Event handling double click on Graphics QD_StateNode in `QD_StateScene`"""
