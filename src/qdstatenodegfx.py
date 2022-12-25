@@ -171,6 +171,7 @@ class QD_StateNodeGfx(QGraphicsItem):
 
 
     def setRect(self, rect: QRectF):
+        self.prepareGeometryChange()
         self.setPos(rect.topLeft())
         self._width = max(rect.width(), self._mini_width)
         self._height = max(rect.height(), self._mini_height)
@@ -193,9 +194,7 @@ class QD_StateNodeGfx(QGraphicsItem):
 
 
     def interactiveResize(self, mousePos):
-        self.prepareGeometryChange()
         rect = self.rect()
-
         if self.handleSelected == self.handleTopLeft:
             rect.setLeft(self.mousePressRect.left() + mousePos.x() - self.mousePressPos.x())
             rect.setTop(self.mousePressRect.top() + mousePos.y() - self.mousePressPos.y())
