@@ -175,6 +175,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         self.setPos(rect.topLeft())
         self._width = max(rect.width(), self._mini_width)
         self._height = max(rect.height(), self._mini_height)
+        self._was_moved = True
         self.node.updateSockets()
         self.update()
 
