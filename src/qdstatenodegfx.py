@@ -191,7 +191,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         self.update()
 
 
-    def handleAt(self, point):
+    def handleDragAt(self, point):
         b = self.boundingRect()
         if b.contains(point):
             for socktype in self.node.getSocketTypeSet():
@@ -227,7 +227,7 @@ class QD_StateNodeGfx(QGraphicsItem):
 
 
     def mousePressEvent(self, event):
-        self.handleSelected = self.handleAt(event.pos())
+        self.handleSelected = self.handleDragAt(event.pos())
         if self.handleSelected:
             self.mousePressPos = event.scenePos()
             self.mousePressRect = QRectF(self.pos(), QSizeF(self.width, self.height))
@@ -284,7 +284,7 @@ class QD_StateNodeGfx(QGraphicsItem):
 
     def hoverMoveEvent(self, event):
         if self.isSelected():
-            handle = self.handleAt(event.pos())
+            handle = self.handleDragAt(event.pos())
             if handle is None:
                 cursor = Qt.CursorShape.ArrowCursor
             else:
