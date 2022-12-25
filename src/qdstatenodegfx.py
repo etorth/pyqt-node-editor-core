@@ -172,8 +172,9 @@ class QD_StateNodeGfx(QGraphicsItem):
 
     def setRect(self, rect: QRectF):
         self.setPos(rect.topLeft())
-        self._width = rect.width()
-        self._height = rect.height()
+        self._width = max(rect.width(), self._mini_width)
+        self._height = max(rect.height(), self._mini_height)
+        self.node.updateSockets()
 
 
     def handleAt(self, point):
