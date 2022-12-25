@@ -261,32 +261,6 @@ class QD_QuestWidget(QSplitter):
             utils.dumpExcept(e)
 
 
-    def onAddPulseInSocket(self, node):
-        def doAddPulseInSocket():
-            node.addPulseIn()
-        return doAddPulseInSocket
-
-
-    def onDeletePulseInSocket(self, node):
-        def doDeletePulseInSocket():
-            node.removePulseIn()
-        return doDeletePulseInSocket
-
-
-    def onSwitchPulseInSocketPosition(self, node):
-        def doSwitchPulseInSocketPosition():
-            node.switchPulseSocketPosition()
-        return doSwitchPulseInSocketPosition
-
-
-    def onSwitchPulseSocketPosition(self, node):
-        def doSwitchPulseSocketPosition():
-            node.gfx.switchSocketPosition()
-            # not working
-            # self.scene.getView().viewport().repaint()
-        return doSwitchPulseSocketPosition
-
-
     def handleNodeContextMenu(self, node, event):
         if confg.DEBUG:
             print("CONTEXT: NODE")
@@ -298,19 +272,13 @@ class QD_QuestWidget(QSplitter):
         evalAct = context_menu.addAction("Eval")
 
         if SocketType.PulseIn in node.getSocketTypeSet():
-            context_menu.addAction("Delete Pulse Input Socket").triggered.connect(self.onDeletePulseInSocket(node))
-            context_menu.addAction("Switch Pulse Input Socket Position").triggered.connect(self.onSwitchPulseInSocketPosition(node))
+            context_menu.addAction("Delete Pulse Input Socket").triggered.connect(lambda: node.removePulseIn())
+            context_menu.addAction("Switch Pulse Input Socket Position").triggered.connect(lambda: node.switchPulseSocketPosition())
         else:
-            context_menu.addAction("Add Pulse Input Socket").triggered.connect(self.onAddPulseInSocket(node))
+            context_menu.addAction("Add Pulse Input Socket").triggered.connect(lambda: node.addPulseIn())
 
         if isinstance(node, QD_PulseNode):
-            context_menu.addAction("Switch Pulse Socket Position").triggered.connect(self.onSwitchPulseSocketPosition(node))
-
-
-        addNodeMenu = context_menu.addMenu('Add Node')
-        addedActDict = {}
-        for type in utils.valid_node_types():
-            addedActDict[addNodeMenu.addAction(type.op_title)] = type
+            context_menu.addAction("Switch Pulse Socket Position").triggered.connect(lambda: node.gfx.switchSocketPosition())
 
         action = context_menu.exec(self.mapToGlobal(event.pos()))
         if action is None:
@@ -350,11 +318,7 @@ class QD_QuestWidget(QSplitter):
                     print("EVALUATED:", val)
 
             else:
-                for addedAct in addedActDict.keys():
-                    if action == addedAct:
-                        print("ADDING NODE: %s" % addedActDict[addedAct].op_title)
-                        selected.addSubNode(addedActDict[addedAct])
-                        break
+                raise ValueError('Unknown action', action)
 
 
     def handleEdgeContextMenu(self, event):
