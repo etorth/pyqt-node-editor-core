@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+
+import math
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
@@ -24,7 +26,7 @@ class _StateNodeTitleBox(QGraphicsTextItem):
             widget.confg.gfx.log.setText(self.toPlainText())
 
 
-class QD_StateNodeGfx(QGraphicsItem):
+class QD_StateNodeGfx(QGraphicsObject):
     dragSensitiveDistance = 5.0
 
     handleTopLeft = 1
@@ -47,6 +49,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         handleBottomRight: Qt.CursorShape.SizeFDiagCursor,
     }
 
+    sizeChanged = pyqtSignal()
 
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         """
@@ -114,17 +117,15 @@ class QD_StateNodeGfx(QGraphicsItem):
         self.title = self.node.title
         self.proxy = QGraphicsProxyWidget(self)
 
-        widget_x = self._widget_margin
-        widget_y = self.title_height + self._widget_margin
-        widget_w = max(self.width - self._widget_margin * 2, 0)
-        widget_h = max(self.height - self.title_height - self._widget_margin * 2, 0)
+        frameRect = self.getFrameRect(self.width, self.height)
 
-        frame = QFrame()
-        frame.setMinimumSize(widget_w, widget_h)
-        frame.setGeometry(widget_x, widget_y, widget_w, widget_h)
+        self.frame = QFrame()
+        self.frame.setMinimumSize(frameRect.size().toSize())
+        self.frame.setGeometry(frameRect.toRect())
+        self.sizeChanged.connect(self.onSizeChanged)
 
-        self.proxy.setWidget(frame)
-        self.vbox = QVBoxLayout(frame)
+        self.proxy.setWidget(self.frame)
+        self.vbox = QVBoxLayout(self.frame)
         self.vbox.addWidget(QTextEdit())
 
 
@@ -164,6 +165,15 @@ class QD_StateNodeGfx(QGraphicsItem):
         self._icons = QImage("icons/status_icons.png")
         self._image = QImage("icons/src.png")
 
+
+    def getFrameRect(self, w: float, h: float) -> QRectF:
+        return QRectF(self._widget_margin, self.title_height + self._widget_margin, max(w - self._widget_margin * 2, 0), max(h - self.title_height - self._widget_margin * 2, 0))
+
+
+    def onSizeChanged(self):
+        self.frame.setGeometry(*self.getFrameRect(self.width, self.height).toRect().getRect())
+
+
     def onSelected(self):
         """Our event handling when the node was selected"""
         self.node.scene.gfx.itemSelected.emit()
@@ -188,6 +198,7 @@ class QD_StateNodeGfx(QGraphicsItem):
         self._height = max(self.mousePressRect.height() + dh, self._mini_height)
         self._was_moved = True
         self.node.updateSockets()
+        self.sizeChanged.emit()
         self.update()
 
 
