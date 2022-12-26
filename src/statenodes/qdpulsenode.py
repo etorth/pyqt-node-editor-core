@@ -13,7 +13,7 @@ import math
 from qdutils import *
 
 
-class _PulseNodeGfx(QGraphicsItem):
+class _PulseNodeGfx(QGraphicsObject):
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         super().__init__(parent)
         self.node = node
