@@ -10,6 +10,7 @@ from qdutils import *
 class QD_StateNode(QD_Serializable):
     """Class representing `QD_StateNode` in the `QD_StateScene`.
     """
+    StateNodeWidget_class = QD_StateWidget
     StateNodeGfx_class = QD_StateNodeGfx
     Socket_class = QD_Socket
 
@@ -104,6 +105,15 @@ class QD_StateNode(QD_Serializable):
         self.updateSockets()
 
 
+    def popMdiWindow(self):
+        win = utils.main_window.findMdiChildByStateNode(self)
+        if win:
+            utils.main_window.mdiArea.setActiveSubWindow(win)
+        else:
+            subwin = utils.main_window.createMdiChild(self.__class__.StateNodeWidget_class(self))
+            subwin.show()
+
+
     def onEdgeConnectionChanged(self, new_edge: 'QD_Edge'):
         """
         Event handling that any connection (`QD_Edge`) has changed. Currently not used...
@@ -131,16 +141,7 @@ class QD_StateNode(QD_Serializable):
 
 
     def onDoubleClicked(self, event):
-        """Event handling double click on Graphics QD_StateNode in `QD_StateScene`"""
-        print('Double clicked on', self)
-
-        win = utils.main_window.findMdiChildByStateNode(self)
-        if win:
-            utils.main_window.mdiArea.setActiveSubWindow(win)
-        else:
-            stateeditor = QD_StateWidget(self)
-            subwin = utils.main_window.createMdiChild(stateeditor)
-            subwin.show()
+        self.popMdiWindow()
 
 
     def doSelect(self, new_state: bool = True):

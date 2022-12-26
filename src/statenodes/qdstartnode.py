@@ -185,6 +185,7 @@ class _StartNodeGfx(QGraphicsItem):
 
 
 class QD_StartNode(QD_StateNode):
+    StateNodeWidget_class = QD_StateStartWidget
     StateNodeGfx_class = _StartNodeGfx
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.Out_True}):
         super().__init__(scene, sockets)
@@ -208,12 +209,3 @@ class QD_StartNode(QD_StateNode):
     def getSocketPosition(self, socktype: SocketType) -> QPointF:
         assert socktype is SocketType.Out_True, socktype
         return QPointF(self.gfx.width, self.gfx.height / 2)
-
-
-    def onDoubleClicked(self, event):
-        win = utils.main_window.findMdiChildByStateNode(self)
-        if win:
-            utils.main_window.mdiArea.setActiveSubWindow(win)
-        else:
-            subwin = utils.main_window.createMdiChild(QD_StateStartWidget(self))
-            subwin.show()
