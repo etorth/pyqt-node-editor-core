@@ -188,3 +188,7 @@ class QD_PulseNode(QD_StateNode):
                         self.gfx.height / 2 * (1.0 + math.sin(math.radians(self.gfx.pulse_angle))))
             case _:
                 raise ValueError('Invalid socket type %d' % socktype)
+
+
+    def onDoubleClicked(self, event):
+        pass

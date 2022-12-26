@@ -165,3 +165,7 @@ class QD_EndNode(QD_StateNode):
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In}):
         super().__init__(scene, sockets)
         self.title = '结束节点'
+
+
+    def onDoubleClicked(self, event):
+        pass
