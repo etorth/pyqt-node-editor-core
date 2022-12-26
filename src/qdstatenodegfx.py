@@ -7,24 +7,6 @@ from PyQt6.QtWidgets import *
 
 from qdutils import *
 
-class _StateNodeTitleBox(QGraphicsTextItem):
-    def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
-        super().__init__(parent)
-
-        self._color = Qt.GlobalColor.white
-
-        self.node = node
-        # self.setTextInteractionFlags(Qt.TextInteractionFlag.TextEditorInteraction)
-        self.setDefaultTextColor(self._color)
-
-    def focusOutEvent(self, event: QFocusEvent):
-        super().focusOutEvent(event)
-
-        win = utils.main_window.findMdiChildByStateNode(self.node)
-        if win:
-            widget = win.widget()
-            widget.confg.gfx.log.setText(self.toPlainText())
-
 
 class QD_StateNodeGfx(QGraphicsObject):
     dragSensitiveDistance = 5.0
@@ -126,7 +108,10 @@ class QD_StateNodeGfx(QGraphicsObject):
 
         self.proxy.setWidget(self.frame)
         self.vbox = QVBoxLayout(self.frame)
-        self.vbox.addWidget(QTextEdit())
+
+        self.edit = QTextEdit()
+        self.edit.textChanged.connect(self.onTextChanged)
+        self.vbox.addWidget(self.edit)
 
 
     def initSizes(self):
@@ -171,6 +156,13 @@ class QD_StateNodeGfx(QGraphicsObject):
 
     def onSizeChanged(self):
         self.frame.setGeometry(*self.getFrameRect(self.width, self.height).toRect().getRect())
+
+
+    def onTextChanged(self):
+        win = utils.main_window.findMdiChildByStateNode(self.node)
+        if win:
+            widget = win.widget()
+            widget.confg.gfx.log.setText(self.edit.toPlainText())
 
 
     def onSelected(self):
