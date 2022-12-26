@@ -6,7 +6,7 @@ from PyQt6.QtWidgets import *
 from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
-from qdstatenode import QD_StateNode
+from statenodes.qdstatenode import QD_StateNode
 from qdbasestatenodegfx import QD_BaseStateNodeGfx
 import math
 

@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import *
 from qdquestscene import *
 from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
-from qdstatenode import *
+from statenodes.qdstatenode import *
 from statenodes.qdpulsenode import *
 from statenodes.qdstartnode import *
 from statenodes.qdendnode import *

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from PyQt6.QtCore import QPointF
 
-from qdstatenodegfx import QD_StateNodeGfx
+from statenodes.qdstatenodegfx import QD_StateNodeGfx
 from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
