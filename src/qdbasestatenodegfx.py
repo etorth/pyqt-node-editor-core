@@ -28,10 +28,6 @@ class QD_BaseStateNodeGfx(QGraphicsObject):
         raise NotImplementedError()
 
 
-    def mouseDoubleClickEvent(self, event):
-        self.node.popMdiWindow()
-
-
     def boundingRect(self) -> QRectF:
         raise NotImplementedError()
 

@@ -7,6 +7,7 @@ from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 from qdstatenode import QD_StateNode
+from qdbasestatenodegfx import QD_BaseStateNodeGfx
 
 from qdutils import *
 
@@ -28,10 +29,9 @@ class QD_StateStartWidget(QWidget):
         self.vbox.addWidget(self.job)
 
 
-class _StartNodeGfx(QGraphicsItem):
+class _StartNodeGfx(QD_BaseStateNodeGfx):
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
-        super().__init__(parent)
-        self.node = node
+        super().__init__(node, parent)
 
         self.hovered = False
         self._was_moved = False
@@ -53,10 +53,7 @@ class _StartNodeGfx(QGraphicsItem):
 
 
     def initUI(self):
-        """Set up this ``QGraphicsItem``"""
-        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
-        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
-        self.setAcceptHoverEvents(True)
+        pass
 
 
     def initSizes(self):
@@ -126,7 +123,7 @@ class _StartNodeGfx(QGraphicsItem):
             self.onSelected()
 
     def mouseDoubleClickEvent(self, event):
-        self.node.onDoubleClicked(event)
+        self.node.popMdiWindow()
 
     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
         self.hovered = True
@@ -145,7 +142,7 @@ class _StartNodeGfx(QGraphicsItem):
         path_content.setFillRule(Qt.FillRule.WindingFill)
         path_content.addEllipse(QRectF(0, 0, self.width, self.height))
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(QBrush(utils.player_color(self.node.index)))
+        painter.setBrush(QBrush(self.playerColor()))
         painter.drawPath(path_content.simplified())
 
         path_text = QPainterPath()

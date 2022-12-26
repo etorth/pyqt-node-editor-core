@@ -103,9 +103,6 @@ class _EndNodeGfx(QD_BaseStateNodeGfx):
             self._last_selected_state = self.isSelected()
             self.onSelected()
 
-    def mouseDoubleClickEvent(self, event):
-        pass
-
 
     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
         self.hovered = True
