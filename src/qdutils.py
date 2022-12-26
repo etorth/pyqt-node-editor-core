@@ -50,6 +50,16 @@ class Utils:
     _mono_font_families = None
 
     _node_state_icons = QImage("icons/status_icons.png")
+    _color_table = [
+        QColor('#800000'),
+        QColor('#008000'),
+        QColor('#808000'),
+        QColor('#000080'),
+        QColor('#800080'),
+        QColor('#008080'),
+        QColor('#005f87'),
+        QColor('#00875f'),
+    ]
 
 
     @property
@@ -153,15 +163,7 @@ class Utils:
 
 
     def player_color(self, index) -> QColor:
-        match index % 7:
-            case 0: return QColor('#800000')
-            case 1: return QColor('#008000')
-            case 2: return QColor('#808000')
-            case 3: return QColor('#000080')
-            case 4: return QColor('#800080')
-            case 5: return QColor('#008080')
-            case 6: return QColor('#005f87')
-            case _: return QColor('#00875f')
+        return self._color_table[index % len(self._color_table)]
 
 
 utils = Utils()
