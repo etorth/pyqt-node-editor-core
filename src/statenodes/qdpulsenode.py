@@ -7,16 +7,16 @@ from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 from qdstatenode import QD_StateNode
+from qdbasestatenodegfx import QD_BaseStateNodeGfx
 import math
 
 
 from qdutils import *
 
 
-class _PulseNodeGfx(QGraphicsObject):
+class _PulseNodeGfx(QD_BaseStateNodeGfx):
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
-        super().__init__(parent)
-        self.node = node
+        super().__init__(node, parent)
 
         self.hovered = False
         self._was_moved = False
@@ -39,10 +39,7 @@ class _PulseNodeGfx(QGraphicsObject):
 
 
     def initUI(self):
-        """Set up this ``QGraphicsItem``"""
-        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
-        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
-        self.setAcceptHoverEvents(True)
+        pass
 
 
     def initSizes(self):
@@ -50,7 +47,6 @@ class _PulseNodeGfx(QGraphicsObject):
         self._rect_height = 60
         self._rect_image_width  = 40
         self._rect_image_height = 40
-        self.title_height = 0
 
 
     def initAssets(self):
@@ -77,15 +73,9 @@ class _PulseNodeGfx(QGraphicsObject):
         self.update()
 
 
-    def playerColor(self) -> QColor:
-        for root in self.node.getRoots():
-            if hasattr(root, 'index'):
-                return utils.player_color(root.index)
-        return QColor("#7F000000")
-
-
     def onSelected(self):
         self.node.scene.gfx.itemSelected.emit()
+
 
     def doSelect(self, new_state=True):
         self.setSelected(new_state)
@@ -94,12 +84,14 @@ class _PulseNodeGfx(QGraphicsObject):
         if new_state:
             self.onSelected()
 
+
     def mouseMoveEvent(self, event):
         super().mouseMoveEvent(event)
         for node in self.scene().scene.nodes:
             if node.gfx.isSelected():
                 node.updateConnectedEdges()
         self._was_moved = True
+
 
     def mouseReleaseEvent(self, event):
         super().mouseReleaseEvent(event)
@@ -122,16 +114,16 @@ class _PulseNodeGfx(QGraphicsObject):
             self._last_selected_state = self.isSelected()
             self.onSelected()
 
-    def mouseDoubleClickEvent(self, event):
-        self.node.onDoubleClicked(event)
 
     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
         self.hovered = True
         self.update()
 
+
     def hoverLeaveEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
         self.hovered = False
         self.update()
+
 
     def boundingRect(self) -> QRectF:
         return QRectF(0, 0, self.width, self.height).normalized()
@@ -192,7 +184,3 @@ class QD_PulseNode(QD_StateNode):
                         self.gfx.height / 2 * (1.0 + math.sin(math.radians(self.gfx.pulse_angle))))
             case _:
                 raise ValueError('Invalid socket type %d' % socktype)
-
-
-    def onDoubleClicked(self, event):
-        pass
