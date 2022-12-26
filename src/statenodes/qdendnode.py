@@ -7,15 +7,15 @@ from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 from qdstatenode import QD_StateNode
+from qdbasestatenodegfx import QD_BaseStateNodeGfx
 
 
 from qdutils import *
 
 
-class _EndNodeGfx(QGraphicsItem):
-    def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
-        super().__init__(parent)
-        self.node = node
+class _EndNodeGfx(QD_BaseStateNodeGfx):
+    def __init__(self, node: 'QD_EndNode', parent: QGraphicsItem = None):
+        super().__init__(node, parent)
 
         self.hovered = False
         self._was_moved = False
@@ -34,13 +34,6 @@ class _EndNodeGfx(QGraphicsItem):
     @property
     def height(self) -> int:
         return self._rect_height
-
-
-    def initUI(self):
-        """Set up this ``QGraphicsItem``"""
-        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsSelectable)
-        self.setFlag(QGraphicsItem.GraphicsItemFlag.ItemIsMovable)
-        self.setAcceptHoverEvents(True)
 
 
     def initSizes(self):
@@ -65,10 +58,12 @@ class _EndNodeGfx(QGraphicsItem):
         self._pen_hover_selected = QPen(self._color_hover_selected)
         self._pen_hover_selected.setWidthF(3.0)
 
-        self._brush_title = QBrush(QColor("#FF313131"))
-        self._brush_background = QBrush(QColor("#E3212121"))
-
         self._image = QImage("icons/dst.png")
+
+
+    def initUI(self):
+        pass
+
 
     def onSelected(self):
         self.node.scene.gfx.itemSelected.emit()
@@ -109,15 +104,18 @@ class _EndNodeGfx(QGraphicsItem):
             self.onSelected()
 
     def mouseDoubleClickEvent(self, event):
-        self.node.onDoubleClicked(event)
+        pass
+
 
     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
         self.hovered = True
         self.update()
 
+
     def hoverLeaveEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
         self.hovered = False
         self.update()
+
 
     def boundingRect(self) -> QRectF:
         return QRectF(0, 0, self.width, self.height).normalized()
@@ -128,7 +126,7 @@ class _EndNodeGfx(QGraphicsItem):
         path_content.setFillRule(Qt.FillRule.WindingFill)
         path_content.addEllipse(QRectF(0, 0, self.width, self.height))
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(self._brush_background)
+        painter.setBrush(QBrush(self.playerColor()))
         painter.drawPath(path_content.simplified())
 
         path_outline = QPainterPath()
@@ -165,7 +163,3 @@ class QD_EndNode(QD_StateNode):
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In}):
         super().__init__(scene, sockets)
         self.title = '结束节点'
-
-
-    def onDoubleClicked(self, event):
-        pass
