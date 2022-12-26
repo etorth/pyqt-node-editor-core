@@ -68,9 +68,6 @@ class _PulseNodeGfx(QGraphicsItem):
         self._pen_hover_selected = QPen(self._color_hover_selected)
         self._pen_hover_selected.setWidthF(3.0)
 
-        self._brush_title = QBrush(QColor("#FF313131"))
-        self._brush_background = QBrush(QColor("#E3212121"))
-
         self._image = QImage("icons/pulse.png")
 
 
@@ -78,6 +75,13 @@ class _PulseNodeGfx(QGraphicsItem):
         self.pulse_angle *= -1
         self.node.updateSockets()
         self.update()
+
+
+    def playerColor(self) -> QColor:
+        for root in self.node.getRoots():
+            if hasattr(root, 'index'):
+                return utils.player_color(root.index)
+        return QColor("#7F000000")
 
 
     def onSelected(self):
@@ -138,7 +142,7 @@ class _PulseNodeGfx(QGraphicsItem):
         path_content.setFillRule(Qt.FillRule.WindingFill)
         path_content.addEllipse(QRectF(0, 0, self.width, self.height))
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(self._brush_background)
+        painter.setBrush(QBrush(self.playerColor()))
         painter.drawPath(path_content.simplified())
 
         path_outline = QPainterPath()

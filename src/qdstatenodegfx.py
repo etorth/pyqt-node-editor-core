@@ -159,7 +159,6 @@ class QD_StateNodeGfx(QGraphicsObject):
         self._pen_hover_selected = QPen(self._color_hover_selected)
         self._pen_hover_selected.setWidthF(3.0)
 
-        self._brush_title = QBrush(QColor("#FF313131"))
         self._brush_background = QBrush(QColor("#E3474747"))
 
         self._icons = QImage("icons/status_icons.png")
@@ -314,11 +313,11 @@ class QD_StateNodeGfx(QGraphicsObject):
         return QRectF(0, 0, self.width, self.height).normalized()
 
 
-    def title_background_brush(self) -> QBrush:
+    def playerColor(self) -> QColor:
         for root in self.node.getRoots():
             if hasattr(root, 'index'):
-                return QBrush(utils.player_color(root.index))
-        return self._brush_title
+                return utils.player_color(root.index)
+        return QColor("#FF313131")
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
@@ -329,7 +328,7 @@ class QD_StateNodeGfx(QGraphicsObject):
         path_title.addRect(0, self.title_height - self.edge_roundness, self.edge_roundness, self.edge_roundness)
         path_title.addRect(self.width - self.edge_roundness, self.title_height - self.edge_roundness, self.edge_roundness, self.edge_roundness)
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(self.title_background_brush())
+        painter.setBrush(QBrush(self.playerColor()))
         painter.drawPath(path_title.simplified())
 
         painter.setPen(self._pen_text)
