@@ -51,6 +51,7 @@ class Utils:
 
     _node_state_icons = QImage("icons/status_icons.png")
 
+
     @property
     def main_window(self):
         return self._main_window
@@ -161,6 +162,7 @@ class Utils:
             case 5: return QColor('#008080')
             case 6: return QColor('#005f87')
             case _: return QColor('#00875f')
+
 
 utils = Utils()
 
