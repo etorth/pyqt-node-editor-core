@@ -332,7 +332,7 @@ class QD_MainWindow(QMainWindow):
     def findMdiChildByStateNode(self, state_node):
         for win in self.mdiArea.subWindowList():
             widget = win.widget()
-            if isinstance(widget, QD_StateWidget) and widget.node == state_node:
+            if hasattr(widget, 'node') and widget.node is state_node:
                 return win
         return None
 
