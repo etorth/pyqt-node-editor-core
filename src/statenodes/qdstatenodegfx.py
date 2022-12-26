@@ -306,10 +306,13 @@ class QD_StateNodeGfx(QGraphicsObject):
 
 
     def playerColor(self) -> QColor:
+        def normalizeLightness(color: QColor, lightness: float = 0.2) -> QColor:
+            return color.lighter(round(lightness * 100 / color.lightnessF()))
+
         for root in self.node.getRoots():
-            if hasattr(root, 'index'):
-                return utils.player_color(root.index)
-        return QColor("#FF313131")
+            if root.__class__.__name__ == 'QD_StartNode' and hasattr(root, 'index'):
+                return normalizeLightness(utils.player_color(root.index - 1))
+        return normalizeLightness(QColor("#313131"))
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):

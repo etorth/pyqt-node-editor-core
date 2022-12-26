@@ -51,17 +51,26 @@ class Utils:
 
     _node_state_icons = QImage("icons/status_icons.png")
 
-    # from: https://zhuanlan.zhihu.com/p/508870810
     _color_table = [
-        QColor('#800000'),
-        QColor('#008000'),
-        QColor('#808000'),
-        QColor('#000080'),
-        QColor('#800080'),
-        QColor('#008080'),
-        QColor('#005f87'),
-        QColor('#00875f'),
+        QColor('#00FF00'),
+        QColor('#FF0000'),
+        QColor('#FFFF00'),
+        QColor('#0000FF'),
+        QColor('#FF00FF'),
+        QColor('#00FFFF'),
+        QColor('#005F87'),
+        QColor('#00875F'),
+        QColor('#F58231'),
+        QColor('#BFEF45'),
+        QColor('#FABED4'),
+        QColor('#AAFFC3'),
+        QColor('#3CB44B'),
+        QColor('#FFE119'),
+        QColor('#4363D8'),
+        QColor('#911EB4'),
+        QColor('#42D4F4'),
 
+        # from: https://zhuanlan.zhihu.com/p/508870810
         # QColor('#E6194B'),
         # QColor('#3CB44B'),
         # QColor('#FFE119'),
