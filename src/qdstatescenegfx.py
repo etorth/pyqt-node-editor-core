@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-A module containing Graphic representation of :class:`scene.QD_StateScene`
-"""
 import math
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
@@ -9,24 +6,14 @@ from PyQt6.QtGui import *
 
 
 class QD_StateSceneGfx(QGraphicsScene):
-    """Class representing Graphic of :class:`scene.QD_StateScene`"""
-    #: pyqtSignal emitted when some item is selected in the `QD_StateScene`
     itemSelected = pyqtSignal()
-    #: pyqtSignal emitted when items are deselected in the `QD_StateScene`
     itemsDeselected = pyqtSignal()
 
     def __init__(self, scene: 'QD_StateScene', parent: QWidget = None):
-        """
-        :param scene: reference to the :class:`scene.QD_StateScene`
-        :type scene: :class:`scene.QD_StateScene`
-        :param parent: parent widget
-        :type parent: QWidget
-        """
         super().__init__(parent)
 
         self.scene = scene
 
-        # settings
         self.gridSize = 20
         self.gridSquares = 5
 
@@ -34,15 +21,17 @@ class QD_StateSceneGfx(QGraphicsScene):
         self.setBackgroundBrush(self._color_background)
 
     def initAssets(self):
-        """Initialize ``QObjects`` like ``QColor``, ``QPen`` and ``QBrush``"""
         self._color_background = QColor("#393940")
         self._color_light = QColor("#2f2f2f")
         self._color_dark = QColor("#292929")
+        self._color_axis = QColor("#202040")
 
         self._pen_light = QPen(self._color_light)
         self._pen_light.setWidth(1)
         self._pen_dark = QPen(self._color_dark)
         self._pen_dark.setWidth(2)
+        self._pen_axis = QPen(self._color_axis)
+        self._pen_axis.setWidth(3)
 
     # the drag events won't be allowed until dragMoveEvent is overriden
     def dragMoveEvent(self, event):
@@ -50,7 +39,6 @@ class QD_StateSceneGfx(QGraphicsScene):
         pass
 
     def setSceneSize(self, width: int, height: int):
-        """Set `width` and `height` of the `Graphics QD_StateScene`"""
         self.setSceneRect(-width // 2, -height // 2, width, height)
 
     def drawBackground(self, painter: QPainter, rect: QRect):
@@ -88,3 +76,7 @@ class QD_StateSceneGfx(QGraphicsScene):
         painter.setPen(self._pen_dark)
         if lines_dark:
             painter.drawLines(*lines_dark)
+
+        painter.setPen(self._pen_axis)
+        painter.drawLine(QPointF(rect.left(), 0), QPointF(rect.right(), 0))
+        painter.drawLine(QPointF(0, rect.top()), QPointF(0, rect.bottom()))

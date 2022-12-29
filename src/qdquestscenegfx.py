@@ -6,24 +6,14 @@ from PyQt6.QtGui import *
 
 
 class QD_QuestSceneGfx(QGraphicsScene):
-    """Class representing Graphic of :class:`scene.QD_QuestScene`"""
-    #: pyqtSignal emitted when some item is selected in the `QD_QuestScene`
     itemSelected = pyqtSignal()
-    #: pyqtSignal emitted when items are deselected in the `QD_QuestScene`
     itemsDeselected = pyqtSignal()
 
     def __init__(self, scene: 'QD_QuestScene', parent: QWidget = None):
-        """
-        :param scene: reference to the :class:`scene.QD_QuestScene`
-        :type scene: :class:`scene.QD_QuestScene`
-        :param parent: parent widget
-        :type parent: QWidget
-        """
         super().__init__(parent)
 
         self.scene = scene
 
-        # settings
         self.gridSize = 20
         self.gridSquares = 5
 
@@ -31,7 +21,6 @@ class QD_QuestSceneGfx(QGraphicsScene):
         self.setBackgroundBrush(self._color_background)
 
     def initAssets(self):
-        """Initialize ``QObjects`` like ``QColor``, ``QPen`` and ``QBrush``"""
         self._color_background = QColor("#394039")
         self._color_light = QColor("#2f2f2f")
         self._color_dark = QColor("#292929")
@@ -50,7 +39,6 @@ class QD_QuestSceneGfx(QGraphicsScene):
         pass
 
     def setSceneSize(self, width: int, height: int):
-        """Set `width` and `height` of the `Graphics QD_QuestScene`"""
         self.setSceneRect(-width // 2, -height // 2, width, height)
 
     def drawBackground(self, painter: QPainter, rect: QRect):
