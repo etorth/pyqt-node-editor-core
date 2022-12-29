@@ -310,7 +310,7 @@ class QD_StateNodeGfx(QGraphicsObject):
             return color.lighter(round(lightness * 100 / color.lightnessF()))
 
         for root in self.node.getRoots():
-            if root.__class__.__name__ == 'QD_StartNode' and hasattr(root, 'index'):
+            if root.__class__.__name__ == 'StateNode_enter' and hasattr(root, 'index'):
                 return normalizeLightness(utils.player_color(root.index - 1))
         return normalizeLightness(QColor("#313131"))
 
