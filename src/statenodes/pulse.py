@@ -14,7 +14,7 @@ import math
 from qdutils import *
 
 
-class _PulseNodeGfx(QD_BaseStateNodeGfx):
+class _StateNodeGfx_pulse(QD_BaseStateNodeGfx):
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         super().__init__(node, parent)
 
@@ -166,8 +166,8 @@ class _PulseNodeGfx(QD_BaseStateNodeGfx):
 
 
 
-class QD_PulseNode(QD_StateNode):
-    StateNodeGfx_class = _PulseNodeGfx
+class StateNode_pulse(QD_StateNode):
+    StateNodeGfx_class = _StateNodeGfx_pulse
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.PulseOut}):
         super().__init__(scene, sockets)
 

@@ -10,7 +10,7 @@ from qdquestscene import *
 from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
 from statenodes.qdstatenode import *
-from statenodes.qdpulsenode import *
+from statenodes.pulse import StateNode_pulse
 from statenodes.qdstartnode import *
 from statenodes.qdendnode import *
 from qdedge import *
@@ -23,7 +23,7 @@ class QD_QuestWidget(QSplitter):
     StateNode_class = QD_StateNode
     StartNode_class = QD_StartNode
     EndNode_class = QD_EndNode
-    InterruptNode_class = QD_PulseNode
+    InterruptNode_class = StateNode_pulse
 
 
     def __init__(self, parent: QWidget = None):
