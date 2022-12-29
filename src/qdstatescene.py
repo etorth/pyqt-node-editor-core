@@ -14,6 +14,7 @@ class InvalidFile(Exception):
 
 
 class QD_StateScene(QD_Serializable):
+    SceneGfx_class = QD_StateSceneGfx
 
     def __init__(self):
         super().__init__()
@@ -61,7 +62,7 @@ class QD_StateScene(QD_Serializable):
         self._has_been_modified = value
 
     def initUI(self):
-        self.gfx = QD_StateSceneGfx(self)
+        self.gfx = self.__class__.SceneGfx_class(self)
         self.gfx.setSceneSize(self.scene_width, self.scene_height)
 
     def setSilentSelectionEvents(self, value: bool = True):
