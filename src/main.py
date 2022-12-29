@@ -7,8 +7,8 @@ from qdutils import *
 from qdmainwindow import QD_MainWindow
 
 if __name__ == '__main__':
-    QCoreApplication.setOrganizationName(confg.APP_ORG)
-    QCoreApplication.setApplicationName(confg.APP_NAME)
+    # QCoreApplication.setOrganizationName(confg.APP_ORG)
+    # QCoreApplication.setApplicationName(confg.APP_NAME)
 
     app = QApplication(sys.argv)
     app.setStyle(confg.APP_STYLE)
