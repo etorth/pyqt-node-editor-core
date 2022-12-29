@@ -13,8 +13,8 @@ from qdbasestatenodegfx import QD_BaseStateNodeGfx
 from qdutils import *
 
 
-class _EndNodeGfx(QD_BaseStateNodeGfx):
-    def __init__(self, node: 'QD_EndNode', parent: QGraphicsItem = None):
+class _StateNodeGfx_exit(QD_BaseStateNodeGfx):
+    def __init__(self, node: 'StateNode_exit', parent: QGraphicsItem = None):
         super().__init__(node, parent)
 
         self.hovered = False
@@ -155,8 +155,8 @@ class _EndNodeGfx(QD_BaseStateNodeGfx):
 
 
 
-class QD_EndNode(QD_StateNode):
-    StateNodeGfx_class = _EndNodeGfx
+class StateNode_exit(QD_StateNode):
+    StateNodeGfx_class = _StateNodeGfx_exit
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In}):
         super().__init__(scene, sockets)
         self.title = '结束节点'
