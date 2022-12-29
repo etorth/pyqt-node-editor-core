@@ -12,8 +12,8 @@ from qdbasestatenodegfx import QD_BaseStateNodeGfx
 from qdutils import *
 
 
-class QD_StateStartWidget(QWidget):
-    def __init__(self, node: 'QD_StartNode' = None, parent: QWidget = None):
+class _StateNodeWidget_enter(QWidget):
+    def __init__(self, node: 'StateNode_enter' = None, parent: QWidget = None):
         super().__init__(parent)
 
         self.node = node
@@ -29,7 +29,7 @@ class QD_StateStartWidget(QWidget):
         self.vbox.addWidget(self.job)
 
 
-class _StartNodeGfx(QD_BaseStateNodeGfx):
+class _StateNodeGfx_enter(QD_BaseStateNodeGfx):
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         super().__init__(node, parent)
 
@@ -181,19 +181,19 @@ class _StartNodeGfx(QD_BaseStateNodeGfx):
             utils.draw_node_state_icon(painter, 0, self.width / 2, 0, False)
 
 
-class QD_StartNode(QD_StateNode):
-    StateNodeWidget_class = QD_StateStartWidget
-    StateNodeGfx_class = _StartNodeGfx
+class StateNode_enter(QD_StateNode):
+    StateNodeWidget_class = _StateNodeWidget_enter
+    StateNodeGfx_class = _StateNodeGfx_enter
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.Out_True}):
         super().__init__(scene, sockets)
 
         # TODO
-        # get_next_valid_start_index() searches all QD_StartNode for existing index
+        # get_next_valid_start_index() searches all StateNode_enter for existing index
         # but also searches to this obj under construction which has no index yet, bad design
 
         indics = {}
         for item in scene.gfx.items():
-            if isinstance(item, QD_StartNode.StateNodeGfx_class) and hasattr(item.node, 'index'):
+            if isinstance(item, StateNode_enter.StateNodeGfx_class) and hasattr(item.node, 'index'):
                 indics[item.node.index] = True
 
         i = 1

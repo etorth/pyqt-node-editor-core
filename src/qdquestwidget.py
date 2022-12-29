@@ -11,7 +11,6 @@ from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
 from statenodes.qdstatenode import *
 from statenodes.pulse import StateNode_pulse
-from statenodes.qdstartnode import *
 from statenodes.exit import StateNode_exit
 from qdedge import *
 from qdviewgfx import MODE_EDGE_DRAG, QD_ViewGfx  # , MODE_EDGES_REROUTING
@@ -21,7 +20,7 @@ from qdutils import *
 class QD_QuestWidget(QSplitter):
     Scene_class = QD_QuestScene
     StateNode_class = QD_StateNode
-    StartNode_class = QD_StartNode
+    StateNode_enter_class = StateNode_enter
     StateNode_exit = StateNode_exit
     InterruptNode_class = StateNode_pulse
 
@@ -141,7 +140,7 @@ class QD_QuestWidget(QSplitter):
     def initNewNodeActions(self):
         self.node_actions = []
         act = QAction(QIcon('icons/state.png'), '添加起始节点')
-        act.node_type = self.__class__.StartNode_class
+        act.node_type = self.__class__.StateNode_enter_class
         self.node_actions.append(act)
 
         act = QAction(QIcon('icons/state.png'), '添加终止节点')

@@ -6,7 +6,7 @@ from qdserializable import QD_Serializable
 from qdquestscenegfx import QD_QuestSceneGfx
 from qdnode import QD_Node
 from qdedge import QD_Edge
-from statenodes.qdstartnode import QD_StartNode
+from statenodes.enter import StateNode_enter
 from qdscenehistory import QD_SceneHistory
 from qdsceneclipboard import QD_SceneClipboard
 
