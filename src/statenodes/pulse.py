@@ -97,7 +97,7 @@ class _StateNodeGfx_pulse(QD_BaseStateNodeGfx):
         super().mouseReleaseEvent(event)
         if self._was_moved:
             self._was_moved = False
-            self.node.scene.history.storeHistory("QD_Node moved", setModified=True)
+            self.node.scene.history.storeHistory("QD_OpNode moved", setModified=True)
 
             self.node.scene.resetLastSelectedStates()
             self.doSelect()  # also trigger itemSelected when node was moved

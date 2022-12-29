@@ -59,7 +59,7 @@ class QD_QuestWidget(QSplitter):
 
     def getNodeClassFromData(self, data):
         if 'op_code' not in data:
-            return QD_Node
+            return QD_OpNode
         return utils.get_class_from_opcode(data['op_code'])
 
     def doEvalOutputs(self):
@@ -389,9 +389,9 @@ class QD_QuestWidget(QSplitter):
 
 
     def addNodes(self):
-        node1 = QD_Node(self.scene, "My Awesome QD_Node 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
-        node2 = QD_Node(self.scene, "My Awesome QD_Node 2", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
-        node3 = QD_Node(self.scene, "My Awesome QD_Node 3", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
+        node1 = QD_OpNode(self.scene, "My Awesome QD_OpNode 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
+        node2 = QD_OpNode(self.scene, "My Awesome QD_OpNode 2", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
+        node3 = QD_OpNode(self.scene, "My Awesome QD_OpNode 3", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
         node1.setPos(-350, -250)
         node2.setPos(-75, 0)
         node3.setPos(200, -200)
@@ -404,7 +404,7 @@ class QD_QuestWidget(QSplitter):
 
 
     def addCustomNode(self):
-        from qdnodecontent import QD_NodeContent
+        from qdnodecontent import QD_OpNodeContent
         from qdserializable import QD_Serializable
 
         class NNodeContent(QLabel):  # , QD_Serializable):
@@ -413,11 +413,11 @@ class QD_QuestWidget(QSplitter):
                 self.node = node
                 self.setParent(parent)
 
-        class NNode(QD_Node):
+        class NNode(QD_OpNode):
             NodeContent_class = NNodeContent
 
         self.scene.setNodeClassSelector(lambda data: NNode)
-        node = NNode(self.scene, "A Custom QD_Node 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
+        node = NNode(self.scene, "A Custom QD_OpNode 1", sockets={SocketType.In, SocketType.Out_True, SocketType.Out_False})
 
         print("node content:", node.content)
 

@@ -8,14 +8,14 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _NotifierContentGfx(QD_NodeContentGfx):
+class _NotifierContentGfx(QD_OpNodeContentGfx):
     def initUI(self):
         self.edit = QLineEdit()
         self.box = QHBoxLayout(self)
         self.box.addWidget(self.edit)
 
 
-class _NotifierContent(QD_NodeContent):
+class _NotifierContent(QD_OpNodeContent):
     NodeContentGfx_class =_NotifierContentGfx
 
     def serialize(self):
@@ -36,7 +36,7 @@ class _NotifierContent(QD_NodeContent):
 
 
 @utils.register_opnode
-class _Notifier(QD_Node):
+class _Notifier(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
     op_title = "通知消息"

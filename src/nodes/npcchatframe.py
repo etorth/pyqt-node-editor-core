@@ -9,7 +9,7 @@ from qdnodecontentgfx import *
 
 
 class _NPCChatSelection(QWidget):
-    def __init__(self, node: QD_Node, parent: QWidget = None):
+    def __init__(self, node: QD_OpNode, parent: QWidget = None):
         super().__init__(parent)
 
         self.node = node
@@ -76,7 +76,7 @@ class _NPCChatSelection(QWidget):
 
 
 class _NPCChatSelectionPannel(QWidget):
-    def __init__(self, node: QD_Node, parent: QWidget = None):
+    def __init__(self, node: QD_OpNode, parent: QWidget = None):
         super().__init__(parent)
 
         self.node = node
@@ -101,7 +101,7 @@ class _NPCChatSelectionPannel(QWidget):
 
 
 class _NPCChatFrameEditor(QSplitter):
-    def __init__(self, node: QD_Node, parent: QWidget = None):
+    def __init__(self, node: QD_OpNode, parent: QWidget = None):
         super().__init__(parent)
 
         self.node = node
@@ -172,7 +172,7 @@ class _NPCChatFrameEditor(QSplitter):
         self.node.content.gfx.setOutputs([SocketType.In] + [SocketType(index + SocketType.IndexOut_min()) for index in range(0, self.selections.count())])
 
 
-class _NPCChatFrameContentGfx(QD_NodeContentGfx):
+class _NPCChatFrameContentGfx(QD_OpNodeContentGfx):
     def initUI(self):
         self.editor = None
         self.label = QLabel('NPC对话')
@@ -198,7 +198,7 @@ class _NPCChatFrameContentGfx(QD_NodeContentGfx):
         self.node.initSockets(sockets, True)
 
 
-class _NPCChatFrameContent(QD_NodeContent):
+class _NPCChatFrameContent(QD_OpNodeContent):
     NodeContentGfx_class =_NPCChatFrameContentGfx
 
     def serialize(self):
@@ -213,7 +213,7 @@ class _NPCChatFrameContent(QD_NodeContent):
 
 
 @utils.register_opnode
-class _NPCChatFrame(QD_Node):
+class _NPCChatFrame(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
     op_title = "NPC对话页"

@@ -8,7 +8,7 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _ConditionCheckerContentGfx_hasItem(QD_NodeContentGfx):
+class _ConditionCheckerContentGfx_hasItem(QD_OpNodeContentGfx):
     def initUI(self):
         self.choice = QComboBox()
         self.choice.addItems(["大于", "小于", "等于", "不等于", "不大于", "不小于"])
@@ -45,7 +45,7 @@ class _ConditionCheckerContentGfx_hasItem(QD_NodeContentGfx):
                 self.content.node.markDirty(True)
 
 
-class _ConditionCheckerContent_hasItem(QD_NodeContent):
+class _ConditionCheckerContent_hasItem(QD_OpNodeContent):
     NodeContentGfx_class = _ConditionCheckerContentGfx_hasItem
 
 
@@ -66,7 +66,7 @@ class _ConditionCheckerContent_hasItem(QD_NodeContent):
 
 
 @utils.register_opnode
-class _ConditionChecker_hasItem(QD_Node):
+class _ConditionChecker_hasItem(QD_OpNode):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER
     op_title = "拥有物品"

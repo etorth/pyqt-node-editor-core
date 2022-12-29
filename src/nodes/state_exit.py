@@ -8,7 +8,7 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _StateContentGfx_exit(QD_NodeContentGfx):
+class _StateContentGfx_exit(QD_OpNodeContentGfx):
     def initUI(self):
         self.edit = QTextEdit()
         self.box = QVBoxLayout(self)
@@ -16,7 +16,7 @@ class _StateContentGfx_exit(QD_NodeContentGfx):
         self.box.addWidget(self.edit)
 
 
-class _StateContent_exit(QD_NodeContent):
+class _StateContent_exit(QD_OpNodeContent):
     NodeContentGfx_class =_StateContentGfx_exit
 
     def serialize(self):
@@ -37,7 +37,7 @@ class _StateContent_exit(QD_NodeContent):
 
 
 @utils.register_opnode
-class _State_exit(QD_Node):
+class _State_exit(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
     op_title = "退出分支"

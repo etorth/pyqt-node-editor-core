@@ -6,7 +6,7 @@ from qdserializable import QD_Serializable
 class QD_Socket(QD_Serializable):
     SocketGfx_class = QD_SocketGfx
 
-    def __init__(self, node: 'QD_Node', socktype: SocketType):
+    def __init__(self, node: 'QD_OpNode', socktype: SocketType):
         super().__init__()
 
         self.node = node

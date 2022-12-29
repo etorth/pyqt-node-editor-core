@@ -8,7 +8,7 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _ContainerContentGfx_and(QD_NodeContentGfx):
+class _ContainerContentGfx_and(QD_OpNodeContentGfx):
     def initUI(self):
         self.vbox = QVBoxLayout(self)
         self.vbox.setContentsMargins(0, 0, 0, 0)
@@ -22,11 +22,11 @@ class _ContainerContentGfx_and(QD_NodeContentGfx):
             self.content.node.updateSockets()
 
 
-class _ContainerContent_and(QD_NodeContent):
+class _ContainerContent_and(QD_OpNodeContent):
     NodeContentGfx_class =_ContainerContentGfx_and
 
 
-    def __init__(self, node: 'QD_Node'):
+    def __init__(self, node: 'QD_OpNode'):
         super().__init__(node)
         self._nested_contents = []
 
@@ -49,7 +49,7 @@ class _ContainerContent_and(QD_NodeContent):
 
 
 @utils.register_opnode
-class _Container_and(QD_Node):
+class _Container_and(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
     op_title = "与"

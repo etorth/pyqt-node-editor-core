@@ -3,8 +3,8 @@ from qdserializable import QD_Serializable
 from PyQt6.QtWidgets import *
 
 
-class QD_NodeContentGfx(QWidget):
-    def __init__(self, content: 'QD_NodeContent', parent: QWidget = None):
+class QD_OpNodeContentGfx(QWidget):
+    def __init__(self, content: 'QD_OpNodeContent', parent: QWidget = None):
         super().__init__(parent)
 
         self.content = content

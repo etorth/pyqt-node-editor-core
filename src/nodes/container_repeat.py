@@ -8,7 +8,7 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _ContainerContentGfx_repeat(QD_NodeContentGfx):
+class _ContainerContentGfx_repeat(QD_OpNodeContentGfx):
     def initUI(self):
         self.choice = QComboBox()
         self.choice.addItems(["为真时", "为假时", "无论真假"])
@@ -37,12 +37,12 @@ class _ContainerContentGfx_repeat(QD_NodeContentGfx):
             self.times.setText("无穷")
 
 
-class _ContainerContent_repeat(QD_NodeContent):
+class _ContainerContent_repeat(QD_OpNodeContent):
     NodeContentGfx_class =_ContainerContentGfx_repeat
 
 
 @utils.register_opnode
-class _Container_repeat(QD_Node):
+class _Container_repeat(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
     op_title = "重复"

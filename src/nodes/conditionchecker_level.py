@@ -8,7 +8,7 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _ConditionCheckerContentGfx_level(QD_NodeContentGfx):
+class _ConditionCheckerContentGfx_level(QD_OpNodeContentGfx):
     def initUI(self):
         self.choice = QComboBox()
         self.choice.addItems(["大于", "小于", "等于", "不等于", "不大于", "不小于"])
@@ -40,7 +40,7 @@ class _ConditionCheckerContentGfx_level(QD_NodeContentGfx):
                 self.content.node.markDirty(True)
 
 
-class _ConditionCheckerContent_level(QD_NodeContent):
+class _ConditionCheckerContent_level(QD_OpNodeContent):
     NodeContentGfx_class = _ConditionCheckerContentGfx_level
 
 
@@ -59,7 +59,7 @@ class _ConditionCheckerContent_level(QD_NodeContent):
 
 
 @utils.register_opnode
-class _ConditionChecker_level(QD_Node):
+class _ConditionChecker_level(QD_OpNode):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER
     op_title = "等级"

@@ -35,14 +35,14 @@ class QD_StateNodeGfx(QGraphicsObject):
 
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         """
-        :param node: reference to :class:`node.QD_Node`
-        :type node: :class:`node.QD_Node`
+        :param node: reference to :class:`node.QD_OpNode`
+        :type node: :class:`node.QD_OpNode`
         :param parent: parent widget
         :type parent: QWidget
 
         :Instance Attributes:
 
-            - **node** - reference to :class:`node.QD_Node`
+            - **node** - reference to :class:`node.QD_OpNode`
         """
         super().__init__(parent)
         self.node = node
@@ -63,9 +63,9 @@ class QD_StateNodeGfx(QGraphicsObject):
 
     @property
     def title(self):
-        """title of this `QD_Node`
+        """title of this `QD_OpNode`
 
-        :getter: current Graphics QD_Node title
+        :getter: current Graphics QD_OpNode title
         :setter: stores and make visible the new title
         :type: str
         """
@@ -170,7 +170,7 @@ class QD_StateNodeGfx(QGraphicsObject):
         self.node.scene.gfx.itemSelected.emit()
 
     def doSelect(self, new_state=True):
-        """Safe version of selecting the `Graphics QD_Node`. Takes care about the selection state flag used internally
+        """Safe version of selecting the `Graphics QD_OpNode`. Takes care about the selection state flag used internally
 
         :param new_state: ``True`` to select, ``False`` to deselect
         :type new_state: ``bool``
@@ -257,7 +257,7 @@ class QD_StateNodeGfx(QGraphicsObject):
         # handle when gfx moved
         if self._was_moved:
             self._was_moved = False
-            self.node.scene.history.storeHistory("QD_Node moved", setModified=True)
+            self.node.scene.history.storeHistory("QD_OpNode moved", setModified=True)
 
             self.node.scene.resetLastSelectedStates()
             self.doSelect()  # also trigger itemSelected when node was moved

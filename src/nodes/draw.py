@@ -8,7 +8,7 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _DrawContentGfx(QD_NodeContentGfx):
+class _DrawContentGfx(QD_OpNodeContentGfx):
     def initUI(self):
         self.scene = QGraphicsScene()
         self.scene.addEllipse(0, 0, 30, 30, QPen(Qt.GlobalColor.black), QBrush(Qt.GlobalColor.red))
@@ -23,12 +23,12 @@ class _DrawContentGfx(QD_NodeContentGfx):
         self.box.addWidget(self.view)
 
 
-class _DrawContent(QD_NodeContent):
+class _DrawContent(QD_OpNodeContent):
     NodeContentGfx_class =_DrawContentGfx
 
 
 @utils.register_opnode
-class _Draw(QD_Node):
+class _Draw(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
     op_title = "绘图"

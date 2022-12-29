@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from qdserializable import QD_Serializable
-from qdnodecontentgfx import QD_NodeContentGfx
+from qdnodecontentgfx import QD_OpNodeContentGfx
 
 
-class QD_NodeContent(QD_Serializable):
-    NodeContentGfx_class = QD_NodeContentGfx
+class QD_OpNodeContent(QD_Serializable):
+    NodeContentGfx_class = QD_OpNodeContentGfx
 
 
-    def __init__(self, node: 'QD_Node'):
+    def __init__(self, node: 'QD_OpNode'):
         super().__init__()
 
         # node can be None which means this content is not bound to any node

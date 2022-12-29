@@ -8,7 +8,7 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _StateContentGfx_abort(QD_NodeContentGfx):
+class _StateContentGfx_abort(QD_OpNodeContentGfx):
     def initUI(self):
         self.scene = QGraphicsScene()
         self.scene.addItem(QGraphicsPixmapItem(QPixmap('icons/abort.png')))
@@ -23,12 +23,12 @@ class _StateContentGfx_abort(QD_NodeContentGfx):
         self.box.addWidget(self.view)
 
 
-class _StateContent_abort(QD_NodeContent):
+class _StateContent_abort(QD_OpNodeContent):
     NodeContentGfx_class =_StateContentGfx_abort
 
 
 @utils.register_opnode
-class _State_abort(QD_Node):
+class _State_abort(QD_OpNode):
     icon = "icons/abort.png"
     op_type = OPS_ACTION
     op_title = "终止"

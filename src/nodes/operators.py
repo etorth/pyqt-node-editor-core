@@ -7,7 +7,7 @@ from qdnode import *
 from qdutils import *
 from qdnodecontentgfx import *
 
-class _CalcNodeBaseContentGfx(QD_NodeContentGfx):
+class _CalcNodeBaseContentGfx(QD_OpNodeContentGfx):
     def initUI(self):
         if self.content.node is None:
             self.label = QLabel('operator')
@@ -21,11 +21,11 @@ class _CalcNodeBaseContentGfx(QD_NodeContentGfx):
         self.box.addWidget(self.label)
 
 
-class _CalcNodeBaseContent(QD_NodeContent):
+class _CalcNodeBaseContent(QD_OpNodeContent):
     NodeContentGfx_class = _CalcNodeBaseContentGfx
 
 
-class _CalcNodeBase(QD_Node):
+class _CalcNodeBase(QD_OpNode):
     op_type = OPS_COMMAND
     NodeContent_class = _CalcNodeBaseContent
 

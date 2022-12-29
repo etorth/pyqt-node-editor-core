@@ -1,24 +1,24 @@
 # -*- coding: utf-8 -*-
-"""A module containing Graphics representation of :class:`node.QD_Node`
+"""A module containing Graphics representation of :class:`node.QD_OpNode`
 """
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
 
-class QD_NodeGfx(QGraphicsItem):
-    """Class describing Graphics representation of :class:`node.QD_Node`"""
+class QD_OpNodeGfx(QGraphicsItem):
+    """Class describing Graphics representation of :class:`node.QD_OpNode`"""
 
-    def __init__(self, node: 'QD_Node', parent: QGraphicsItem = None):
+    def __init__(self, node: 'QD_OpNode', parent: QGraphicsItem = None):
         """
-        :param node: reference to :class:`node.QD_Node`
-        :type node: :class:`node.QD_Node`
+        :param node: reference to :class:`node.QD_OpNode`
+        :type node: :class:`node.QD_OpNode`
         :param parent: parent widget
         :type parent: QWidget
 
         :Instance Attributes:
 
-            - **node** - reference to :class:`node.QD_Node`
+            - **node** - reference to :class:`node.QD_OpNode`
         """
         super().__init__(parent)
         self.node = node
@@ -34,14 +34,14 @@ class QD_NodeGfx(QGraphicsItem):
 
     @property
     def content(self):
-        """Reference to `QD_Node Content`"""
+        """Reference to `QD_OpNode Content`"""
         return self.node.content if self.node else None
 
     @property
     def title(self):
-        """title of this `QD_Node`
+        """title of this `QD_OpNode`
 
-        :getter: current Graphics QD_Node title
+        :getter: current Graphics QD_OpNode title
         :setter: stores and make visible the new title
         :type: str
         """
@@ -120,7 +120,7 @@ class QD_NodeGfx(QGraphicsItem):
         self.node.scene.gfx.itemSelected.emit()
 
     def doSelect(self, new_state=True):
-        """Safe version of selecting the `Graphics QD_Node`. Takes care about the selection state flag used internally
+        """Safe version of selecting the `Graphics QD_OpNode`. Takes care about the selection state flag used internally
 
         :param new_state: ``True`` to select, ``False`` to deselect
         :type new_state: ``bool``
@@ -132,7 +132,7 @@ class QD_NodeGfx(QGraphicsItem):
             self.onSelected()
 
     def mouseMoveEvent(self, event):
-        """Overriden event to detect that we moved with this `QD_Node`"""
+        """Overriden event to detect that we moved with this `QD_OpNode`"""
         super().mouseMoveEvent(event)
 
         # optimize me! just update the selected nodes
@@ -142,13 +142,13 @@ class QD_NodeGfx(QGraphicsItem):
         self._was_moved = True
 
     def mouseReleaseEvent(self, event):
-        """Overriden event to handle when we moved, selected or deselected this `QD_Node`"""
+        """Overriden event to handle when we moved, selected or deselected this `QD_OpNode`"""
         super().mouseReleaseEvent(event)
 
         # handle when gfx moved
         if self._was_moved:
             self._was_moved = False
-            self.node.scene.history.storeHistory("QD_Node moved", setModified=True)
+            self.node.scene.history.storeHistory("QD_OpNode moved", setModified=True)
 
             self.node.scene.resetLastSelectedStates()
             self.doSelect()  # also trigger itemSelected when node was moved
@@ -166,7 +166,7 @@ class QD_NodeGfx(QGraphicsItem):
             self.onSelected()
 
     def mouseDoubleClickEvent(self, event):
-        """Overriden event for doubleclick. Resend to `QD_Node::onDoubleClicked`"""
+        """Overriden event for doubleclick. Resend to `QD_OpNode::onDoubleClicked`"""
         self.node.onDoubleClicked(event)
 
     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
@@ -205,7 +205,7 @@ class QD_NodeGfx(QGraphicsItem):
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
-        """Painting the rounded rectanglar `QD_Node`"""
+        """Painting the rounded rectanglar `QD_OpNode`"""
         # title
         path_title = QPainterPath()
         path_title.setFillRule(Qt.FillRule.WindingFill)

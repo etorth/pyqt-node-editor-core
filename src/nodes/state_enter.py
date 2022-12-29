@@ -8,14 +8,14 @@ from qdutils import *
 from qdnodecontentgfx import *
 
 
-class _StateContentGfx_enter(QD_NodeContentGfx):
+class _StateContentGfx_enter(QD_OpNodeContentGfx):
     def initUI(self):
         self.label = QLabel('进入')
         self.box = QVBoxLayout(self)
         self.box.addWidget(self.label)
 
 
-class _StateContent_enter(QD_NodeContent):
+class _StateContent_enter(QD_OpNodeContent):
     NodeContentGfx_class =_StateContentGfx_enter
 
     def serialize(self):
@@ -30,7 +30,7 @@ class _StateContent_enter(QD_NodeContent):
 
 
 @utils.register_opnode
-class _State_enter(QD_Node):
+class _State_enter(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
     op_title = "进入节点"

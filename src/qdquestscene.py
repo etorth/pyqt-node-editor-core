@@ -4,7 +4,7 @@ import json
 from qdutils import *
 from qdserializable import QD_Serializable
 from qdquestscenegfx import QD_QuestSceneGfx
-from qdnode import QD_Node
+from qdnode import QD_OpNode
 from qdedge import QD_Edge
 from statenodes.enter import StateNode_enter
 from qdscenehistory import QD_SceneHistory
@@ -207,11 +207,11 @@ class QD_QuestScene(QD_Serializable):
         """
         return self.getView().itemAt(pos)
 
-    def addNode(self, node: QD_Node):
-        """Add :class:`node.QD_Node` to this `QD_QuestScene`
+    def addNode(self, node: QD_OpNode):
+        """Add :class:`node.QD_OpNode` to this `QD_QuestScene`
 
-        :param node: :class:`node.QD_Node` to be added to this `QD_QuestScene`
-        :type node: :class:`node.QD_Node`
+        :param node: :class:`node.QD_OpNode` to be added to this `QD_QuestScene`
+        :type node: :class:`node.QD_OpNode`
         """
         self.nodes.append(node)
 
@@ -223,11 +223,11 @@ class QD_QuestScene(QD_Serializable):
         """
         self.edges.append(edge)
 
-    def removeNode(self, node: QD_Node):
-        """Remove :class:`node.QD_Node` from this `QD_QuestScene`
+    def removeNode(self, node: QD_OpNode):
+        """Remove :class:`node.QD_OpNode` from this `QD_QuestScene`
 
-        :param node: :class:`node.QD_Node` to be removed from this `QD_QuestScene`
-        :type node: :class:`node.QD_Node`
+        :param node: :class:`node.QD_OpNode` to be removed from this `QD_QuestScene`
+        :type node: :class:`node.QD_OpNode`
         """
         if node in self.nodes:
             self.nodes.remove(node)
@@ -254,29 +254,29 @@ class QD_QuestScene(QD_Serializable):
         self.has_been_modified = False
 
 
-    def setNodeClassSelector(self, class_selecting_function: 'functon') -> 'QD_Node class type':
+    def setNodeClassSelector(self, class_selecting_function: 'functon') -> 'QD_OpNode class type':
         """
-        Set the function which decides what `QD_Node` class to instantiate when deserializating `QD_QuestScene`.
-        If not set, we will always instantiate :class:`node.QD_Node` for each `QD_Node` in the `QD_QuestScene`
+        Set the function which decides what `QD_OpNode` class to instantiate when deserializating `QD_QuestScene`.
+        If not set, we will always instantiate :class:`node.QD_OpNode` for each `QD_OpNode` in the `QD_QuestScene`
 
-        :param class_selecting_function: function which returns `QD_Node` class type (not instance) from `QD_Node` serialized ``dict`` data
+        :param class_selecting_function: function which returns `QD_OpNode` class type (not instance) from `QD_OpNode` serialized ``dict`` data
         :type class_selecting_function: ``function``
-        :return: Class Type of `QD_Node` to be instantiated during deserialization
-        :rtype: `QD_Node` class type
+        :return: Class Type of `QD_OpNode` to be instantiated during deserialization
+        :rtype: `QD_OpNode` class type
         """
         self.node_class_selector = class_selecting_function
 
-    def getNodeClassFromData(self, data: dict) -> 'QD_Node class instance':
+    def getNodeClassFromData(self, data: dict) -> 'QD_OpNode class instance':
         """
-        Takes `QD_Node` serialized data and determines which `QD_Node Class` to instantiate according the description
-        in the serialized QD_Node
+        Takes `QD_OpNode` serialized data and determines which `QD_OpNode Class` to instantiate according the description
+        in the serialized QD_OpNode
 
-        :param data: serialized `QD_Node` object data
+        :param data: serialized `QD_OpNode` object data
         :type data: ``dict``
-        :return: Instance of `QD_Node` class to be used in this QD_QuestScene
-        :rtype: `QD_Node` class instance
+        :return: Instance of `QD_OpNode` class to be used in this QD_QuestScene
+        :rtype: `QD_OpNode` class instance
         """
-        return QD_Node if self.node_class_selector is None else self.node_class_selector(data)
+        return QD_OpNode if self.node_class_selector is None else self.node_class_selector(data)
 
 
     def serialize(self) -> dict:

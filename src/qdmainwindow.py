@@ -79,7 +79,7 @@ class QD_MainWindow(QMainWindow):
     def setTitle(self):
         """Function responsible for setting window title
         """
-        self.setWindowTitle("QD_Node Editor - " + self.getCurrentStateNodeWidget().getUserFriendlyFilename())
+        self.setWindowTitle("QD_OpNode Editor - " + self.getCurrentStateNodeWidget().getUserFriendlyFilename())
 
 
     def createActions(self):
@@ -97,7 +97,7 @@ class QD_MainWindow(QMainWindow):
         self.actDelete = QAction('&Delete', self, shortcut='Del', statusTip="Delete selected items", triggered=self.onEditDelete)
         self.actLuaEditor = QAction('&LuaEditor', self, shortcut='Ctrl+L', statusTip="Edit lua code", triggered=self.onEditLuaEditor)
 
-        self.actOpenNodeEditWindow = QAction("Open QD_Node Edit Window", self, statusTip="Open node edit window", triggered=self.onOpenNodeEditWindow)
+        self.actOpenNodeEditWindow = QAction("Open QD_OpNode Edit Window", self, statusTip="Open node edit window", triggered=self.onOpenNodeEditWindow)
 
         self.actClose = QAction("Cl&ose", self, statusTip="Close the active window", triggered=self.mdiArea.closeActiveSubWindow)
         self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)
