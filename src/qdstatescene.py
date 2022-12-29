@@ -9,9 +9,6 @@ from qdedge import QD_Edge
 from qdscenehistory import QD_SceneHistory
 from qdsceneclipboard import QD_SceneClipboard
 
-class InvalidFile(Exception):
-    pass
-
 
 class QD_StateScene(QD_Serializable):
     SceneGfx_class = QD_StateSceneGfx

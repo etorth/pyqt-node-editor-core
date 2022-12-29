@@ -9,7 +9,8 @@ from PyQt6.QtWidgets import *
 from qdquestscene import *
 from qdquestconfg import QD_QuestConfg
 from qddraglistbox import QD_DragListBox
-from qdstatenode import *
+from qdstatenode import QD_StateNode
+from statenodes.enter import StateNode_enter
 from statenodes.pulse import StateNode_pulse
 from statenodes.exit import StateNode_exit
 from qdedge import *
@@ -101,7 +102,7 @@ class QD_QuestWidget(QSplitter):
                 self.doEvalOutputs()
                 return True
 
-        except InvalidFile as e:
+        except Exception as e:
             QMessageBox.warning(self, "Error loading json file: %s" % filename, str(e))
             return False
 

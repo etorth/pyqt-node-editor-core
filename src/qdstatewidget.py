@@ -100,7 +100,7 @@ class QD_StateWidget(QSplitter):
                 self.doEvalOutputs()
                 return True
 
-        except InvalidFile as e:
+        except Exception as e:
             QMessageBox.warning(self, "Error loading json file: %s" % filename, str(e))
             return False
 
