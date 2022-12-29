@@ -3,9 +3,9 @@ from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
-from qdnode import *
+from qdopnode import *
 from qdutils import *
-from qdnodecontentgfx import *
+from qdopnodecontentgfx import *
 
 
 class _ConditionCheckerContentGfx_level(QD_OpNodeContentGfx):

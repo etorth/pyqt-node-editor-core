@@ -6,7 +6,7 @@ import json
 from qdutils import *
 from qdserializable import QD_Serializable
 from qdstatescenegfx import QD_StateSceneGfx
-from qdnode import QD_OpNode
+from qdopnode import QD_OpNode
 from qdedge import QD_Edge
 from qdscenehistory import QD_SceneHistory
 from qdsceneclipboard import QD_SceneClipboard

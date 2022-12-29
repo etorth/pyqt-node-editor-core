@@ -4,7 +4,7 @@ import json
 from qdutils import *
 from qdserializable import QD_Serializable
 from qdquestscenegfx import QD_QuestSceneGfx
-from qdnode import QD_OpNode
+from qdopnode import QD_OpNode
 from qdedge import QD_Edge
 from statenodes.enter import StateNode_enter
 from qdscenehistory import QD_SceneHistory

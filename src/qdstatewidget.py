@@ -9,7 +9,7 @@ from PyQt6.QtWidgets import *
 from qdstatescene import *
 from qdstateconfg import QD_StateConfg
 from qddraglistbox import QD_DragListBox
-from qdnode import *
+from qdopnode import *
 from qdedge import *
 from qdviewgfx import MODE_EDGE_DRAG, QD_ViewGfx  # , MODE_EDGES_REROUTING
 from qdutils import *
@@ -373,7 +373,7 @@ class QD_StateWidget(QSplitter):
 
 
     def addCustomNode(self):
-        from qdnodecontent import QD_OpNodeContent
+        from qdopnodecontent import QD_OpNodeContent
         from qdserializable import QD_Serializable
 
         class NNodeContent(QLabel):  # , QD_Serializable):

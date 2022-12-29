@@ -404,7 +404,7 @@ class QD_QuestWidget(QSplitter):
 
 
     def addCustomNode(self):
-        from qdnodecontent import QD_OpNodeContent
+        from qdopnodecontent import QD_OpNodeContent
         from qdserializable import QD_Serializable
 
         class NNodeContent(QLabel):  # , QD_Serializable):
