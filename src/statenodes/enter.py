@@ -174,11 +174,11 @@ class _StateNodeGfx_enter(QD_StateNodeGfx):
             painter.drawPath(path_outline.simplified())
 
         if self.node.isDirty():
-            utils.draw_node_state_icon(painter, 1, self.width / 2, 0, False)
+            utils.drawNodeStateIcon(painter, 1, self.width / 2, 0, False)
         elif self.node.isInvalid():
-            utils.draw_node_state_icon(painter, 2, self.width / 2, 0, False)
+            utils.drawNodeStateIcon(painter, 2, self.width / 2, 0, False)
         else:
-            utils.draw_node_state_icon(painter, 0, self.width / 2, 0, False)
+            utils.drawNodeStateIcon(painter, 0, self.width / 2, 0, False)
 
 
 class StateNode_enter(QD_StateNode):

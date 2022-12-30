@@ -35,7 +35,7 @@ class _CalcNodeBase(QD_OpNode):
         self.eval()
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _CalcNode_add(_CalcNodeBase):
     icon = "icons/add.png"
     op_title = "加"
@@ -45,7 +45,7 @@ class _CalcNode_add(_CalcNodeBase):
         return 1
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _CalcNode_sub(_CalcNodeBase):
     icon = "icons/sub.png"
     op_title = "减"
@@ -55,7 +55,7 @@ class _CalcNode_sub(_CalcNodeBase):
         return 1
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _CalcNode_mul(_CalcNodeBase):
     icon = "icons/mul.png"
     op_title = "乘"
@@ -65,7 +65,7 @@ class _CalcNode_mul(_CalcNodeBase):
         return 1
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _CalcNode_div(_CalcNodeBase):
     icon = "icons/divide.png"
     op_title = "除"

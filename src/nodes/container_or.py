@@ -33,7 +33,7 @@ class _ContainerContent_or(QD_OpNodeContent):
         return res
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _Container_or(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER

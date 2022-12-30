@@ -29,7 +29,7 @@ class _StateContent_enter(QD_OpNodeContent):
         return self.gfx.label.setText(data['value'])
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _State_enter(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION

@@ -27,7 +27,7 @@ class _DrawContent(QD_OpNodeContent):
     NodeContentGfx_class =_DrawContentGfx
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _Draw(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION

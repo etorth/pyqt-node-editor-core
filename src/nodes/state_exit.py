@@ -36,7 +36,7 @@ class _StateContent_exit(QD_OpNodeContent):
         return res
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _State_exit(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION

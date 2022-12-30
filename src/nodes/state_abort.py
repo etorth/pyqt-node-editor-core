@@ -27,7 +27,7 @@ class _StateContent_abort(QD_OpNodeContent):
     NodeContentGfx_class =_StateContentGfx_abort
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _State_abort(QD_OpNode):
     icon = "icons/abort.png"
     op_type = OPS_ACTION

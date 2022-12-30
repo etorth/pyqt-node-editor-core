@@ -41,7 +41,7 @@ class _ContainerContent_repeat(QD_OpNodeContent):
     NodeContentGfx_class =_ContainerContentGfx_repeat
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _Container_repeat(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER

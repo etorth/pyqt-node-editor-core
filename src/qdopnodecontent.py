@@ -21,7 +21,7 @@ class QD_OpNodeContent(QD_Serializable):
 
 
     def serialize(self) -> dict:
-        return {'op_code': self.__class__.op_code} # added by @register_opnode
+        return {'op_code': self.__class__.op_code} # added by @opNodeRegister
 
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:

@@ -212,7 +212,7 @@ class _NPCChatFrameContent(QD_OpNodeContent):
         return self.gfx.label.setText(data['value'])
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _NPCChatFrame(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION

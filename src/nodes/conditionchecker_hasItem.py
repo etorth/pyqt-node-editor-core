@@ -65,7 +65,7 @@ class _ConditionCheckerContent_hasItem(QD_OpNodeContent):
         return True
 
 
-@utils.register_opnode
+@utils.opNodeRegister
 class _ConditionChecker_hasItem(QD_OpNode):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER

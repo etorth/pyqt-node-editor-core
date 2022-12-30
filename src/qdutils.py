@@ -43,8 +43,10 @@ confg = Confg()
 
 
 class Utils:
+    _stateNodeTypeUID = 0
     _node_type_uid = 0
     _node_type_list = {}
+    _stateNodeTypeList = []
 
     _main_window = None
     _mono_font_families = None
@@ -113,11 +115,18 @@ class Utils:
         return self._mono_font_families[0]
 
     @classmethod
-    def register_opnode(cls, node_type):
+    def opNodeRegister(cls, node_type):
         cls._node_type_uid += 1
         node_type.op_code = cls._node_type_uid
         node_type.NodeContent_class.op_code = cls._node_type_uid
         bisect.insort(cls._node_type_list.setdefault(node_type.op_type, []), node_type, key=lambda x: str(x))
+
+
+    @classmethod
+    def stateNodeRegister(cls, nodeType):
+        cls._stateNodeTypeUID += 1
+        nodeType.stateCode = cls._stateNodeTypeUID
+        cls._stateNodeTypeList.append(nodeType)
 
 
     def get_class_from_opcode(self, op_code):
@@ -139,7 +148,7 @@ class Utils:
         self._pprint = pprint.PrettyPrinter(indent=4)
 
 
-    def draw_node_state_icon(self, painter: QPainter, index: int, x: float, y: float, topleft: bool = True):
+    def drawNodeStateIcon(self, painter: QPainter, index: int, x: float, y: float, topleft: bool = True):
         icon_size = 24.0
         if not topleft:
             x -= icon_size / 2.0

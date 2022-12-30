@@ -419,7 +419,7 @@ class QD_OpNode(QD_Node):
             'position': (self.gfx.scenePos().x(), self.gfx.scenePos().y()),
             'sockets': [sock.serialize() for sock in self.sockets],
             'content': self.content.serialize(),
-            'op_code': self.__class__.op_code, # added by @register_opnode
+            'op_code': self.__class__.op_code, # added by @opNodeRegister
         }
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:

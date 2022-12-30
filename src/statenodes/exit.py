@@ -147,11 +147,11 @@ class _StateNodeGfx_exit(QD_StateNodeGfx):
         painter.drawImage(QRectF(img_x, img_y, img_w, img_h), self._image)
 
         if self.node.isDirty():
-            utils.draw_node_state_icon(painter, 1, self.width / 2, 0, False)
+            utils.drawNodeStateIcon(painter, 1, self.width / 2, 0, False)
         elif self.node.isInvalid():
-            utils.draw_node_state_icon(painter, 2, self.width / 2, 0, False)
+            utils.drawNodeStateIcon(painter, 2, self.width / 2, 0, False)
         else:
-            utils.draw_node_state_icon(painter, 0, self.width / 2, 0, False)
+            utils.drawNodeStateIcon(painter, 0, self.width / 2, 0, False)
 
 
 
