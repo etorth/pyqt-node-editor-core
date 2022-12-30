@@ -6,9 +6,10 @@ from PyQt6.QtCore import *
 from PyQt6.QtWidgets import *
 
 from qdutils import *
+from qdnodegfx import QD_NodeGfx
 
 
-class QD_StateNodeGfx(QGraphicsObject):
+class QD_StateNodeGfx(QD_NodeGfx):
     dragSensitiveDistance = 5.0
 
     handleTopLeft = 1
@@ -34,18 +35,7 @@ class QD_StateNodeGfx(QGraphicsObject):
     sizeChanged = pyqtSignal()
 
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
-        """
-        :param node: reference to :class:`node.QD_OpNode`
-        :type node: :class:`node.QD_OpNode`
-        :param parent: parent widget
-        :type parent: QWidget
-
-        :Instance Attributes:
-
-            - **node** - reference to :class:`node.QD_OpNode`
-        """
-        super().__init__(parent)
-        self.node = node
+        super().__init__(node, parent)
 
         self.handleSelected = None
         self.mousePressPos = None

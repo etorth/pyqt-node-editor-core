@@ -1,29 +1,15 @@
 # -*- coding: utf-8 -*-
-"""A module containing Graphics representation of :class:`node.QD_OpNode`
-"""
 from PyQt6.QtWidgets import *
 from PyQt6.QtCore import *
 from PyQt6.QtGui import *
 
+from qdnodegfx import QD_NodeGfx
 
-class QD_OpNodeGfx(QGraphicsItem):
-    """Class describing Graphics representation of :class:`node.QD_OpNode`"""
 
+class QD_OpNodeGfx(QD_NodeGfx):
     def __init__(self, node: 'QD_OpNode', parent: QGraphicsItem = None):
-        """
-        :param node: reference to :class:`node.QD_OpNode`
-        :type node: :class:`node.QD_OpNode`
-        :param parent: parent widget
-        :type parent: QWidget
+        super().__init__(node, parent)
 
-        :Instance Attributes:
-
-            - **node** - reference to :class:`node.QD_OpNode`
-        """
-        super().__init__(parent)
-        self.node = node
-
-        # init our flags
         self.hovered = False
         self._was_moved = False
         self._last_selected_state = False
