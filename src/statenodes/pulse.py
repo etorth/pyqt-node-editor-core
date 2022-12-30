@@ -7,14 +7,14 @@ from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 from qdstatenode import QD_StateNode
-from qdbasestatenodegfx import QD_BaseStateNodeGfx
+from qdstatenodegfx import QD_StateNodeGfx
 import math
 
 
 from qdutils import *
 
 
-class _StateNodeGfx_pulse(QD_BaseStateNodeGfx):
+class _StateNodeGfx_pulse(QD_StateNodeGfx):
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         super().__init__(node, parent)
 

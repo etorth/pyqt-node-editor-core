@@ -13,6 +13,7 @@ from qdstatenode import QD_StateNode
 from statenodes.enter import StateNode_enter
 from statenodes.pulse import StateNode_pulse
 from statenodes.exit import StateNode_exit
+from statenodes.act import StateNode_act
 from qdedge import *
 from qdviewgfx import MODE_EDGE_DRAG, QD_ViewGfx  # , MODE_EDGES_REROUTING
 from qdutils import *
@@ -20,10 +21,6 @@ from qdutils import *
 
 class QD_QuestWidget(QSplitter):
     Scene_class = QD_QuestScene
-    StateNode_class = QD_StateNode
-    StateNode_enter_class = StateNode_enter
-    StateNode_exit = StateNode_exit
-    InterruptNode_class = StateNode_pulse
 
 
     def __init__(self, parent: QWidget = None):
@@ -135,25 +132,27 @@ class QD_QuestWidget(QSplitter):
         print("onAddNewStateNode2")
 
 
-    def onAddNewInterruptNode(self):
-        print("onAddNewInterruptNode")
+    def onAddNewPulseNode(self):
+        print("onAddNewPulseNode")
 
     def initNewNodeActions(self):
         self.node_actions = []
         act = QAction(QIcon('icons/state.png'), '添加起始节点')
-        act.node_type = self.__class__.StateNode_enter_class
+        act.node_type = StateNode_enter
         self.node_actions.append(act)
 
         act = QAction(QIcon('icons/state.png'), '添加终止节点')
-        act.node_type = self.__class__.StateNode_exit
+        act.node_type = StateNode_exit
         self.node_actions.append(act)
 
         act = QAction(QIcon('icons/state.png'), '添加脉冲节点')
-        act.node_type = self.__class__.InterruptNode_class
+        act.node_type = StateNode_pulse
         self.node_actions.append(act)
 
 
-        self.node_actions.append(QAction(QIcon('icons/state.png'), '添加状态节点', triggered=self.onAddNewStateNode))
+        act = QAction(QIcon('icons/state.png'), '添加状态节点')
+        act.node_type = StateNode_act
+        self.node_actions.append(act)
 
     def createNodesContextMenu(self):
         context_menu = QMenu(self)

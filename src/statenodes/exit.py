@@ -7,13 +7,13 @@ from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 from qdstatenode import QD_StateNode
-from qdbasestatenodegfx import QD_BaseStateNodeGfx
+from qdstatenodegfx import QD_StateNodeGfx
 
 
 from qdutils import *
 
 
-class _StateNodeGfx_exit(QD_BaseStateNodeGfx):
+class _StateNodeGfx_exit(QD_StateNodeGfx):
     def __init__(self, node: 'StateNode_exit', parent: QGraphicsItem = None):
         super().__init__(node, parent)
 

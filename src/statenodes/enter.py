@@ -7,7 +7,7 @@ from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
 from qdstatenode import QD_StateNode
-from qdbasestatenodegfx import QD_BaseStateNodeGfx
+from qdstatenodegfx import QD_StateNodeGfx
 
 from qdutils import *
 
@@ -29,7 +29,7 @@ class _StateNodeWidget_enter(QWidget):
         self.vbox.addWidget(self.job)
 
 
-class _StateNodeGfx_enter(QD_BaseStateNodeGfx):
+class _StateNodeGfx_enter(QD_StateNodeGfx):
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         super().__init__(node, parent)
 
