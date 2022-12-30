@@ -150,7 +150,7 @@ class QD_QuestWidget(QSplitter):
         self.node_actions.append(act)
 
 
-        act = QAction(QIcon('icons/state.png'), '添加状态节点')
+        act = QAction(QIcon('icons/state.png'), '添加情节节点')
         act.node_type = StateNode_act
         self.node_actions.append(act)
 
