@@ -8,11 +8,10 @@ from qdopnodegfx import QD_OpNodeGfx
 from qdopnodecontent import *
 from qdsocket import *
 from qdutils import *
+from qdnode import QD_Node
 
 
-class QD_OpNode(QD_Serializable):
-    """Class representing `QD_OpNode` in the `QD_StateScene`.
-    """
+class QD_OpNode(QD_Node):
     NodeGfx_class = QD_OpNodeGfx
     NodeContent_class = QD_OpNodeContent
     Socket_class = QD_Socket
@@ -21,9 +20,8 @@ class QD_OpNode(QD_Serializable):
     op_title = "Undefined"
 
     def __init__(self, scene: 'QD_StateScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
-        super().__init__()
+        super().__init__(scene)
         self._title = self.__class__.op_title
-        self.scene = scene
 
         outtypes = set([sock.cast_type() for sock in sockets if sock is not SocketType.In])
         if len(outtypes) > 1:

@@ -5,11 +5,10 @@ from qdstatenodegfx import QD_StateNodeGfx
 from qdstatewidget import QD_StateWidget
 from qdsocket import *
 from qdutils import *
+from qdnode import QD_Node
 
 
-class QD_StateNode(QD_Serializable):
-    """Class representing `QD_StateNode` in the `QD_StateScene`.
-    """
+class QD_StateNode(QD_Node):
     StateNodeWidget_class = QD_StateWidget
     StateNodeGfx_class = QD_StateNodeGfx
     Socket_class = QD_Socket
@@ -17,9 +16,8 @@ class QD_StateNode(QD_Serializable):
     icon = ""
 
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
-        super().__init__()
+        super().__init__(scene)
         self._title = '状态节点'
-        self.scene = scene
 
         # just to be sure, init these variables
         self.gfx = None
