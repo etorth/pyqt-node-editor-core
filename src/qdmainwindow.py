@@ -29,7 +29,7 @@ class QD_MainWindow(QMainWindow):
         utils.loadStylesheets(os.path.join(os.path.dirname(__file__), "qss/nodeeditor-dark.qss"), self.stylesheet_filename)
 
         self.empty_icon = QIcon(".")
-        utils.printObj(utils.valid_node_types())
+        utils.printObj(utils.getOpNodeTypes())
 
         self.mdiArea = QMdiArea()
         self.mdiArea.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAsNeeded)

@@ -43,10 +43,9 @@ confg = Confg()
 
 
 class Utils:
-    _stateNodeTypeUID = 0
     _node_type_uid = 0
     _node_type_list = {}
-    _stateNodeTypeList = []
+    _stateNodeTypeList = {}
 
     _main_window = None
     _mono_font_families = None
@@ -124,18 +123,17 @@ class Utils:
 
     @classmethod
     def stateNodeRegister(cls, nodeType):
-        cls._stateNodeTypeUID += 1
-        nodeType.stateCode = cls._stateNodeTypeUID
-        cls._stateNodeTypeList.append(nodeType)
+        nodeType.stateCode = len(cls._stateNodeTypeList)
+        cls._stateNodeTypeList[nodeType.stateCode] = nodeType
 
 
     def get_class_from_opcode(self, op_code):
-        for type in self.valid_node_types():
+        for type in self.getOpNodeTypes():
             if type.op_code == op_code:
                 return type
 
 
-    def valid_node_types(self):
+    def getOpNodeTypes(self):
         return sorted(sum(self._node_type_list.values(), []), key=lambda x: (x.op_type, x.op_code))
 
     def valid_nodes(self, op_type=None):

@@ -129,13 +129,13 @@ class QD_StateWidget(QSplitter):
 
     def initNewNodeActions(self):
         self.node_actions = {}
-        for node in utils.valid_node_types():
+        for node in utils.getOpNodeTypes():
             self.node_actions[node.op_code] = QAction(QIcon(node.icon), node.op_title)
             self.node_actions[node.op_code].setData(node.op_code)
 
     def createNodesContextMenu(self):
         context_menu = QMenu(self)
-        for type in utils.valid_node_types():
+        for type in utils.getOpNodeTypes():
             context_menu.addAction(self.node_actions[type.op_code])
         return context_menu
 
@@ -250,7 +250,7 @@ class QD_StateWidget(QSplitter):
 
         addNodeMenu = context_menu.addMenu('Add Node')
         addedActDict = {}
-        for type in utils.valid_node_types():
+        for type in utils.getOpNodeTypes():
             addedActDict[addNodeMenu.addAction(type.op_title)] = type
 
         action = context_menu.exec(self.mapToGlobal(event.pos()))
