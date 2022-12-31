@@ -165,7 +165,9 @@ class _StateNodeGfx_pulse(QD_StateNodeGfx):
             utils.drawNodeStateIcon(painter, 0, self.width / 2, 0, False)
 
 
+@utils.stateNodeRegister
 class StateNode_pulse(QD_StateNode):
+    stateName = '脉冲'
     StateNodeGfx_class = _StateNodeGfx_pulse
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.PulseOut}):
         super().__init__(scene, sockets)

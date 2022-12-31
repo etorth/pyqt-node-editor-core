@@ -123,7 +123,7 @@ class Utils:
 
     @classmethod
     def stateNodeRegister(cls, nodeType):
-        nodeType.stateCode = len(cls._stateNodeTypeList)
+        nodeType.stateCode = len(cls._stateNodeTypeList) + 1
         cls._stateNodeTypeList[nodeType.stateCode] = nodeType
 
 
@@ -135,6 +135,22 @@ class Utils:
 
     def getOpNodeTypes(self):
         return sorted(sum(self._node_type_list.values(), []), key=lambda x: (x.op_type, x.op_code))
+
+
+    def getStateNodeTypes(self):
+        return self._stateNodeTypeList.values()
+
+
+    def getStateNodeType(self, arg):
+        if isinstance(arg, str):
+            for nodeType in self.getStateNodeTypes():
+                if nodeType.__name__ == arg:
+                    return nodeType
+        elif isinstance(arg, int):
+            return self._stateNodeTypeList[arg]
+        else:
+            raise RuntimeError('Invalid argument type: %s' % type(arg))
+
 
     def valid_nodes(self, op_type=None):
         if op_type is None:
@@ -204,3 +220,4 @@ class Utils:
 utils = Utils()
 
 from nodes import *
+from statenodes import *

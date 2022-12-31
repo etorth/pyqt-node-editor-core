@@ -342,7 +342,10 @@ class _StateNodeGfx_act(QD_NodeGfx):
         painter.drawImage(QRectF(25, 20, 50, 50), self._image)
 
 
+@utils.stateNodeRegister
 class StateNode_act(QD_Node):
+    stateName = '情节'
+
     StateNodeWidget_class = QD_StateWidget
     StateNodeGfx_class = _StateNodeGfx_act
     Socket_class = QD_Socket

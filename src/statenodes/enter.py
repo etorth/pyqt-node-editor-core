@@ -181,7 +181,10 @@ class _StateNodeGfx_enter(QD_StateNodeGfx):
             utils.drawNodeStateIcon(painter, 0, self.width / 2, 0, False)
 
 
+@utils.stateNodeRegister
 class StateNode_enter(QD_StateNode):
+    stateName = '进入'
+
     StateNodeWidget_class = _StateNodeWidget_enter
     StateNodeGfx_class = _StateNodeGfx_enter
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.Out_True}):
@@ -193,7 +196,7 @@ class StateNode_enter(QD_StateNode):
 
         indics = {}
         for item in scene.gfx.items():
-            if isinstance(item, StateNode_enter.StateNodeGfx_class) and hasattr(item.node, 'index'):
+            if isinstance(item, utils.getStateNodeType('StateNode_enter').StateNodeGfx_class) and hasattr(item.node, 'index'):
                 indics[item.node.index] = True
 
         i = 1

@@ -154,8 +154,10 @@ class _StateNodeGfx_exit(QD_StateNodeGfx):
             utils.drawNodeStateIcon(painter, 0, self.width / 2, 0, False)
 
 
-
+@utils.stateNodeRegister
 class StateNode_exit(QD_StateNode):
+    stateName = '终止'
+
     StateNodeGfx_class = _StateNodeGfx_exit
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In}):
         super().__init__(scene, sockets)

@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import os
 import json
+import copy
 
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
@@ -355,10 +356,9 @@ class QD_QuestWidget(QSplitter):
             print("CONTEXT: EMPTY SPACE in QS_QuestWidget")
 
         context_menu = QMenu(self)
-        context_menu.addAction(QIcon('icons/state.png'), '添加起始节点').triggered.connect(lambda: self.createNewStateNode(StateNode_enter, event.pos()))
-        context_menu.addAction(QIcon('icons/state.png'), '添加终止节点').triggered.connect(lambda: self.createNewStateNode(StateNode_exit , event.pos()))
-        context_menu.addAction(QIcon('icons/state.png'), '添加脉冲节点').triggered.connect(lambda: self.createNewStateNode(StateNode_pulse, event.pos()))
-        context_menu.addAction(QIcon('icons/state.png'), '添加情节节点').triggered.connect(lambda: self.createNewStateNode(StateNode_act  , event.pos()))
+        for stateNodeType in utils.getStateNodeTypes():
+            act = context_menu.addAction(QIcon('icons/state.png'), '添加%s节点' % stateNodeType.stateName)
+            act.triggered.connect(lambda f, stateNodeType=stateNodeType: self.createNewStateNode(stateNodeType, event.pos()))
         context_menu.exec(self.mapToGlobal(event.pos()))
 
 
