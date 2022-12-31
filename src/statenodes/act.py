@@ -371,7 +371,7 @@ class StateNode_act(QD_Node):
         self._is_invalid = False
 
         self.value = None
-        self.markDirty()
+        self.markDirty(False)
 
     def __str__(self):
         return "<%s:%s %s..%s>" % (self._title, self.__class__.__name__, hex(id(self))[2:5], hex(id(self))[-3:])

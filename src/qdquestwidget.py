@@ -33,7 +33,6 @@ class QD_QuestWidget(QSplitter):
         self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
 
         self.setTitle()
-        self.initNewNodeActions()
 
         self.scene.addHasBeenModifiedListener(self.setTitle)
         self.scene.history.addHistoryRestoredListener(self.onHistoryRestored)
@@ -135,30 +134,6 @@ class QD_QuestWidget(QSplitter):
     def onAddNewPulseNode(self):
         print("onAddNewPulseNode")
 
-    def initNewNodeActions(self):
-        self.node_actions = []
-        act = QAction(QIcon('icons/state.png'), '添加起始节点')
-        act.node_type = StateNode_enter
-        self.node_actions.append(act)
-
-        act = QAction(QIcon('icons/state.png'), '添加终止节点')
-        act.node_type = StateNode_exit
-        self.node_actions.append(act)
-
-        act = QAction(QIcon('icons/state.png'), '添加脉冲节点')
-        act.node_type = StateNode_pulse
-        self.node_actions.append(act)
-
-
-        act = QAction(QIcon('icons/state.png'), '添加情节节点')
-        act.node_type = StateNode_act
-        self.node_actions.append(act)
-
-    def createNodesContextMenu(self):
-        context_menu = QMenu(self)
-        for action in self.node_actions:
-            context_menu.addAction(action)
-        return context_menu
 
     def onAttrTimeoutEditingFinished(self):
         if self._attr_timeout_edit.text():
@@ -357,35 +332,34 @@ class QD_QuestWidget(QSplitter):
         new_calc_node.gfx.onSelected()
 
 
+    def createNewStateNode(self, stateNodeType, eventPos):
+        newNode = stateNodeType(self.scene)
+        scene_pos = self.scene.getView().mapToScene(eventPos - self.view.pos())
+        newNode.setPos(scene_pos.x(), scene_pos.y())
+        if confg.DEBUG:
+            print("Selected node:", newNode)
+
+        # if self.scene.getView().mode == MODE_EDGE_DRAG:
+        #     # if we were dragging an edge...
+        #     target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output, new_calc_node)
+        #     if target_socket is not None:
+        #         self.scene.getView().edgeDragEnd(target_socket.gfx)
+        #         self.finish_new_node_state(new_calc_node)
+        #
+        # else:
+        #     self.scene.history.storeHistory("Created %s" % new_calc_node.__class__.__name__)
+
+
     def handleNewNodeContextMenu(self, event):
         if confg.DEBUG:
             print("CONTEXT: EMPTY SPACE in QS_QuestWidget")
 
-        context_menu = self.createNodesContextMenu()
-        action = context_menu.exec(self.mapToGlobal(event.pos()))
-
-        if action is not None:
-            if hasattr(action, 'node_type'):
-                new_node_type = action.node_type
-            else:
-                new_node_type = self.__class__.StateNode_class
-
-            print(action, 'in QD_QuestWidget')
-            new_state_node = new_node_type(self.scene)
-            scene_pos = self.scene.getView().mapToScene(event.pos() - self.view.pos())
-            new_state_node.setPos(scene_pos.x(), scene_pos.y())
-            if confg.DEBUG:
-                print("Selected node:", new_state_node)
-
-            # if self.scene.getView().mode == MODE_EDGE_DRAG:
-            #     # if we were dragging an edge...
-            #     target_socket = self.determine_target_socket_of_node(self.scene.getView().drag_start_socket.is_output, new_calc_node)
-            #     if target_socket is not None:
-            #         self.scene.getView().edgeDragEnd(target_socket.gfx)
-            #         self.finish_new_node_state(new_calc_node)
-            #
-            # else:
-            #     self.scene.history.storeHistory("Created %s" % new_calc_node.__class__.__name__)
+        context_menu = QMenu(self)
+        context_menu.addAction(QIcon('icons/state.png'), '添加起始节点').triggered.connect(lambda: self.createNewStateNode(StateNode_enter, event.pos()))
+        context_menu.addAction(QIcon('icons/state.png'), '添加终止节点').triggered.connect(lambda: self.createNewStateNode(StateNode_exit , event.pos()))
+        context_menu.addAction(QIcon('icons/state.png'), '添加脉冲节点').triggered.connect(lambda: self.createNewStateNode(StateNode_pulse, event.pos()))
+        context_menu.addAction(QIcon('icons/state.png'), '添加情节节点').triggered.connect(lambda: self.createNewStateNode(StateNode_act  , event.pos()))
+        context_menu.exec(self.mapToGlobal(event.pos()))
 
 
     def addNodes(self):
