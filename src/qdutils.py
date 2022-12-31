@@ -146,8 +146,12 @@ class Utils:
             for nodeType in self.getStateNodeTypes():
                 if nodeType.__name__ == arg:
                     return nodeType
+            raise RuntimeError('Cannot find state node type: %s' % arg)
         elif isinstance(arg, int):
-            return self._stateNodeTypeList[arg]
+            if arg in self._stateNodeTypeList:
+                return self._stateNodeTypeList[arg]
+            else:
+                raise RuntimeError('Cannot find state node type: %d' % arg)
         else:
             raise RuntimeError('Invalid argument type: %s' % type(arg))
 
