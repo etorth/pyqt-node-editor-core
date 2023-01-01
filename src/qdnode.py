@@ -22,8 +22,29 @@ class QD_Node(QD_Serializable):
         return self._status == 2
 
 
-    def markDirty(self, val: bool):
+    def markDirty(self, val:bool = False):
         pass
+
+
+    def markDescendantsDirty(self, new_value: bool = True):
+        for other_node in self.getChildrenNodes():
+            other_node.markDirty(new_value)
+            other_node.markChildrenDirty(new_value)
+
+
+    def markChildrenDirty(self, new_value: bool = True):
+        for other_node in self.getChildrenNodes():
+            other_node.markDirty(new_value)
+
+
+    def getChildrenNodes(self) -> 'List[QD_Node]':
+        other_nodes = []
+        for sock in self.sockets:
+            if sock.is_output:
+                for edge in sock.edges:
+                    other_nodes.append(edge.getOtherSocket(sock).node)
+        return other_nodes
+
 
     def getSocket(self, socktype: SocketType) -> [QD_Socket, None]:
         for sock in self.sockets:
@@ -129,4 +150,14 @@ class QD_Node(QD_Serializable):
 
 
     def onEdgeConnectionChanged(self, new_edge: 'QD_Edge'):
+        pass
+
+
+    def onInputChanged(self, socket: 'QD_Socket'):
+        self.markDirty()
+        self.markDescendantsDirty()
+        self.eval()
+
+
+    def eval(self):
         pass

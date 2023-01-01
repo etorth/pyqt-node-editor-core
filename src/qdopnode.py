@@ -132,16 +132,6 @@ class QD_OpNode(QD_Node):
         self.updateSockets()
 
 
-    def onInputChanged(self, socket: 'QD_Socket'):
-        """Event handling when QD_OpNode's input QD_Edge has changed. We auto-mark this `QD_OpNode` to be `Dirty` with all it's descendants
-
-        :param socket: reference to the changed :class:`socket.QD_Socket`
-        :type socket: :class:`socket.QD_Socket`
-        """
-        self.markDirty()
-        self.markDescendantsDirty()
-        self.eval()
-
     def onDeserialized(self, data: dict):
         """Event manually called when this node was deserialized. Currently called when node is deserialized from scene
         Passing `data` containing the data which have been deserialized """
@@ -248,82 +238,32 @@ class QD_OpNode(QD_Node):
     # node evaluation stuff
 
     def isDirty(self) -> bool:
-        """Is this node marked as `Dirty`
-
-        :return: ``True`` if `QD_OpNode` is marked as `Dirty`
-        :rtype: ``bool``
-        """
         return self._is_dirty
 
     def markDirty(self, new_value: bool = True):
-        """Mark this `QD_OpNode` as `Dirty`. See :ref:`evaluation` for more
-
-        :param new_value: ``True`` if this `QD_OpNode` should be `Dirty`. ``False`` if you want to un-dirty this `QD_OpNode`
-        :type new_value: ``bool``
-        """
         self._is_dirty = new_value
         if self._is_dirty:
             self.onMarkedDirty()
 
     def onMarkedDirty(self):
-        """Called when this `QD_OpNode` has been marked as `Dirty`. This method is supposed to be overriden"""
         pass
 
-    def markChildrenDirty(self, new_value: bool = True):
-        """Mark all first level children of this `QD_OpNode` to be `Dirty`. Not this `QD_OpNode` it self. Not other descendants
-
-        :param new_value: ``True`` if children should be `Dirty`. ``False`` if you want to un-dirty children
-        :type new_value: ``bool``
-        """
-        for other_node in self.getChildrenNodes():
-            other_node.markDirty(new_value)
-
-    def markDescendantsDirty(self, new_value: bool = True):
-        """Mark all children and descendants of this `QD_OpNode` to be `Dirty`. Not this `QD_OpNode` it self
-
-        :param new_value: ``True`` if children and descendants should be `Dirty`. ``False`` if you want to un-dirty children and descendants
-        :type new_value: ``bool``
-        """
-        for other_node in self.getChildrenNodes():
-            other_node.markDirty(new_value)
-            other_node.markChildrenDirty(new_value)
 
     def isInvalid(self) -> bool:
-        """Is this node marked as `Invalid`?
-
-        :return: ``True`` if `QD_OpNode` is marked as `Invalid`
-        :rtype: ``bool``
-        """
         return self._is_invalid
 
     def markInvalid(self, new_value: bool = True):
-        """Mark this `QD_OpNode` as `Invalid`. See :ref:`evaluation` for more
-
-        :param new_value: ``True`` if this `QD_OpNode` should be `Invalid`. ``False`` if you want to make this `QD_OpNode` valid
-        :type new_value: ``bool``
-        """
         self._is_invalid = new_value
         if self._is_invalid: self.onMarkedInvalid()
 
     def onMarkedInvalid(self):
-        """Called when this `QD_OpNode` has been marked as `Invalid`. This method is supposed to be overriden"""
         pass
 
     def markChildrenInvalid(self, new_value: bool = True):
-        """Mark all first level children of this `QD_OpNode` to be `Invalid`. Not this `QD_OpNode` it self. Not other descendants
-
-        :param new_value: ``True`` if children should be `Invalid`. ``False`` if you want to make children valid
-        :type new_value: ``bool``
-        """
         for other_node in self.getChildrenNodes():
             other_node.markInvalid(new_value)
 
     def markDescendantsInvalid(self, new_value: bool = True):
-        """Mark all children and descendants of this `QD_OpNode` to be `Invalid`. Not this `QD_OpNode` it self
-
-        :param new_value: ``True`` if children and descendants should be `Invalid`. ``False`` if you want to make children and descendants valid
-        :type new_value: ``bool``
-        """
         for other_node in self.getChildrenNodes():
             other_node.markInvalid(new_value)
             other_node.markChildrenInvalid(new_value)
@@ -374,25 +314,8 @@ class QD_OpNode(QD_Node):
             utils.dumpExcept(e)
 
     def evalChildren(self):
-        """Evaluate all children of this `QD_OpNode`"""
         for node in self.getChildrenNodes():
             node.eval()
-
-    def getChildrenNodes(self) -> 'List[QD_OpNode]':
-        """Retreive all first-level children connected to this QD_OpNode output
-        """
-        other_nodes = []
-        for sock in self.sockets:
-            if sock.is_output:
-                for edge in sock.edges:
-                    other_nodes.append(edge.getOtherSocket(sock).node)
-        return other_nodes
-
-    def getInputs(self):
-        sockin = self.getSocket(SocketType.In)
-        if sockin is None:
-            return None
-        return [edge.getOtherSocket(sockin).node for edge in sockin.edges]
 
     def getOutput(self, socktype: SocketType):
         sockout = self.getSocket(socktype)

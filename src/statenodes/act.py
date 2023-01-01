@@ -431,7 +431,7 @@ class StateNode_act(QD_Node):
 
 
     def onInputChanged(self, socket: 'QD_Socket'):
-        self.markDirty()
+        self.markDirty(False)
         self.markDescendantsDirty()
         self.eval()
 
