@@ -90,24 +90,20 @@ class QD_OpNode(QD_Node):
 
 
     def onDeserialized(self, data: dict):
-        """Event manually called when this node was deserialized. Currently called when node is deserialized from scene
-        Passing `data` containing the data which have been deserialized """
         pass
 
+
     def onDoubleClicked(self, event):
-        """Event handling double click on Graphics QD_OpNode in `QD_StateScene`"""
         self.content.gfx.mouseDoubleClickEvent(event)
 
-    def doSelect(self, new_state: bool = True):
-        """Shortcut method for selecting/deselecting the `QD_OpNode`
 
-        :param new_state: ``True`` if you want to select the `QD_OpNode`. ``False`` if you want to deselect the `QD_OpNode`
-        :type new_state: ``bool``
-        """
+    def doSelect(self, new_state: bool = True):
         self.gfx.doSelect(new_state)
+
 
     def isSelected(self):
         return self.gfx.isSelected()
+
 
     def getSocket(self, socktype: SocketType) -> [QD_Socket, None]:
         for sock in self.sockets:
