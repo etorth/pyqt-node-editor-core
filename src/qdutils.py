@@ -2,6 +2,7 @@
 import bisect
 import pprint
 import traceback
+import functools
 
 from PyQt6.QtCore import QFile, QRectF
 from PyQt6.QtGui import QFontDatabase, QImage, QPainter, QColor
@@ -43,7 +44,6 @@ confg = Confg()
 
 
 class Utils:
-    _node_type_uid = 0
     _node_type_list = {}
     _stateNodeTypeList = {}
 
@@ -115,9 +115,8 @@ class Utils:
 
     @classmethod
     def opNodeRegister(cls, node_type):
-        cls._node_type_uid += 1
-        node_type.op_code = cls._node_type_uid
-        node_type.NodeContent_class.op_code = cls._node_type_uid
+        node_type.op_code = functools.reduce(lambda count, sublist: count + len(sublist), cls._node_type_list.values(), 0) + 1
+        node_type.NodeContent_class.op_code = node_type.op_code
         bisect.insort(cls._node_type_list.setdefault(node_type.op_type, []), node_type, key=lambda x: str(x))
 
 
