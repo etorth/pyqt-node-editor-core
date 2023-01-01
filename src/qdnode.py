@@ -202,3 +202,75 @@ class QD_Node(QD_Serializable):
         self.scene.removeNode(self)
         if confg.DEBUG:
             print(" - everything was done.")
+
+
+    def isInvalid(self) -> bool:
+        return self._status == 2
+
+    def markInvalid(self, new_value: bool = True):
+        pass
+
+    def onMarkedInvalid(self):
+        pass
+
+    def markChildrenInvalid(self, new_value: bool = True):
+        for other_node in self.getChildrenNodes():
+            other_node.markInvalid(new_value)
+
+    def markDescendantsInvalid(self, new_value: bool = True):
+        for other_node in self.getChildrenNodes():
+            other_node.markInvalid(new_value)
+            other_node.markChildrenInvalid(new_value)
+
+
+    def evalOperation(self, input1, input2):
+        return 123
+
+
+    def evalImplementation(self):
+        inputs = self.getInputs()
+        if not inputs:
+            self.markInvalid()
+            self.markDescendantsDirty()
+            self.gfx.setToolTip('Node has no input connected')
+            return None
+
+        i1 = inputs[0]
+        i2 = inputs[0]
+
+        val = self.evalOperation(i1.eval(), i2.eval())
+        self.value = val
+        self.markDirty(False)
+        self.markInvalid(False)
+        self.gfx.setToolTip("")
+
+        self.markDescendantsDirty()
+        self.evalChildren()
+
+        return val
+
+    def eval(self):
+        if not self.isDirty() and not self.isInvalid():
+            print(" _> returning cached %s value:" % self.__class__.__name__, 12)
+            return 12
+
+        try:
+
+            val = self.evalImplementation()
+            return val
+        except ValueError as e:
+            self.markInvalid()
+            self.gfx.setToolTip(str(e))
+            self.markDescendantsDirty()
+        except Exception as e:
+            self.markInvalid()
+            self.gfx.setToolTip(str(e))
+            utils.dumpExcept(e)
+
+    def evalChildren(self):
+        for node in self.getChildrenNodes():
+            node.eval()
+
+
+    def onMarkedDirty(self):
+        pass
