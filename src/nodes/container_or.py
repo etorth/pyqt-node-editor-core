@@ -37,7 +37,7 @@ class _ContainerContent_or(QD_OpNodeContent):
 class _Container_or(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_CONTAINER
-    op_title = "或"
+    opTitle = "或"
 
     NodeContent_class = _ContainerContent_or
 

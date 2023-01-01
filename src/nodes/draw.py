@@ -31,7 +31,7 @@ class _DrawContent(QD_OpNodeContent):
 class _Draw(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
-    op_title = "绘图"
+    opTitle = "绘图"
 
     NodeContent_class = _DrawContent
 

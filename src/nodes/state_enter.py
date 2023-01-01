@@ -33,7 +33,7 @@ class _StateContent_enter(QD_OpNodeContent):
 class _State_enter(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
-    op_title = "进入节点"
+    opTitle = "进入节点"
 
     NodeContent_class = _StateContent_enter
 

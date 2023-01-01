@@ -31,7 +31,7 @@ class _StateContent_abort(QD_OpNodeContent):
 class _State_abort(QD_OpNode):
     icon = "icons/abort.png"
     op_type = OPS_ACTION
-    op_title = "终止"
+    opTitle = "终止"
 
     NodeContent_class = _StateContent_abort
 

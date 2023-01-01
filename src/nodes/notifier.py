@@ -39,7 +39,7 @@ class _NotifierContent(QD_OpNodeContent):
 class _Notifier(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
-    op_title = "通知消息"
+    opTitle = "通知消息"
 
     NodeContent_class = _NotifierContent
 

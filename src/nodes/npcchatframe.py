@@ -216,7 +216,7 @@ class _NPCChatFrameContent(QD_OpNodeContent):
 class _NPCChatFrame(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
-    op_title = "NPC对话页"
+    opTitle = "NPC对话页"
 
     NodeContent_class = _NPCChatFrameContent
 

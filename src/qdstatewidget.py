@@ -130,7 +130,7 @@ class QD_StateWidget(QSplitter):
     def initNewNodeActions(self):
         self.node_actions = {}
         for node in utils.getOpNodeTypes():
-            self.node_actions[node.op_code] = QAction(QIcon(node.icon), node.op_title)
+            self.node_actions[node.op_code] = QAction(QIcon(node.icon), node.opTitle)
             self.node_actions[node.op_code].setData(node.op_code)
 
     def createNodesContextMenu(self):
@@ -251,7 +251,7 @@ class QD_StateWidget(QSplitter):
         addNodeMenu = context_menu.addMenu('Add Node')
         addedActDict = {}
         for type in utils.getOpNodeTypes():
-            addedActDict[addNodeMenu.addAction(type.op_title)] = type
+            addedActDict[addNodeMenu.addAction(type.opTitle)] = type
 
         action = context_menu.exec(self.mapToGlobal(event.pos()))
         if action is None:
@@ -293,7 +293,7 @@ class QD_StateWidget(QSplitter):
             else:
                 for addedAct in addedActDict.keys():
                     if action == addedAct:
-                        print("ADDING NODE: %s" % addedActDict[addedAct].op_title)
+                        print("ADDING NODE: %s" % addedActDict[addedAct].opTitle)
                         selected.addSubNode(addedActDict[addedAct])
                         break
 

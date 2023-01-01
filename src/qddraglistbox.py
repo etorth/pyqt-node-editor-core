@@ -59,7 +59,7 @@ class QD_DragListBox(QListWidget):
 
 
     def addOpItem(self, node):
-        item = QListWidgetItem(node.op_title, self)
+        item = QListWidgetItem(node.opTitle, self)
         pixmap = QPixmap(node.icon if node.icon is not None else ".")
         item.setIcon(QIcon(pixmap.scaled(QSize(32, 32), Qt.AspectRatioMode.KeepAspectRatio)))
         item.setSizeHint(QSize(32, 32))

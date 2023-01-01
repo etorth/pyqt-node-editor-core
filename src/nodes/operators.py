@@ -12,7 +12,7 @@ class _CalcNodeBaseContentGfx(QD_OpNodeContentGfx):
         if self.content.node is None:
             self.label = QLabel('operator')
         else:
-            self.label = QLabel(self.content.node.__class__.op_title)
+            self.label = QLabel(self.content.node.__class__.opTitle)
 
         self.box = QHBoxLayout(self)
         self.box.setContentsMargins(10, 10, 10, 10)
@@ -38,7 +38,7 @@ class _CalcNodeBase(QD_OpNode):
 @utils.opNodeRegister
 class _CalcNode_add(_CalcNodeBase):
     icon = "icons/add.png"
-    op_title = "加"
+    opTitle = "加"
 
 
     def evalOperation(self, input1, input2):
@@ -48,7 +48,7 @@ class _CalcNode_add(_CalcNodeBase):
 @utils.opNodeRegister
 class _CalcNode_sub(_CalcNodeBase):
     icon = "icons/sub.png"
-    op_title = "减"
+    opTitle = "减"
 
 
     def evalOperation(self, input1, input2):
@@ -58,7 +58,7 @@ class _CalcNode_sub(_CalcNodeBase):
 @utils.opNodeRegister
 class _CalcNode_mul(_CalcNodeBase):
     icon = "icons/mul.png"
-    op_title = "乘"
+    opTitle = "乘"
 
 
     def evalOperation(self, input1, input2):
@@ -68,7 +68,7 @@ class _CalcNode_mul(_CalcNodeBase):
 @utils.opNodeRegister
 class _CalcNode_div(_CalcNodeBase):
     icon = "icons/divide.png"
-    op_title = "除"
+    opTitle = "除"
 
 
     def evalOperation(self, input1, input2):

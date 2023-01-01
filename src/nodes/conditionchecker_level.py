@@ -62,7 +62,7 @@ class _ConditionCheckerContent_level(QD_OpNodeContent):
 class _ConditionChecker_level(QD_OpNode):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER
-    op_title = "等级"
+    opTitle = "等级"
 
     NodeContent_class = _ConditionCheckerContent_level
 

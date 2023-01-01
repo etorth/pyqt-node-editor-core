@@ -69,7 +69,7 @@ class _ConditionCheckerContent_hasItem(QD_OpNodeContent):
 class _ConditionChecker_hasItem(QD_OpNode):
     icon = "icons/checker.png"
     op_type = OPS_CHECKER
-    op_title = "拥有物品"
+    opTitle = "拥有物品"
 
     NodeContent_class = _ConditionCheckerContent_hasItem
 

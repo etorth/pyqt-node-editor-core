@@ -40,7 +40,7 @@ class _StateContent_exit(QD_OpNodeContent):
 class _State_exit(QD_OpNode):
     icon = "icons/editor.png"
     op_type = OPS_ACTION
-    op_title = "退出分支"
+    opTitle = "退出分支"
 
     NodeContent_class = _StateContent_exit
 

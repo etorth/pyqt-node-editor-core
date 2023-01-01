@@ -13,11 +13,11 @@ class QD_OpNode(QD_Node):
     NodeContent_class = QD_OpNodeContent
 
     icon = ""
-    op_title = "Undefined"
+    opTitle = "Undefined"
 
     def __init__(self, scene: 'QD_StateScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
         super().__init__(scene)
-        self._title = self.__class__.op_title
+        self._title = self.__class__.opTitle
 
         outtypes = set([sock.cast_type() for sock in sockets if sock is not SocketType.In])
         if len(outtypes) > 1:
@@ -33,7 +33,7 @@ class QD_OpNode(QD_Node):
         self.initInnerClasses()
         self.initSettings()
 
-        self.title = self.__class__.op_title
+        self.title = self.__class__.opTitle
 
         self.scene.addNode(self)
         self.scene.gfx.addItem(self.gfx)
