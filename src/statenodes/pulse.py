@@ -155,14 +155,8 @@ class _StateNodeGfx_pulse(QD_StateNodeGfx):
         img_w = self.width  - 2 * img_x
         img_h = self.height - 2 * img_y
 
+        utils.drawNodeStateIcon(painter, self.node.iconIndex, self.width / 2, 0, False)
         painter.drawImage(QRectF(img_x, img_y, img_w, img_h), self._image)
-
-        if self.node.isDirty():
-            utils.drawNodeStateIcon(painter, 1, self.width / 2, 0, False)
-        elif self.node.isInvalid():
-            utils.drawNodeStateIcon(painter, 2, self.width / 2, 0, False)
-        else:
-            utils.drawNodeStateIcon(painter, 0, self.width / 2, 0, False)
 
 
 @utils.stateNodeRegister

@@ -14,7 +14,7 @@ class QD_Node(QD_Serializable):
     def __init__(self, scene: 'QD_Scene'):
         super().__init__()
         self.scene = scene
-        self._status = 0
+        self._iconIndex = 0
 
 
     def updateConnectedEdges(self):
@@ -29,11 +29,11 @@ class QD_Node(QD_Serializable):
 
 
     def isDirty(self) -> bool:
-        return self._status == 1
+        return self._iconIndex == 1
 
 
     def isInvalid(self) -> bool:
-        return self._status == 2
+        return self._iconIndex == 2
 
 
     def markDirty(self, val:bool = False):
@@ -205,7 +205,7 @@ class QD_Node(QD_Serializable):
 
 
     def isInvalid(self) -> bool:
-        return self._status == 2
+        return self._iconIndex == 2
 
     def markInvalid(self, new_value: bool = True):
         pass
@@ -284,3 +284,7 @@ class QD_Node(QD_Serializable):
     def pos(self):
         return self.gfx.pos()  # QPointF
 
+
+    @property
+    def iconIndex(self):
+        return self._iconIndex
