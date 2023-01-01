@@ -274,3 +274,13 @@ class QD_Node(QD_Serializable):
 
     def onMarkedDirty(self):
         pass
+
+
+    def setPos(self, x: float, y: float):
+        self.gfx.setPos(x, y)
+
+
+    @property
+    def pos(self):
+        return self.gfx.pos()  # QPointF
+

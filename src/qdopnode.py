@@ -59,10 +59,6 @@ class QD_OpNode(QD_Node):
         self._title = value
         self.gfx.title = self._title
 
-    @property
-    def pos(self):
-        return self.gfx.pos()  # QPointF
-
 
     @property
     def output_type(self):
@@ -71,15 +67,6 @@ class QD_OpNode(QD_Node):
                 return socktype.cast_type()
         return None
 
-
-    def setPos(self, x: float, y: float):
-        """
-        Sets position of the Graphics QD_OpNode
-
-        :param x: X `QD_StateScene` position
-        :param y: Y `QD_StateScene` position
-        """
-        self.gfx.setPos(x, y)
 
     def initInnerClasses(self):
         node_content_class = self.getNodeContentClass()
@@ -139,17 +126,6 @@ class QD_OpNode(QD_Node):
                 return sock
         return None
 
-    def getSocketTypeSet(self):
-        return set([sock.type for sock in self.sockets])
-
-
-    def getOutSocketCount(self):
-        sockset = self.getSocketTypeSet()
-        if SocketType.In in sockset:
-            return len(sockset) - 1
-        else:
-            return len(sockset)
-
 
     def getSocketPosition(self, socktype: SocketType) -> QPointF:
         assert socktype in SocketType
@@ -176,24 +152,6 @@ class QD_OpNode(QD_Node):
     def getSocketScenePosition(self, socket: 'QD_Socket') -> QPointF:
         return self.gfx.pos() + self.getSocketPosition(socket.type)
 
-
-    def isDirty(self) -> bool:
-        return self._is_dirty
-
-    def markDirty(self, new_value: bool = True):
-        self._is_dirty = new_value
-        if self._is_dirty:
-            self.onMarkedDirty()
-
-
-    def getOutput(self, socktype: SocketType):
-        sockout = self.getSocket(socktype)
-        if sockout is None:
-            return None
-
-        if sockout.edges:
-            return sockout.edges[0].getOtherSocket(sockout).node
-        return None
 
     def serialize(self) -> dict:
         return {

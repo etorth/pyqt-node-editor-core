@@ -14,6 +14,7 @@ from qdstatenode import QD_StateNode
 from qdedge import *
 from qdviewgfx import MODE_EDGE_DRAG, QD_ViewGfx  # , MODE_EDGES_REROUTING
 from qdutils import *
+from qdsocketgfx import SocketType
 
 
 class QD_QuestWidget(QSplitter):
@@ -249,7 +250,7 @@ class QD_QuestWidget(QSplitter):
         else:
             context_menu.addAction("Add Pulse Input Socket").triggered.connect(lambda: node.addPulseIn())
 
-        if isinstance(node, QD_PulseNode):
+        if isinstance(node, utils.getStateNodeType('StateNode_pulse')):
             context_menu.addAction("Switch Pulse Socket Position").triggered.connect(lambda: node.gfx.switchSocketPosition())
 
         action = context_menu.exec(self.mapToGlobal(event.pos()))
