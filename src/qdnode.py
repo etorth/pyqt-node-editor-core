@@ -288,3 +288,18 @@ class QD_Node(QD_Serializable):
     @property
     def iconIndex(self):
         return self._iconIndex
+
+
+    def setError(msg: str):
+        self._iconIndex = 2
+        self.gfx.setToolTip(msg)
+
+
+    def setWarning(msg: str):
+        self._iconIndex = 1
+        self.gfx.setToolTip(msg)
+
+
+    def setValid():
+        self._iconIndex = 0
+        self.gfx.setToolTip("")
