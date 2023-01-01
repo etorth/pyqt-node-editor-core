@@ -48,9 +48,8 @@ class Utils:
     _stateNodeTypeList = {}
 
     _mainWindow = None
+    _nodeStateIcons = None
     _monoFontFamilies = None
-
-    _nodeStateIcons = QImage("icons/status_icons.png")
 
     _color_table = [
         QColor('#00FF00'),
@@ -106,6 +105,7 @@ class Utils:
     @property
     def monoFont(self):
         if self._monoFontFamilies is None:
+            assert QApplication.instance()
             monoFontPath = 'fonts/YaHeiMonacoHybrid.ttf'
             loadedFont = QFontDatabase.addApplicationFont(monoFontPath)
             if loadedFont < 0:
@@ -175,6 +175,10 @@ class Utils:
             case 0: offset = icon_size * 1
             case 1: offset = icon_size * 0
             case _: offset = icon_size * 2
+
+        if not self._nodeStateIcons:
+            assert QApplication.instance()
+            self._nodeStateIcons = QImage("icons/status_icons.png")
 
         painter.drawImage(QRectF(x, y, icon_size, icon_size), self._nodeStateIcons, QRectF(offset, 0, icon_size, icon_size))
 
