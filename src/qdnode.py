@@ -126,3 +126,7 @@ class QD_Node(QD_Serializable):
         for sock in self.sockets:
             for edge in sock.edges:
                 edge.updatePositions()
+
+
+    def onEdgeConnectionChanged(self, new_edge: 'QD_Edge'):
+        pass

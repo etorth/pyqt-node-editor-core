@@ -430,9 +430,6 @@ class StateNode_act(QD_Node):
             subwin.show()
 
 
-    def onEdgeConnectionChanged(self, new_edge: 'QD_Edge'):
-        pass
-
     def onInputChanged(self, socket: 'QD_Socket'):
         self.markDirty()
         self.markDescendantsDirty()

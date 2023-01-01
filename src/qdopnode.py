@@ -132,15 +132,6 @@ class QD_OpNode(QD_Node):
         self.updateSockets()
 
 
-    def onEdgeConnectionChanged(self, new_edge: 'QD_Edge'):
-        """
-        Event handling that any connection (`QD_Edge`) has changed. Currently not used...
-
-        :param new_edge: reference to the changed :class:`qdedge.QD_Edge`
-        :type new_edge: :class:`qdedge.QD_Edge`
-        """
-        pass
-
     def onInputChanged(self, socket: 'QD_Socket'):
         """Event handling when QD_OpNode's input QD_Edge has changed. We auto-mark this `QD_OpNode` to be `Dirty` with all it's descendants
 
