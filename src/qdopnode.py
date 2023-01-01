@@ -143,8 +143,7 @@ class QD_OpNode(QD_Node):
 
 
     def serialize(self) -> dict:
-        return {
-            'id': self.id,
+        return super().serialize() | {
             'title': self.title,
             'position': (self.gfx.scenePos().x(), self.gfx.scenePos().y()),
             'sockets': [sock.serialize() for sock in self.sockets],
