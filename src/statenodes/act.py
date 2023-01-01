@@ -348,7 +348,6 @@ class StateNode_act(QD_Node):
 
     StateNodeWidget_class = QD_StateWidget
     StateNodeGfx_class = _StateNodeGfx_act
-    Socket_class = QD_Socket
 
     icon = ""
 
@@ -455,17 +454,6 @@ class StateNode_act(QD_Node):
         return self.gfx.pos() + self.getSocketPosition(socket.type)
 
 
-    def updateConnectedEdges(self):
-        for sock in self.sockets:
-            for edge in sock.edges:
-                edge.updatePositions()
-
-
-    def updateSockets(self):
-        for sock in self.sockets:
-            sock.updateSocketPosition()
-
-
     def addPulseIn(self):
         if self.getSocket(SocketType.PulseIn):
             return
@@ -485,34 +473,6 @@ class StateNode_act(QD_Node):
                 self.sockets.remove(socket)
         self.updateSockets()
 
-
-    def remove(self):
-        if confg.DEBUG:
-            print("> Removing StateNode_act", self)
-
-        if confg.DEBUG:
-            print(" - remove all edges from sockets")
-
-        for socket in self.sockets:
-            for edge in socket.edges:
-                if confg.DEBUG:
-                    print("    - removing from socket:", socket, "edge:", edge)
-                edge.remove()
-
-        if confg.DEBUG:
-            print(" - remove gfx")
-
-        self.scene.gfx.removeItem(self.gfx)
-        self.gfx = None
-
-        if confg.DEBUG:
-            print(" - remove node from the scene")
-
-        self.scene.removeNode(self)
-        if confg.DEBUG:
-            print(" - everything was done.")
-
-    # node evaluation stuff
 
     def isDirty(self) -> bool:
         return self._is_dirty

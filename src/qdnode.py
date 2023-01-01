@@ -5,6 +5,8 @@ from qdsocket import QD_Socket
 from qdsocketgfx import QD_SocketGfx, SocketType
 from qdserializable import QD_Serializable
 
+from qdutils import *
+
 class QD_Node(QD_Serializable):
     Socket_class = QD_Socket
 
@@ -13,6 +15,18 @@ class QD_Node(QD_Serializable):
         super().__init__()
         self.scene = scene
         self._status = 0
+
+
+    def updateConnectedEdges(self):
+        for sock in self.sockets:
+            for edge in sock.edges:
+                edge.updatePositions()
+
+
+    def updateSockets(self):
+        for sock in self.sockets:
+            sock.updateSocketPosition()
+
 
     def isDirty(self) -> bool:
         return self._status == 1
@@ -161,3 +175,30 @@ class QD_Node(QD_Serializable):
 
     def eval(self):
         pass
+
+
+    def remove(self):
+        if confg.DEBUG:
+            print("> Removing QD_Node", self)
+
+        if confg.DEBUG:
+            print(" - remove all edges from sockets")
+
+        for socket in self.sockets:
+            for edge in socket.edges:
+                if confg.DEBUG:
+                    print("    - removing from socket:", socket, "edge:", edge)
+                edge.remove()
+
+        if confg.DEBUG:
+            print(" - remove gfx")
+
+        self.scene.gfx.removeItem(self.gfx)
+        self.gfx = None
+
+        if confg.DEBUG:
+            print(" - remove node from the scene")
+
+        self.scene.removeNode(self)
+        if confg.DEBUG:
+            print(" - everything was done.")

@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-A module containing NodeEditor's class for representing `QD_OpNode`.
-"""
 from PyQt6.QtCore import QPointF
 
 from qdopnodegfx import QD_OpNodeGfx
@@ -14,7 +11,6 @@ from qdnode import QD_Node
 class QD_OpNode(QD_Node):
     NodeGfx_class = QD_OpNodeGfx
     NodeContent_class = QD_OpNodeContent
-    Socket_class = QD_Socket
 
     icon = ""
     op_title = "Undefined"
@@ -56,13 +52,6 @@ class QD_OpNode(QD_Node):
 
     @property
     def title(self):
-        """
-        Title shown in the scene
-
-        :getter: return current QD_OpNode title
-        :setter: sets QD_OpNode title and passes it to Graphics QD_OpNode class
-        :type: ``str``
-        """
         return self._title
 
     @title.setter
@@ -72,12 +61,6 @@ class QD_OpNode(QD_Node):
 
     @property
     def pos(self):
-        """
-        Retrieve QD_OpNode's position in the QD_StateScene
-
-        :return: QD_OpNode position
-        :rtype: ``QPointF``
-        """
         return self.gfx.pos()  # QPointF
 
 
@@ -99,7 +82,6 @@ class QD_OpNode(QD_Node):
         self.gfx.setPos(x, y)
 
     def initInnerClasses(self):
-        """Sets up graphics QD_OpNode (PyQt) and Content Widget"""
         node_content_class = self.getNodeContentClass()
         graphics_node_class = self.getGraphicsNodeClass()
 
@@ -110,7 +92,6 @@ class QD_OpNode(QD_Node):
             self.gfx = graphics_node_class(self)
 
     def getNodeContentClass(self):
-        """Returns class representing nodeeditor content"""
         return self.__class__.NodeContent_class
 
     def getGraphicsNodeClass(self):
@@ -195,47 +176,6 @@ class QD_OpNode(QD_Node):
     def getSocketScenePosition(self, socket: 'QD_Socket') -> QPointF:
         return self.gfx.pos() + self.getSocketPosition(socket.type)
 
-
-    def updateConnectedEdges(self):
-        for sock in self.sockets:
-            for edge in sock.edges:
-                edge.updatePositions()
-
-
-    def updateSockets(self):
-        for sock in self.sockets:
-            sock.updateSocketPosition()
-
-
-    def remove(self):
-        """Safely remove this QD_OpNode
-        """
-        if confg.DEBUG:
-            print("> Removing QD_OpNode", self)
-
-        if confg.DEBUG:
-            print(" - remove all edges from sockets")
-
-        for socket in self.sockets:
-            for edge in socket.edges:
-                if confg.DEBUG:
-                    print("    - removing from socket:", socket, "edge:", edge)
-                edge.remove()
-
-        if confg.DEBUG:
-            print(" - remove gfx")
-
-        self.scene.gfx.removeItem(self.gfx)
-        self.gfx = None
-
-        if confg.DEBUG:
-            print(" - remove node from the scene")
-
-        self.scene.removeNode(self)
-        if confg.DEBUG:
-            print(" - everything was done.")
-
-    # node evaluation stuff
 
     def isDirty(self) -> bool:
         return self._is_dirty
