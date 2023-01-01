@@ -69,20 +69,9 @@ class QD_OpNode(QD_Node):
 
 
     def initInnerClasses(self):
-        node_content_class = self.getNodeContentClass()
-        graphics_node_class = self.getGraphicsNodeClass()
+        self.content = self.__class__.NodeContent_class(self)
+        self.gfx = self.__class__.NodeGfx_class(self)
 
-        if node_content_class is not None:
-            self.content = node_content_class(self)
-
-        if graphics_node_class is not None:
-            self.gfx = graphics_node_class(self)
-
-    def getNodeContentClass(self):
-        return self.__class__.NodeContent_class
-
-    def getGraphicsNodeClass(self):
-        return self.__class__.NodeGfx_class
 
     def initSettings(self):
         self._max_socket_out_spacing = 30
