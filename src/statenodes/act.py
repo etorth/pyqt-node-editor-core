@@ -416,15 +416,6 @@ class StateNode_act(QD_Node):
         self.updateSockets()
 
 
-    def popMdiWindow(self):
-        win = utils.mainWindow.findMdiChildByStateNode(self)
-        if win:
-            utils.mainWindow.mdiArea.setActiveSubWindow(win)
-        else:
-            subwin = utils.mainWindow.createMdiChild(self.__class__.StateNodeWidget_class(self))
-            subwin.show()
-
-
     def onInputChanged(self, socket: 'QD_Socket'):
         self.markDirty(False)
         self.markDescendantsDirty()
@@ -436,7 +427,12 @@ class StateNode_act(QD_Node):
 
 
     def onDoubleClicked(self, event):
-        self.popMdiWindow()
+        win = utils.mainWindow.findMdiChildByStateNode(self)
+        if win:
+            utils.mainWindow.mdiArea.setActiveSubWindow(win)
+        else:
+            subwin = utils.mainWindow.createMdiChild(self.__class__.StateNodeWidget_class(self))
+            subwin.show()
 
 
     def doSelect(self, new_state: bool = True):

@@ -30,6 +30,9 @@ class _StateNodeWidget_enter(QWidget):
 
 
 class _StateNodeGfx_enter(QD_StateNodeGfx):
+    StateNodeWidget_class = _StateNodeWidget_enter
+
+
     def __init__(self, node: 'QD_StateNode', parent: QGraphicsItem = None):
         super().__init__(node, parent)
 
@@ -123,7 +126,13 @@ class _StateNodeGfx_enter(QD_StateNodeGfx):
             self.onSelected()
 
     def mouseDoubleClickEvent(self, event):
-        self.node.popMdiWindow()
+        win = utils.mainWindow.findMdiChildByStateNode(self)
+        if win:
+            utils.mainWindow.mdiArea.setActiveSubWindow(win)
+        else:
+            subwin = utils.mainWindow.createMdiChild(self.__class__.StateNodeWidget_class(self))
+            subwin.show()
+
 
     def hoverEnterEvent(self, event: 'QGraphicsSceneHoverEvent') -> None:
         self.hovered = True
