@@ -48,9 +48,9 @@ class Utils:
     _stateNodeTypeList = {}
 
     _mainWindow = None
-    _mono_font_families = None
+    _monoFontFamilies = None
 
-    _node_state_icons = QImage("icons/status_icons.png")
+    _nodeStateIcons = QImage("icons/status_icons.png")
 
     _color_table = [
         QColor('#00FF00'),
@@ -104,14 +104,14 @@ class Utils:
             raise RuntimeError('Main window has already been created')
 
     @property
-    def mono_font(self):
-        if self._mono_font_families is None:
-            mono_font_path = 'fonts/YaHeiMonacoHybrid.ttf'
-            loaded_font = QFontDatabase.addApplicationFont(mono_font_path)
-            if loaded_font < 0:
-                raise RuntimeError('Cannot load customized font: %s' % mono_font_path)
-            self._mono_font_families = QFontDatabase.applicationFontFamilies(loaded_font)
-        return self._mono_font_families[0]
+    def monoFont(self):
+        if self._monoFontFamilies is None:
+            monoFontPath = 'fonts/YaHeiMonacoHybrid.ttf'
+            loadedFont = QFontDatabase.addApplicationFont(monoFontPath)
+            if loadedFont < 0:
+                raise RuntimeError('Cannot load customized font: %s' % monoFontPath)
+            self._monoFontFamilies = QFontDatabase.applicationFontFamilies(loadedFont)
+        return self._monoFontFamilies[0]
 
     @classmethod
     def opNodeRegister(cls, node_type):
@@ -176,7 +176,7 @@ class Utils:
             case 1: offset = icon_size * 0
             case _: offset = icon_size * 2
 
-        painter.drawImage(QRectF(x, y, icon_size, icon_size), self._node_state_icons, QRectF(offset, 0, icon_size, icon_size))
+        painter.drawImage(QRectF(x, y, icon_size, icon_size), self._nodeStateIcons, QRectF(offset, 0, icon_size, icon_size))
 
 
     def printObj(self, obj):
