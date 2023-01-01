@@ -126,7 +126,7 @@ class Utils:
         cls._stateNodeTypeList[nodeType.stateCode] = nodeType
 
 
-    def get_class_from_opcode(self, op_code):
+    def getOpNodeType(self, op_code):
         for type in self.getOpNodeTypes():
             if type.op_code == op_code:
                 return type

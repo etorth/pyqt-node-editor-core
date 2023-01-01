@@ -44,7 +44,7 @@ class _ContainerContent_and(QD_OpNodeContent):
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
         for content_data in data['nested_contents']:
-            self.addSubNode(utils.get_class_from_opcode(content_data['op_code']).NodeContent_class).deserialize(content_data, hashmap, restore_id)
+            self.addSubNode(utils.getOpNodeType(content_data['op_code']).NodeContent_class).deserialize(content_data, hashmap, restore_id)
         return True
 
 

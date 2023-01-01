@@ -52,7 +52,7 @@ class QD_QuestWidget(QSplitter):
     def getNodeClassFromData(self, data):
         if 'op_code' not in data:
             return QD_OpNode
-        return utils.get_class_from_opcode(data['op_code'])
+        return utils.getOpNodeType(data['op_code'])
 
     def doEvalOutputs(self):
         # eval all output nodes
@@ -196,7 +196,7 @@ class QD_QuestWidget(QSplitter):
                 print("GOT DROP: [%d] '%s'" % (op_code, text), "mouse:", mouse_position, "scene:", scene_position)
 
             try:
-                node = utils.get_class_from_opcode(op_code)(self.scene)
+                node = utils.getOpNodeType(op_code)(self.scene)
                 node.setPos(scene_position.x(), scene_position.y())
                 self.scene.history.storeHistory("Created node %s" % node.__class__.__name__)
             except Exception as e:
