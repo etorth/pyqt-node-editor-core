@@ -44,10 +44,10 @@ confg = Confg()
 
 
 class Utils:
-    _node_type_list = {}
+    _opNodeTypeList = {}
     _stateNodeTypeList = {}
 
-    _main_window = None
+    _mainWindow = None
     _mono_font_families = None
 
     _node_state_icons = QImage("icons/status_icons.png")
@@ -92,14 +92,14 @@ class Utils:
 
 
     @property
-    def main_window(self):
-        return self._main_window
+    def mainWindow(self):
+        return self._mainWindow
 
 
-    @main_window.setter
-    def main_window(self, win):
-        if self._main_window is None:
-            self._main_window = win
+    @mainWindow.setter
+    def mainWindow(self, win):
+        if self._mainWindow is None:
+            self._mainWindow = win
         else:
             raise RuntimeError('Main window has already been created')
 
@@ -115,9 +115,9 @@ class Utils:
 
     @classmethod
     def opNodeRegister(cls, node_type):
-        node_type.op_code = functools.reduce(lambda count, sublist: count + len(sublist), cls._node_type_list.values(), 0) + 1
+        node_type.op_code = functools.reduce(lambda count, sublist: count + len(sublist), cls._opNodeTypeList.values(), 0) + 1
         node_type.NodeContent_class.op_code = node_type.op_code
-        bisect.insort(cls._node_type_list.setdefault(node_type.op_type, []), node_type, key=lambda x: str(x))
+        bisect.insort(cls._opNodeTypeList.setdefault(node_type.op_type, []), node_type, key=lambda x: str(x))
 
 
     @classmethod
@@ -133,7 +133,7 @@ class Utils:
 
 
     def getOpNodeTypes(self):
-        return sorted(sum(self._node_type_list.values(), []), key=lambda x: (x.op_type, x.op_code))
+        return sorted(sum(self._opNodeTypeList.values(), []), key=lambda x: (x.op_type, x.op_code))
 
 
     def getStateNodeTypes(self):
@@ -157,9 +157,9 @@ class Utils:
 
     def valid_nodes(self, op_type=None):
         if op_type is None:
-            return self._node_type_list
+            return self._opNodeTypeList
         else:
-            return self._node_type_list.get(op_type, [])
+            return self._opNodeTypeList.get(op_type, [])
 
     def __init__(self):
         self._pprint = pprint.PrettyPrinter(indent=4)

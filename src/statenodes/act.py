@@ -147,7 +147,7 @@ class _StateNodeGfx_act(QD_NodeGfx):
 
 
     def onTextChanged(self):
-        win = utils.main_window.findMdiChildByStateNode(self.node)
+        win = utils.mainWindow.findMdiChildByStateNode(self.node)
         if win:
             widget = win.widget()
             widget.confg.gfx.log.setText(self.edit.toPlainText())
@@ -421,11 +421,11 @@ class StateNode_act(QD_Node):
 
 
     def popMdiWindow(self):
-        win = utils.main_window.findMdiChildByStateNode(self)
+        win = utils.mainWindow.findMdiChildByStateNode(self)
         if win:
-            utils.main_window.mdiArea.setActiveSubWindow(win)
+            utils.mainWindow.mdiArea.setActiveSubWindow(win)
         else:
-            subwin = utils.main_window.createMdiChild(self.__class__.StateNodeWidget_class(self))
+            subwin = utils.mainWindow.createMdiChild(self.__class__.StateNodeWidget_class(self))
             subwin.show()
 
 

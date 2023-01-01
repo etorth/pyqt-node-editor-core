@@ -13,10 +13,10 @@ if __name__ == '__main__':
     app = QApplication(sys.argv)
     app.setStyle(confg.APP_STYLE)
 
-    utils.main_window = QD_MainWindow()
+    utils.mainWindow = QD_MainWindow()
 
-    utils.main_window.setWindowIcon(QIcon(confg.APP_ICON))
-    utils.main_window.setWindowTitle(confg.APP_TITLE)
-    utils.main_window.show()
+    utils.mainWindow.setWindowIcon(QIcon(confg.APP_ICON))
+    utils.mainWindow.setWindowTitle(confg.APP_TITLE)
+    utils.mainWindow.show()
 
     sys.exit(app.exec())

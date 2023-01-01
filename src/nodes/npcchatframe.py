@@ -183,7 +183,7 @@ class _NPCChatFrameContentGfx(QD_OpNodeContentGfx):
 
     def mouseDoubleClickEvent(self, event):
         self.editor = _NPCChatFrameEditor(self.node)
-        subwin = utils.main_window.mdiArea.addSubWindow(self.editor)
+        subwin = utils.mainWindow.mdiArea.addSubWindow(self.editor)
         subwin.setWindowIcon(QIcon('.'))
         subwin.show()
 
