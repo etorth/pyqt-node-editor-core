@@ -18,9 +18,6 @@ from qdsocketgfx import SocketType
 
 
 class QD_QuestWidget(QSplitter):
-    Scene_class = QD_QuestScene
-
-
     def __init__(self, parent: QWidget = None):
         super().__init__(parent)
 
@@ -45,7 +42,7 @@ class QD_QuestWidget(QSplitter):
         self.confg = QD_QuestConfg()
         self.addWidget(self.confg.gfx)
 
-        self.scene = self.__class__.Scene_class()
+        self.scene = QD_QuestScene()
         self.view = QD_ViewGfx(self.scene.gfx)
         self.addWidget(self.view)
 
