@@ -159,3 +159,13 @@ class QD_SocketGfx(QGraphicsItem):
 
     def boundingRect(self) -> QRectF:
         return QRectF(-self.radius_outline, -self.radius_outline, 2 * self.radius_outline, 2 * self.radius_outline)
+
+
+    def hoverEnterEvent(self, event: QGraphicsSceneHoverEvent):
+        self.is_highlighted = True
+        self.update()
+
+
+    def hoverLeaveEvent(self, event: QGraphicsSceneHoverEvent):
+        self.is_highlighted = False
+        self.update()
