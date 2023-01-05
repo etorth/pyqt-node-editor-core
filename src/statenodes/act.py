@@ -203,12 +203,12 @@ class _StateNodeGfx_act(QD_NodeGfx):
 
         match self.handleSelected:
             case self.handleTopLeft     : self.updatePosAndSize(dx, dy, -dx, -dy, self.mousePressRect.bottomRight() - QPointF(self._miniWidth, self._miniHeight))
-            case self.handleTopMiddle   : self.updatePosAndSize( 0, dy,   0, -dy, self.mousePressRect.bottomRight() - QPointF(self._miniWidth, self._miniHeight))
+            case self.handleTopMiddle   : self.updatePosAndSize( 0, dy,   0, -dy, self.mousePressRect.bottomLeft () - QPointF(              0, self._miniHeight))
             case self.handleTopRight    : self.updatePosAndSize( 0, dy,  dx, -dy, self.mousePressRect.bottomLeft () - QPointF(              0, self._miniHeight))
-            case self.handleMiddleLeft  : self.updatePosAndSize(dx,  0, -dx,   0, self.mousePressRect.topRight   () - QPointF(self._miniWidth,                0))
+            case self.handleMiddleLeft  : self.updatePosAndSize(dx,  0, -dx,   0, self.mousePressRect.bottomRight() - QPointF(self._miniWidth, self._miniHeight))
             case self.handleMiddleRight : self.updatePosAndSize( 0,  0,  dx,   0, self.mousePressRect.topLeft    () - QPointF(              0,                0))
             case self.handleBottomLeft  : self.updatePosAndSize(dx,  0, -dx,  dy, self.mousePressRect.topRight   () - QPointF(self._miniWidth,                0))
-            case self.handleBottomMiddle: self.updatePosAndSize( 0,  0,   0,  dy, self.mousePressRect.topLeft    () - QPointF(              0,                0))
+            case self.handleBottomMiddle: self.updatePosAndSize( 0,  0,   0,  dy, self.mousePressRect.topRight   () - QPointF(self._miniWidth,                0))
             case self.handleBottomRight : self.updatePosAndSize( 0,  0,  dx,  dy, self.mousePressRect.topLeft    () - QPointF(              0,                0))
             case _: raise ValueError("Invalid selected handle", self.handleSelected)
 
