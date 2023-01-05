@@ -151,25 +151,29 @@ class QD_SocketGfx(QGraphicsItem):
 
 
     def initAssets(self):
-        self._color_outline = QColor("#FF000000")
-        self._color_highlighted = QColor("#FF37A6FF")
+        self._colorOutline = QColor("#FF000000")
+        self._colorHovered = QColor("#FF37A6FF")
 
-        self._pen = QPen(self._color_outline)
+        self._pen = QPen(self._colorOutline)
         self._pen.setWidthF(self._outlineWidth)
 
-        self._pen_highlighted = QPen(self._color_highlighted)
-        self._pen_highlighted.setWidthF(2.0)
+        self._penHovered = QPen(self._colorHovered)
+        self._penHovered.setWidthF(2.0)
 
         self._brush = QBrush(self.color)
-        self._icon = QImage("icons/socket_pulse.png")
+        self._pulseIcon = QImage("icons/socket_pulse.png")
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         painter.setBrush(self._brush)
-        painter.setPen(self._pen_highlighted if self._hovered else self._pen)
+        if self._hovered:
+            painter.setPen(self._penHovered)
+        else:
+            painter.setPen(self._pen)
         painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
+
         if self.socket.type.is_pulse:
-            painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._icon)
+            painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._pulseIcon)
 
 
     def boundingRect(self) -> QRectF:
