@@ -91,6 +91,7 @@ class SocketType(int, Enum):
 class QD_SocketGfx(QGraphicsItem):
     def __init__(self, socket: 'QD_Socket'):
         super().__init__(socket.node.gfx)
+        self.setAcceptHoverEvents(True)
 
         self.socket = socket
         self.is_highlighted = False
