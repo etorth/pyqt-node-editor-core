@@ -94,20 +94,26 @@ class QD_SocketGfx(QGraphicsItem):
         self.setAcceptHoverEvents(True)
 
         self.socket = socket
-        self.is_highlighted = False
+        self._hovered = False
 
-        self.radius = 6.0
-        self.outline_width = 1.0
-
+        self.initSizes()
         self.initAssets()
+
 
     @property
     def color(self) -> QColor:
         return self.__class__.getSocketColor(self.socket.type)
 
+
     @property
-    def radius_outline(self) -> float:
-        return self.radius + self.outline_width
+    def radiusOutline(self) -> float:
+        return self.radius + self._outlineWidth
+
+
+    @property
+    def radius(self) -> float:
+        return self._normalRadius * (1.2 if self._hovered else 1.0)
+
 
     @staticmethod
     def getSocketColor(socktype: SocketType) -> QColor:
@@ -138,12 +144,18 @@ class QD_SocketGfx(QGraphicsItem):
         self._brush = QBrush(self.color)
         self.update()
 
+
+    def initSizes(self):
+        self._outlineWidth = 1.0
+        self._normalRadius = 6.0
+
+
     def initAssets(self):
         self._color_outline = QColor("#FF000000")
         self._color_highlighted = QColor("#FF37A6FF")
 
         self._pen = QPen(self._color_outline)
-        self._pen.setWidthF(self.outline_width)
+        self._pen.setWidthF(self._outlineWidth)
 
         self._pen_highlighted = QPen(self._color_highlighted)
         self._pen_highlighted.setWidthF(2.0)
@@ -151,22 +163,24 @@ class QD_SocketGfx(QGraphicsItem):
         self._brush = QBrush(self.color)
         self._icon = QImage("icons/socket_pulse.png")
 
+
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         painter.setBrush(self._brush)
-        painter.setPen(self._pen_highlighted if self.is_highlighted else self._pen)
+        painter.setPen(self._pen_highlighted if self._hovered else self._pen)
         painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
         if self.socket.type.is_pulse:
             painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._icon)
 
+
     def boundingRect(self) -> QRectF:
-        return QRectF(-self.radius_outline, -self.radius_outline, 2 * self.radius_outline, 2 * self.radius_outline)
+        return QRectF(-self.radiusOutline, -self.radiusOutline, 2 * self.radiusOutline, 2 * self.radiusOutline)
 
 
     def hoverEnterEvent(self, event: QGraphicsSceneHoverEvent):
-        self.is_highlighted = True
+        self._hovered = True
         self.update()
 
 
     def hoverLeaveEvent(self, event: QGraphicsSceneHoverEvent):
-        self.is_highlighted = False
+        self._hovered = False
         self.update()
