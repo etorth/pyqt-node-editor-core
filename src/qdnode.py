@@ -144,16 +144,39 @@ class QD_Node(QD_Serializable):
            so for node-4, it has two roots now: node-1 and node-3
         """
         result = []
-        nextnodes = [self]
+        nextNodes = [self]
 
-        while nextnodes:
-            currnode = nextnodes.pop(0)
-            inputs = currnode.getInputs()
+        while nextNodes:
+            currNode = nextNodes.pop(0)
+            inputs = currNode.getInputs()
 
             if inputs:
-                nextnodes += inputs
+                nextNodes += inputs
             else:
-                result.append(currnode)
+                result.append(currNode)
+        return result
+
+
+    def findNodes(self, ignorePulseEdge: bool, func):
+        result = set()
+        nextNodes = [self]
+        visitedNodes = set()
+
+        while nextNodes:
+            currNode = nextNodes.pop(0)
+            if currNode in visitedNodes:
+                continue
+
+            visitedNodes.add(currNode)
+            if func(currNode):
+                result.add(currNode)
+
+            for sock in currNode.sockets:
+                if sock.type.is_pulse and ignorePulseEdge:
+                    continue
+
+                for edge in sock.edges:
+                    nextNodes.append(edge.getOtherSocket(sock).node)
         return result
 
 

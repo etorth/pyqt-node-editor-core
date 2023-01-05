@@ -354,7 +354,20 @@ class QD_ViewGfx(QGraphicsView):
                 raise ValueError('Cannot connect sockets with same In/Out type')
 
             if startSocket.type.is_pulse != endSocket.type.is_pulse:
-                raise ValueError('Cannot connect sockets with different pulse type')
+                raise ValueError('Cannot connect pulse socket and non-pulse socket')
+
+            if hasattr(startSocket, 'node') and startSocket.node and hasattr(endSocket, 'node') and endSocket.node:
+                startEnterNodes = startSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_enter')
+                endEnterNodes = endSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_enter')
+
+                if len(startEnterNodes.union(endEnterNodes)) > 1:
+                    raise ValueError('Cannot connect sockets with multiple enter nodes')
+
+                startExitNodes = startSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_exit')
+                endExitNodes = endSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_exit')
+
+                if len(startExitNodes.union(endExitNodes)) > 1:
+                    raise ValueError('Cannot connect sockets with multiple exit nodes')
 
             return True, 'No error'
 
