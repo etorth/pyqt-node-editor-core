@@ -455,3 +455,7 @@ class QD_ViewGfx(QGraphicsView):
         # set scene scale
         if not clamped or self.zoomClamp is False:
             self.scale(zoomFactor, zoomFactor)
+
+
+    def edgeDragMode(self) -> bool:
+        return self.mode == MODE_EDGE_DRAG

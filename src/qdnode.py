@@ -176,7 +176,8 @@ class QD_Node(QD_Serializable):
                     continue
 
                 for edge in sock.edges:
-                    nextNodes.append(edge.getOtherSocket(sock).node)
+                    if (otherSocket := edge.getOtherSocket(sock)) and hasattr(otherSocket, 'node') and otherSocket.node:
+                        nextNodes.append(otherSocket.node)
         return result
 
 

@@ -182,11 +182,20 @@ class QD_SocketGfx(QGraphicsItem):
 
     def hoverEnterEvent(self, event: QGraphicsSceneHoverEvent):
         self._hovered = True
+        viewGfx = self.socket.node.scene.getView()
+
+        if viewGfx.edgeDragMode():
+            canConnect, errmsg = viewGfx.canConnectSockets(self.socket, viewGfx.dragStartSocket)
+            if not canConnect:
+                viewGfx.statusBarMessageChanged.emit(errmsg)
+
         self.prepareGeometryChange()
         self.update()
 
 
     def hoverLeaveEvent(self, event: QGraphicsSceneHoverEvent):
         self._hovered = False
+        self.socket.node.scene.getView().statusBarMessageChanged.emit('Ready')
+
         self.prepareGeometryChange()
         self.update()
