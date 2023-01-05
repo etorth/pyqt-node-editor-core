@@ -294,6 +294,7 @@ class QD_MainWindow(QMainWindow):
             childWidget.scene.history.addHistoryModifiedListener(self.updateEditMenu)
             childWidget.addCloseEventListener(self.onSubWndClose)
             childWidget.view.scenePosChanged.connect(self.onScenePosChanged)
+            childWidget.view.statusBarMessageChanged.connect(self.onStatusBarMessageChanged)
         return subwin
 
 
@@ -306,6 +307,10 @@ class QD_MainWindow(QMainWindow):
 
     def onScenePosChanged(self, x: int, y: int):
         self.mousePosLabel.setText("LOC: [%d, %d]" % (x, y))
+
+
+    def onStatusBarMessageChanged(self, msg: str):
+        self.statusBar().showMessage(msg)
 
 
     def onSubWndClose(self, widget, event):

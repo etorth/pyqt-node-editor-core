@@ -20,6 +20,7 @@ EDGE_DRAG_START_THRESHOLD = 50
 
 class QD_ViewGfx(QGraphicsView):
     scenePosChanged = pyqtSignal(int, int)
+    statusBarMessageChanged = pyqtSignal(str)
 
     def __init__(self, gfx: 'QD_SceneGfx', parent: 'QWidget' = None):
         super().__init__(parent)
@@ -343,6 +344,25 @@ class QD_ViewGfx(QGraphicsView):
         except Exception as e:
             utils.dumpExcept(e)
 
+
+    def canConnectSockets(self, startSocket: 'QD_Socket', endSocket: 'QD_Socket') -> tuple[bool, str]:
+        try:
+            if startSocket is endSocket:
+                raise ValueError('Cannot connect socket to itself')
+
+            if startSocket.type.is_in != endSocket.type.is_out:
+                raise ValueError('Cannot connect sockets with same In/Out type')
+
+            if startSocket.type.is_pulse != endSocket.type.is_pulse:
+                raise ValueError('Cannot connect sockets with different pulse type')
+
+            return True, 'No error'
+
+        except Exception as e:
+            return False, str(e)
+
+
+
     def edgeDragEnd(self, item: 'QGraphicsItem'):
         self.mode = MODE_NOOP
 
@@ -354,9 +374,9 @@ class QD_ViewGfx(QGraphicsView):
 
         try:
             if isinstance(item, QD_SocketGfx):
-                if (item.socket != self.drag_start_socket) and (item.socket.type.is_in == self.drag_start_socket.type.is_out) and (item.socket.type.is_pulse == self.drag_start_socket.type.is_pulse):
+                canConnect, errmsg = self.canConnectSockets(item.socket, self.drag_start_socket)
+                if canConnect:
                     # if we released dragging on a socket (other then the beginning socket)
-
                     ## First remove old edges / send notifications
                     for socket in (item.socket, self.drag_start_socket):
                         if not socket.is_multi_edges:
@@ -379,8 +399,14 @@ class QD_ViewGfx(QGraphicsView):
 
                     self.gfx.scene.history.storeHistory("Created new edge by dragging", setModified=True)
                     return True
+
+                else:
+                    self.statusBarMessageChanged.emit(errmsg)
+                    return False
+
         except Exception as e:
             utils.dumpExcept(e)
+            self.statusBarMessageChanged.emit(str(e))
 
         if confg.DEBUG:
             print('View::edgeDragEnd ~ everything done.')
