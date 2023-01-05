@@ -244,11 +244,11 @@ class QD_ViewGfx(QGraphicsView):
 
         if self.mode == MODE_EDGE_DRAG:
             # according to sentry: 'NoneType' object has no attribute 'gfx'
-            if self.drag_edge is not None and self.drag_edge.gfx is not None:
-                self.drag_edge.gfx.setDestination(scenepos.x(), scenepos.y())
-                self.drag_edge.gfx.update()
+            if self.dragEdge is not None and self.dragEdge.gfx is not None:
+                self.dragEdge.gfx.setDestination(scenepos.x(), scenepos.y())
+                self.dragEdge.gfx.update()
             else:
-                print(">>> Want to update self.drag_edge gfx, but it's None!!!")
+                print(">>> Want to update self.dragEdge gfx, but it's None!!!")
 
         if self.mode == MODE_EDGE_CUT and self.cutline is not None:
             self.cutline.line_points.append(scenepos)
@@ -336,11 +336,11 @@ class QD_ViewGfx(QGraphicsView):
             if confg.DEBUG:
                 print('View::edgeDragStart ~   assign Start QD_Socket to:', item.socket)
 
-            self.drag_start_socket = item.socket
-            self.drag_edge = QD_Edge(self.gfx.scene, item.socket, None, EdgeType.Bezier)
+            self.dragStartSocket = item.socket
+            self.dragEdge = QD_Edge(self.gfx.scene, item.socket, None, EdgeType.Bezier)
 
             if confg.DEBUG:
-                print('View::edgeDragStart ~   dragEdge:', self.drag_edge)
+                print('View::edgeDragStart ~   dragEdge:', self.dragEdge)
         except Exception as e:
             utils.dumpExcept(e)
 
@@ -369,16 +369,16 @@ class QD_ViewGfx(QGraphicsView):
         if confg.DEBUG:
             print('View::edgeDragEnd ~ End dragging edge')
 
-        self.drag_edge.remove(silent=True)  # don't notify sockets about removing drag_edge
-        self.drag_edge = None
+        self.dragEdge.remove(silent=True)  # don't notify sockets about removing dragEdge
+        self.dragEdge = None
 
         try:
             if isinstance(item, QD_SocketGfx):
-                canConnect, errmsg = self.canConnectSockets(item.socket, self.drag_start_socket)
+                canConnect, errmsg = self.canConnectSockets(item.socket, self.dragStartSocket)
                 if canConnect:
                     # if we released dragging on a socket (other then the beginning socket)
                     ## First remove old edges / send notifications
-                    for socket in (item.socket, self.drag_start_socket):
+                    for socket in (item.socket, self.dragStartSocket):
                         if not socket.is_multi_edges:
                             if socket.is_input:
                                 socket.removeAllEdges(silent=True)
@@ -386,12 +386,12 @@ class QD_ViewGfx(QGraphicsView):
                                 socket.removeAllEdges(silent=False)
 
                     ## Create new QD_Edge
-                    new_edge = QD_Edge(self.gfx.scene, self.drag_start_socket, item.socket, edge_type=EdgeType.Bezier)
+                    new_edge = QD_Edge(self.gfx.scene, self.dragStartSocket, item.socket, edge_type=EdgeType.Bezier)
                     if confg.DEBUG:
                         print("View::edgeDragEnd ~  created new edge:", new_edge, "connecting", new_edge.start_socket, "<-->", new_edge.end_socket)
 
                     ## Send notifications for the new edge
-                    for socket in [self.drag_start_socket, item.socket]:
+                    for socket in [self.dragStartSocket, item.socket]:
                         # @TODO: Add possibility (ie when an input edge was replaced) to be silent and don't trigger change
                         socket.node.onEdgeConnectionChanged(new_edge)
                         if socket.is_input:
