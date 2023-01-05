@@ -1,7 +1,4 @@
 # -*- coding: utf-8 -*-
-"""
-A module containing `Graphics View` for NodeEditor
-"""
 from PyQt6.QtGui import *
 from PyQt6.QtCore import *
 from PyQt6.QtWidgets import QGraphicsView, QApplication
@@ -22,33 +19,13 @@ EDGE_DRAG_START_THRESHOLD = 50
 
 
 class QD_ViewGfx(QGraphicsView):
-    """Class representing NodeEditor's `Graphics View`"""
-    #: pyqtSignal emitted when cursor position on the `QD_StateScene` has changed
     scenePosChanged = pyqtSignal(int, int)
 
-    def __init__(self, gfx: 'QD_StateSceneGfx', parent: 'QWidget' = None):
-        """
-        :param gfx: reference to the :class:`qdstatescenegfx.QD_StateSceneGfx`
-        :type gfx: :class:`qdstatescenegfx.QD_StateSceneGfx`
-        :param parent: parent widget
-        :type parent: ``QWidget``
-
-        :Instance Attributes:
-
-        - **gfx** - reference to the :class:`qdstatescenegfx.QD_StateSceneGfx`
-        - **mode** - state of the `Graphics View`
-        - **zoomInFactor**- ``float`` - zoom step scaling, default 1.25
-        - **zoomClamp** - ``bool`` - do we clamp zooming or is it infinite?
-        - **zoom** - current zoom step
-        - **zoomStep** - ``int`` - the relative zoom step when zooming in/out
-        - **zoomRange** - ``[min, max]``
-
-        """
+    def __init__(self, gfx: 'QD_SceneGfx', parent: 'QWidget' = None):
         super().__init__(parent)
         self.gfx = gfx
 
         self.initUI()
-
         self.setScene(self.gfx)
 
         self.mode = MODE_NOOP
@@ -71,7 +48,6 @@ class QD_ViewGfx(QGraphicsView):
         self._drop_listeners = []
 
     def initUI(self):
-        """Set up this ``QGraphicsView``"""
         self.setRenderHints(QPainter.RenderHint.Antialiasing | QPainter.RenderHint.TextAntialiasing | QPainter.RenderHint.SmoothPixmapTransform)
 
         self.setViewportUpdateMode(QGraphicsView.ViewportUpdateMode.FullViewportUpdate)
@@ -86,35 +62,20 @@ class QD_ViewGfx(QGraphicsView):
         self.setAcceptDrops(True)
 
     def dragEnterEvent(self, event: QDragEnterEvent):
-        """Trigger our registered `Drag Enter` events
-        """
         for callback in self._drag_enter_listeners:
             callback(event)
 
     def dropEvent(self, event: QDropEvent):
-        """Trigger our registered `Drop` events
-        """
         for callback in self._drop_listeners:
             callback(event)
 
     def addDragEnterListener(self, callback: 'function'):
-        """Register callback for `Drag Enter` event
-
-        :param callback: callback function
-        """
         self._drag_enter_listeners.append(callback)
 
     def addDropListener(self, callback: 'function'):
-        """
-        Register callback for `Drop` event
-
-        :param callback: callback function
-        """
         self._drop_listeners.append(callback)
 
     def mousePressEvent(self, event: QMouseEvent):
-        """Dispatch Qt's mousePress event to corresponding function below
-        """
         if event.button() == Qt.MouseButton.MiddleButton:
             self.middleMouseButtonPress(event)
         elif event.button() == Qt.MouseButton.LeftButton:
@@ -125,7 +86,6 @@ class QD_ViewGfx(QGraphicsView):
             super().mousePressEvent(event)
 
     def mouseReleaseEvent(self, event: QMouseEvent):
-        """Dispatch Qt's mouseRelease event to corresponding function below"""
         if event.button() == Qt.MouseButton.MiddleButton:
             self.middleMouseButtonRelease(event)
         elif event.button() == Qt.MouseButton.LeftButton:
@@ -136,8 +96,6 @@ class QD_ViewGfx(QGraphicsView):
             super().mouseReleaseEvent(event)
 
     def middleMouseButtonPress(self, event: QMouseEvent):
-        """When Middle mouse button was pressed
-        """
         item = self.getItemAtClick(event)
 
         # debug print out
@@ -174,13 +132,11 @@ class QD_ViewGfx(QGraphicsView):
         super().mousePressEvent(fakeEvent)
 
     def middleMouseButtonRelease(self, event: QMouseEvent):
-        """When Middle mouse button was released"""
         fakeEvent = QMouseEvent(event.type(), event.position(), event.globalPosition(), Qt.MouseButton.LeftButton, event.buttons() & ~Qt.MouseButton.LeftButton, event.modifiers())
         super().mouseReleaseEvent(fakeEvent)
         self.setDragMode(QGraphicsView.DragMode.RubberBandDrag)
 
     def leftMouseButtonPress(self, event: QMouseEvent):
-        """When Left  mouse button was pressed"""
 
         # get item which we clicked on
         item = self.getItemAtClick(event)
@@ -223,9 +179,6 @@ class QD_ViewGfx(QGraphicsView):
         super().mousePressEvent(event)
 
     def leftMouseButtonRelease(self, event: QMouseEvent):
-        """When Left  mouse button was released"""
-
-        # get item which we release mouse button on
         item = self.getItemAtClick(event)
 
         try:
@@ -273,11 +226,9 @@ class QD_ViewGfx(QGraphicsView):
         super().mouseReleaseEvent(event)
 
     def rightMouseButtonPress(self, event: QMouseEvent):
-        """When Right mouse button was pressed"""
         super().mousePressEvent(event)
 
     def rightMouseButtonRelease(self, event: QMouseEvent):
-        """When Right mouse button was release"""
 
         ## cannot be because with dragging RMB we spawn Create New QD_OpNode Context Menu
         ## However, you could use this if you want to cancel with RMB
@@ -288,7 +239,6 @@ class QD_ViewGfx(QGraphicsView):
         super().mouseReleaseEvent(event)
 
     def mouseMoveEvent(self, event: QMouseEvent):
-        """Overriden Qt's ``mouseMoveEvent`` handling QD_StateScene/View logic"""
         scenepos = self.mapToScene(event.position().toPoint())
 
         if self.mode == MODE_EDGE_DRAG:
@@ -347,7 +297,6 @@ class QD_ViewGfx(QGraphicsView):
         super().keyPressEvent(event)
 
     def cutIntersectingEdges(self):
-        """Compare which `Edges` intersect with current `Cut line` and delete them safely"""
         for ix in range(len(self.cutline.line_points) - 1):
             p1 = self.cutline.line_points[ix]
             p2 = self.cutline.line_points[ix + 1]
@@ -361,7 +310,6 @@ class QD_ViewGfx(QGraphicsView):
         self.gfx.scene.history.storeHistory("Delete cutted edges", setModified=True)
 
     def deleteSelected(self):
-        """Shortcut for safe deleting every object selected in the `QD_StateScene`."""
         for item in self.gfx.selectedItems():
             if isinstance(item, QD_EdgeGfx):
                 item.edge.remove()
@@ -370,7 +318,6 @@ class QD_ViewGfx(QGraphicsView):
         self.gfx.scene.history.storeHistory("Delete selected", setModified=True)
 
     def debug_modifiers(self, event):
-        """Helper function get string if we hold Ctrl, Shift or Alt modifier keys"""
         out = "MODS: "
         if event.modifiers() & Qt.KeyboardModifier.ShiftModifier: out += "SHIFT "
         if event.modifiers() & Qt.KeyboardModifier.ControlModifier: out += "CTRL "
@@ -378,16 +325,9 @@ class QD_ViewGfx(QGraphicsView):
         return out
 
     def getItemAtClick(self, event: QEvent) -> 'QGraphicsItem':
-        """Return the object on which we've clicked/release mouse button
-
-        :param event: Qt's mouse or key event
-        :type event: ``QEvent``
-        :return: ``QGraphicsItem`` which the mouse event happened or ``None``
-        """
         return self.itemAt(event.position().toPoint())
 
     def edgeDragStart(self, item: 'QGraphicsItem'):
-        """Code handling the start of dragging an `QD_Edge` operation"""
         try:
             if confg.DEBUG:
                 print('View::edgeDragStart ~ Start dragging edge')
@@ -404,12 +344,6 @@ class QD_ViewGfx(QGraphicsView):
             utils.dumpExcept(e)
 
     def edgeDragEnd(self, item: 'QGraphicsItem'):
-        """Code handling the end of dragging an `QD_Edge` operation. In this code return True if skip the
-        rest of the mouse event processing
-
-        :param item: Item in the `Graphics QD_StateScene` where we ended dragging an `QD_Edge`
-        :type item: ``QGraphicsItem``
-        """
         self.mode = MODE_NOOP
 
         if confg.DEBUG:
@@ -453,20 +387,12 @@ class QD_ViewGfx(QGraphicsView):
         return False
 
     def distanceBetweenClickAndReleaseIsOff(self, event: QMouseEvent) -> bool:
-        """ Measures if we are too far from the last Mouse button click scene position.
-        This is used for detection if we release too far after we clicked on a `QD_Socket`
-
-        :param event: Qt's mouse event
-        :type event: ``QMouseEvent``
-        :return: ``True`` if we released too far from where we clicked before
-        """
         new_lmb_release_scene_pos = self.mapToScene(event.position().toPoint())
         dist_scene = new_lmb_release_scene_pos - self.last_lmb_click_scene_pos
         edge_drag_threshold_sq = EDGE_DRAG_START_THRESHOLD * EDGE_DRAG_START_THRESHOLD
         return (dist_scene.x() * dist_scene.x() + dist_scene.y() * dist_scene.y()) > edge_drag_threshold_sq
 
     def wheelEvent(self, event: QWheelEvent):
-        """overriden Qt's ``wheelEvent``. This handles zooming"""
         # calculate our zoom Factor
         zoomOutFactor = 1 / self.zoomInFactor
 
