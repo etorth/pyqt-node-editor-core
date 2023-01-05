@@ -357,17 +357,22 @@ class QD_ViewGfx(QGraphicsView):
                 raise ValueError('Cannot connect pulse socket and non-pulse socket')
 
             if hasattr(startSocket, 'node') and startSocket.node and hasattr(endSocket, 'node') and endSocket.node:
-                startEnterNodes = startSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_enter')
-                endEnterNodes = endSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_enter')
+                if startSocket.type.is_pulse:
+                    if startSocket.node.findNodes(True, lambda node: node is endSocket.node):
+                        raise ValueError('Cannot connect send pulse signal inside its own graph')
 
-                if len(startEnterNodes.union(endEnterNodes)) > 1:
-                    raise ValueError('Cannot connect sockets with multiple enter nodes')
+                else:
+                    startEnterNodes = startSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_enter')
+                    endEnterNodes = endSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_enter')
 
-                startExitNodes = startSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_exit')
-                endExitNodes = endSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_exit')
+                    if len(startEnterNodes.union(endEnterNodes)) > 1:
+                        raise ValueError('Cannot connect sockets with multiple enter nodes')
 
-                if len(startExitNodes.union(endExitNodes)) > 1:
-                    raise ValueError('Cannot connect sockets with multiple exit nodes')
+                    startExitNodes = startSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_exit')
+                    endExitNodes = endSocket.node.findNodes(True, lambda node: node.__class__.__name__ == 'StateNode_exit')
+
+                    if len(startExitNodes.union(endExitNodes)) > 1:
+                        raise ValueError('Cannot connect sockets with multiple exit nodes')
 
             return True, 'No error'
 
