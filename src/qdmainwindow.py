@@ -276,23 +276,26 @@ class QD_MainWindow(QMainWindow):
 
     def createStatusBar(self):
         self.statusBar().showMessage("Ready")
-        self.status_mouse_pos = QLabel()
-        self.statusBar().addPermanentWidget(self.status_mouse_pos)
+        self.mousePosLabel = QLabel()
+        self.statusBar().addPermanentWidget(self.mousePosLabel)
 
-    def createMdiChild(self, child_widget=None):
-        if child_widget is None:
-            child_widget = QD_QuestWidget()
-            child_widget.setWindowIcon(QIcon('icons/qd.png'))
 
-        subwin = self.mdiArea.addSubWindow(child_widget)
+    def createMdiChild(self, childWidget=None):
+        if childWidget is None:
+            childWidget = QD_QuestWidget()
+            childWidget.setWindowIcon(QIcon('icons/qd.png'))
 
-        # child_widget.scene.addItemSelectedListener(self.updateEditMenu)
-        # child_widget.scene.addItemsDeselectedListener(self.updateEditMenu)
+        subwin = self.mdiArea.addSubWindow(childWidget)
 
-        # child_widget.scene.history.addHistoryModifiedListener(self.updateEditMenu)
-        # child_widget.addCloseEventListener(self.onSubWndClose)
-        # child_widget.view.scenePosChanged.connect(self.onScenePosChanged)
+        if isinstance(childWidget, QD_QuestWidget):
+            childWidget.scene.addItemSelectedListener(self.updateEditMenu)
+            childWidget.scene.addItemsDeselectedListener(self.updateEditMenu)
+
+            childWidget.scene.history.addHistoryModifiedListener(self.updateEditMenu)
+            childWidget.addCloseEventListener(self.onSubWndClose)
+            childWidget.view.scenePosChanged.connect(self.onScenePosChanged)
         return subwin
+
 
     def createLuaEditorChild(self):
         luaeditor = QD_LuaEditor()
@@ -302,15 +305,7 @@ class QD_MainWindow(QMainWindow):
 
 
     def onScenePosChanged(self, x: int, y: int):
-        """Handle event when cursor position changed on the `QD_StateScene`
-
-        :param x: new cursor x position
-        :type x:
-        :param y: new cursor y position
-        :type y:
-        """
-        self.status_mouse_pos.setText("LOC: [%d, %d]" % (x, y))
-
+        self.mousePosLabel.setText("LOC: [%d, %d]" % (x, y))
 
 
     def onSubWndClose(self, widget, event):
