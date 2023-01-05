@@ -112,7 +112,7 @@ class QD_SocketGfx(QGraphicsItem):
 
     @property
     def radius(self) -> float:
-        return self._normalRadius * (1.2 if self._hovered else 1.0)
+        return self._normalRadius * (1.3 if self._hovered else 1.0)
 
 
     @staticmethod
@@ -178,9 +178,11 @@ class QD_SocketGfx(QGraphicsItem):
 
     def hoverEnterEvent(self, event: QGraphicsSceneHoverEvent):
         self._hovered = True
+        self.prepareGeometryChange()
         self.update()
 
 
     def hoverLeaveEvent(self, event: QGraphicsSceneHoverEvent):
         self._hovered = False
+        self.prepareGeometryChange()
         self.update()
