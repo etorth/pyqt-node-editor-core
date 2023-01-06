@@ -82,8 +82,7 @@ class QD_Socket(QD_Serializable):
 
 
     def serialize(self) -> dict:
-        return {
-            'id': self.id,
+        return super().serialize() | {
             'type': self.type,
         }
 

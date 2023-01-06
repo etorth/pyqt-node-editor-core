@@ -6,7 +6,7 @@ class QD_Serializable():
         self.id = id(self)
 
     def serialize(self) -> dict:
-        return {'id', self.id}
+        return {'id': self.id}
 
     def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True) -> bool:
         """Deserialization method.
