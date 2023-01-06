@@ -146,13 +146,13 @@ class QD_SocketGfx(QGraphicsItem):
 
 
     def initSizes(self):
-        self._outlineWidth = 1.0
+        self._outlineWidth = 1.5
         self._normalRadius = 6.0
 
 
     def initAssets(self):
         self._colorOutline = QColor("#FF000000")
-        self._colorHovered = QColor("#FF37A6FF")
+        self._colorHovered = QColor("#FF57A8F9")
 
         self._pen = QPen(self._colorOutline)
         self._pen.setWidthF(self._outlineWidth)
