@@ -87,9 +87,6 @@ class QD_Socket(QD_Serializable):
         }
 
 
-    def deserialize(self, data: dict, hashmap: dict = {}, restore_id: bool = True):
-        if restore_id:
-            self.id = data['id']
-
+    def deserialize(self, data: dict, hashmap: dict = {}, restoreId: bool = True):
+        super().deserialize(data, hashmap, restoreId)
         self.changeSocketType(SocketType(data['type']))
-        hashmap[data['id']] = self
