@@ -92,9 +92,12 @@ class QD_SocketGfx(QGraphicsItem):
     def __init__(self, socket: 'QD_Socket'):
         super().__init__(socket.node.gfx)
         self.setAcceptHoverEvents(True)
-
         self.socket = socket
-        self._hovered = False
+
+        # _hoverState: 0 not hovered
+        #              1     hovered and normal
+        #              2     hovered but has error
+        self._hoverState = 0
 
         self.initSizes()
         self.initAssets()
@@ -112,7 +115,12 @@ class QD_SocketGfx(QGraphicsItem):
 
     @property
     def radius(self) -> float:
-        return self._normalRadius * (1.3 if self._hovered else 1.0)
+        return self._normalRadius * (1.3 if self._hoverState > 0 else 1.0)
+
+
+    @property
+    def view(self) -> 'QD_ViewGfx':
+        return self.socket.node.scene.getView()
 
 
     @staticmethod
@@ -153,6 +161,7 @@ class QD_SocketGfx(QGraphicsItem):
     def initAssets(self):
         self._colorOutline = QColor("#FF000000")
         self._colorHovered = QColor("#FF57A8F9")
+        self._colorOnError = QColor("#FF800080")
 
         self._pen = QPen(self._colorOutline)
         self._pen.setWidthF(self._outlineWidth)
@@ -161,17 +170,23 @@ class QD_SocketGfx(QGraphicsItem):
         self._penHovered.setWidthF(2.0)
 
         self._brush = QBrush(self.color)
+        self._brushOnError = QBrush(self._colorOnError)
         self._pulseIcon = QImage("icons/socket_pulse.png")
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
-        painter.setBrush(self._brush)
-        if self._hovered:
-            painter.setPen(self._penHovered)
-        else:
-            painter.setPen(self._pen)
-        painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
+        match self._hoverState:
+            case 0:
+                painter.setPen(self._pen)
+                painter.setBrush(self._brush)
+            case 1:
+                painter.setPen(self._penHovered)
+                painter.setBrush(self._brush)
+            case _:
+                painter.setPen(self._penHovered)
+                painter.setBrush(self._brushOnError)
 
+        painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
         if self.socket.type.is_pulse:
             painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._pulseIcon)
 
@@ -181,20 +196,25 @@ class QD_SocketGfx(QGraphicsItem):
 
 
     def hoverEnterEvent(self, event: QGraphicsSceneHoverEvent):
-        self._hovered = True
-        viewGfx = self.socket.node.scene.getView()
-
-        if viewGfx.edgeDragMode():
-            canConnect, errmsg = viewGfx.canConnectSockets(self.socket, viewGfx.dragStartSocket)
-            if not canConnect:
-                viewGfx.statusBarMessageChanged.emit(errmsg)
+        self._hoverState = True
+        if self.view.edgeDragMode():
+            canConnect, errmsg = self.view.canConnectSockets(self.socket, self.view.dragStartSocket)
+            if canConnect:
+                self._hoverState = 1
+                self.view.statusBarMessageChanged.emit('Ready')
+            else:
+                self._hoverState = 2
+                self.view.statusBarMessageChanged.emit(errmsg)
+        else:
+            self._hoverState = 1
+            self.view.statusBarMessageChanged.emit('Ready')
 
         self.prepareGeometryChange()
         self.update()
 
 
     def hoverLeaveEvent(self, event: QGraphicsSceneHoverEvent):
-        self._hovered = False
+        self._hoverState = 0
         self.socket.node.scene.getView().statusBarMessageChanged.emit('Ready')
 
         self.prepareGeometryChange()
