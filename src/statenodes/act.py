@@ -395,6 +395,7 @@ class StateNode_act(QD_Node):
 
     def initInnerClasses(self):
         self.gfx = self.__class__.StateNodeGfx_class(self)
+        self.widget = self.__class__.StateNodeWidget_class(self)
 
 
     def initSettings(self):
@@ -434,7 +435,7 @@ class StateNode_act(QD_Node):
         if win:
             utils.mainWindow.mdiArea.setActiveSubWindow(win)
         else:
-            subwin = utils.mainWindow.createMdiChild(self.__class__.StateNodeWidget_class(self))
+            subwin = utils.mainWindow.createMdiChild(self.widget)
             subwin.show()
 
 
