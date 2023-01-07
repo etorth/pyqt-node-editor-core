@@ -28,6 +28,8 @@ class QD_MainWindow(QMainWindow):
         def closeEvent(self, event):
             if self.widget():
                 self.widget().setParent(None)
+
+            self.setWidget(None)
             super().closeEvent(event)
 
 
