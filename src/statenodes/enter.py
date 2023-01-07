@@ -254,3 +254,10 @@ class StateNode_enter(QD_StateNode):
     def getSocketPosition(self, socktype: SocketType) -> QPointF:
         assert socktype is SocketType.Out_True, socktype
         return QPointF(self.gfx.width, self.gfx.height / 2)
+
+
+    def serialize(self) -> dict:
+        return super().serialize() | {
+            'position': (self.gfx.scenePos().x(), self.gfx.scenePos().y()),
+            'sockets': [sock.serialize() for sock in self.sockets],
+        }

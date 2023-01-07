@@ -141,8 +141,6 @@ class QD_OpNode(QD_Node):
     def serialize(self) -> dict:
         return super().serialize() | {
             'title': self.title,
-            'position': (self.gfx.scenePos().x(), self.gfx.scenePos().y()),
-            'sockets': [sock.serialize() for sock in self.sockets],
             'content': self.content.serialize(),
             'op_code': self.__class__.op_code, # added by @opNodeRegister
         }

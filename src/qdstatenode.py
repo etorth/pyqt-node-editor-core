@@ -49,7 +49,3 @@ class QD_StateNode(QD_Node):
     def updateSockets(self):
         for sock in self.sockets:
             sock.updateSocketPosition()
-
-
-    def setPos(self, x: float, y: float):
-        self.gfx.setPos(x, y)

@@ -327,3 +327,23 @@ class QD_Node(QD_Serializable):
     def setValid():
         self._iconIndex = 0
         self.gfx.setToolTip("")
+
+
+    def serialize(self) -> dict:
+        return super().serialize() | {
+            'position': (self.gfx.scenePos().x(), self.gfx.scenePos().y()),
+            'sockets': [sock.serialize() for sock in self.sockets],
+        }
+
+
+    def deserialize(self, data: dict, hashmap: dict = {}, restoreId: bool = True):
+        super().deserialize(data, hashmap, restoreId)
+        self.setPos(*data['position'])
+
+        index = 0
+        for sockData in data['sockets']:
+            if index >= len(self.sockets):
+                self.sockets.append(QD_Socket(self, SocketType.In))
+
+            self.sockets[index].deserialize(sockData, hashmap, restoreId)
+            index += 1
