@@ -12,7 +12,7 @@ from qdstatenodegfx import QD_StateNodeGfx
 from qdutils import *
 
 
-class _StateNodeWidget_enter(QWidget):
+class _StateNodeWidget_enter(utils.disableAutoDelete(QWidget)):
     def __init__(self, node: 'StateNode_enter' = None, parent: QWidget = None):
         super().__init__(parent)
 
@@ -166,7 +166,7 @@ class _StateNodeGfx_enter(QD_StateNodeGfx):
         if win:
             utils.mainWindow.mdiArea.setActiveSubWindow(win)
         else:
-            subwin = utils.mainWindow.createMdiChild(self.__class__.StateNodeWidget_class(self))
+            subwin = utils.mainWindow.createMdiChild(self.node.widget)
             subwin.show()
 
 
@@ -234,6 +234,7 @@ class StateNode_enter(QD_StateNode):
     StateNodeGfx_class = _StateNodeGfx_enter
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.Out_True}):
         super().__init__(scene, sockets)
+        self.widget = _StateNodeWidget_enter(self)
 
         # TODO
         # get_next_valid_start_index() searches all StateNode_enter for existing index

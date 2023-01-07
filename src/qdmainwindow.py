@@ -19,6 +19,18 @@ class QD_MainWindow(QMainWindow):
     StateWidget_class = QD_StateWidget
 
 
+    class _MdiSubWindow_disableAutoDelete(QMdiSubWindow):
+        def __init__(self, *args, **kwargs):
+            super().__init__(*args, **kwargs)
+            self.setAttribute(Qt.WidgetAttribute.WA_DeleteOnClose)
+
+
+        def closeEvent(self, event):
+            if self.widget():
+                self.widget().setParent(None)
+            super().closeEvent(event)
+
+
     def __init__(self):
         super().__init__()
         self.initUI()
@@ -285,7 +297,13 @@ class QD_MainWindow(QMainWindow):
             childWidget = QD_QuestWidget()
             childWidget.setWindowIcon(QIcon('icons/qd.png'))
 
-        subwin = self.mdiArea.addSubWindow(childWidget)
+        if hasattr(childWidget.__class__, 'disableAutoDelete'):
+            mdiSubWin = self.__class__._MdiSubWindow_disableAutoDelete()
+        else:
+            mdiSubWin = QMdiSubWindow()
+
+        mdiSubWin.setWidget(childWidget)
+        subwin = self.mdiArea.addSubWindow(mdiSubWin)
 
         if isinstance(childWidget, QD_QuestWidget):
             childWidget.scene.addItemSelectedListener(self.updateEditMenu)

@@ -113,6 +113,14 @@ class Utils:
             self._monoFontFamilies = QFontDatabase.applicationFontFamilies(loadedFont)
         return self._monoFontFamilies[0]
 
+
+    @classmethod
+    def disableAutoDelete(cls, baseClass):
+        class _disableAutoDeleteClass(baseClass):
+            disableAutoDelete = True
+        return _disableAutoDeleteClass
+
+
     @classmethod
     def opNodeRegister(cls, node_type):
         node_type.op_code = functools.reduce(lambda count, sublist: count + len(sublist), cls._opNodeTypeList.values(), 0) + 1

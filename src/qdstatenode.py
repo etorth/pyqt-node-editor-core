@@ -19,6 +19,7 @@ from qdnodegfx import QD_NodeGfx
 class QD_StateNode(QD_Node):
     StateNodeGfx_class = None
 
+
     def __init__(self, scene: 'QD_QuestScene', sockets: set = {SocketType.In, SocketType.Out_True, SocketType.Out_False}):
         super().__init__(scene)
 
