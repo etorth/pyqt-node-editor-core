@@ -23,7 +23,7 @@ class QD_Socket(QD_Serializable):
 
     @property
     def is_multi_edges(self) -> bool:
-        return self.type in [SocketType.In, SocketType.PulseOut]
+        return self.type in [SocketType.In, SocketType.PulseIn, SocketType.PulseOut]
 
 
     @property
