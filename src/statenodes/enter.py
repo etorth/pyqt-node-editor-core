@@ -24,7 +24,7 @@ class _StateNodeWidget_enter(QWidget):
     def initUI(self):
         self.vbox = QVBoxLayout(self)
         if "CreateJobRequest":
-            jobReqGroupBox = QGroupBox('可选择角色')
+            jobReqGroupBox = QGroupBox('可选择职业')
             jobReqGroupBox.setToolTip('该任务线角色可选择职业')
 
             jobWarrior = QCheckBox('战士')
