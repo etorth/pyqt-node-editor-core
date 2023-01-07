@@ -27,16 +27,16 @@ class _StateNodeWidget_enter(QWidget):
             jobReqGroupBox = QGroupBox('可选择职业')
             jobReqGroupBox.setToolTip('该任务线角色可选择职业')
 
-            jobWarrior = QCheckBox('战士')
-            jobWizard  = QCheckBox('法师')
-            jobTaoist  = QCheckBox('道士')
+            self.warrior = QCheckBox('战士')
+            self.wizard  = QCheckBox('法师')
+            self.taoist  = QCheckBox('道士')
 
-            jobWarrior.setChecked(True)
+            self.warrior.setChecked(True)
 
             jobReqLayout = QVBoxLayout(jobReqGroupBox)
-            jobReqLayout.addWidget(jobWarrior)
-            jobReqLayout.addWidget(jobWizard)
-            jobReqLayout.addWidget(jobTaoist)
+            jobReqLayout.addWidget(self.warrior)
+            jobReqLayout.addWidget(self.wizard)
+            jobReqLayout.addWidget(self.taoist)
 
             self.vbox.addWidget(jobReqGroupBox)
 
