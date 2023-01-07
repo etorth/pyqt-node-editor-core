@@ -23,10 +23,46 @@ class _StateNodeWidget_enter(QWidget):
 
     def initUI(self):
         self.vbox = QVBoxLayout(self)
+        if "CreateJobRequest":
+            jobReqGroupBox = QGroupBox('可选择角色')
+            jobReqGroupBox.setToolTip('该任务线角色可选择职业')
 
-        self.job = QComboBox()
-        self.job.addItems(["战士", "法师", "道士"])
-        self.vbox.addWidget(self.job)
+            jobWarrior = QCheckBox('战士')
+            jobWizard  = QCheckBox('法师')
+            jobTaoist  = QCheckBox('道士')
+
+            jobWarrior.setChecked(True)
+
+            jobReqLayout = QVBoxLayout(jobReqGroupBox)
+            jobReqLayout.addWidget(jobWarrior)
+            jobReqLayout.addWidget(jobWizard)
+            jobReqLayout.addWidget(jobTaoist)
+
+            self.vbox.addWidget(jobReqGroupBox)
+
+        if "CreateLevelRequest":
+            levelReqGroupBox = QGroupBox('角色等级要求')
+            levelReqGroupBox.setToolTip('该任务线角色等级要求')
+
+            levelReqLayout = QHBoxLayout(levelReqGroupBox)
+            levelReqLayout.setContentsMargins(10, 10, 10, 10)
+            levelReqLayout.setSpacing(5)
+
+            self.choice = QComboBox()
+            self.choice.addItems(["大于", "小于", "等于", "不等于", "不大于", "不小于"])
+
+            self.edit = QLineEdit()
+            self.edit.setValidator(QIntValidator())
+            self.edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
+
+            levelReqLayout.addWidget(QLabel('等级'))
+            levelReqLayout.addWidget(self.choice)
+            levelReqLayout.addWidget(self.edit)
+
+            self.vbox.addWidget(levelReqGroupBox)
+
+        if 'CreateBlankArea':
+            self.vbox.addWidget(QFrame())
 
 
 class _StateNodeGfx_enter(QD_StateNodeGfx):

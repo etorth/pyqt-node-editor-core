@@ -3,7 +3,7 @@ QGroupBox {
     color:#eee
 }
 
-QRadioButton {
+QRadioButton, QCheckBox {
     background: #474747;
     color:#eee
 }
