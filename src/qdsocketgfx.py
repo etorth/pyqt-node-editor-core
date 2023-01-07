@@ -171,8 +171,8 @@ class QD_SocketGfx(QGraphicsItem):
 
         self._brush = QBrush(self.color)
         self._brushOnError = QBrush(self._colorOnError)
-        self._pulseIcon = QImage("icons/socket_pulse.png")
-        self._invalidIcon = QImage("icons/invalid.png")
+        self._iconPulse = QImage("icons/socket_pulse.png")
+        self._iconError = QImage("icons/socket_error.png")
 
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
@@ -189,10 +189,10 @@ class QD_SocketGfx(QGraphicsItem):
 
         painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
         if self.socket.type.is_pulse:
-            painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._pulseIcon)
+            painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._iconPulse)
 
         if self._hoverState == 2:
-            painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._invalidIcon)
+            painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._iconError)
 
 
     def boundingRect(self) -> QRectF:
