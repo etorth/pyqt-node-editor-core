@@ -161,7 +161,7 @@ class QD_SocketGfx(QGraphicsItem):
     def initAssets(self):
         self._colorOutline = QColor("#FF000000")
         self._colorHovered = QColor("#FF57A8F9")
-        self._colorOnError = QColor("#FF800080")
+        self._colorError   = QColor("#FF800080")
 
         self._pen = QPen(self._colorOutline)
         self._pen.setWidthF(self._outlineWidth)
@@ -170,7 +170,8 @@ class QD_SocketGfx(QGraphicsItem):
         self._penHovered.setWidthF(2.0)
 
         self._brush = QBrush(self.color)
-        self._brushOnError = QBrush(self._colorOnError)
+        self._brushError = QBrush(self._colorError)
+
         self._iconPulse = QImage("icons/socket_pulse.png")
         self._iconError = QImage("icons/socket_error.png")
 
@@ -185,7 +186,7 @@ class QD_SocketGfx(QGraphicsItem):
                 painter.setBrush(self._brush)
             case _:
                 painter.setPen(self._penHovered)
-                painter.setBrush(self._brushOnError)
+                painter.setBrush(self._brushError)
 
         painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
         if self.socket.type.is_pulse:
