@@ -178,22 +178,26 @@ class QD_SocketGfx(QGraphicsItem):
 
     def paint(self, painter, option: QStyleOptionGraphicsItem, widget=None):
         match self._hoverState:
-            case 0:
-                painter.setPen(self._pen)
-                painter.setBrush(self._brush)
-            case 1:
-                painter.setPen(self._penHovered)
-                painter.setBrush(self._brush)
-            case _:
-                painter.setPen(self._penHovered)
-                painter.setBrush(self._brushError)
+            case 0: painter.setBrush(self._brush)
+            case 1: painter.setBrush(self._brush)
+            case _: painter.setBrush(self._brushError)
 
+        painter.setPen(Qt.PenStyle.NoPen)
         painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
+
         if self.socket.type.is_pulse:
             painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._iconPulse)
 
         if self._hoverState == 2:
             painter.drawImage(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius), self._iconError)
+
+        match self._hoverState:
+            case 0: painter.setPen(self._pen)
+            case 1: painter.setPen(self._penHovered)
+            case _: painter.setPen(self._penHovered)
+
+        painter.setBrush(Qt.BrushStyle.NoBrush)
+        painter.drawEllipse(QRectF(-self.radius, -self.radius, 2 * self.radius, 2 * self.radius))
 
 
     def boundingRect(self) -> QRectF:
