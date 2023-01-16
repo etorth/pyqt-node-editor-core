@@ -106,6 +106,8 @@ class _StateNodeGfx_enter(QD_StateNodeGfx):
     def initAssets(self):
         self._color = QColor("#7F000000")
         self._color_text = QColor("#FF2F2835")
+        self._color_text_background = QColor("#E3FFFFFF")
+
         self._color_hovered = QColor("#FF37A6FF")
         self._color_selected = QColor("#FFF7862F")
         self._color_hover_selected = QColor("#FFFFA637")
@@ -200,7 +202,7 @@ class _StateNodeGfx_enter(QD_StateNodeGfx):
 
         path_text.addPolygon(QPolygonF([QPointF(text_x, text_y), QPointF(text_x + text_w, text_y), QPointF(self.width, self.height / 2), QPointF(text_x + text_w, text_y + text_h), QPointF(text_x, text_y + text_h)]))
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(QBrush(QColor("#E3FFFFFF")))
+        painter.setBrush(QBrush(self._color_text_background))
         painter.drawPath(path_text.simplified())
 
         painter.setPen(self._pen_text)
