@@ -261,6 +261,29 @@ class StateNode_enter(QD_StateNode):
 
     def serialize(self) -> dict:
         return super().serialize() | {
-            'position': (self.gfx.scenePos().x(), self.gfx.scenePos().y()),
-            'sockets': [sock.serialize() for sock in self.sockets],
+            'index': self.index,
+            'widget': {
+                'job': {
+                    'warrior': self.widget.warrior.isChecked(),
+                    'wizard': self.widget.wizard.isChecked(),
+                    'taoist': self.widget.taoist.isChecked(),
+                },
+
+                'level': {
+                    'rationalIndex': self.widget.choice.currentIndex(),
+                    'value': self.widget.edit.text(),
+                },
+            },
         }
+
+
+    def deserialize(self, data: dict, hashmap: dict = {}, restoreId: bool = True):
+        super().deserialize(data, hashmap, restoreId)
+        self.index = data['index']
+
+        self.widget.warrior.setChecked(data['widget']['job']['warrior'])
+        self.widget.wizard.setChecked(data['widget']['job']['wizard'])
+        self.widget.taoist.setChecked(data['widget']['job']['taoist'])
+
+        self.widget.choice.setCurrentIndex(data['widget']['level']['rationalIndex'])
+        self.widget.edit.setText(data['widget']['level']['value'])
