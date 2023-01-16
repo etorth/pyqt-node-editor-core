@@ -45,21 +45,15 @@ class _StateNodeWidget_enter(utils.disableAutoDelete(QWidget)):
             levelReqGroupBox = QGroupBox('角色等级要求')
             levelReqGroupBox.setToolTip('该任务线角色等级要求')
 
-            levelReqLayout = QHBoxLayout(levelReqGroupBox)
-            levelReqLayout.setContentsMargins(10, 10, 10, 10)
-            levelReqLayout.setSpacing(5)
-
-            self.choice = QD_RelationalComboBox()
-
-            self.edit = QLineEdit()
-            self.edit.setValidator(QIntValidator())
-            self.edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
-
-            levelReqLayout.addWidget(QLabel('等级'))
-            levelReqLayout.addWidget(self.choice)
-            levelReqLayout.addWidget(self.edit)
-
+            self.level = QD_RelationalConditionHBoxLayout('等级', levelReqGroupBox)
             self.vbox.addWidget(levelReqGroupBox)
+
+        if "CreateGoldRequest":
+            goldReqGroupBox = QGroupBox('角色金币要求')
+            goldReqGroupBox.setToolTip('该任务线角色金币要求')
+
+            self.gold = QD_RelationalConditionHBoxLayout('金币', goldReqGroupBox)
+            self.vbox.addWidget(goldReqGroupBox)
 
         if 'CreateBlankArea':
             self.vbox.addWidget(QFrame())
@@ -270,8 +264,13 @@ class StateNode_enter(QD_StateNode):
                 },
 
                 'level': {
-                    'rationalIndex': self.widget.choice.currentIndex(),
-                    'value': self.widget.edit.text(),
+                    'rationalIndex': self.widget.level.choice.currentIndex(),
+                    'value': self.widget.level.edit.text(),
+                },
+
+                'gold': {
+                    'rationalIndex': self.widget.level.choice.currentIndex(),
+                    'value': self.widget.level.edit.text(),
                 },
             },
         }
@@ -285,5 +284,8 @@ class StateNode_enter(QD_StateNode):
         self.widget.wizard.setChecked(data['widget']['job']['wizard'])
         self.widget.taoist.setChecked(data['widget']['job']['taoist'])
 
-        self.widget.choice.setCurrentIndex(data['widget']['level']['rationalIndex'])
-        self.widget.edit.setText(data['widget']['level']['value'])
+        self.widget.level.choice.setCurrentIndex(data['widget']['level']['rationalIndex'])
+        self.widget.level.edit.setText(data['widget']['level']['value'])
+
+        self.widget.gold.choice.setCurrentIndex(data['widget']['gold']['rationalIndex'])
+        self.widget.gold.edit.setText(data['widget']['gold']['value'])
