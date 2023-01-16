@@ -10,6 +10,7 @@ from qdstatenode import QD_StateNode
 from qdstatenodegfx import QD_StateNodeGfx
 
 from qdutils import *
+from qdwidgets import *
 
 
 class _StateNodeWidget_enter(utils.disableAutoDelete(QWidget)):
@@ -48,8 +49,7 @@ class _StateNodeWidget_enter(utils.disableAutoDelete(QWidget)):
             levelReqLayout.setContentsMargins(10, 10, 10, 10)
             levelReqLayout.setSpacing(5)
 
-            self.choice = QComboBox()
-            self.choice.addItems(["大于", "小于", "等于", "不等于", "不大于", "不小于"])
+            self.choice = QD_RelationalComboBox()
 
             self.edit = QLineEdit()
             self.edit.setValidator(QIntValidator())
