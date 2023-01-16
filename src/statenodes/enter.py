@@ -105,22 +105,22 @@ class _StateNodeGfx_enter(QD_StateNodeGfx):
 
     def initAssets(self):
         self._color = QColor("#7F000000")
-        self._color_text = QColor("#FF2F2835")
-        self._color_text_background = QColor("#E3FFFFFF")
+        self._colorText = QColor("#FF2F2835")
+        self._colorTextBackground = QColor("#E3FFFFFF")
 
-        self._color_hovered = QColor("#FF37A6FF")
-        self._color_selected = QColor("#FFF7862F")
-        self._color_hover_selected = QColor("#FFFFA637")
+        self._colorHovered = QColor("#FF37A6FF")
+        self._colorSelected = QColor("#FFF7862F")
+        self._colorHoverSelected = QColor("#FFFFA637")
 
         self._pen = QPen(self._color)
         self._pen.setWidthF(2.0)
-        self._pen_text = QPen(self._color_text)
+        self._pen_text = QPen(self._colorText)
         self._pen_text.setWidthF(2.0)
-        self._pen_selected = QPen(self._color_selected)
+        self._pen_selected = QPen(self._colorSelected)
         self._pen_selected.setWidthF(2.0)
-        self._pen_hovered = QPen(self._color_hovered)
+        self._pen_hovered = QPen(self._colorHovered)
         self._pen_hovered.setWidthF(3.0)
-        self._pen_hover_selected = QPen(self._color_hover_selected)
+        self._pen_hover_selected = QPen(self._colorHoverSelected)
         self._pen_hover_selected.setWidthF(3.0)
 
         self._image = QImage("icons/src.png")
@@ -202,7 +202,7 @@ class _StateNodeGfx_enter(QD_StateNodeGfx):
 
         path_text.addPolygon(QPolygonF([QPointF(text_x, text_y), QPointF(text_x + text_w, text_y), QPointF(self.width, self.height / 2), QPointF(text_x + text_w, text_y + text_h), QPointF(text_x, text_y + text_h)]))
         painter.setPen(Qt.PenStyle.NoPen)
-        painter.setBrush(QBrush(self._color_text_background))
+        painter.setBrush(QBrush(self._colorTextBackground))
         painter.drawPath(path_text.simplified())
 
         painter.setPen(self._pen_text)
