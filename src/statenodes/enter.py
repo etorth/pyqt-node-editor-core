@@ -263,15 +263,8 @@ class StateNode_enter(QD_StateNode):
                     'taoist': self.widget.taoist.isChecked(),
                 },
 
-                'level': {
-                    'rationalIndex': self.widget.level.choice.currentIndex(),
-                    'value': self.widget.level.edit.text(),
-                },
-
-                'gold': {
-                    'rationalIndex': self.widget.level.choice.currentIndex(),
-                    'value': self.widget.level.edit.text(),
-                },
+                'level': self.widget.level.toDict(),
+                'gold': self.widget.gold.toDict(),
             },
         }
 
@@ -284,8 +277,5 @@ class StateNode_enter(QD_StateNode):
         self.widget.wizard.setChecked(data['widget']['job']['wizard'])
         self.widget.taoist.setChecked(data['widget']['job']['taoist'])
 
-        self.widget.level.choice.setCurrentIndex(data['widget']['level']['rationalIndex'])
-        self.widget.level.edit.setText(data['widget']['level']['value'])
-
-        self.widget.gold.choice.setCurrentIndex(data['widget']['gold']['rationalIndex'])
-        self.widget.gold.edit.setText(data['widget']['gold']['value'])
+        self.widget.level.fromDict(data['widget']['level'])
+        self.widget.gold.fromDict(data['widget']['gold'])

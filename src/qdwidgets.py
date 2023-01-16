@@ -10,6 +10,14 @@ class QD_RelationalComboBox(QComboBox):
         self.addItems(["大于", "小于", "等于", "不大于", "不小于", "不等于"])
 
 
+    def fromDict(self, data: dict):
+        self.setCurentIndex(data["index"])
+
+
+    def toDict(self) -> dict:
+        return {"index": self.currentIndex()}
+
+
 class QD_RelationalConditionHBoxLayout(QHBoxLayout):
     def __init__(self, label: str, parent: QWidget = None):
         super().__init__(parent)
@@ -24,3 +32,15 @@ class QD_RelationalConditionHBoxLayout(QHBoxLayout):
         self.addWidget(QLabel(label))
         self.addWidget(self.choice)
         self.addWidget(self.edit)
+
+
+    def fromDict(self, data: dict):
+        self.choice.setCurrentIndex(data["index"])
+        self.edit.setText(data["value"])
+
+
+    def toDict(self) -> dict:
+        return {
+            "index": self.choice.currentIndex(),
+            "value": self.edit.text()
+        }
