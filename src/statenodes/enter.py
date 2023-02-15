@@ -279,3 +279,12 @@ class StateNode_enter(QD_StateNode):
 
         self.widget.level.fromDict(data['widget']['level'])
         self.widget.gold.fromDict(data['widget']['gold'])
+
+
+    def translate(self):
+        lines = []
+        if self.widget.warrior.isChecked():
+            lines.append(''' if hasJob(JOB_WARRINOR) then print('OK') end''')
+
+        return '\n'.join(lines)
+
