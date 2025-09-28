@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from PyQt6.QtCore import QPointF
+from PySide6.QtCore import QPointF
 
 from qdopnodegfx import QD_OpNodeGfx
 from qdopnodecontent import *

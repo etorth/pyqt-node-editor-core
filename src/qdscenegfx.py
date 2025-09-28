@@ -1,15 +1,16 @@
 # -*- coding: utf-8 -*-
 import math
-from PyQt6.QtWidgets import *
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
+from PySide6.QtWidgets import *
+from PySide6.QtCore import *
+from PySide6.QtGui import *
+from PySide6.QtCore import Signal
 
 
 class QD_SceneGfx(QGraphicsScene):
     bgColor = QColor("#394039")
 
-    itemSelected = pyqtSignal()
-    itemsDeselected = pyqtSignal()
+    itemSelected = Signal()
+    itemsDeselected = Signal()
 
     def __init__(self, scene: 'QD_Scene', parent: QWidget = None):
         super().__init__(parent)

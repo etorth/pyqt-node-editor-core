@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-from PyQt6.QtCore import QPointF
+from PySide6.QtCore import QPointF, Signal, Qt
+from PySide6.QtGui import *
+from PySide6.QtWidgets import *
 
 from qdstatewidget import QD_StateWidget
 from qdsocket import *
@@ -7,10 +9,6 @@ from qdutils import *
 from qdnode import QD_Node
 
 import math
-from PyQt6.QtGui import *
-from PyQt6.QtCore import *
-from PyQt6.QtWidgets import *
-
 from qdutils import *
 from qdnodegfx import QD_NodeGfx
 
@@ -38,7 +36,7 @@ class _StateNodeGfx_act(QD_NodeGfx):
         handleBottomRight: Qt.CursorShape.SizeFDiagCursor,
     }
 
-    sizeChanged = pyqtSignal()
+    sizeChanged = Signal()
 
     def __init__(self, node: 'StateNode_act', parent: QGraphicsItem = None):
         super().__init__(node, parent)

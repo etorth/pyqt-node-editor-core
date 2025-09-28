@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from PyQt6.QtCore import pyqtSlot, Qt, QRect, QRectF, QSize
-from PyQt6.QtGui import QColor, QPainter, QTextFormat
-from PyQt6.QtWidgets import QPlainTextEdit, QWidget, QTextEdit
+from PySide6.QtCore import Slot, Qt, QRect, QRectF, QSize
+from PySide6.QtGui import QColor, QPainter, QTextFormat
+from PySide6.QtWidgets import QPlainTextEdit, QWidget, QTextEdit
 
 
 class LineNumberArea(QWidget):
@@ -67,11 +67,11 @@ class QD_LuaEditor(QPlainTextEdit):
                 bottom = top + self.blockBoundingRect(block).height()
                 block_number += 1
 
-    @pyqtSlot(int)
+    @Slot(int)
     def update_line_number_area_width(self, newBlockCount):
         self.setViewportMargins(self.line_number_area_width(), 0, 0, 0)
 
-    @pyqtSlot(QRect, int)
+    @Slot(QRect, int)
     def update_line_number_area(self, rect, dy):
         if dy:
             self.line_number_area.scroll(0, dy)
@@ -82,12 +82,12 @@ class QD_LuaEditor(QPlainTextEdit):
         if rect.contains(self.viewport().rect()):
             self.update_line_number_area_width(0)
 
-    @pyqtSlot()
+    @Slot()
     def highlight_current_line(self):
         extra_selections = []
 
         if not self.isReadOnly():
-            selection = QTextEdit.ExtraSelection()
+            selection = QPlainTextEdit.ExtraSelection()
 
             line_color = QColor(Qt.GlobalColor.yellow).lighter(160)
             selection.format.setBackground(line_color)

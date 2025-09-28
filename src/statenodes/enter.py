@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from PyQt6.QtGui import *
-from PyQt6.QtCore import *
-from PyQt6.QtWidgets import *
+from PySide6.QtGui import *
+from PySide6.QtCore import *
+from PySide6.QtWidgets import *
 
 from qdstatewidget import QD_StateWidget
 from qdsocket import *
@@ -287,4 +287,3 @@ class StateNode_enter(QD_StateNode):
             lines.append(''' if hasJob(JOB_WARRINOR) then print('OK') end''')
 
         return '\n'.join(lines)
-

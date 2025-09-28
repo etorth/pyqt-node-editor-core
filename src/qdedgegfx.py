@@ -3,9 +3,9 @@
 A module containing Graphics representation of QD_Edge
 """
 import math
-from PyQt6.QtWidgets import *
-from PyQt6.QtCore import *
-from PyQt6.QtGui import *
+from PySide6.QtWidgets import *
+from PySide6.QtCore import *
+from PySide6.QtGui import *
 
 EDGE_CP_ROUNDNESS = 100  #: Bezier controll point distance on the line
 

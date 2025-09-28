@@ -4,9 +4,9 @@ import pprint
 import traceback
 import functools
 
-from PyQt6.QtCore import QFile, QRectF
-from PyQt6.QtGui import QFontDatabase, QImage, QPainter, QColor
-from PyQt6.QtWidgets import QApplication
+from PySide6.QtCore import QFile, QRectF
+from PySide6.QtGui import QFontDatabase, QImage, QPainter, QColor
+from PySide6.QtWidgets import QApplication
 
 LISTBOX_MIMETYPE = "application/x-item"
 

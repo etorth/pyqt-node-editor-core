@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from PyQt6.QtGui import *
-from PyQt6.QtCore import *
-from PyQt6.QtWidgets import *
+from PySide6.QtGui import *
+from PySide6.QtCore import *
+from PySide6.QtWidgets import *
 from qdutils import *
 
 class QD_QuestConfgGfx(QWidget):

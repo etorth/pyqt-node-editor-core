@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from qdutils import *
-from PyQt6.QtGui import *
-from PyQt6.QtCore import *
-from PyQt6.QtWidgets import *
+from PySide6.QtGui import *
+from PySide6.QtCore import *
+from PySide6.QtWidgets import *
 
 
 class QD_StateNodeGfx(QGraphicsObject):

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 from enum import Enum, unique
-from PyQt6.QtGui import *
-from PyQt6.QtCore import *
-from PyQt6.QtWidgets import *
+from PySide6.QtGui import *
+from PySide6.QtCore import *
+from PySide6.QtWidgets import *
 
 @unique
 class SocketType(int, Enum):

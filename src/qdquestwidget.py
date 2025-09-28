@@ -3,9 +3,9 @@ import os
 import json
 import copy
 
-from PyQt6.QtGui import *
-from PyQt6.QtCore import *
-from PyQt6.QtWidgets import *
+from PySide6.QtGui import *
+from PySide6.QtCore import *
+from PySide6.QtWidgets import *
 
 from qdquestscene import *
 from qdquestconfg import QD_QuestConfg

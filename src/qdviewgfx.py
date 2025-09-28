@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
-from PyQt6.QtGui import *
-from PyQt6.QtCore import *
-from PyQt6.QtWidgets import QGraphicsView, QApplication
+from PySide6.QtGui import *
+from PySide6.QtCore import *
+from PySide6.QtWidgets import QGraphicsView, QApplication
 
 from qdsocketgfx import QD_SocketGfx
 from qdedgegfx import QD_EdgeGfx
@@ -18,8 +18,8 @@ EDGE_DRAG_START_THRESHOLD = 50
 
 
 class QD_ViewGfx(QGraphicsView):
-    scenePosChanged = pyqtSignal(int, int)
-    statusBarMessageChanged = pyqtSignal(str)
+    scenePosChanged = Signal(int, int)
+    statusBarMessageChanged = Signal(str)
 
     def __init__(self, gfx: 'QD_SceneGfx', parent: 'QWidget' = None):
         super().__init__(parent)

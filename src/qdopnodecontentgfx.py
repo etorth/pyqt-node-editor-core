@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from qdserializable import QD_Serializable
-from PyQt6.QtWidgets import *
+from PySide6.QtWidgets import *
 
 
 class QD_OpNodeContentGfx(QWidget):

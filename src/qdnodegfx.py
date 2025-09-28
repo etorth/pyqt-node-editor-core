@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from PyQt6.QtWidgets import QGraphicsObject, QGraphicsItem
+from PySide6.QtWidgets import QGraphicsObject, QGraphicsItem
 
 
 class QD_NodeGfx(QGraphicsObject):
