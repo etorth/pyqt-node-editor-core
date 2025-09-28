@@ -97,33 +97,102 @@ class QD_MainWindow(QMainWindow):
 
 
     def createActions(self):
-        self.actNew = QAction('&New', self, shortcut='Ctrl+N', statusTip="Create new graph", triggered=self.onFileNew)
-        self.actOpen = QAction('&Open', self, shortcut='Ctrl+O', statusTip="Open file", triggered=self.onFileOpen)
-        self.actSave = QAction('&Save', self, shortcut='Ctrl+S', statusTip="Save file", triggered=self.onFileSave)
-        self.actSaveAs = QAction('Save &As...', self, shortcut='Ctrl+Shift+S', statusTip="Save file as...", triggered=self.onFileSaveAs)
-        self.actExit = QAction('E&xit', self, shortcut='Ctrl+Q', statusTip="Exit application", triggered=self.close)
+        self.actNew = QAction('&New', self)
+        self.actNew.setShortcut('Ctrl+N')
+        self.actNew.setStatusTip("Create new graph")
+        self.actNew.triggered.connect(self.onFileNew)
 
-        self.actUndo = QAction('&Undo', self, shortcut='Ctrl+Z', statusTip="Undo last operation", triggered=self.onEditUndo)
-        self.actRedo = QAction('&Redo', self, shortcut='Ctrl+Shift+Z', statusTip="Redo last operation", triggered=self.onEditRedo)
-        self.actCut = QAction('Cu&t', self, shortcut='Ctrl+X', statusTip="Cut to clipboard", triggered=self.onEditCut)
-        self.actCopy = QAction('&Copy', self, shortcut='Ctrl+C', statusTip="Copy to clipboard", triggered=self.onEditCopy)
-        self.actPaste = QAction('&Paste', self, shortcut='Ctrl+V', statusTip="Paste from clipboard", triggered=self.onEditPaste)
-        self.actDelete = QAction('&Delete', self, shortcut='Del', statusTip="Delete selected items", triggered=self.onEditDelete)
-        self.actLuaEditor = QAction('&LuaEditor', self, shortcut='Ctrl+L', statusTip="Edit lua code", triggered=self.onEditLuaEditor)
+        self.actOpen = QAction('&Open', self)
+        self.actOpen.setShortcut('Ctrl+O')
+        self.actOpen.setStatusTip("Open file")
+        self.actOpen.triggered.connect(self.onFileOpen)
 
-        self.actOpenNodeEditWindow = QAction("Open QD_OpNode Edit Window", self, statusTip="Open node edit window", triggered=self.onOpenNodeEditWindow)
+        self.actSave = QAction('&Save', self)
+        self.actSave.setShortcut('Ctrl+S')
+        self.actSave.setStatusTip("Save file")
+        self.actSave.triggered.connect(self.onFileSave)
 
-        self.actClose = QAction("Cl&ose", self, statusTip="Close the active window", triggered=self.mdiArea.closeActiveSubWindow)
-        self.actCloseAll = QAction("Close &All", self, statusTip="Close all the windows", triggered=self.mdiArea.closeAllSubWindows)
-        self.actTile = QAction("&Tile", self, statusTip="Tile the windows", triggered=self.mdiArea.tileSubWindows)
-        self.actCascade = QAction("&Cascade", self, statusTip="Cascade the windows", triggered=self.mdiArea.cascadeSubWindows)
-        self.actNext = QAction("Ne&xt", self, shortcut=QKeySequence.StandardKey.NextChild, statusTip="Move the focus to the next window", triggered=self.mdiArea.activateNextSubWindow)
-        self.actPrevious = QAction("Pre&vious", self, shortcut=QKeySequence.StandardKey.PreviousChild, statusTip="Move the focus to the previous window", triggered=self.mdiArea.activatePreviousSubWindow)
+        self.actSaveAs = QAction('Save &As...', self)
+        self.actSaveAs.setShortcut('Ctrl+Shift+S')
+        self.actSaveAs.setStatusTip("Save file as...")
+        self.actSaveAs.triggered.connect(self.onFileSaveAs)
+
+        self.actExit = QAction('E&xit', self)
+        self.actExit.setShortcut('Ctrl+Q')
+        self.actExit.setStatusTip("Exit application")
+        self.actExit.triggered.connect(self.close)
+
+        self.actUndo = QAction('&Undo', self)
+        self.actUndo.setShortcut('Ctrl+Z')
+        self.actUndo.setStatusTip("Undo last operation")
+        self.actUndo.triggered.connect(self.onEditUndo)
+
+        self.actRedo = QAction('&Redo', self)
+        self.actRedo.setShortcut('Ctrl+Shift+Z')
+        self.actRedo.setStatusTip("Redo last operation")
+        self.actRedo.triggered.connect(self.onEditRedo)
+
+        self.actCut = QAction('Cu&t', self)
+        self.actCut.setShortcut('Ctrl+X')
+        self.actCut.setStatusTip("Cut to clipboard")
+        self.actCut.triggered.connect(self.onEditCut)
+
+        self.actCopy = QAction('&Copy', self)
+        self.actCopy.setShortcut('Ctrl+C')
+        self.actCopy.setStatusTip("Copy to clipboard")
+        self.actCopy.triggered.connect(self.onEditCopy)
+
+        self.actPaste = QAction('&Paste', self)
+        self.actPaste.setShortcut('Ctrl+V')
+        self.actPaste.setStatusTip("Paste from clipboard")
+        self.actPaste.triggered.connect(self.onEditPaste)
+
+        self.actDelete = QAction('&Delete', self)
+        self.actDelete.setShortcut('Del')
+        self.actDelete.setStatusTip("Delete selected items")
+        self.actDelete.triggered.connect(self.onEditDelete)
+
+        self.actLuaEditor = QAction('&LuaEditor', self)
+        self.actLuaEditor.setShortcut('Ctrl+L')
+        self.actLuaEditor.setStatusTip("Edit lua code")
+        self.actLuaEditor.triggered.connect(self.onEditLuaEditor)
+
+        self.actOpenNodeEditWindow = QAction("Open QD_OpNode Edit Window", self)
+        self.actOpenNodeEditWindow.setStatusTip("Open node edit window")
+        self.actOpenNodeEditWindow.triggered.connect(self.onOpenNodeEditWindow)
+
+        self.actClose = QAction("Cl&ose", self)
+        self.actClose.setStatusTip("Close the active window")
+        self.actClose.triggered.connect(self.mdiArea.closeActiveSubWindow)
+
+        self.actCloseAll = QAction("Close &All", self)
+        self.actCloseAll.setStatusTip("Close all the windows")
+        self.actCloseAll.triggered.connect(self.mdiArea.closeAllSubWindows)
+
+        self.actTile = QAction("&Tile", self)
+        self.actTile.setStatusTip("Tile the windows")
+        self.actTile.triggered.connect(self.mdiArea.tileSubWindows)
+
+        self.actCascade = QAction("&Cascade", self)
+        self.actCascade.setStatusTip("Cascade the windows")
+        self.actCascade.triggered.connect(self.mdiArea.cascadeSubWindows)
+
+        self.actNext = QAction("Ne&xt", self)
+        self.actNext.setShortcut(QKeySequence.StandardKey.NextChild)
+        self.actNext.setStatusTip("Move the focus to the next window")
+        self.actNext.triggered.connect(self.mdiArea.activateNextSubWindow)
+
+        self.actPrevious = QAction("Pre&vious", self)
+        self.actPrevious.setShortcut(QKeySequence.StandardKey.PreviousChild)
+        self.actPrevious.setStatusTip("Move the focus to the previous window")
+        self.actPrevious.triggered.connect(self.mdiArea.activatePreviousSubWindow)
 
         self.actSeparator = QAction(self)
         self.actSeparator.setSeparator(True)
 
-        self.actAbout = QAction("&About", self, statusTip="Show the application's About box", triggered=self.about)
+        self.actAbout = QAction("&About", self)
+        self.actAbout.setStatusTip("Show the application's About box")
+        self.actAbout.triggered.connect(self.about)
 
     def getCurrentStateNodeWidget(self):
         """ we're returning QD_StateWidget here... """
