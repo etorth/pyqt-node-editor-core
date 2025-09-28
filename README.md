@@ -1,4 +1,4 @@
-# pyqt-node-editor-core
+# quest-designer
 
 based on: https://gitlab.com/pavel.krupala/pyqt-node-editor
 
