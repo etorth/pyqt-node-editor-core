@@ -87,7 +87,7 @@ class QD_LuaEditor(QPlainTextEdit):
         extra_selections = []
 
         if not self.isReadOnly():
-            selection = QPlainTextEdit.ExtraSelection()
+            selection = QPlainTextEdit.extraSelections()
 
             line_color = QColor(Qt.GlobalColor.yellow).lighter(160)
             selection.format.setBackground(line_color)

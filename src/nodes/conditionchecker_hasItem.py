@@ -1,12 +1,11 @@
 # -*- coding: utf-8 -*-
-from ..qdopnode import QD_OpNode
-from ..qdopnodecontent import QD_OpNodeContent
-from ..qdopnodecontentgfx import QD_OpNodeContentGfx
-from ..qdutils import utils, SocketType, OPS_CHECKER
+from PySide6.QtGui import *
+from PySide6.QtCore import *
+from PySide6.QtWidgets import *
 
-from PySide6.QtWidgets import QComboBox, QLineEdit, QHBoxLayout, QLabel
-from PySide6.QtGui import QIntValidator
-from PySide6.QtCore import Qt
+from qdopnode import *
+from qdutils import *
+from qdopnodecontentgfx import *
 
 
 class _ConditionCheckerContentGfx_hasItem(QD_OpNodeContentGfx):
@@ -59,9 +58,7 @@ class _ConditionCheckerContent_hasItem(QD_OpNodeContent):
 
 
     def deserialize(self, data, hashmap=None, restore_id: bool = True):
-        if hashmap is None:
-            hashmap = {}
-        super().deserialize(data, hashmap)
+    def deserialize(self, data, hashmap={}, restore_id: bool = True):
         self.gfx.choice.setCurrentIndex(data['choice'])
         self.gfx.edit.setText(data['value'])
         self.gfx.items.setCurrentIndex(data['item'])

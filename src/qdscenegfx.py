@@ -74,11 +74,11 @@ class QD_SceneGfx(QGraphicsScene):
         # draw the lines
         painter.setPen(self._pen_light)
         if lines_light:
-            painter.drawLines(*lines_light)
+            painter.drawLines(lines_light)
 
         painter.setPen(self._pen_dark)
         if lines_dark:
-            painter.drawLines(*lines_dark)
+            painter.drawLines(lines_dark)
 
         painter.setPen(self._pen_axis)
         painter.drawLine(QPointF(rect.left(), 0), QPointF(rect.right(), 0))
